@@ -11,11 +11,16 @@ export const boardService = {
 };
 
 function query(filterBy) {
-	return httpService.get(`board`)
+	return (
+		httpService
+			.get(`board`)
 			// return axios.get(`${_getURL()}?name=${filterBy.searchStr}`)
-			.then((res) => res)
+			.then((res) => {
+				res.forEach((board) => _addLabels(board));
+				return res;
+			})
+	);
 }
-
 function getById(id) {
 	return httpService.get(`board/${id}`).then((res) => res.data);
 }
@@ -27,7 +32,28 @@ function remove(id) {
 function save(board) {
 	return board._id ? _update(board) : _add(board);
 }
-
+function _addLabels(board) {
+	//Should be in server
+	board.topics.forEach((topic) => {
+		topic.cards.forEach((card) => {
+			let labels = board.labels;
+			labels = labels.filter((label) => card.labels.includes(label.title));
+			card.labels = labels;
+		});
+	});
+	return board;
+}
+function _removeLabels(board) {
+	//Should be in server
+	board.topics.forEach((topic) => {
+		topic.cards.forEach((card) => {
+			let labels = [];
+			card.labels.forEach((label) => labels.push(label.color));
+			card.labels = labels;
+		});
+	});
+	return board;
+}
 function getStarterBoard() {
 	return {
 		// _id: _makeId(),
@@ -191,7 +217,7 @@ function _update(board) {
 function _add(board) {
 	// console.log('_add', board)
 	// board['_id'] = _makeId();
-	console.log('_add-id', board)
+	console.log('_add-id', board);
 
 	return httpService.post(`board/${id}`, board).then((res) => res.data);
 }

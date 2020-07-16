@@ -12,7 +12,7 @@
 			<button v-if="isDescInFocus" @click="updateCard">Save</button>
 			<button @click="editModal='card-label-edit'">Labels</button>
 			<card-edit-modal v-if="editModal" @modalClose="closeModal">
-				<component :is="editModal"></component>
+				<component :is="editModal" :card="card"></component>
 			</card-edit-modal>
 		</div>
 	</section>
@@ -43,7 +43,7 @@ export default {
 		let cardId = this.$route.params.cardId;
 		let boardId = this.$route.params.boardId;
 		if (!boardId || !cardId) this.$router.push('/');
-		await this.$store.dispatch({ type: 'loadBoard' });
+		await this.$store.dispatch({ type: 'loadBoard' }, { id: boardId });
 		this.board = this.$store.getters.board;
 		if (!this.board) this.$router.push('/');
 		this.card = JSON.parse(

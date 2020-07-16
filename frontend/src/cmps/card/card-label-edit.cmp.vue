@@ -1,39 +1,40 @@
 <template>
-    <section class="card-label-edit">
-    
-    </section>
+	<section class="card-label-edit">
+		<ul>
+			<li v-for="label in labels" :key="label.color" :style="{color:label.color}">{{label.title}}</li>
+		</ul>
+	</section>
 </template>
 
 <script>
 export default {
-    props:[card],
-    data(){
-        return{
+	props: [card],
+	data() {
+		return {
+            labels: [...card.labels]
+		}
+	},
+	computed: {
 
-        }
-    },
-    computed: {
+	},
+	methods: {
 
-    },
-    methods: {
+	},
+	created() {
 
-    },
-    created(){
+	},
+	mounted() {
 
-    },
-    mounted(){
+	},
+	watch: {
 
-    },
-    watch: {
+	},
+	components: {
 
-    },
-    components: {
-
-    }
+	}
 
 }
 </script>
 
 <style>
-
 </style>
