@@ -7,20 +7,16 @@
 </template>
 <script>
 export default {
-	props: [],
-	data() {
-		return {};
-	},
-	computed: {},
 	methods: {
 		close() {
-			this.$emit("closeModal");
+			this.$emit('modalClose');
 		}
 	},
-	created() {},
-	components: {}
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+section {
+	position: absolute;
+}
 </style>

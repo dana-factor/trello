@@ -1,15 +1,14 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import {boardService} from '../services/board.service.js'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import { boardService } from '../services/board.service.js';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export const boardStore = {
     strict: true,
     state: {
         boards: [],
         currBoard: {},
-        currCard: {},
         // filterBy: {
         //     searchStr: '',
         // },
@@ -33,9 +32,9 @@ export const boardStore = {
         // topics(state) {
         //     return state.currBoard.topics;
         // },
-        card(state) {
-            return state.currCard;
-        },
+        // card(state) {
+        //     return state.currCard;
+        // },
     },
     mutations: {
         setBoards(state, { boards }) {
