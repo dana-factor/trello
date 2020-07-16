@@ -173,7 +173,19 @@ function getStarterBoard() {
 		],
 	};
 }
-
+function getStarterCard() {
+	return {
+		id: _makeId(),
+		name: '',
+		description: '',
+		createdAt: Date.now(), //will come from server in the near future!
+		members: [],
+		lables: [],
+		backgroundColor: 'lightgrey',
+		attachments: [],
+		checklists: [],
+	};
+}
 function _update(board) {
 	return httpService.put(`board/${id}`, board).then((res) => res.data);
 }

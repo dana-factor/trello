@@ -19,6 +19,4 @@ export default {
 section {
 	position: absolute;
 }
-</style>>
-
 </style>
