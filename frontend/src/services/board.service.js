@@ -17,7 +17,9 @@ function query(filterBy) {
 }
 
 function getById(id) {
-	return httpService.get(`board/${id}`).then((res) => res.data);
+	return httpService.get(`board/${id}`).then((res) => {
+		console.log('res service', res)
+		return res});
 }
 
 function remove(id) {
@@ -190,10 +192,13 @@ function _update(board) {
 
 function _add(board) {
 	// console.log('_add', board)
-	// board['_id'] = _makeId();
+	board['_id'] = _makeId();
 	console.log('_add-id', board)
 
-	return httpService.post(`board/${id}`, board).then((res) => res.data);
+	return httpService.post(`board/${board._id}`, board)
+	.then((res) => {
+		console.log('res', res)
+		res.data});
 }
 function getCardById(board, id) {
 	board.topics.forEach((topic) => {

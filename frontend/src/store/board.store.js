@@ -40,6 +40,10 @@ export const boardStore = {
         setBoards(state, { boards }) {
             state.boards = boards;
         },
+        // setCurrBoard(state { id }) {
+        //     const board = boardService.getById(id);
+        //     state.currBoard = board;
+        // },
         // updateFilterBy(state, {filter}) {
         //     state.filterBy = filter;
         // },
