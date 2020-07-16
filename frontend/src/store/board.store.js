@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {boardService} from '../services/board.service.js'
+import { boardService } from '../services/board.service.js'
 
 Vue.use(Vuex)
 
@@ -44,14 +44,15 @@ export const boardStore = {
         // updateFilterBy(state, {filter}) {
         //     state.filterBy = filter;
         // },
-        removeBoard(state, {id}){
+        removeBoard(state, { id }) {
             const idx = state.boards.findIndex(board => board._id === id)
             state.boards.splice(idx, 1)
         },
-        addBoard(state, {board}) {
+        addBoard(state, { board }) {
             state.boards.push(board)
+            // this.$router.push('/board/:board._id')
         },
-        updateBoard(state, {board}) {
+        updateBoard(state, { board }) {
             const idx = state.boards.findIndex(t => t._id === board._id)
             state.boards.splice(idx, 1, board)
         }
@@ -64,19 +65,22 @@ export const boardStore = {
                     return boards
                 })
         },
-        saveBoard({commit}, {board}) {
-            const type = (board._id)? 'updateBoard' : 'addBoard'
+        saveBoard({ commit }, { board }) {
+            console.log(board)
+            const type = (board._id) ? 'updateBoard' : 'addBoard'
+            // console.log(type)
             return boardService.save(board)
-                .then((savedBoard)=>{
-                    commit({type ,board: savedBoard})
+                .then((savedBoard) => {
+                    console.log('savedBoard, store', savedBoard)
+                    commit({ type, board: savedBoard })
                 })
         },
-        removeBoard({commit}, {id}){
+        removeBoard({ commit }, { id }) {
             return boardService.remove(id)
-                .then(()=>{
-                    commit({type: 'removeBoard', id})
+                .then(() => {
+                    commit({ type: 'removeBoard', id })
                 })
         },
     },
-    
+
 }

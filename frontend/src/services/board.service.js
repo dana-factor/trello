@@ -11,12 +11,9 @@ export const boardService = {
 };
 
 function query(filterBy) {
-	return (
-		httpService
-			.get(`board`)
+	return httpService.get(`board`)
 			// return axios.get(`${_getURL()}?name=${filterBy.searchStr}`)
-			.then((res) => res.data)
-	);
+			.then((res) => res)
 }
 
 function getById(id) {
@@ -33,6 +30,7 @@ function save(board) {
 
 function getStarterBoard() {
 	return {
+		// _id: _makeId(),
 		name: '',
 		members: [],
 		lables: [
@@ -179,6 +177,10 @@ function _update(board) {
 }
 
 function _add(board) {
+	// console.log('_add', board)
+	// board['_id'] = _makeId();
+	console.log('_add-id', board)
+
 	return httpService.post(`board/${id}`, board).then((res) => res.data);
 }
 

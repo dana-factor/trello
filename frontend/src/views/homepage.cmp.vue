@@ -1,39 +1,60 @@
 <template>
-    <section class="homepage">
-        <h1>homepage</h1>
-    </section>
+	<section class="homepage">
+		<h1>homepage</h1>
+		<board-list
+            @updateBoard="updateBoard"
+			@addBoard="addBoard"
+			@removeBoard="removeBoard"
+			:boards="boards"
+		/>
+	</section>
 </template>
 
 <script>
+import boardList from "../cmps/board/board-list.cmp.vue";
+import { boardService } from '../services/board.service.js';
+
 export default {
-    props:[],
-    data(){
-        return{
-
+	props: [],
+	data() {
+		return {
+			boards: []
+		};
+	},
+	computed: {},
+	methods: {
+		removeBoard(boardId) {
+			this.$store.commit({ type: "removeBoard", boardId });
+		},
+		addBoard() {
+			var board = boardService.getStarterBoard();
+			this.$store.dispatch({ type: "saveBoard", board })
+				.then((res) => {
+                    console.log('board added', res)
+					// this.$router.push('/board/:boardId')
+				})
+				.catch(err => {
+					console.log("ERROR, cannot add a board", err);
+				});
+        },
+        updateBoard(board) {
+            this.$store.commit({type: 'saveBoard', board})
         }
-    },
-    computed: {
+	},
+	created() {
+        this.$store.dispatch({type: 'loadBoards'})
+        .then(() => {
+             this.boards = this.$store.getters.boards
+             })
 
     },
-    methods: {
-
-    },
-    created(){
-
-    },
-    mounted(){
-
-    },
-    watch: {
-
-    },
-    components: {
-
-    }
-
-}
+	mounted() {},
+	watch: {},
+	components: {
+		boardList
+	}
+};
 </script>
 
 <style>
-
 </style>
