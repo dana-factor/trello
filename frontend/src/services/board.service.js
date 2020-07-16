@@ -1,4 +1,3 @@
-import axios from 'axios';
 import httpService from './http.service';
 // axios.defaults.withCredentials = true
 
@@ -8,6 +7,7 @@ export const boardService = {
 	remove,
 	save,
 	getStarterBoard,
+	getCardById,
 };
 
 function query(filterBy) {
@@ -181,7 +181,11 @@ function _update(board) {
 function _add(board) {
 	return httpService.post(`board/${id}`, board).then((res) => res.data);
 }
-
+function getCardById(board, id) {
+	board.topics.forEach((topic) => {
+		return topic.cards.find((card) => card.id === id);
+	});
+}
 function _makeId(length = 5) {
 	var txt = '';
 	var possible =
