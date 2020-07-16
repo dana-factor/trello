@@ -67,7 +67,13 @@ export const boardStore = {
             state.currBoard.topics.splice(idx, 1, topic)
         },
         updateTopicName(state, {topicName, topicId}) {
-            state.currBoard.topics.find(topic => topic.id === topicId) = topicName
+            let currTopic = state.currBoard.topics.find(topic => topic.id === topicId)
+            currTopic.name = topicName
+        },
+        addCard(state, {topicId}){
+            const starterCard = boardService.getStarterCard()
+            let currTopic = state.currBoard.topics.find(topic => topic.id = topicId)
+            currTopic.push(starterCard)
         }
     },
     actions: {
