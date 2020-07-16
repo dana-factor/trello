@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import cardPreview from '../../cmps/card/card-preview.cmp'
 export default {
     props:{
         topic: {
@@ -58,7 +59,7 @@ export default {
 
     },
     components: {
-
+        cardPreview
     }
 
 }
