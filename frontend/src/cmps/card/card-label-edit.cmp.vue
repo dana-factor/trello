@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    props:[],
+    props:[card],
     data(){
         return{
 
