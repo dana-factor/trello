@@ -1,6 +1,6 @@
 <template>
-    <section class="homepage">
-    <h1>homepage</h1>
+    <section class="login">
+    <h1>login</h1>
     </section>
 </template>
 
