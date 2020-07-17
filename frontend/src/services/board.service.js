@@ -11,6 +11,7 @@ export const boardService = {
 	getStarterCard,
 	addLabels,
 	removeLabels,
+	getStarterTopic
 };
 
 function query(filterBy) {
@@ -214,6 +215,13 @@ function getStarterCard() {
 		attachments: [],
 		checklists: [],
 	};
+}
+function getStarterTopic(topicName) {
+	return {
+		id: _makeId(),
+		name: topicName,
+		cards: [],
+	}
 }
 function _update(board) {
 	return httpService.put(`board/${board._id}`, board).then((res) => res);

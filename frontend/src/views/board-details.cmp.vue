@@ -17,6 +17,11 @@
 					@addCard="addCard"
 				/>
 			</li>
+            <li>
+                <!-- <h2 @click="addTopic">+Add new list</h2> -->
+                <h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add new list</h2>
+                <input class="topicName" v-if="topicNameInputOpen" v-model="topicName"/><button @click="addTopic" v-if="topicNameInputOpen">Add List</button>
+            </li>
 		</ul>
 	</section>
 </template>
@@ -31,7 +36,9 @@ export default {
         return{
             board: null,
             editMenuOpen: false,
-            nameInputOpen: false
+            nameInputOpen: false,
+            topicNameInputOpen: false,
+            topicName: ''
         }
     },
     computed: {
@@ -45,8 +52,8 @@ export default {
             let currTopic = this.board.topics.find(topic => topic.id === topicId)
             currTopic.name = topicName
             this.$store.dispatch({type: 'saveBoard', board: this.board})
-            .then(()=>{
-                this.loadBoard()
+            .then((savedBoard)=>{
+                this.board = JSON.parse(JSON.stringify(savedBoard));
             })
         },
         addCard(topicId){
@@ -54,16 +61,25 @@ export default {
             let currTopic = this.board.topics.find(topic => topic.id === topicId)
             currTopic.cards.push(starterCard)
             this.$store.dispatch({type: 'saveBoard', board: this.board})
-            .then(()=>{
-                this.loadBoard()
+            .then((savedBoard)=>{
+                this.board = JSON.parse(JSON.stringify(savedBoard));
             })
         },
         removeTopic(topicId){
             const idx = this.board.topics.findIndex(topic => topic.id === topicId)
             this.board.topics.splice(idx, 1)
             this.$store.dispatch({type: 'saveBoard', board: this.board})
-            .then(()=>{
-                this.loadBoard()
+            .then((savedBoard)=>{
+                this.board = JSON.parse(JSON.stringify(savedBoard));
+            })
+        },
+        addTopic(){
+            const starterTopic = boardService.getStarterTopic(this.topicName)
+            this.topicNameInputOpen = false
+            this.board.topics.push(starterTopic)
+            this.$store.dispatch({type: 'saveBoard', board: this.board})
+            .then((savedBoard)=>{
+                this.board = JSON.parse(JSON.stringify(savedBoard));
             })
         },
         // 	updateName(ev) {
@@ -77,8 +93,8 @@ export default {
 			if (!this.board.name) return;
 			this.$store
 				.dispatch({ type: "saveBoard", board: this.board })
-				.then(() => {
-                    this.loadBoard();
+				.then((savedBoard) => {
+                    this.board = JSON.parse(JSON.stringify(savedBoard));
                     this.nameInputOpen = false;
                     this.editMenuOpen = false;
 				});
