@@ -43,6 +43,7 @@ export default {
 		},
 		updateBoardLabels() {
 			this.labelToEditOG.title = this.labelToEdit.title;
+			this.labelToEdit = null;
 			this.$emit('boardLabelsUpdate', this.boardLabelsToUpdate);
 		},
 		toggleLabel(label) {
@@ -52,7 +53,10 @@ export default {
 			this.updateCard();
 		},
 		editTitle(label) {
-			if (this.labelToEdit === label) this.labelToEdit = null;
+			if (this.labelToEditOG === label) {
+				this.labelToEdit = null;
+				this.labelToEditOG = null;
+			}
 			else {
 				this.labelToEditOG = label;
 				this.labelToEdit = JSON.parse(JSON.stringify(label))

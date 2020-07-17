@@ -1,6 +1,6 @@
 <template>
 	<section onclick class="card-preview">
-		<router-link :to="'card/'+card.id">{{card.name}}</router-link>
+		<router-link :to="'card/'+card.id" append>{{card.name}}</router-link>
 		<!-- <button>✏</button> -->
 	</section>
 </template>
@@ -13,10 +13,13 @@ export default {
 	},
 	computed: {},
 	methods: {},
-	created() {},
+	created() { },
 	components: {}
 };
 </script>
 
-<style>
+<style scoped>
+a {
+	display: block;
+}
 </style>

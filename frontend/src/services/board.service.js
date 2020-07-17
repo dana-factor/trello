@@ -12,7 +12,9 @@ export const boardService = {
 	addLabels,
 	removeLabels,
 	getStarterTopic,
-	saveCardToBoard
+	saveCardToBoard,
+	getStarterChecklist,
+	getStarterChecklistTask
 };
 
 function query(filterBy) {
@@ -224,12 +226,26 @@ function getStarterCard() {
 		checklists: [],
 	};
 }
+function getStarterChecklist() {
+	return {
+		id: _makeId(),
+		name: 'yay2',
+		tasks: [],
+	};
+}
+function getStarterChecklistTask() {
+	return {
+		id: _makeId(),
+		text: '',
+		isDone: false,
+	};
+}
 function getStarterTopic(topicName) {
 	return {
 		id: _makeId(),
 		name: topicName,
 		cards: [],
-	}
+	};
 }
 function _update(board) {
 	return httpService.put(`board/${board._id}`, board).then((res) => res);
