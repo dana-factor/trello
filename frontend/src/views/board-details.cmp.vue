@@ -79,7 +79,7 @@ export default {
 		loadBoard() {
 			const boardId = this.$route.params.boardId;
 			this.$store
-				.dispatch({ type: "getCurrBoard", id: boardId })
+				.dispatch({ type: "loadCurrBoard", id: boardId })
 				.then(board => {
 					this.board = JSON.parse(JSON.stringify(board));
 				});
