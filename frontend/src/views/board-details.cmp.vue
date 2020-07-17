@@ -1,7 +1,7 @@
 <template>
     <section class="board-details">
     <h1>board-details</h1>
-    <h2>{{board.name}}</h2>
+    <h2 v-if="board">{{board.name}}</h2>
     <button @click="toggleEditMenu">...</button>
     <div v-if="editMenuOpen">
         <p>Change Name </p>
@@ -9,7 +9,7 @@
     </div>
     <ul v-if="board">
         <li v-for="topic in board.topics" :key="topic.id">
-            <board-topic :topic="topic" />
+            <board-topic :topic="topic" @updateTopicName="updateTopicName" @removeTopic="removeTopic" @addCard="addCard"/>
         </li>
     </ul>
     </section>
@@ -33,9 +33,18 @@ export default {
 
     },
     methods: {
-           toggleEditMenu(){
+        toggleEditMenu(){
             this.editMenuOpen = !this.editMenuOpen
         },
+        updateTopicName(topicName, topicId){
+            this.$store.commit({type: 'updateTopicName', topicName: topicName, topicId: topicId})
+        },
+        removeTopic(topicId){
+            this.$store.commit({type: 'removeTopic', topicId: topicId})
+        },
+        addCard(topicId){
+            this.$store.commit({type: 'addCard', topicId: topicId})
+        }
 
     },
     created(){

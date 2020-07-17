@@ -76,7 +76,11 @@ export const boardStore = {
         addCard(state, { topicId }) {
             const starterCard = boardService.getStarterCard()
             let currTopic = state.currBoard.topics.find(topic => topic.id = topicId)
-            currTopic.push(starterCard)
+            console.log('111:',currTopic);
+            
+            currTopic.cards.push(starterCard)
+            console.log('222:',currTopic);
+            boardService.save(state.currBoard)
         }
     },
     actions: {
