@@ -21,7 +21,6 @@ export default {
     data(){
         return{
             editMenuOpen: false,
-            // topicEditMode: false,
             topicName: ''
         }
     },
@@ -31,25 +30,16 @@ export default {
     methods: {
         removeTopic(topicId){
             this.$emit('removeTopic', topicId)
-            //context.commit({type: 'removeTopic', topicId})
         },
         toggleEditMenu(){
             this.editMenuOpen = !this.editMenuOpen
         },
-        // toggleTopicEditMode(){
-        //     this.topicEditMode = !this.topicEditMode
-        // },
         updateTopicName(ev){
             this.topicName = ev.target.innerText
             this.$emit('updateTopicName', this.topicName, this.topic.id)
-            // context.commit({type: 'updateTopicName', topicName: this.topicName, topicId: this.topic.id})
         },
         addCard(){
-            console.log('333:', this.topic.id);
-            
             this.$emit('addCard', this.topic.id)
-
-            // context.commit({type: 'addCard', topicId: this.topic.id})
         }
     },
     created(){
@@ -70,6 +60,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.board-topic{
+    border: black 1px solid;
+    width: 200px
+}
 
 </style>

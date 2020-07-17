@@ -41,6 +41,7 @@ export default {
 		return {
 			board: null,
 			card: null,
+			cardId: 0,
 			isDescInFocus: false,
 			isNameInFocus: false,
 			editModal: ''
@@ -48,31 +49,36 @@ export default {
 	},
 	computed: {},
 	methods: {
+		async init() {
+			//todo change push to something nicer
+			this.cardId = this.$route.params.cardId;
+			let boardId = this.$route.params.boardId;
+			if (!boardId || !this.cardId) this.$router.push('/');
+			await this.$store.dispatch({ type: 'loadCurrBoard', id: boardId });
+			this.setBoardAndCard(this.$store.getters.board)
+		},
+		setBoardAndCard(board) {
+			this.board = boardService.addLabels(JSON.parse(
+				JSON.stringify(board)));
+			if (!this.board) this.$router.push('/');
+			this.card = boardService.getCardById(this.board, this.cardId);
+			if (!this.card) this.$router.push('/');
+		},
 		updateCardName() {
 			this.card.name = document.querySelector('#name').innerText;
 			this.updateCard(this.card);
 		},
-		updateCard(card) {
-			this.$store.dispatch({ type: 'saveBoard', board: boardService.removeLabels(this.board) });
+		async updateCard(card) {
+			boardService.saveCardToBoard(this.board, card);
+			this.$store.dispatch({ type: 'saveBoard', board: boardService.removeLabels(this.board) })
+				.then(savedBoard => this.setBoardAndCard(savedBoard))
 		},
 		closeModal() {
 			this.editModal = '';
 		}
 	},
-	async created() {
-		//todo change push to something nicer
-		let cardId = this.$route.params.cardId;
-		let boardId = this.$route.params.boardId;
-		if (!boardId || !cardId) this.$router.push('/');
-		// await this.$store.dispatch({ type: 'loadBoards' }, { id: boardId });
-		await this.$store.dispatch({ type: 'getCurrBoard', id: boardId });
-		this.board = boardService.addLabels(JSON.parse(
-			JSON.stringify(this.$store.getters.board)));
-		// this.board = boardService.addLabels(JSON.parse(
-		// 	JSON.stringify(this.$store.getters.boards[0])));
-		if (!this.board) this.$router.push('/');
-		this.card = boardService.getCardById(this.board, cardId);
-		if (!this.card) this.$router.push('/');
+	created() {
+		this.init();
 	},
 	components: { cardEditModal, cardLabelEdit }
 };

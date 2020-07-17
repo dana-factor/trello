@@ -11,6 +11,8 @@ export const boardService = {
 	getStarterCard,
 	addLabels,
 	removeLabels,
+	getStarterTopic,
+	saveCardToBoard
 };
 
 function query(filterBy) {
@@ -58,6 +60,13 @@ function removeLabels(board) {
 		});
 	});
 	return board;
+}
+function saveCardToBoard(board, card) {
+	board.topics.find((topic) => {
+		const idx = topic.cards.indexOf(getCardById(board, card.id));
+		topic.cards.splice(idx, 1, card);
+		return idx !== -1;
+	});
 }
 function getStarterBoard() {
 	return {
@@ -214,6 +223,13 @@ function getStarterCard() {
 		attachments: [],
 		checklists: [],
 	};
+}
+function getStarterTopic(topicName) {
+	return {
+		id: _makeId(),
+		name: topicName,
+		cards: [],
+	}
 }
 function _update(board) {
 	return httpService.put(`board/${board._id}`, board).then((res) => res);

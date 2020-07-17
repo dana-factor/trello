@@ -1,8 +1,8 @@
 <template>
 	<section class="card-label-edit">
 		<ul>
-			<li v-for="label in boardLabels" :key="label.color" :style="{backgroundColor:label.color}">
-				<button @click="toggleLabel(label)">
+			<li v-for="label in boardLabels" :key="label.color">
+				<button @click="toggleLabel(label)" :style="{backgroundColor:label.color}">
 					<span v-if="hasLabel(label)">V</span>
 					{{label.title}}
 				</button>
@@ -17,6 +17,7 @@ export default {
 	data() {
 		return {
 			// labels: JSON.parse(JSON.stringify(this.card.labels))
+			cardToUpdate: JSON.parse(JSON.stringify(this.card))
 		}
 	},
 	computed: {
@@ -24,16 +25,18 @@ export default {
 	},
 	methods: {
 		hasLabel(label) {
-			return this.card.labels.findIndex((currLabel) => currLabel.color === label.color) !== -1
+			return this.getLabelIndex(label) !== -1;
+		},
+		getLabelIndex(label) {
+			return this.cardToUpdate.labels.findIndex((currLabel) => currLabel.color === label.color);
 		},
 		updateCard() {
-			let cardToUpdate = JSON.parse(JSON.stringify(this.card));
-			cardToUpdate.labels = this.labels;
-			this.$emit('cardUpdate', cardToUpdate);
+			// let cardToUpdate = JSON.parse(JSON.stringify(this.card));
+			this.$emit('cardUpdate', this.cardToUpdate);
 		},
 		toggleLabel(label) {
-			let currLabels = this.card.labels
-			if (currLabels.includes(label)) currLabels.splice(currLabels.indexOf(label), 1)
+			let currLabels = this.cardToUpdate.labels
+			if (this.hasLabel(label)) currLabels.splice(this.getLabelIndex(label), 1)
 			else currLabels.push(label);
 			this.updateCard();
 		}
