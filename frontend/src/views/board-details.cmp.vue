@@ -82,13 +82,6 @@ export default {
                 this.board = JSON.parse(JSON.stringify(savedBoard));
             })
         },
-        // 	updateName(ev) {
-		// 	console.log(ev.target.value);
-		// 	var boardClone = JSON.parse(JSON.stringify(this.board));
-		// 	boardClone.name = ev.target.value;
-		// 	this.$store.commit({ type: "updateBoardName", boardName });
-			
-		// },
 		saveBoard() {
 			if (!this.board.name) return;
 			this.$store
