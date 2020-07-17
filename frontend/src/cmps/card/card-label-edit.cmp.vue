@@ -1,8 +1,8 @@
 <template>
 	<section class="card-label-edit">
 		<ul>
-			<li v-for="label in boardLabels" :key="label.color" :style="{backgroundColor:label.color}">
-				<button @click="toggleLabel(label)">
+			<li v-for="label in boardLabels" :key="label.color">
+				<button @click="toggleLabel(label)" :style="{backgroundColor:label.color}">
 					<span v-if="hasLabel(label)">V</span>
 					{{label.title}}
 				</button>
@@ -25,7 +25,10 @@ export default {
 	},
 	methods: {
 		hasLabel(label) {
-			return this.cardToUpdate.labels.findIndex((currLabel) => currLabel.color === label.color) !== -1
+			return this.getLabelIndex(label) !== -1;
+		},
+		getLabelIndex(label) {
+			return this.cardToUpdate.labels.findIndex((currLabel) => currLabel.color === label.color);
 		},
 		updateCard() {
 			// let cardToUpdate = JSON.parse(JSON.stringify(this.card));
@@ -33,8 +36,8 @@ export default {
 		},
 		toggleLabel(label) {
 			let currLabels = this.cardToUpdate.labels
-			// if (this.hasLabel(label)) currLabels.splice(currLabels.indexOf(label), 1)
-			currLabels.push(label);
+			if (this.hasLabel(label)) currLabels.splice(this.getLabelIndex(label), 1)
+			else currLabels.push(label);
 			this.updateCard();
 		}
 	},
