@@ -1,11 +1,17 @@
 <template>
     <section class="board-topic">
-        <h2 contenteditable="true" @keydown.enter.prevent="updateTopicName">{{topicName}}</h2>
-        <!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
-        <button @click="toggleEditMenu">...</button>
-        <button v-if="editMenuOpen" @click="removeTopic(topic.id)">X</button>
-        <card-preview v-for="card in topic.cards" :key="card.id" :card="card"></card-preview>
-        <button @click="addCard">+ Add another card</button>
+        <div class="topic-header">
+            <h2 contenteditable="true" @keydown.enter.prevent="updateTopicName">{{topicName}}</h2>
+            <!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
+            <button @click="toggleEditMenu">...</button>
+            <button v-if="editMenuOpen" @click="removeTopic(topic.id)">X</button>
+        </div>
+        <div class="topic-main">
+            <card-preview v-for="card in topic.cards" :key="card.id" :card="card"></card-preview>
+        </div>
+        <div class="topic-footer">
+            <button @click="addCard">+ Add another card</button>
+        </div>
     </section>
 </template>
 

@@ -8,21 +8,21 @@
 			<input v-if="nameInputOpen" v-model="board.name" @change="saveBoard" />
 			<p>Change Background</p>
 		</div>
-		<ul v-if="board">
-			<li class="topic-wrapper" v-for="topic in board.topics" :key="topic.id">
+		<div class="board-container">
+			<div class="topic-wrapper" v-for="topic in board.topics" :key="topic.id">
 				<board-topic
 					:topic="topic"
 					@updateTopicName="updateTopicName"
 					@removeTopic="removeTopic"
 					@addCard="addCard"
 				/>
-			</li>
-            <li class="topic-wrapper">
+			</div>
+            <div class="topic-wrapper">
                 <!-- <h2 @click="addTopic">+Add new list</h2> -->
                 <h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add new list</h2>
                 <input class="topicName" v-if="topicNameInputOpen" v-model="topicName"/><button @click="addTopic" v-if="topicNameInputOpen">Add List</button>
-            </li>
-		</ul>
+            </div>
+		</div>
 	</section>
 </template>
 
