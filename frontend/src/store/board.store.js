@@ -53,7 +53,6 @@ export const boardStore = {
         },
         addBoard(state, { board }) {
             state.boards.push(board)
-            // this.$router.push('/board/:board._id')
         },
         updateBoard(state, { board }) {
             const idx = state.boards.findIndex(t => t._id === board._id)
@@ -93,7 +92,7 @@ export const boardStore = {
             const type = (board._id) ? 'updateBoard' : 'addBoard'
             return boardService.save(board)
                 .then((savedBoard) => {
-                    console.log('savedBoard, store', savedBoard)
+                    // console.log('savedBoard, store', savedBoard)
                     commit({ type, board: savedBoard })
                     return savedBoard
                 })

@@ -58,7 +58,7 @@ function _removeLabels(board) {
 function getStarterBoard() {
 	return {
 		// _id: _makeId(),
-		name: '',
+		name: 'starter board',
 		members: [],
 		lables: [
 			{
