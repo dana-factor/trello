@@ -45,7 +45,10 @@ export default {
             // context.commit({type: 'updateTopicName', topicName: this.topicName, topicId: this.topic.id})
         },
         addCard(){
+            console.log('333:', this.topic.id);
+            
             this.$emit('addCard', this.topic.id)
+
             // context.commit({type: 'addCard', topicId: this.topic.id})
         }
     },
