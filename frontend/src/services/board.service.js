@@ -36,6 +36,7 @@ function save(board) {
 }
 function addLabels(board) {
 	//Should be in server
+	board = JSON.parse(JSON.stringify(board));
 	board.topics.forEach((topic) => {
 		topic.cards.forEach((card) => {
 			let labels = board.labels;
@@ -47,6 +48,7 @@ function addLabels(board) {
 }
 function removeLabels(board) {
 	//Should be in server
+	board = JSON.parse(JSON.stringify(board));
 	board.topics.forEach((topic) => {
 		topic.cards.forEach((card) => {
 			let labels = [];
@@ -217,16 +219,15 @@ function _update(board) {
 }
 
 function _add(board) {
-	return httpService.post(`board/`, board)
-	.then((board) => board);
+	return httpService.post(`board/`, board).then((board) => board);
 }
 function getCardById(board, id) {
-	for(const topic of board.topics) {
+	for (const topic of board.topics) {
 		const card = topic.cards.find((card) => {
 			return card.id === id;
 		});
 		if (card) return card;
-	};
+	}
 }
 function _makeId(length = 5) {
 	var txt = '';

@@ -108,6 +108,7 @@ export const boardStore = {
                 })
         },
         getCurrBoard({commit}, { id }) {
+            console.log(id)
             return boardService.getById(id)
                 .then(board => {
                     commit({type: 'setCurrBoard', board})

@@ -2,8 +2,8 @@
 	<section class="card-details">
 		<div v-if="card">
 			<div>
-				<h1 @focus="isNameInFocus=true" @blur="isNameInFocus=false" contenteditable>{{card.name}}</h1>
-				<button v-if="isNameInFocus" @click="updateCard(card)">Save</button>
+				<h1 id="name" contenteditable>{{card.name}}</h1>
+				<button @click="updateCardName">Save</button>
 			</div>
 			<div>
 				<!-- members -->
@@ -17,13 +17,8 @@
 			</div>
 			<div>
 				<h2>Description:</h2>
-				<textarea
-					v-model="card.Description"
-					@focus="isDescInFocus=true"
-					@blur="isDescInFocus=false"
-					placeholder="Add a description..."
-				></textarea>
-				<button v-if="isDescInFocus" @click="updateCard(card)">Save</button>
+				<textarea v-model="card.Description" placeholder="Add a description..."></textarea>
+				<button @click="updateCard(card)">Save</button>
 			</div>
 			<div>
 				<button @click="editModal='card-label-edit'">Labels</button>
@@ -33,6 +28,8 @@
 			</card-edit-modal>
 		</div>
 	</section>
+	<!-- @focus="isDescInFocus=true"
+	@blur="isDescInFocus=false"-->
 </template>
 
 <script>
@@ -51,8 +48,12 @@ export default {
 	},
 	computed: {},
 	methods: {
+		updateCardName() {
+			this.card.name = document.querySelector('#name').innerText;
+			this.updateCard(this.card);
+		},
 		updateCard(card) {
-			this.$store.dispatch({ type: 'saveBoard' }, { board: boardService.removeLabels(this.board) });
+			this.$store.dispatch({ type: 'saveBoard', board: boardService.removeLabels(this.board) });
 		},
 		closeModal() {
 			this.editModal = '';
@@ -63,11 +64,12 @@ export default {
 		let cardId = this.$route.params.cardId;
 		let boardId = this.$route.params.boardId;
 		if (!boardId || !cardId) this.$router.push('/');
-		await this.$store.dispatch({ type: 'loadBoards' }, { id: boardId });
-		// await this.$store.dispatch({ type: 'loadBoard' }, { id: boardId });
-		// this.board = this.$store.getters.board;
+		// await this.$store.dispatch({ type: 'loadBoards' }, { id: boardId });
+		await this.$store.dispatch({ type: 'getCurrBoard', id: boardId });
 		this.board = boardService.addLabels(JSON.parse(
-			JSON.stringify(this.$store.getters.boards[0])));
+			JSON.stringify(this.$store.getters.board)));
+		// this.board = boardService.addLabels(JSON.parse(
+		// 	JSON.stringify(this.$store.getters.boards[0])));
 		if (!this.board) this.$router.push('/');
 		this.card = boardService.getCardById(this.board, cardId);
 		if (!this.card) this.$router.push('/');
