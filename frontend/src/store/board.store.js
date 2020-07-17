@@ -91,11 +91,11 @@ export const boardStore = {
         saveBoard({ commit }, { board }) {
             console.log(board)
             const type = (board._id) ? 'updateBoard' : 'addBoard'
-            // console.log(type)
             return boardService.save(board)
                 .then((savedBoard) => {
                     console.log('savedBoard, store', savedBoard)
                     commit({ type, board: savedBoard })
+                    return savedBoard
                 })
         },
         removeBoard({ commit }, { id }) {

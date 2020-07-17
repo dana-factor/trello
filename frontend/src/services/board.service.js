@@ -35,14 +35,14 @@ function save(board) {
 }
 function _addLabels(board) {
 	//Should be in server
-	board.topics.forEach((topic) => {
-		topic.cards.forEach((card) => {
-			let labels = board.labels;
-			labels = labels.filter((label) => card.labels.includes(label.title));
-			card.labels = labels;
-		});
-	});
-	return board;
+	// board.topics.forEach((topic) => {
+	// 	topic.cards.forEach((card) => {
+	// 		let labels = board.labels;
+	// 		labels = labels.filter((label) => card.labels.includes(label.title));
+	// 		card.labels = labels;
+	// 	});
+	// });
+	// return board;
 }
 function _removeLabels(board) {
 	//Should be in server
@@ -217,13 +217,15 @@ function _update(board) {
 
 function _add(board) {
 	// console.log('_add', board)
-	board['_id'] = _makeId();
+	
 	console.log('_add-id', board)
 
-	return httpService.post(`board/${board._id}`, board)
-	.then((res) => {
-		console.log('res', res)
-		res.data});
+	return httpService.post(`board/`, board)
+	.then((board) => {
+		console.log('res', board)
+		board['_id'] = _makeId();
+		console.log('res-id', board)
+		return board});
 }
 function getCardById(board, id) {
 	board.topics.forEach((topic) => {

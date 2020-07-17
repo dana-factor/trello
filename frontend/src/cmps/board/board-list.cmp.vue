@@ -46,8 +46,9 @@ export default {
 
 <style scoped>
 li {
-	width: 400px;
-	height: 300px;
+	width: 350px;
+	height: 250px;
 	list-style: none;
+    border: 1px solid black;
 }
 </style>
