@@ -22,12 +22,14 @@
                 <input class="topicName" v-if="topicNameInputOpen" v-model="topicName"/><button @click="addTopic" v-if="topicNameInputOpen">Add List</button>
             </div>
 		</div>
+        <router-view/>
 	</section>
 </template>
 
 <script>
 import { boardService } from "../services/board.service.js";
 import boardTopic from "../cmps/board/board-topic.cmp.vue";
+import cardDetails from '../views/card-details.cmp.vue'
 
 export default {
     props:[],
@@ -106,7 +108,8 @@ export default {
     mounted() {},
 	watch: {},
 	components: {
-		boardTopic
+        boardTopic,
+        cardDetails
 	},
 };
 </script>
