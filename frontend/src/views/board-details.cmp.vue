@@ -42,10 +42,12 @@ export default {
             this.editMenuOpen = !this.editMenuOpen
         },
         updateTopicName(topicName, topicId){
-            this.$store.commit({type: 'updateTopicName', topicName: topicName, topicId: topicId})
-        },
-        removeTopic(topicId){
-            this.$store.commit({type: 'removeTopic', topicId: topicId})
+            let currTopic = this.board.topics.find(topic => topic.id === topicId)
+            currTopic.name = topicName
+            this.$store.dispatch({type: 'saveBoard', board: this.board})
+            .then(()=>{
+                this.loadBoard()
+            })
         },
         addCard(topicId){
             const starterCard = boardService.getStarterCard()
@@ -55,15 +57,15 @@ export default {
             .then(()=>{
                 this.loadBoard()
             })
-            
         },
-        	updateName(ev) {
-			console.log(ev.target.value);
-			var boardClone = JSON.parse(JSON.stringify(this.board));
-			boardClone.name = ev.target.value;
-			this.$store.commit({ type: "updateBoardName", boardName });
-			
-		},
+        removeTopic(topicId){
+            const idx = this.board.topics.findIndex(topic => topic.id === topicId)
+            this.board.topics.splice(idx, 1)
+            this.$store.dispatch({type: 'saveBoard', board: this.board})
+            .then(()=>{
+                this.loadBoard()
+            })
+        },
 		saveBoard() {
 			if (!this.board.name) return;
 			this.$store
@@ -77,7 +79,7 @@ export default {
 		loadBoard() {
 			const boardId = this.$route.params.boardId;
 			this.$store
-				.dispatch({ type: "getCurrBoard", id: boardId })
+				.dispatch({ type: "loadCurrBoard", id: boardId })
 				.then(board => {
 					this.board = JSON.parse(JSON.stringify(board));
 				});
