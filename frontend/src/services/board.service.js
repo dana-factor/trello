@@ -216,16 +216,10 @@ function _update(board) {
 }
 
 function _add(board) {
-	// console.log('_add', board)
-	
-	console.log('_add-id', board)
+
 
 	return httpService.post(`board/`, board)
-	.then((board) => {
-		console.log('res', board)
-		board['_id'] = _makeId();
-		console.log('res-id', board)
-		return board});
+	.then((board) => board);
 }
 function getCardById(board, id) {
 	board.topics.forEach((topic) => {

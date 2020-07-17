@@ -30,7 +30,6 @@ export default {
 			var board = boardService.getStarterBoard();
 			this.$store.dispatch({ type: "saveBoard", board })
                 .then((res) => {
-                    console.log(res)
 					this.$router.push('/board/' + res._id)
 				})
 				.catch(err => {
