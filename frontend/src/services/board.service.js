@@ -8,6 +8,7 @@ export const boardService = {
 	save,
 	getStarterBoard,
 	getCardById,
+	getStarterCard,
 	addLabels,
 	removeLabels,
 };
@@ -204,7 +205,7 @@ function getStarterBoard() {
 function getStarterCard() {
 	return {
 		id: _makeId(),
-		name: '',
+		name: 'new card',
 		description: '',
 		createdAt: Date.now(), //will come from server in the near future!
 		members: [],
