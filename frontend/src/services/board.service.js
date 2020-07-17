@@ -212,7 +212,7 @@ function getStarterCard() {
 	};
 }
 function _update(board) {
-	return httpService.put(`board/${id}`, board).then((res) => res.data);
+	return httpService.put(`board/${board._id}`, board).then((res) => res);
 }
 
 function _add(board) {
