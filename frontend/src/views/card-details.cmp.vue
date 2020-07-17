@@ -36,6 +36,7 @@
 				<button @click="editModal='card-checklist-edit'">Checklists</button>
 			</div>
 			<card-edit-modal v-if="editModal" @modalClose="closeModal">
+				<header>test</header>
 				<component
 					:is="editModal"
 					:card="card"
@@ -124,5 +125,17 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.card-details {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 80%;
+	max-width: 800px;
+	height: auto;
+	min-height: 600px;
+	z-index: 2;
+	background-color: lightblue;
+}
 </style>
