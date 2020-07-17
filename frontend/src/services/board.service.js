@@ -23,7 +23,6 @@ function query(filterBy) {
 }
 function getById(id) {
 	return httpService.get(`board/${id}`).then((res) => {
-		console.log('res service', res)
 		return res});
 }
 

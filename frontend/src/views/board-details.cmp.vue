@@ -30,8 +30,7 @@ export default {
     },
     created(){
          const boardId = this.$route.params.boardId;
-        //  this.$store.setCurrBoard(boardId);
-         boardService.getById(boardId)
+         this.$store.dispatch({type: 'getCurrBoard', id: boardId})
             .then(board => {
                 this.board = board
             })
