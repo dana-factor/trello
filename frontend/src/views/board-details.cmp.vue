@@ -42,10 +42,12 @@ export default {
             this.editMenuOpen = !this.editMenuOpen
         },
         updateTopicName(topicName, topicId){
-            this.$store.commit({type: 'updateTopicName', topicName: topicName, topicId: topicId})
-        },
-        removeTopic(topicId){
-            this.$store.commit({type: 'removeTopic', topicId: topicId})
+            let currTopic = this.board.topics.find(topic => topic.id === topicId)
+            currTopic.name = topicName
+            this.$store.dispatch({type: 'saveBoard', board: this.board})
+            .then(()=>{
+                this.loadBoard()
+            })
         },
         addCard(topicId){
             const starterCard = boardService.getStarterCard()
@@ -55,7 +57,14 @@ export default {
             .then(()=>{
                 this.loadBoard()
             })
-            
+        },
+        removeTopic(topicId){
+            const idx = this.board.topics.findIndex(topic => topic.id === topicId)
+            this.board.topics.splice(idx, 1)
+            this.$store.dispatch({type: 'saveBoard', board: this.board})
+            .then(()=>{
+                this.loadBoard()
+            })
         },
         // 	updateName(ev) {
 		// 	console.log(ev.target.value);

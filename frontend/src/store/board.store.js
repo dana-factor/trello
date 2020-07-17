@@ -58,21 +58,6 @@ export const boardStore = {
             const idx = state.boards.findIndex(t => t._id === board._id)
             state.boards.splice(idx, 1, board)
         },
-        removeTopic(state, { id }) {
-            const idx = state.currBoard.topics.findIndex(topic => topic.id === id)
-            state.boards.splice(idx, 1)
-        },
-        addTopic(state, { topic }) {
-            state.currBoard.topics.push(topic)
-        },
-        updateTopic(state, { topic }) {
-            const idx = state.currBoard.topics.findIndex(t => t.id === topic.id)
-            state.currBoard.topics.splice(idx, 1, topic)
-        },
-        updateTopicName(state, { topicName, topicId }) {
-            let currTopic = state.currBoard.topics.find(topic => topic.id === topicId)
-            currTopic.name = topicName
-        },
     },
     actions: {
         loadBoards({ commit, state }) {
