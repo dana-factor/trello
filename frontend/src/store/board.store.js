@@ -40,10 +40,10 @@ export const boardStore = {
         setBoards(state, { boards }) {
             state.boards = boards;
         },
-        // setCurrBoard(state { id }) {
-        //     const board = boardService.getById(id);
-        //     state.currBoard = board;
-        // },
+      
+        setCurrBoard(state, { board}) {
+            state.currBoard = board;
+        },
         // updateFilterBy(state, {filter}) {
         //     state.filterBy = filter;
         // },
@@ -53,28 +53,31 @@ export const boardStore = {
         },
         addBoard(state, { board }) {
             state.boards.push(board)
-            // this.$router.push('/board/:board._id')
         },
         updateBoard(state, { board }) {
+            console.log('update board store', board)
             const idx = state.boards.findIndex(t => t._id === board._id)
             state.boards.splice(idx, 1, board)
         },
-        removeTopic(state, {id}){
+        // updateBoardName(state, {boardName}) {
+        //     state.currBoard.name = boardName;
+        // },
+        removeTopic(state, { id }) {
             const idx = state.currBoard.topics.findIndex(topic => topic.id === id)
             state.boards.splice(idx, 1)
         },
-        addTopic(state, {topic}) {
+        addTopic(state, { topic }) {
             state.currBoard.topics.push(topic)
         },
-        updateTopic(state, {topic}) {
+        updateTopic(state, { topic }) {
             const idx = state.currBoard.topics.findIndex(t => t.id === topic.id)
             state.currBoard.topics.splice(idx, 1, topic)
         },
-        updateTopicName(state, {topicName, topicId}) {
+        updateTopicName(state, { topicName, topicId }) {
             let currTopic = state.currBoard.topics.find(topic => topic.id === topicId)
             currTopic.name = topicName
         },
-        addCard(state, {topicId}){
+        addCard(state, { topicId }) {
             const starterCard = boardService.getStarterCard()
             let currTopic = state.currBoard.topics.find(topic => topic.id = topicId)
             currTopic.push(starterCard)
@@ -89,19 +92,26 @@ export const boardStore = {
                 })
         },
         saveBoard({ commit }, { board }) {
-            console.log(board)
+            console.log(board._id)
             const type = (board._id) ? 'updateBoard' : 'addBoard'
-            // console.log(type)
             return boardService.save(board)
                 .then((savedBoard) => {
                     console.log('savedBoard, store', savedBoard)
                     commit({ type, board: savedBoard })
+                    return savedBoard
                 })
         },
         removeBoard({ commit }, { id }) {
             return boardService.remove(id)
                 .then(() => {
                     commit({ type: 'removeBoard', id })
+                })
+        },
+        getCurrBoard({commit}, { id }) {
+            return boardService.getById(id)
+                .then(board => {
+                    commit({type: 'setCurrBoard', board})
+                    return board
                 })
         },
     },

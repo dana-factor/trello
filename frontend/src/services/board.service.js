@@ -24,10 +24,7 @@ function query(filterBy) {
 	);
 }
 function getById(id) {
-	return httpService.get(`board/${id}`).then((res) => {
-		console.log('res service', res);
-		return res;
-	});
+	return httpService.get(`board/${id}`).then((res) => res);
 }
 
 function remove(id) {
@@ -62,7 +59,7 @@ function removeLabels(board) {
 function getStarterBoard() {
 	return {
 		// _id: _makeId(),
-		name: '',
+		name: 'starter board',
 		members: [],
 		labels: [
 			{
@@ -216,18 +213,12 @@ function getStarterCard() {
 	};
 }
 function _update(board) {
-	return httpService.put(`board/${id}`, board).then((res) => res.data);
+	return httpService.put(`board/${board._id}`, board).then((res) => res);
 }
 
 function _add(board) {
-	// console.log('_add', board)
-	board['_id'] = _makeId();
-	console.log('_add-id', board);
-
-	return httpService.post(`board/${board._id}`, board).then((res) => {
-		console.log('res', res);
-		res.data;
-	});
+	return httpService.post(`board/`, board)
+	.then((board) => board);
 }
 function getCardById(board, id) {
 	for(const topic of board.topics) {

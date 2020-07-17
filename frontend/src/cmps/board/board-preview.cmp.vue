@@ -1,8 +1,9 @@
 <template>
     <section class="board-preview">
+        <!-- contenteditable="true" @change="saveBoardName" -->
+        <h4 > {{board.name}}</h4> 
         <img class="board-img" v-if="board.style.imgUrl" :src="board.style.imgUrl" />
         <div class="board-bgc" v-if="board.style.backgroundColor" :style="{backgroundColor: board.style.backgroundColor}"></div>
-        <h4 @change="saveBoardName"> {{board.name}}</h4> 
     </section>
 </template>
 
@@ -18,11 +19,11 @@ export default {
 
     },
     methods: {
-        saveBoardName(ev) {
-            var boardClone = JSON.parse(JSON.stringify(this.board))
-            boardClone.name = ev.target.innerText;
-            this.$emit('updateBoard', boardClone);
-        }
+        // saveBoardName(ev) {
+        //     var boardClone = JSON.parse(JSON.stringify(this.board))
+        //     boardClone.name = ev.target.innerText;
+        //     this.$emit('updateBoard', boardClone);
+        // }
 
     },
     created(){
@@ -48,7 +49,9 @@ export default {
     height: 200px;
 }
 
-
+h4 {
+    margin: 0;
+}
 
 
 </style>
