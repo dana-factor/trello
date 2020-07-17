@@ -1,11 +1,14 @@
 <template>
     <section class="board-edit-background">
-    
+        <color-picker @changeBgc="changeBgc" />
     </section>
 </template>
 
 <script>
+import colorPicker from '../color-picker.cmp.vue';
+
 export default {
+    name: 'board-edit-background',
     props:[],
     data(){
         return{
@@ -16,6 +19,9 @@ export default {
 
     },
     methods: {
+        changeBgc(color) {
+            this.$emit('changeBgc', color)
+        }
 
     },
     created(){
@@ -28,7 +34,7 @@ export default {
 
     },
     components: {
-
+        colorPicker
     }
 
 }
