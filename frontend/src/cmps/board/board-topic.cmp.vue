@@ -1,6 +1,6 @@
 <template>
     <section class="board-topic">
-        <h2 contenteditable="true" @keyup.enter="updateTopicName">{{topicName}}</h2>
+        <h2 contenteditable="true" @keydown.enter.prevent="updateTopicName">{{topicName}}</h2>
         <!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
         <button @click="toggleEditMenu">...</button>
         <button v-if="editMenuOpen" @click="removeTopic(topic.id)">X</button>
@@ -51,6 +51,8 @@ export default {
     },
     created(){
         this.topicName = this.topic.name
+        console.log(this.topicName);
+        
     },
     mounted(){
 
