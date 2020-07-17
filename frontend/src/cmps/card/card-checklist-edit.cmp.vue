@@ -1,39 +1,45 @@
 <template>
-    <section class="card-checklist-edit">
-    
-    </section>
+	<section class="card-checklist-edit">
+		<input v-model="checklistTitle" placeholder="Enter checklist title..." />
+		<button @click="addChecklist"></button>
+	</section>
 </template>
 
 <script>
 export default {
-    props:[],
-    data(){
-        return{
+	props: ['card'],
+	data() {
+		return {
+			cardToUpdate: JSON.parse(JSON.stringify(this.card)),
+			checklistTitle: ''
+		}
+	},
+	computed: {
 
-        }
-    },
-    computed: {
+	},
+	methods: {
+		// updateCard() {
+		// 	this.$emit('cardUpdate', this.cardToUpdate);
+		// },
+		addChecklist() {
+			this.$emit('newChecklist', this.checklistTitle);
+		}
+	},
+	created() {
 
-    },
-    methods: {
+	},
+	mounted() {
 
-    },
-    created(){
+	},
+	watch: {
 
-    },
-    mounted(){
+	},
+	components: {
 
-    },
-    watch: {
-
-    },
-    components: {
-
-    }
+	}
 
 }
 </script>
 
 <style>
-
 </style>

@@ -223,6 +223,7 @@ function getStarterCard() {
 		checklists: [],
 	};
 }
+// function addCheckListToBoard
 function _update(board) {
 	return httpService.put(`board/${board._id}`, board).then((res) => res);
 }
