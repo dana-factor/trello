@@ -40,7 +40,6 @@ export const boardStore = {
         setBoards(state, { boards }) {
             state.boards = boards;
         },
-      
         setCurrBoard(state, { board}) {
             state.currBoard = board;
         },
@@ -59,9 +58,6 @@ export const boardStore = {
             const idx = state.boards.findIndex(t => t._id === board._id)
             state.boards.splice(idx, 1, board)
         },
-        // updateBoardName(state, {boardName}) {
-        //     state.currBoard.name = boardName;
-        // },
         removeTopic(state, { id }) {
             const idx = state.currBoard.topics.findIndex(topic => topic.id === id)
             state.boards.splice(idx, 1)

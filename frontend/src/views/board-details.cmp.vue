@@ -44,13 +44,6 @@ export default {
 		toggleEditMenu() {
 			this.editMenuOpen = !this.editMenuOpen;
 		},
-		updateName(ev) {
-			console.log(ev.target.value);
-			var boardClone = JSON.parse(JSON.stringify(this.board));
-			boardClone.name = ev.target.value;
-			this.$store.commit({ type: "updateBoardName", boardName });
-			
-		},
 		saveBoard() {
 			if (!this.board.name) return;
 			this.$store
@@ -73,12 +66,6 @@ export default {
 	},
 	created() {
         this.loadBoard();
-		// const boardId = this.$route.params.boardId;
-		// this.$store
-		// 	.dispatch({ type: "getCurrBoard", id: boardId })
-		// 	.then(board => {
-		// 		this.board = JSON.parse(JSON.stringify(board));
-		// 	});
 	},
 	mounted() {},
 	watch: {},
