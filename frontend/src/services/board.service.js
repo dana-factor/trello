@@ -8,6 +8,8 @@ export const boardService = {
 	save,
 	getStarterBoard,
 	getCardById,
+	addLabels,
+	removeLabels,
 };
 
 function query(filterBy) {
@@ -16,15 +18,16 @@ function query(filterBy) {
 			.get(`board`)
 			// return axios.get(`${_getURL()}?name=${filterBy.searchStr}`)
 			.then((res) => {
-				res.forEach((board) => _addLabels(board));
+				// res.forEach((board) => _addLabels(board));
 				return res;
 			})
 	);
 }
 function getById(id) {
 	return httpService.get(`board/${id}`).then((res) => {
-		console.log('res service', res)
-		return res});
+		console.log('res service', res);
+		return res;
+	});
 }
 
 function remove(id) {
@@ -34,18 +37,18 @@ function remove(id) {
 function save(board) {
 	return board._id ? _update(board) : _add(board);
 }
-function _addLabels(board) {
+function addLabels(board) {
 	//Should be in server
 	board.topics.forEach((topic) => {
 		topic.cards.forEach((card) => {
 			let labels = board.labels;
-			labels = labels.filter((label) => card.labels.includes(label.title));
+			labels = labels.filter((label) => card.labels.includes(label.color));
 			card.labels = labels;
 		});
 	});
 	return board;
 }
-function _removeLabels(board) {
+function removeLabels(board) {
 	//Should be in server
 	board.topics.forEach((topic) => {
 		topic.cards.forEach((card) => {
@@ -61,7 +64,7 @@ function getStarterBoard() {
 		// _id: _makeId(),
 		name: '',
 		members: [],
-		lables: [
+		labels: [
 			{
 				color: 'green',
 				title: '',
@@ -89,7 +92,7 @@ function getStarterBoard() {
 						description: 'wow',
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
-						lables: [],
+						labels: [],
 						backgroundColor: 'lightcoral',
 						attachments: [],
 						checklists: [],
@@ -100,7 +103,7 @@ function getStarterBoard() {
 						description: 'wow',
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
-						lables: [],
+						labels: [],
 						backgroundColor: 'lightgrey',
 						attachments: [],
 						checklists: [],
@@ -111,7 +114,7 @@ function getStarterBoard() {
 						description: 'wow',
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
-						lables: [],
+						labels: [],
 						backgroundColor: 'lightgrey',
 						attachments: [],
 						checklists: [],
@@ -128,7 +131,7 @@ function getStarterBoard() {
 						description: 'wow',
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
-						lables: [],
+						labels: [],
 						backgroundColor: 'lightcoral',
 						attachments: [],
 						checklists: [],
@@ -139,7 +142,7 @@ function getStarterBoard() {
 						description: 'wow',
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
-						lables: [],
+						labels: [],
 						backgroundColor: 'lightgrey',
 						attachments: [],
 						checklists: [],
@@ -150,7 +153,7 @@ function getStarterBoard() {
 						description: 'wow',
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
-						lables: [],
+						labels: [],
 						backgroundColor: 'lightgrey',
 						attachments: [],
 						checklists: [],
@@ -167,7 +170,7 @@ function getStarterBoard() {
 						description: 'wow',
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
-						lables: [],
+						labels: [],
 						backgroundColor: 'lightcoral',
 						attachments: [],
 						checklists: [],
@@ -178,7 +181,7 @@ function getStarterBoard() {
 						description: 'wow',
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
-						lables: [],
+						labels: [],
 						backgroundColor: 'lightgrey',
 						attachments: [],
 						checklists: [],
@@ -189,7 +192,7 @@ function getStarterBoard() {
 						description: 'wow',
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
-						lables: [],
+						labels: [],
 						backgroundColor: 'lightgrey',
 						attachments: [],
 						checklists: [],
@@ -206,7 +209,7 @@ function getStarterCard() {
 		description: '',
 		createdAt: Date.now(), //will come from server in the near future!
 		members: [],
-		lables: [],
+		labels: [],
 		backgroundColor: 'lightgrey',
 		attachments: [],
 		checklists: [],
@@ -219,17 +222,20 @@ function _update(board) {
 function _add(board) {
 	// console.log('_add', board)
 	board['_id'] = _makeId();
-	console.log('_add-id', board)
+	console.log('_add-id', board);
 
-	return httpService.post(`board/${board._id}`, board)
-	.then((res) => {
-		console.log('res', res)
-		res.data});
+	return httpService.post(`board/${board._id}`, board).then((res) => {
+		console.log('res', res);
+		res.data;
+	});
 }
 function getCardById(board, id) {
-	board.topics.forEach((topic) => {
-		return topic.cards.find((card) => card.id === id);
-	});
+	for(const topic of board.topics) {
+		const card = topic.cards.find((card) => {
+			return card.id === id;
+		});
+		if (card) return card;
+	};
 }
 function _makeId(length = 5) {
 	var txt = '';

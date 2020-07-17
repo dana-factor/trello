@@ -19,7 +19,7 @@ Vue.use(VueRouter)
     component: boardDetails
   },
   {
-    path: '/board/:boardId/card/:cardId?',
+    path: '/board/:boardId/card/:cardId',
     name: 'Card Details',
     component: cardDetails
   },

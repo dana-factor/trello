@@ -2,8 +2,8 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Homepage</router-link> |
-      <router-link to="/board/:boardId">Board Details</router-link> |
-      <router-link to="/board/:boardId/card/:cardId?">Card Details</router-link> |
+      <router-link to="/board/a101">Board Details</router-link> |
+      <router-link to="/board/a101/card/asd">Card Details</router-link> |
       <router-link to="/login">Login</router-link> |
     </div>
     <router-view/>
