@@ -83,7 +83,7 @@ export const boardStore = {
                     commit({ type: 'removeBoard', id })
                 })
         },
-        getCurrBoard({commit}, { id }) {
+        loadCurrBoard({commit}, { id }) {
             console.log(id)
             return boardService.getById(id)
                 .then(board => {
