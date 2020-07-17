@@ -1,17 +1,17 @@
 <template>
 	<section class="card-checklist-edit">
-		<input v-model="checklistTitle" placeholder="Enter checklist title..." />
-		<button @click="addChecklist"></button>
+		<input v-model="checklistName" placeholder="Enter checklist title..." />
+		<button @click="addChecklist">Add</button>
 	</section>
 </template>
 
 <script>
 export default {
-	props: ['card'],
+	// props: ['card'],
 	data() {
 		return {
-			cardToUpdate: JSON.parse(JSON.stringify(this.card)),
-			checklistTitle: ''
+			// cardToUpdate: JSON.parse(JSON.stringify(this.card)),
+			checklistName: ''
 		}
 	},
 	computed: {
@@ -22,22 +22,9 @@ export default {
 		// 	this.$emit('cardUpdate', this.cardToUpdate);
 		// },
 		addChecklist() {
-			this.$emit('newChecklist', this.checklistTitle);
+			this.$emit('newChecklist', this.checklistName);
 		}
 	},
-	created() {
-
-	},
-	mounted() {
-
-	},
-	watch: {
-
-	},
-	components: {
-
-	}
-
 }
 </script>
 
