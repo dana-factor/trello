@@ -16,15 +16,30 @@
 				</ul>
 			</div>
 			<div>
-				<h2>Description:</h2>
+				<h2>Description</h2>
 				<textarea v-model="card.Description" placeholder="Add a description..."></textarea>
 				<button @click="updateCard(card)">Save</button>
+			</div>
+			<div>
+				<h2>Checklist</h2>
+				<ul>
+					<li v-for="task in card.checklists[0].tasks" :key="task.id">
+						<input type="checkbox" v-model="task.isDone" @input="updateCard(card)" />
+						{{task.text}}
+					</li>
+				</ul>
 			</div>
 			<div>
 				<button @click="editModal='card-label-edit'">Labels</button>
 			</div>
 			<card-edit-modal v-if="editModal" @modalClose="closeModal">
-				<component :is="editModal" :card="card" :boardLabels="board.labels" @cardUpdate="updateCard"></component>
+				<component
+					:is="editModal"
+					:card="card"
+					:boardLabels="board.labels"
+					@cardUpdate="updateCard"
+					@boardLabelsUpdate="updateBoardLabels"
+				></component>
 			</card-edit-modal>
 		</div>
 	</section>
@@ -49,14 +64,6 @@ export default {
 	},
 	computed: {},
 	methods: {
-		async init() {
-			//todo change push to something nicer
-			this.cardId = this.$route.params.cardId;
-			let boardId = this.$route.params.boardId;
-			if (!boardId || !this.cardId) this.$router.push('/');
-			await this.$store.dispatch({ type: 'loadCurrBoard', id: boardId });
-			this.setBoardAndCard(this.$store.getters.board)
-		},
 		setBoardAndCard(board) {
 			this.board = boardService.addLabels(JSON.parse(
 				JSON.stringify(board)));
@@ -68,8 +75,15 @@ export default {
 			this.card.name = document.querySelector('#name').innerText;
 			this.updateCard(this.card);
 		},
-		async updateCard(card) {
+		updateCard(card) {
 			boardService.saveCardToBoard(this.board, card);
+			this.dispatchBoardSave();
+		},
+		updateBoardLabels(boardLabels) {
+			this.board.labels = boardLabels;
+			this.dispatchBoardSave();
+		},
+		dispatchBoardSave() {
 			this.$store.dispatch({ type: 'saveBoard', board: boardService.removeLabels(this.board) })
 				.then(savedBoard => this.setBoardAndCard(savedBoard))
 		},
@@ -77,8 +91,13 @@ export default {
 			this.editModal = '';
 		}
 	},
-	created() {
-		this.init();
+	async created() {
+		//todo change push to something nicer
+		this.cardId = this.$route.params.cardId;
+		let boardId = this.$route.params.boardId;
+		if (!boardId || !this.cardId) this.$router.push('/');
+		await this.$store.dispatch({ type: 'loadCurrBoard', id: boardId });
+		this.setBoardAndCard(this.$store.getters.board)
 	},
 	components: { cardEditModal, cardLabelEdit }
 };

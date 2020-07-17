@@ -54,7 +54,7 @@ export const boardStore = {
             state.boards.push(board)
         },
         updateBoard(state, { board }) {
-            console.log('update board store', board)
+            // console.log('update board store', board)
             const idx = state.boards.findIndex(t => t._id === board._id)
             state.boards.splice(idx, 1, board)
         },
@@ -68,11 +68,11 @@ export const boardStore = {
                 })
         },
         saveBoard({ commit }, { board }) {
-            console.log(board._id)
+            // console.log(board._id)
             const type = (board._id) ? 'updateBoard' : 'addBoard'
             return boardService.save(board)
                 .then((savedBoard) => {
-                    console.log('savedBoard, store', savedBoard)
+                    // console.log('savedBoard, store', savedBoard)
                     commit({ type, board: savedBoard })
                     return savedBoard
                 })
@@ -84,7 +84,7 @@ export const boardStore = {
                 })
         },
         loadCurrBoard({commit}, { id }) {
-            console.log(id)
+            // console.log(id)
             return boardService.getById(id)
                 .then(board => {
                     commit({type: 'setCurrBoard', board})

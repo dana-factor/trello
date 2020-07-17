@@ -61,9 +61,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.board-topic{
-    border: black 1px solid;
-    width: 200px
-}
+
 
 </style>

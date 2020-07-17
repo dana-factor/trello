@@ -9,7 +9,7 @@
 			<p>Change Background</p>
 		</div>
 		<ul v-if="board">
-			<li v-for="topic in board.topics" :key="topic.id">
+			<li class="topic-wrapper" v-for="topic in board.topics" :key="topic.id">
 				<board-topic
 					:topic="topic"
 					@updateTopicName="updateTopicName"
@@ -17,7 +17,7 @@
 					@addCard="addCard"
 				/>
 			</li>
-            <li>
+            <li class="topic-wrapper">
                 <!-- <h2 @click="addTopic">+Add new list</h2> -->
                 <h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add new list</h2>
                 <input class="topicName" v-if="topicNameInputOpen" v-model="topicName"/><button @click="addTopic" v-if="topicNameInputOpen">Add List</button>

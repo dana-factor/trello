@@ -6,7 +6,7 @@
 			@addBoard="addBoard"
 			@removeBoard="removeBoard"
 			:boards="boards"
-		/>
+		/> 
 	</section>
 </template>
 

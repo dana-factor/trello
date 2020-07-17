@@ -92,7 +92,25 @@ const scene = {
                         style: {backgroundColor: 'salmon'}
                     },
                     data: txt
-                }
+                },
+                {
+                    type: 'draggable',
+                    id: '01',
+                    props: {
+                        className: 'card',
+                        style: {backgroundColor: 'lightblue'}
+                    },
+                    data: txt
+                },
+                {
+                    type: 'draggable',
+                    id: '02',
+                    props: {
+                        className: 'card',
+                        style: {backgroundColor: 'pink'}
+                    },
+                    data: txt
+                },
             ]
         },
         {
@@ -112,7 +130,16 @@ const scene = {
                         style: {backgroundColor: 'lightgreen'}
                     },
                     data: txt
-                }
+                },
+                {
+                    type: 'draggable',
+                    id: '12',
+                    props: {
+                        className: 'card',
+                        style: {backgroundColor: 'salmon'}
+                    },
+                    data: txt
+                },
             ]
         },
         {
@@ -132,7 +159,25 @@ const scene = {
                         style: {backgroundColor: 'yellow'}
                     },
                     data: txt
-                }
+                },
+                {
+                    type: 'draggable',
+                    id: '23',
+                    props: {
+                        className: 'card',
+                        style: {backgroundColor: 'lightblue'}
+                    },
+                    data: txt
+                },
+                {
+                    type: 'draggable',
+                    id: '24',
+                    props: {
+                        className: 'card',
+                        style: {backgroundColor: 'pink'}
+                    },
+                    data: txt
+                },
             ]
         },
     ]
