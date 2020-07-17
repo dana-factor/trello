@@ -73,11 +73,6 @@ export const boardStore = {
             let currTopic = state.currBoard.topics.find(topic => topic.id === topicId)
             currTopic.name = topicName
         },
-        addCard(state, { topicId }) {
-            const starterCard = boardService.getStarterCard()
-            let currTopic = state.currBoard.topics.find(topic => topic.id = topicId)
-            currTopic.push(starterCard)
-        }
     },
     actions: {
         loadBoards({ commit, state }) {
@@ -104,6 +99,7 @@ export const boardStore = {
                 })
         },
         getCurrBoard({commit}, { id }) {
+            console.log(id)
             return boardService.getById(id)
                 .then(board => {
                     commit({type: 'setCurrBoard', board})

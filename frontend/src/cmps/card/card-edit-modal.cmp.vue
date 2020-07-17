@@ -1,6 +1,6 @@
 <template>
 	<section class="card-edit-modal">
-		<button onclick="close">X</button>
+		<button @click="close">X</button>
 		<slot></slot>
 	</section>
 	<!-- <modal v-if="showModal" @close="showModal = false"> -->
