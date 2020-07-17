@@ -1,11 +1,15 @@
 .board-details{
     height: 100%;
+    background-color: lightskyblue;
     .topic-wrapper{
         width: 272px;
         margin: 0 4px;
         height: 100%;
         display: inline-block;
-        // vertical-align: top;
-        // white-space: nowrap;
+    }
+    .add-topic{
+        background-color: hsla(0,0%,100%,.24);
+        padding: 6px 8px;
+        color: white;
     }
 }

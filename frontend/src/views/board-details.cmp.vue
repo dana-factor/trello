@@ -17,9 +17,8 @@
 					@addCard="addCard"
 				/>
 			</div>
-            <div class="topic-wrapper">
-                <!-- <h2 @click="addTopic">+Add new list</h2> -->
-                <h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add new list</h2>
+            <div class="topic-wrapper add-topic">
+                <h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add another list</h2>
                 <input class="topicName" v-if="topicNameInputOpen" v-model="topicName"/><button @click="addTopic" v-if="topicNameInputOpen">Add List</button>
             </div>
 		</div>

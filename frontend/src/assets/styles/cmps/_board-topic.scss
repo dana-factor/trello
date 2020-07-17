@@ -1,6 +1,7 @@
 .board-topic{
     background-color: #ebecf0;
     border-radius: 3px;
+    position: relative;
     display: flex;
     flex-direction: column;
     max-height: 100%;
@@ -11,9 +12,41 @@
     .topic-header{
         display: flex;
         justify-content: space-between;
+        height: 40px;
         h2{
             font-size: rem(20px);
         }
-        // margin: ;
+        .topic-menu{
+            position: absolute;
+            top: 32px;
+            right: 8px;
+            z-index: 2;
+            background-color: #fff;
+            h3{
+                border-bottom: 1px solid rgba(9,30,66,.13);
+                text-align: center;
+                padding: 6px 12px;
+                color: #5e6c84;
+                margin: 0 12px;
+            }
+            .close-menu{
+                position: absolute;
+                top: 3px;
+                right: 8px;
+                z-index: 3;
+                cursor: pointer;
+            }
+            p{
+                display: block;
+                padding: 6px 12px;
+                color: #172b4d;
+            }
+        }
+    }
+    .topic-footer{
+        p{
+            width: 100%;
+            cursor: pointer;
+        }
     }
 }

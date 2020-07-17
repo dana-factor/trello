@@ -1,16 +1,22 @@
 <template>
     <section class="board-topic">
         <div class="topic-header">
-            <h2 contenteditable="true" @keydown.enter.prevent="updateTopicName">{{topicName}}</h2>
+            <h2 contenteditable="true" @input="updateTopicName">{{topicName}}</h2>
             <!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
             <button @click="toggleEditMenu">...</button>
-            <button v-if="editMenuOpen" @click="removeTopic(topic.id)">X</button>
+            <div class="topic-menu" v-if="editMenuOpen">
+                <h3>List Actions</h3>
+                <span @click="toggleEditMenu" class="closeMenu">X</span>
+                <p @click="removeTopic(topic.id); toggleEditMenu();">Delete list</p>
+                <p @click="addCard(); toggleEditMenu();">Add new card</p>
+                <p @click="toggleMinimize(); toggleEditMenu();"><span v-if="!minimize">Minimize</span><span v-if="minimize">Maximize</span></p>
+            </div>
         </div>
-        <div class="topic-main">
+        <div class="topic-main" v-if="!minimize">
             <card-preview v-for="card in topic.cards" :key="card.id" :card="card"></card-preview>
         </div>
-        <div class="topic-footer">
-            <button @click="addCard">+ Add another card</button>
+        <div class="topic-footer" v-if="!minimize">
+            <p @click="addCard">+ Add another card</p>
         </div>
     </section>
 </template>
@@ -27,7 +33,8 @@ export default {
     data(){
         return{
             editMenuOpen: false,
-            topicName: ''
+            topicName: '',
+            minimize: false
         }
     },
     computed: {
@@ -46,6 +53,9 @@ export default {
         },
         addCard(){
             this.$emit('addCard', this.topic.id)
+        },
+        toggleMinimize(){
+            this.minimize = !this.minimize
         }
     },
     created(){
