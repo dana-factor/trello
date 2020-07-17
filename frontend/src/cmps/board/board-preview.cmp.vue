@@ -19,12 +19,6 @@ export default {
 
     },
     methods: {
-        // saveBoardName(ev) {
-        //     var boardClone = JSON.parse(JSON.stringify(this.board))
-        //     boardClone.name = ev.target.innerText;
-        //     this.$emit('updateBoard', boardClone);
-        // }
-
     },
     created(){
         this.boardName = this.board.name;
@@ -44,10 +38,7 @@ export default {
 
 <style scoped> 
 
-.board-img, .board-bgc {
-    width: 300px;
-    height: 200px;
-}
+
 
 h4 {
     margin: 0;

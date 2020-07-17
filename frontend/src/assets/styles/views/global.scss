@@ -7,8 +7,13 @@
 @import '../basics/layout';
 @import '../basics/typography';
 
+// VIEWS
+
+// COMPONENTS
+@import '../cmps/board-list';
+
 body{
-    background-color: green;
+    // background-color: green;
 }
 a{
     color: red;
