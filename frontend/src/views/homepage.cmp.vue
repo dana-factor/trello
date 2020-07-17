@@ -24,14 +24,13 @@ export default {
 	computed: {},
 	methods: {
 		removeBoard(boardId) {
-			this.$store.commit({ type: "removeBoard", boardId });
+			this.$store.dispatch({ type: "removeBoard", id: boardId });
 		},
 		addBoard() {
 			var board = boardService.getStarterBoard();
 			this.$store.dispatch({ type: "saveBoard", board })
-				.then((res) => {
-                    console.log('board added', res)
-					// this.$router.push('/board/:boardId')
+                .then((res) => {
+					this.$router.push('/board/' + res._id)
 				})
 				.catch(err => {
 					console.log("ERROR, cannot add a board", err);
