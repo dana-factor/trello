@@ -1,6 +1,7 @@
 <template>
-	<section class="card-details-container">
-		<div class="card-details" v-if="card">
+	<section class="card-details-container" @click="$router.push('../')">
+		<div class="card-details" v-if="card" @click.stop>
+			<router-link to="../">X</router-link>
 			<div>
 				<h1
 					@keypress.enter.prevent="updateCardName"
@@ -25,7 +26,7 @@
 				<textarea v-model="card.description" placeholder="Add a description..."></textarea>
 				<button @click="updateCard(card)">Save</button>
 			</div>
-			<card-attachments :attachments="card.attachments"/>
+			<card-attachments :attachments="card.attachments" />
 			<div class="checklists" v-for="checklist in card.checklists" :key="checklist.id">
 				{{'✅' + checklist.name}}
 				<ul>
@@ -159,19 +160,34 @@ export default {
 
 <style lang="scss">
 .card-details-container {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 80%;
-	max-width: 800px;
-	height: auto;
-	min-height: 600px;
-	z-index: 2;
-	background-color: lightblue;
-	display: flex;
+	background-color: rgba(0, 0, 0, 0.61);
+	width: 100vw;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	overflow-y: auto;
+	padding: 61px 0;
+	// position: absolute;
+	// top: 50%;
+	// left: 50%;
+	// transform: translate(-50%, -50%);
+	// width: 80%;
+	// max-width: 800px;
+	// height: auto;
+	// min-height: 600px;
+	// z-index: 2;
+	// background-color: lightblue;
+	// display: flex;
 	.card-details {
-		flex-grow: 1;
+		// flex-grow: 1;
+		min-height: 200px;
+		position: relative;
+		z-index: 99;
+		margin: 0 auto;
+		padding: 5px 15px 20px;
+		width: 85%;
+		background-color: #f4f5f7;
 		.description {
 			display: flex;
 			flex-direction: column;
