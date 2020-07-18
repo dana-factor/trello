@@ -28,15 +28,18 @@
 				v-for="topic in board.topics"
 				:key="topic.id"
 			>
-				<!-- :class="scene.children.topic.props.className" -->
-				<div class="board-topic card-container">
+            <board-topic :topic="topic" :boardy="board"
+					@updateTopicName="updateTopicName"
+					@removeTopic="removeTopic"
+					@addCard="addCard"
+                    @saveBoardd="saveBoardd"/>
+				<!-- <div class="board-topic card-container">
 					<div class="topic-header">
-						<span class="column-drag-handle">&#x2630;</span>
+						<span class="column-drag-handle">✥</span>
 						<h2
 							contenteditable="true"
 							@input="updateTopicName"
 						>{{topicName}}</h2>
-						<!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
 						<button @click="toggleEditMenu">...</button>
 						<div
 							class="topic-menu"
@@ -68,10 +71,6 @@
 							:key="card.id"
 							:card="card"
 						>
-                        <!-- <Draggable>
-                        <card-preview v-for="card in topic.cards"
-							:key="card.id"
-							:card="card"/> -->
 							<div
 								onclick
 								class="card-preview card"
@@ -86,7 +85,7 @@
 					>
 						<p @click="addCard">+ Add another card</p>
 					</div>
-				</div>
+				</div> -->
 			</Draggable>
 		</Container>
 
@@ -115,7 +114,7 @@ import { boardService } from "../services/board.service.js";
 import { utilService } from "../services/util.service.js";
 import boardTopic from "../cmps/board/board-topic.cmp.vue";
 import cardDetails from "../views/card-details.cmp.vue";
-import cardPreview from "../cmps/card/card-preview.cmp";
+import cardPreview from "../cmps/card/card-preview.cmp.vue";
 import { Container, Draggable } from "vue-smooth-dnd";
 
 export default {
@@ -128,7 +127,6 @@ export default {
 			topicNameInputOpen: false,
 			topicName: "",
 			minimize: false,
-			// scene: null,
 			upperDropPlaceholderOptions: {
 				className: "cards-drop-preview",
 				animationDuration: "150",
@@ -199,9 +197,13 @@ export default {
 					this.nameInputOpen = false;
 					this.editMenuOpen = false;
 				});
-		},
+        },
+        saveBoardd(board) {
+            this.board = board;
+            this.saveBoard();
+        },
 		loadBoard() {
-			const boardId = "C-K3KhX";
+			const boardId = "1JK5GVm";
 			console.log(boardId);
 			this.$store
 				.dispatch({ type: "loadCurrBoard", id: boardId })
@@ -231,7 +233,8 @@ export default {
 		onColumnDrop(dropResult) {
 			const board = Object.assign({}, this.board);
 			board.topics = utilService.applyDrag(board.topics, dropResult);
-			this.board = board;
+            this.board = board;
+            this.saveBoard();
 		},
 		onCardDrop(columnId, dropResult) {
 			if (
@@ -250,7 +253,7 @@ export default {
 				board.topics.splice(columnIndex, 1, newColumn);
                 console.log('scene', board)
                 this.board = board;
-                this.saveBoard()
+                this.saveBoard();
             }
 		},
 		getCardPayload(columnId) {
@@ -289,11 +292,11 @@ export default {
 	margin: 5px;
 }
 
-.card-container {
+/* .card-container {
 	background-color: beige;
 	border: 1px solid black;
 	margin: 10px;
-}
+} */
 
 .column-drag-handle {
 	cursor: move;
