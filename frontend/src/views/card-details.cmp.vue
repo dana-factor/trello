@@ -21,13 +21,13 @@
 				</ul>
 			</div>
 			<div class="description">
-				<h2>Description</h2>
-				<textarea v-model="card.Description" placeholder="Add a description..."></textarea>
+				<h2>📄 Description</h2>
+				<textarea v-model="card.description" placeholder="Add a description..."></textarea>
 				<button @click="updateCard(card)">Save</button>
 			</div>
 			<card-attachments :attachments="card.attachments"/>
 			<div class="checklists" v-for="checklist in card.checklists" :key="checklist.id">
-				{{checklist.name}}
+				{{'✅' + checklist.name}}
 				<ul>
 					<li v-for="task in checklist.tasks" :key="task.id">
 						<input type="checkbox" v-model="task.isDone" @input="updateCard(card)" />
