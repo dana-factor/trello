@@ -32,7 +32,6 @@ export default {
 			return this.getLabelIndex(label) !== -1;
 		},
 		getLabelIndex(label) {
-			// if(!this.labels) return -1;
 			return this.labels.findIndex((currLabel) => currLabel.color === label.color);
 		},
 		updateBoardLabels() {

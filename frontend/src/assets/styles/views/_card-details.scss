@@ -20,8 +20,8 @@
 			justify-content: space-around;
 		}
 		.header {
-            display: flex;
-            align-items: center;
+			display: flex;
+			align-items: center;
 			justify-content: space-between;
 			padding: 0.5rem;
 		}
@@ -39,6 +39,12 @@
 			}
 			button:hover {
 				background-color: #ccd1db;
+			}
+		}
+		.card-checklists {
+			ul {
+				display: flex;
+				flex-direction: column;
 			}
 		}
 		.description {

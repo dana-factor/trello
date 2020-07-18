@@ -18,9 +18,6 @@ export default {
 
 	},
 	methods: {
-		// updateCard() {
-		// 	this.$emit('cardUpdate', this.cardToUpdate);
-		// },
 		addChecklist() {
 			if (this.checklistName) {
 				this.$emit('newChecklist', this.checklistName);

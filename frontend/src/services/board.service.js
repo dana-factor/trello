@@ -12,7 +12,7 @@ export const boardService = {
 	addLabels,
 	removeLabels,
 	getStarterTopic,
-	saveCardToBoard,
+	// saveCardToBoard,
 	getStarterChecklist,
 	getStarterChecklistTask,
 	updateBoardLabel
@@ -70,13 +70,13 @@ function updateBoardLabel(board, label) {
 	);
 	board.labels.splice(idx, 1, label);
 }
-function saveCardToBoard(board, card) {
-	board.topics.find((topic) => {
-		const idx = topic.cards.indexOf(getCardById(board, card.id));
-		topic.cards.splice(idx, 1, card);
-		return idx !== -1;
-	});
-}
+// function saveCardToBoard(board, card) {
+// 	board.topics.find((topic) => {
+// 		const idx = topic.cards.indexOf(getCardById(board, card.id));
+// 		topic.cards.splice(idx, 1, card);
+// 		return idx !== -1;
+// 	});
+// }
 function getStarterBoard() {
 	return {
 		// _id: _makeId(),

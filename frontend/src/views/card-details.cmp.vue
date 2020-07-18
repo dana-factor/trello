@@ -25,7 +25,7 @@
 					<div class="description">
 						<h2>📄 Description</h2>
 						<textarea v-model="card.description" placeholder="Add a description..."></textarea>
-						<button @click="updateCard(card)">Save</button>
+						<button @click="dispatchBoardSave">Save</button>
 					</div>
 					<card-attachments :attachments="card.attachments" @attachmentRemoved="removeAttachment" />
 					<card-checklists
@@ -44,7 +44,6 @@
 				<template v-slot:header>{{modalTitle}}</template>
 				<component
 					:is="editModal"
-					:card="card"
 					:boardLabels="board.labels"
 					:labels="card.labels"
 					@modalClose="closeModal"
@@ -55,6 +54,7 @@
 			</card-edit-modal>
 		</div>
 	</section>
+	<!-- :card="card" -->
 	<!-- @focus="isDescInFocus=true"
 	@blur="isDescInFocus=false"-->
 </template>
@@ -95,7 +95,7 @@ export default {
 		},
 		updateCardName() {
 			this.card.name = document.querySelector('#name').innerText;
-			this.updateCard(this.card);
+			this.dispatchBoardSave();
 		},
 		// updateCard(card) {
 		// 	boardService.saveCardToBoard(this.board, card);
@@ -146,7 +146,7 @@ export default {
 		async onUploadImg(ev) {
 			const res = await uploadImg(ev);
 			this.card.attachments.push({ imgUrl: res.url });
-			this.updateCard(this.card);
+			this.dispatchBoardSave();
 		},
 		closeModal() {
 			this.editModal = '';

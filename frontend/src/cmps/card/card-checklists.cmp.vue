@@ -9,42 +9,29 @@
 				</li>
 			</ul>
 			<input
-				@keypress.enter="$emit('newChecklistTaskAdded',checklist,newTaskTexts[checklist.id])"
+				@keypress.enter="addNewChecklistTask(checklist)"
 				v-model="newTaskTexts[checklist.id]"
 				placeholder="Enter new task..."
 			/>
-			<button @click="$emit('newChecklistTaskAdded',checklist,newTaskTexts[checklist.id])">Add</button>
+			<button @click="addNewChecklistTask(checklist)">Add</button>
 		</div>
 	</section>
 </template>
 
 <script>
 export default {
-    props:['checklists'],
+	props: ['checklists'],
 	data() {
 		return {
 			newTaskTexts: {},
 		}
 	},
-	computed: {
-
-	},
 	methods: {
-
+		addNewChecklistTask(checklist) {
+			this.$emit('newChecklistTaskAdded', checklist, this.newTaskTexts[checklist.id]);
+			this.newTaskTexts[checklist.id] = '';
+		}
 	},
-	created() {
-
-	},
-	mounted() {
-
-	},
-	watch: {
-
-	},
-	components: {
-
-	}
-
 }
 </script>
 
