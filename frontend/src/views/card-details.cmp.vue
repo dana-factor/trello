@@ -23,7 +23,8 @@
 						</ul>
 					</div>
 					<div class="description">
-						<h2>📄 Description</h2>
+						
+						<h2><i class="el-icon-document"></i> Description</h2>
 						<textarea v-model="card.description" placeholder="Add a description..."></textarea>
 						<button @click="dispatchBoardSave">Save</button>
 					</div>

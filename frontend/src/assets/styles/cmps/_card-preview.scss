@@ -1,0 +1,23 @@
+.card-preview{
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(9,30,66,.25);
+    min-height: 20px;
+    padding: 6px 8px 2px;
+    margin-bottom: 8px;
+    h2{
+        display: block;
+        margin-bottom: 4px;
+    }
+    a{
+        color: rgb(23, 43, 77);
+    }
+    .card-label{
+        border-radius: 4px;
+        overflow: hidden;
+        height: 8px;
+        width: 40px;
+        margin: 0 4px 4px 0;
+        display: inline-block;
+    }
+}

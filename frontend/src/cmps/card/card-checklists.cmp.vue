@@ -1,7 +1,7 @@
 <template>
 	<section class="card-checklists">
 		<div class="checklists" v-for="checklist in checklists" :key="checklist.id">
-			{{'✅' + checklist.name}}
+			<i class="el-icon-finished"></i>{{checklist.name}}
 			<ul>
 				<li v-for="task in checklist.tasks" :key="task.id">
 					<input type="checkbox" v-model="task.isDone" @change="$emit('dispatchBoardSave')" />
