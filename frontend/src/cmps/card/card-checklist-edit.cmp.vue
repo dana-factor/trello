@@ -1,6 +1,6 @@
 <template>
 	<section class="card-checklist-edit">
-		<input v-model="checklistName" placeholder="Enter checklist title..." />
+		<input v-model="checklistName" @keypress.enter="addChecklist" placeholder="Enter checklist title..." />
 		<button @click="addChecklist">Add</button>
 	</section>
 </template>
@@ -22,7 +22,10 @@ export default {
 		// 	this.$emit('cardUpdate', this.cardToUpdate);
 		// },
 		addChecklist() {
-			this.$emit('newChecklist', this.checklistName);
+			if (this.checklistName) {
+				this.$emit('newChecklist', this.checklistName);
+				this.$emit('modalClose');
+			}
 		}
 	},
 }
