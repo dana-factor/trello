@@ -1,51 +1,58 @@
 <template>
 	<section class="card-details-container" @click="$router.push('../')">
-		<div class="card-details" v-if="card" @click.stop>
-			<router-link to="../">X</router-link>
-			<div>
-				<h1
-					@keypress.enter.prevent="updateCardName"
-					@blur="updateCardName"
-					id="name"
-					contenteditable
-				>{{card.name}}</h1>
-				<!-- <button @click="updateCardName">Save</button> -->
+		<div class="card-details" v-if="card" @click.stop="closeModal">
+			<div class="header">
+				<p>Edit Card</p>
+				<router-link to="../">X</router-link>
 			</div>
-			<div class="members-labels">
-				<!-- members -->
-				<ul>
-					<li
-						v-for="label in card.labels"
-						:key="label.color"
-						:style="{backgroundColor:label.color}"
-					>{{label.title}}</li>
-				</ul>
-			</div>
-			<div class="description">
-				<h2>📄 Description</h2>
-				<textarea v-model="card.description" placeholder="Add a description..."></textarea>
-				<button @click="updateCard(card)">Save</button>
-			</div>
-			<card-attachments :attachments="card.attachments" />
-			<div class="checklists" v-for="checklist in card.checklists" :key="checklist.id">
-				{{'✅' + checklist.name}}
-				<ul>
-					<li v-for="task in checklist.tasks" :key="task.id">
-						<input type="checkbox" v-model="task.isDone" @input="updateCard(card)" />
-						{{task.text}}
-					</li>
-				</ul>
-				<input
-					@keypress.enter="addNewChecklistTask(checklist)"
-					v-model="newTaskTexts[checklist.id]"
-					placeholder="Enter new task..."
-				/>
-				<button @click="addNewChecklistTask(checklist)">Add</button>
-			</div>
-			<div class="edit-btns">
-				<button @click="editModal='card-label-edit'">Labels</button>
-				<button @click="editModal='card-checklist-edit'">Checklists</button>
-				<input type="file" @change="onUploadImg" />
+			<div class="body">
+				<div class="left-side">
+					<div>
+						<h1
+							@keypress.enter.prevent="updateCardName"
+							@blur="updateCardName"
+							id="name"
+							contenteditable
+						>{{card.name}}</h1>
+						<!-- <button @click="updateCardName">Save</button> -->
+					</div>
+					<div class="members-labels">
+						<!-- members -->
+						<ul>
+							<li
+								v-for="label in card.labels"
+								:key="label.color"
+								:style="{backgroundColor:label.color}"
+							>{{label.title}}</li>
+						</ul>
+					</div>
+					<div class="description">
+						<h2>📄 Description</h2>
+						<textarea v-model="card.description" placeholder="Add a description..."></textarea>
+						<button @click="updateCard(card)">Save</button>
+					</div>
+					<card-attachments :attachments="card.attachments" />
+					<div class="checklists" v-for="checklist in card.checklists" :key="checklist.id">
+						{{'✅' + checklist.name}}
+						<ul>
+							<li v-for="task in checklist.tasks" :key="task.id">
+								<input type="checkbox" v-model="task.isDone" @input="updateCard(card)" />
+								{{task.text}}
+							</li>
+						</ul>
+						<input
+							@keypress.enter="addNewChecklistTask(checklist)"
+							v-model="newTaskTexts[checklist.id]"
+							placeholder="Enter new task..."
+						/>
+						<button @click="addNewChecklistTask(checklist)">Add</button>
+					</div>
+				</div>
+				<div class="edit-btns">
+					<button @click.stop="toggleModal('card-label-edit')">Labels</button>
+					<button @click.stop="toggleModal('card-checklist-edit')">Checklists</button>
+					<input type="file" @change="onUploadImg" />
+				</div>
 			</div>
 			<card-edit-modal v-if="editModal" :modalLocation="modalLocation" @modalClose="closeModal">
 				<template v-slot:header>{{modalTitle}}</template>
@@ -132,6 +139,10 @@ export default {
 		// 	this.modalLocation = { top: ev.target.offsetTop + 'px', left: ev.target.offsetLeft + ev.target.offsetWidth + 'px' }
 		// 	this.editModal = cmpName;
 		// },
+		toggleModal(cmpName) {
+			if (this.editModal === cmpName) this.closeModal()
+			else this.editModal = cmpName;
+		},
 		async onUploadImg(ev) {
 			const res = await uploadImg(ev);
 			this.card.attachments.push({ imgUrl: res.url });
@@ -168,26 +179,36 @@ export default {
 	left: 0;
 	overflow-y: auto;
 	padding: 61px 0;
-	// position: absolute;
-	// top: 50%;
-	// left: 50%;
-	// transform: translate(-50%, -50%);
-	// width: 80%;
-	// max-width: 800px;
-	// height: auto;
-	// min-height: 600px;
-	// z-index: 2;
-	// background-color: lightblue;
-	// display: flex;
 	.card-details {
-		// flex-grow: 1;
-		min-height: 200px;
+		min-height: 80vh;
 		position: relative;
-		z-index: 99;
+		z-index: 2;
 		margin: 0 auto;
 		padding: 5px 15px 20px;
 		width: 85%;
 		background-color: #f4f5f7;
+		.body {
+			display: flex;
+			justify-content: space-around;
+		}
+		.header {
+			display: flex;
+			justify-content: space-between;
+			padding: 0.5rem;
+		}
+		.edit-btns {
+			display: flex;
+			flex-direction: column;
+			button {
+				width: 100%;
+				background-color: #eaecf0;
+				padding: 8px 15px;
+				border-radius: 5px;
+				margin-bottom: 10px;
+				font-size: 0.875rem;
+				transition: 0.3s;
+			}
+		}
 		.description {
 			display: flex;
 			flex-direction: column;
