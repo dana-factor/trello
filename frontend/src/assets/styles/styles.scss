@@ -12,8 +12,10 @@
 //VIEWS
 @import './views/homepage';
 @import './views/board-details';
+@import './views/card-details';
 
 //CMPS
 @import './cmps/board-topic';
 @import './cmps/board-nav';
 @import './cmps/app-header';
+@import './cmps/card-edit-modal';
