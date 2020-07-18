@@ -21,6 +21,7 @@
             <h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add another list</h2>
             <input class="topicName" v-if="topicNameInputOpen" v-model="topicName"/><button @click="addTopic" v-if="topicNameInputOpen">Add List</button>
         </div>
+        <router-view/>
 	</section>
 </template>
 
@@ -28,6 +29,7 @@
 import { boardService } from "../services/board.service";
 import boardTopic from "../cmps/board/board-topic.cmp";
 import boardNav from '../cmps/board/board-nav.cmp'
+import cardDetails from '../views/card-details.cmp.vue'
 
 export default {
     props:[],
@@ -107,7 +109,8 @@ export default {
 	watch: {},
 	components: {
         boardTopic,
-        boardNav
+        boardNav,
+        cardDetails
 	},
 };
 </script>

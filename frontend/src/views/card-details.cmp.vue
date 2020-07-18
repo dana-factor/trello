@@ -1,46 +1,62 @@
 <template>
-	<section class="card-details">
-		<div v-if="card">
-			<div>
-				<h1 id="name" contenteditable>{{card.name}}</h1>
-				<button @click="updateCardName">Save</button>
+	<section class="card-details-container" @click="$router.push('../')">
+		<div class="card-details" v-if="card" @click.stop="closeModal">
+			<div class="header">
+				<h1
+					@keypress.enter.prevent="updateCardName"
+					@blur="updateCardName"
+					id="name"
+					contenteditable
+				>{{card.name}}</h1>
+				<router-link to="../">X</router-link>
 			</div>
-			<div>
-				<!-- members -->
-				<ul>
-					<li
-						v-for="label in card.labels"
-						:key="label.color"
-						:style="{backgroundColor:label.color}"
-					>{{label.title}}</li>
-				</ul>
+			<div class="body">
+				<div class="left-side">
+					<div class="members-labels">
+						<!-- members -->
+						<ul>
+							<li
+								v-for="label in card.labels"
+								:key="label.color"
+								:style="{backgroundColor:label.color}"
+							>{{label.title}}</li>
+						</ul>
+					</div>
+					<div class="description">
+						<h2>📄 Description</h2>
+						<textarea v-model="card.description" placeholder="Add a description..."></textarea>
+						<button @click="updateCard(card)">Save</button>
+					</div>
+					<card-attachments :attachments="card.attachments" @attachmentRemoved="removeAttachment" />
+					<div class="checklists" v-for="checklist in card.checklists" :key="checklist.id">
+						{{'✅' + checklist.name}}
+						<ul>
+							<li v-for="task in checklist.tasks" :key="task.id">
+								<input type="checkbox" v-model="task.isDone" @input="updateCard(card)" />
+								{{task.text}}
+							</li>
+						</ul>
+						<input
+							@keypress.enter="addNewChecklistTask(checklist)"
+							v-model="newTaskTexts[checklist.id]"
+							placeholder="Enter new task..."
+						/>
+						<button @click="addNewChecklistTask(checklist)">Add</button>
+					</div>
+				</div>
+				<div class="edit-btns">
+					<button @click.stop="toggleModal('card-label-edit')">Labels</button>
+					<button @click.stop="toggleModal('card-checklist-edit')">Checklists</button>
+					<input type="file" @change="onUploadImg" />
+				</div>
 			</div>
-			<div>
-				<h2>Description</h2>
-				<textarea v-model="card.Description" placeholder="Add a description..."></textarea>
-				<button @click="updateCard(card)">Save</button>
-			</div>
-			<div v-for="checklist in card.checklists" :key="checklist.id">
-				{{checklist.name}}
-				<ul>
-					<li v-for="task in checklist.tasks" :key="task.id">
-						<input type="checkbox" v-model="task.isDone" @input="updateCard(card)" />
-						{{task.text}}
-					</li>
-				</ul>
-				<input v-model="newTaskTexts[checklist.id]" placeholder="Enter new task..." />
-				<button @click="addNewChecklistTask(checklist)">Add an item</button>
-			</div>
-			<div>
-				<button @click="editModal='card-label-edit'">Labels</button>
-				<button @click="editModal='card-checklist-edit'">Checklists</button>
-			</div>
-			<card-edit-modal v-if="editModal" @modalClose="closeModal">
-				<header>test</header>
+			<card-edit-modal v-if="editModal" :modalLocation="modalLocation" @modalClose="closeModal">
+				<template v-slot:header>{{modalTitle}}</template>
 				<component
 					:is="editModal"
 					:card="card"
 					:boardLabels="board.labels"
+					@modalClose="closeModal"
 					@cardUpdate="updateCard"
 					@newChecklist="addNewChecklist"
 					@boardLabelsUpdate="updateBoardLabels"
@@ -54,9 +70,11 @@
 
 <script>
 import { boardService } from '../services/board.service.js';
+import { uploadImg } from '../services/img-upload.service.js';
 import cardEditModal from '../cmps/card/card-edit-modal.cmp';
 import cardLabelEdit from '../cmps/card/card-label-edit.cmp';
 import cardChecklistEdit from '../cmps/card/card-checklist-edit.cmp';
+import cardAttachments from '../cmps/card/card-attachments.cmp';
 export default {
 	data() {
 		return {
@@ -66,8 +84,15 @@ export default {
 			newTaskTexts: {},
 			// isDescInFocus: false,
 			// isNameInFocus: false,
-			editModal: ''
+			editModal: '',
+			modalLocation: { top: 0, left: 0 }
 		};
+	},
+	computed: {
+		modalTitle() {
+			let title = this.editModal.split('-')[1];
+			return title.charAt(0).toUpperCase() + title.slice(1) + 's';
+		}
 	},
 	methods: {
 		setBoardAndCard(board) {
@@ -101,9 +126,23 @@ export default {
 			checklist.tasks.push(task);
 			this.dispatchBoardSave();
 		},
+		removeAttachment(attachment) {
+			//kinda temp idk
+			this.card.attachments.splice(this.card.attachments.indexOf(attachment), 1);
+			this.dispatchBoardSave();
+		},
 		dispatchBoardSave() {
 			this.$store.dispatch({ type: 'saveBoard', board: boardService.removeLabels(this.board) })
 				.then(savedBoard => this.setBoardAndCard(savedBoard))
+		},
+		toggleModal(cmpName) {
+			if (this.editModal === cmpName) this.closeModal()
+			else this.editModal = cmpName;
+		},
+		async onUploadImg(ev) {
+			const res = await uploadImg(ev);
+			this.card.attachments.push({ imgUrl: res.url });
+			this.updateCard(this.card);
 		},
 		closeModal() {
 			this.editModal = '';
@@ -120,22 +159,62 @@ export default {
 	components: {
 		cardEditModal,
 		cardLabelEdit,
-		cardChecklistEdit
+		cardChecklistEdit,
+		cardAttachments
 	}
 };
 </script>
 
-<style scoped>
-.card-details {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 80%;
-	max-width: 800px;
-	height: auto;
-	min-height: 600px;
-	z-index: 2;
-	background-color: lightblue;
+<style lang="scss">
+.card-details-container {
+	background-color: rgba(0, 0, 0, 0.61);
+	width: 100vw;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	overflow-y: auto;
+	padding: 61px 0;
+	.card-details {
+		min-height: 80vh;
+		position: relative;
+		z-index: 2;
+		margin: 0 auto;
+		padding: 5px 15px 20px;
+		width: 85%;
+		background-color: #f4f5f7;
+		.body {
+			display: flex;
+			justify-content: space-around;
+		}
+		.header {
+			display: flex;
+			justify-content: space-between;
+			padding: 0.5rem;
+		}
+		.edit-btns {
+			display: flex;
+			flex-direction: column;
+			button {
+				width: 100%;
+				background-color: #eaecf0;
+				padding: 8px 15px;
+				border-radius: 5px;
+				margin-bottom: 10px;
+				font-size: 0.875rem;
+				transition: 0.3s;
+			}
+			button:hover {
+				background-color: #ccd1db;
+			}
+		}
+		.description {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+}
+textarea {
+	resize: none;
 }
 </style>

@@ -1,8 +1,10 @@
 <template>
-	<section class="card-edit-modal">
+	<section class="card-edit-modal" @click.stop>
 		<!-- <div class="header flex"> -->
-			
-			<slot name="header"><button @click="close">X</button></slot>
+		<header>
+			<slot name="header"></slot>
+			<button @click="close">X</button>
+		</header>
 		<!-- </div> -->
 		<slot></slot>
 	</section>
@@ -10,6 +12,7 @@
 </template>
 <script>
 export default {
+	// props:['modalLocation'],
 	methods: {
 		close() {
 			this.$emit('modalClose');
@@ -22,7 +25,10 @@ export default {
 .card-edit-modal {
 	position: absolute;
 	background-color: lightcoral;
-	top: 0;
+	top: 70px;
+	right: 40px;
+	width: 300px;
+	min-height: 100px;
 	text-align: right;
 }
 </style>
