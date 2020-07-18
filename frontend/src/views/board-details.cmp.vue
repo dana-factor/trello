@@ -1,33 +1,33 @@
 <template>
 	<section v-if="board" class="board-details">
-		<h1>board-details</h1>
-		<h2>{{board.name}}</h2>
+        <board-nav>
+		<h2 slot="board-name">{{board.name}}</h2>
 		<button @click="toggleEditMenu">...</button>
 		<div v-if="editMenuOpen">
 			<p @click="nameInputOpen = true">Change Name</p>
 			<input v-if="nameInputOpen" v-model="board.name" @change="saveBoard" />
 			<p>Change Background</p>
 		</div>
-		<div class="board-container">
-			<div class="topic-wrapper" v-for="topic in board.topics" :key="topic.id">
-				<board-topic
-					:topic="topic"
-					@updateTopicName="updateTopicName"
-					@removeTopic="removeTopic"
-					@addCard="addCard"
-				/>
-			</div>
-            <div class="topic-wrapper add-topic">
-                <h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add another list</h2>
-                <input class="topicName" v-if="topicNameInputOpen" v-model="topicName"/><button @click="addTopic" v-if="topicNameInputOpen">Add List</button>
-            </div>
-		</div>
+        </board-nav>
+        <div class="topic-wrapper" v-for="topic in board.topics" :key="topic.id">
+            <board-topic
+                :topic="topic"
+                @updateTopicName="updateTopicName"
+                @removeTopic="removeTopic"
+                @addCard="addCard"
+            />
+        </div>
+        <div class="topic-wrapper add-topic">
+            <h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add another list</h2>
+            <input class="topicName" v-if="topicNameInputOpen" v-model="topicName"/><button @click="addTopic" v-if="topicNameInputOpen">Add List</button>
+        </div>
 	</section>
 </template>
 
 <script>
-import { boardService } from "../services/board.service.js";
-import boardTopic from "../cmps/board/board-topic.cmp.vue";
+import { boardService } from "../services/board.service";
+import boardTopic from "../cmps/board/board-topic.cmp";
+import boardNav from '../cmps/board/board-nav.cmp'
 
 export default {
     props:[],
@@ -106,7 +106,8 @@ export default {
     mounted() {},
 	watch: {},
 	components: {
-		boardTopic
+        boardTopic,
+        boardNav
 	},
 };
 </script>

@@ -32,14 +32,17 @@
             .close-menu{
                 position: absolute;
                 top: 3px;
-                right: 8px;
+                left: 100px;
                 z-index: 3;
-                cursor: pointer;
             }
-            p{
+            button{
                 display: block;
                 padding: 6px 12px;
                 color: #172b4d;
+            }
+            input{
+                width: 104px;
+                margin: 6px 12px;
             }
         }
     }

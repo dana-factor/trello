@@ -1,14 +1,24 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Homepage</router-link> |
-      <router-link to="/board/a101">Board Details</router-link> |
-      <router-link to="/board/a101/card/asd">Card Details</router-link> |
-      <router-link to="/login">Login</router-link> |
-    </div>
+    <app-header></app-header>
     <router-view/>
   </div>
 </template>
+
+<script>
+
+import appHeader from '../src/cmps/app-header.cmp'
+export default {
+    data(){
+        return {
+
+        }
+    },
+    components: {
+      appHeader
+    }
+}
+</script>
 
 <style lang="scss">
 

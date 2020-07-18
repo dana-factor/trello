@@ -1,6 +1,7 @@
 <template>
     <section class="board-nav">
-    
+        <slot name="board-name"></slot>
+        <slot></slot>
     </section>
 </template>
 

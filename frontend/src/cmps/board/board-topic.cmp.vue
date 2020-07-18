@@ -1,15 +1,17 @@
 <template>
     <section class="board-topic">
         <div class="topic-header">
-            <h2 contenteditable="true" @input="updateTopicName">{{topicName}}</h2>
+            <h2 contenteditable @keypress.enter.prevent="updateTopicName" @blur="updateTopicName">{{topicName}}</h2>
             <!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
             <button @click="toggleEditMenu">...</button>
             <div class="topic-menu" v-if="editMenuOpen">
                 <h3>List Actions</h3>
-                <span @click="toggleEditMenu" class="closeMenu">X</span>
-                <p @click="removeTopic(topic.id); toggleEditMenu();">Delete list</p>
-                <p @click="addCard(); toggleEditMenu();">Add new card</p>
-                <p @click="toggleMinimize(); toggleEditMenu();"><span v-if="!minimize">Minimize</span><span v-if="minimize">Maximize</span></p>
+                <button @click="toggleEditMenu" class="close-menu">X</button>
+                <button @click="removeTopic(topic.id); toggleEditMenu();">Delete list</button>
+                <button @click="addCard(); toggleEditMenu();">Add new card</button>
+                <button @click="toggleEditListNameShown">Change list name</button>
+                <input v-if="editListNameShown" v-model="topicName" @keypress.enter.prevent="updateTopicName" @blur="updateTopicName"/>
+                <button @click="toggleMinimize(); toggleEditMenu();"><span v-if="!minimize">Minimize</span><span v-if="minimize">Maximize</span></button>
             </div>
         </div>
         <div class="topic-main" v-if="!minimize">
@@ -34,7 +36,8 @@ export default {
         return{
             editMenuOpen: false,
             topicName: '',
-            minimize: false
+            minimize: false,
+            editListNameShown: false
         }
     },
     computed: {
@@ -48,14 +51,19 @@ export default {
             this.editMenuOpen = !this.editMenuOpen
         },
         updateTopicName(ev){
-            this.topicName = ev.target.innerText
+            if (ev.target.innerText) this.topicName = ev.target.innerText
             this.$emit('updateTopicName', this.topicName, this.topic.id)
+            this.editListNameShown = false
+            this.editMenuOpen = false  
         },
         addCard(){
             this.$emit('addCard', this.topic.id)
         },
         toggleMinimize(){
             this.minimize = !this.minimize
+        },
+        toggleEditListNameShown(){
+            this.editListNameShown = !this.editListNameShown
         }
     },
     created(){
