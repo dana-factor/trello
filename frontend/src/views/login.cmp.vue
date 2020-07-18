@@ -6,6 +6,7 @@
 				drag-handle-selector=".column-drag-handle"
 				@drag-start="dragStart"
                 :drop-placeholder="upperDropPlaceholderOptions"
+
 			>
 				<Draggable
 					v-for="column in scene.children"
@@ -25,6 +26,7 @@
 									drag-class="card-ghost"
 									drop-class="card-ghost-drop"
                                     :drop-placeholder="dropPlaceholderOptions"
+
 								>
 									<Draggable
 										v-for="card in column.children"
@@ -156,7 +158,7 @@ const scene = {
                     id: '22',
                     props: {
                         className: 'card',
-                        style: {backgroundColor: 'yellow'}
+                        style: {backgroundColor: 'purple'}
                     },
                     data: txt
                 },
@@ -298,6 +300,17 @@ export default {
 .card-ghost-drop {
     transition: transform 0.18s ease-in-out;
     transform: rotateZ(0deg)
+}
+.drop-preview {
+  background-color: rgba(150, 150, 200, 0.1);
+  border: 1px dashed #abc;
+  margin: 5px;
+}
+
+.cards-drop-preview {
+  background-color: rgba(150, 150, 200, 0.1);
+  border: 1px dashed #abc;
+  margin: 5px 45px 5px 5px;
 }
 
 </style>
