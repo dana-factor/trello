@@ -31,7 +31,7 @@
 						<textarea v-model="card.description" placeholder="Add a description..."></textarea>
 						<button @click="updateCard(card)">Save</button>
 					</div>
-					<card-attachments :attachments="card.attachments" />
+					<card-attachments :attachments="card.attachments" @attachmentRemoved="removeAttachment" />
 					<div class="checklists" v-for="checklist in card.checklists" :key="checklist.id">
 						{{'✅' + checklist.name}}
 						<ul>
@@ -130,15 +130,15 @@ export default {
 			checklist.tasks.push(task);
 			this.dispatchBoardSave();
 		},
+		removeAttachment(attachment) {
+			//kinda temp idk
+			this.card.attachments.splice(this.card.attachments.indexOf(attachment),1);
+			this.dispatchBoardSave();
+		},
 		dispatchBoardSave() {
 			this.$store.dispatch({ type: 'saveBoard', board: boardService.removeLabels(this.board) })
 				.then(savedBoard => this.setBoardAndCard(savedBoard))
 		},
-		// openModal(ev, cmpName) {
-		// 	console.dir(ev.target)
-		// 	this.modalLocation = { top: ev.target.offsetTop + 'px', left: ev.target.offsetLeft + ev.target.offsetWidth + 'px' }
-		// 	this.editModal = cmpName;
-		// },
 		toggleModal(cmpName) {
 			if (this.editModal === cmpName) this.closeModal()
 			else this.editModal = cmpName;

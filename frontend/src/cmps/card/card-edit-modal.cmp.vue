@@ -1,5 +1,5 @@
 <template>
-	<section class="card-edit-modal">
+	<section class="card-edit-modal" @click.stop>
 		<!-- <div class="header flex"> -->
 		<header>
 			<slot name="header"></slot>
