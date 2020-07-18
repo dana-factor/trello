@@ -2,8 +2,13 @@
 	<section class="card-details-container">
 		<div class="card-details" v-if="card">
 			<div>
-				<h1 id="name" contenteditable>{{card.name}}</h1>
-				<button @click="updateCardName">Save</button>
+				<h1
+					@keypress.enter.prevent="updateCardName"
+					@blur="updateCardName"
+					id="name"
+					contenteditable
+				>{{card.name}}</h1>
+				<!-- <button @click="updateCardName">Save</button> -->
 			</div>
 			<div class="members-labels">
 				<!-- members -->
@@ -20,6 +25,7 @@
 				<textarea v-model="card.Description" placeholder="Add a description..."></textarea>
 				<button @click="updateCard(card)">Save</button>
 			</div>
+			<card-attachments :attachments="card.attachments"/>
 			<div class="checklists" v-for="checklist in card.checklists" :key="checklist.id">
 				{{checklist.name}}
 				<ul>
@@ -28,12 +34,17 @@
 						{{task.text}}
 					</li>
 				</ul>
-				<input v-model="newTaskTexts[checklist.id]" placeholder="Enter new task..." />
+				<input
+					@keypress.enter="addNewChecklistTask(checklist)"
+					v-model="newTaskTexts[checklist.id]"
+					placeholder="Enter new task..."
+				/>
 				<button @click="addNewChecklistTask(checklist)">Add</button>
 			</div>
-			<div class="edit-modals">
+			<div class="edit-btns">
 				<button @click="editModal='card-label-edit'">Labels</button>
 				<button @click="editModal='card-checklist-edit'">Checklists</button>
+				<input type="file" @change="onUploadImg" />
 			</div>
 			<card-edit-modal v-if="editModal" :modalLocation="modalLocation" @modalClose="closeModal">
 				<template v-slot:header>{{modalTitle}}</template>
@@ -55,9 +66,11 @@
 
 <script>
 import { boardService } from '../services/board.service.js';
+import { uploadImg } from '../services/img-upload.service.js';
 import cardEditModal from '../cmps/card/card-edit-modal.cmp';
 import cardLabelEdit from '../cmps/card/card-label-edit.cmp';
 import cardChecklistEdit from '../cmps/card/card-checklist-edit.cmp';
+import cardAttachments from '../cmps/card/card-attachments.cmp';
 export default {
 	data() {
 		return {
@@ -118,6 +131,11 @@ export default {
 		// 	this.modalLocation = { top: ev.target.offsetTop + 'px', left: ev.target.offsetLeft + ev.target.offsetWidth + 'px' }
 		// 	this.editModal = cmpName;
 		// },
+		async onUploadImg(ev) {
+			const res = await uploadImg(ev);
+			this.card.attachments.push({ imgUrl: res.url });
+			this.updateCard(this.card);
+		},
 		closeModal() {
 			this.editModal = '';
 		}
@@ -133,7 +151,8 @@ export default {
 	components: {
 		cardEditModal,
 		cardLabelEdit,
-		cardChecklistEdit
+		cardChecklistEdit,
+		cardAttachments
 	}
 };
 </script>
