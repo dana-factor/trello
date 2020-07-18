@@ -1,11 +1,11 @@
 <template>
-	<section class="card-details">
-		<div v-if="card">
+	<section class="card-details-container">
+		<div class="card-details" v-if="card">
 			<div>
 				<h1 id="name" contenteditable>{{card.name}}</h1>
 				<button @click="updateCardName">Save</button>
 			</div>
-			<div>
+			<div class="members-labels">
 				<!-- members -->
 				<ul>
 					<li
@@ -15,12 +15,12 @@
 					>{{label.title}}</li>
 				</ul>
 			</div>
-			<div>
+			<div class="description">
 				<h2>Description</h2>
 				<textarea v-model="card.Description" placeholder="Add a description..."></textarea>
 				<button @click="updateCard(card)">Save</button>
 			</div>
-			<div v-for="checklist in card.checklists" :key="checklist.id">
+			<div class="checklists" v-for="checklist in card.checklists" :key="checklist.id">
 				{{checklist.name}}
 				<ul>
 					<li v-for="task in checklist.tasks" :key="task.id">
@@ -29,18 +29,19 @@
 					</li>
 				</ul>
 				<input v-model="newTaskTexts[checklist.id]" placeholder="Enter new task..." />
-				<button @click="addNewChecklistTask(checklist)">Add an item</button>
+				<button @click="addNewChecklistTask(checklist)">Add</button>
 			</div>
-			<div>
+			<div class="edit-modals">
 				<button @click="editModal='card-label-edit'">Labels</button>
 				<button @click="editModal='card-checklist-edit'">Checklists</button>
 			</div>
-			<card-edit-modal v-if="editModal" @modalClose="closeModal">
-				<header>test</header>
+			<card-edit-modal v-if="editModal" :modalLocation="modalLocation" @modalClose="closeModal">
+				<template v-slot:header>{{modalTitle}}</template>
 				<component
 					:is="editModal"
 					:card="card"
 					:boardLabels="board.labels"
+					@modalClose="closeModal"
 					@cardUpdate="updateCard"
 					@newChecklist="addNewChecklist"
 					@boardLabelsUpdate="updateBoardLabels"
@@ -66,8 +67,15 @@ export default {
 			newTaskTexts: {},
 			// isDescInFocus: false,
 			// isNameInFocus: false,
-			editModal: ''
+			editModal: '',
+			modalLocation: { top: 0, left: 0 }
 		};
+	},
+	computed: {
+		modalTitle() {
+			let title = this.editModal.split('-')[1];
+			return title.charAt(0).toUpperCase() + title.slice(1) + 's';
+		}
 	},
 	methods: {
 		setBoardAndCard(board) {
@@ -105,6 +113,11 @@ export default {
 			this.$store.dispatch({ type: 'saveBoard', board: boardService.removeLabels(this.board) })
 				.then(savedBoard => this.setBoardAndCard(savedBoard))
 		},
+		// openModal(ev, cmpName) {
+		// 	console.dir(ev.target)
+		// 	this.modalLocation = { top: ev.target.offsetTop + 'px', left: ev.target.offsetLeft + ev.target.offsetWidth + 'px' }
+		// 	this.editModal = cmpName;
+		// },
 		closeModal() {
 			this.editModal = '';
 		}
@@ -125,8 +138,8 @@ export default {
 };
 </script>
 
-<style scoped>
-.card-details {
+<style lang="scss">
+.card-details-container {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -137,5 +150,16 @@ export default {
 	min-height: 600px;
 	z-index: 2;
 	background-color: lightblue;
+	display: flex;
+	.card-details {
+		flex-grow: 1;
+		.description {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+}
+textarea {
+	resize: none;
 }
 </style>
