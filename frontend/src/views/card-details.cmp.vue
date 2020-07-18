@@ -2,20 +2,16 @@
 	<section class="card-details-container" @click="$router.push('../')">
 		<div class="card-details" v-if="card" @click.stop="closeModal">
 			<div class="header">
-				<p>Edit Card</p>
+				<h1
+					@keypress.enter.prevent="updateCardName"
+					@blur="updateCardName"
+					id="name"
+					contenteditable
+				>{{card.name}}</h1>
 				<router-link to="../">X</router-link>
 			</div>
 			<div class="body">
 				<div class="left-side">
-					<div>
-						<h1
-							@keypress.enter.prevent="updateCardName"
-							@blur="updateCardName"
-							id="name"
-							contenteditable
-						>{{card.name}}</h1>
-						<!-- <button @click="updateCardName">Save</button> -->
-					</div>
 					<div class="members-labels">
 						<!-- members -->
 						<ul>
@@ -132,7 +128,7 @@ export default {
 		},
 		removeAttachment(attachment) {
 			//kinda temp idk
-			this.card.attachments.splice(this.card.attachments.indexOf(attachment),1);
+			this.card.attachments.splice(this.card.attachments.indexOf(attachment), 1);
 			this.dispatchBoardSave();
 		},
 		dispatchBoardSave() {
@@ -207,6 +203,9 @@ export default {
 				margin-bottom: 10px;
 				font-size: 0.875rem;
 				transition: 0.3s;
+			}
+			button:hover {
+				background-color: #ccd1db;
 			}
 		}
 		.description {
