@@ -14,7 +14,8 @@ export const boardService = {
 	getStarterTopic,
 	saveCardToBoard,
 	getStarterChecklist,
-	getStarterChecklistTask
+	getStarterChecklistTask,
+	updateBoardLabel
 };
 
 function query(filterBy) {
@@ -62,6 +63,12 @@ function removeLabels(board) {
 		});
 	});
 	return board;
+}
+function updateBoardLabel(board, label) {
+	const idx = board.labels.findIndex(
+		(labelToFind) => label.color === labelToFind.color
+	);
+	board.labels.splice(idx, 1, label);
 }
 function saveCardToBoard(board, card) {
 	board.topics.find((topic) => {

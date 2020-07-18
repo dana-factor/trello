@@ -28,7 +28,11 @@
 						<button @click="updateCard(card)">Save</button>
 					</div>
 					<card-attachments :attachments="card.attachments" @attachmentRemoved="removeAttachment" />
-					<card-checklists :checklists="card.checklists" @dispatchBoardSave="dispatchBoardSave" @newChecklistTaskAdded="addNewChecklistTask"/>
+					<card-checklists
+						:checklists="card.checklists"
+						@dispatchBoardSave="dispatchBoardSave"
+						@newChecklistTaskAdded="addNewChecklistTask"
+					/>
 				</div>
 				<div class="edit-btns">
 					<button @click.stop="toggleModal('card-label-edit')">Labels</button>
@@ -42,8 +46,9 @@
 					:is="editModal"
 					:card="card"
 					:boardLabels="board.labels"
+					:labels="card.labels"
 					@modalClose="closeModal"
-					@cardUpdate="updateCard"
+					@toggleLabel="toggleLabel"
 					@newChecklist="addNewChecklist"
 					@boardLabelsUpdate="updateBoardLabels"
 				></component>
@@ -92,12 +97,12 @@ export default {
 			this.card.name = document.querySelector('#name').innerText;
 			this.updateCard(this.card);
 		},
-		updateCard(card) {
-			boardService.saveCardToBoard(this.board, card);
-			this.dispatchBoardSave();
-		},
-		updateBoardLabels(boardLabels) {
-			this.board.labels = boardLabels;
+		// updateCard(card) {
+		// 	boardService.saveCardToBoard(this.board, card);
+		// 	this.dispatchBoardSave();
+		// },
+		updateBoardLabels(labelToUpdate) {
+			boardService.updateBoardLabel(this.board, labelToUpdate);
 			this.dispatchBoardSave();
 		},
 		addNewChecklist(name) {
@@ -111,6 +116,18 @@ export default {
 			task.text = text;
 			checklist.tasks.push(task);
 			this.dispatchBoardSave();
+		},
+		toggleLabel(label) {
+			let currLabels = this.card.labels
+			if (this.hasLabel(label)) currLabels.splice(this.getLabelIndex(label), 1)
+			else currLabels.push(label);
+			this.dispatchBoardSave();
+		},
+		hasLabel(label) {
+			return this.getLabelIndex(label) !== -1;
+		},
+		getLabelIndex(label) {
+			return this.card.labels.findIndex((currLabel) => currLabel.color === label.color);
 		},
 		removeAttachment(attachment) {
 			//kinda temp idk
