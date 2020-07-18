@@ -32,7 +32,7 @@
 						{{'✅' + checklist.name}}
 						<ul>
 							<li v-for="task in checklist.tasks" :key="task.id">
-								<input type="checkbox" v-model="task.isDone" @input="updateCard(card)" />
+								<input type="checkbox" v-model="task.isDone" @change="dispatchBoardSave" />
 								{{task.text}}
 							</li>
 						</ul>
@@ -132,7 +132,8 @@ export default {
 			this.dispatchBoardSave();
 		},
 		dispatchBoardSave() {
-			this.$store.dispatch({ type: 'saveBoard', board: boardService.removeLabels(this.board) })
+			const boardToUpdate = boardService.removeLabels(this.board);
+			this.$store.dispatch({ type: 'saveBoard', board: boardToUpdate })
 				.then(savedBoard => this.setBoardAndCard(savedBoard))
 		},
 		toggleModal(cmpName) {
