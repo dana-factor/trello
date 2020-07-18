@@ -20,15 +20,5 @@ export default {
 	},
 };
 </script>
-
-<style lang="scss">
-.card-edit-modal {
-	position: absolute;
-	background-color: lightcoral;
-	top: 70px;
-	right: 40px;
-	width: 300px;
-	min-height: 100px;
-	text-align: right;
-}
+<style>
 </style>

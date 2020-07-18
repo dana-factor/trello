@@ -3,7 +3,7 @@
 		<ul>
 			<li v-for="attachment in attachments" :key="attachment.imgUrl">
 				<div>
-					<label for="image">Image</label>
+					<label for="image">🖼️ Image</label>
 					<button @click="removeAttachment(attachment)">X</button>
 				</div>
 				<img id="image" :src="attachment.imgUrl" />

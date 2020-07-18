@@ -3,7 +3,7 @@
 		<router-link :to="'card/'+card.id" append>{{card.name}}</router-link>
 		<p v-if="card.description">📄</p>
 		<p v-if="card.checklists.length">{{checklistCount}}</p>
-		<p v-if="card.attachments.length">🖼</p>
+		<p v-if="card.attachments.length">🖼️</p>
 		<!-- <button>✏</button> -->
 	</section>
 </template>

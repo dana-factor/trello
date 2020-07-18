@@ -1,5 +1,5 @@
 <template>
-	<section class="card-details-container" @click="$router.push('../')">
+	<section class="card-details-screen" @click="$router.push('../')">
 		<div class="card-details" v-if="card" @click.stop="closeModal">
 			<div class="header">
 				<h1
@@ -28,21 +28,7 @@
 						<button @click="updateCard(card)">Save</button>
 					</div>
 					<card-attachments :attachments="card.attachments" @attachmentRemoved="removeAttachment" />
-					<div class="checklists" v-for="checklist in card.checklists" :key="checklist.id">
-						{{'✅' + checklist.name}}
-						<ul>
-							<li v-for="task in checklist.tasks" :key="task.id">
-								<input type="checkbox" v-model="task.isDone" @change="dispatchBoardSave" />
-								{{task.text}}
-							</li>
-						</ul>
-						<input
-							@keypress.enter="addNewChecklistTask(checklist)"
-							v-model="newTaskTexts[checklist.id]"
-							placeholder="Enter new task..."
-						/>
-						<button @click="addNewChecklistTask(checklist)">Add</button>
-					</div>
+					<card-checklists :checklists="card.checklists" @dispatchBoardSave="dispatchBoardSave" @newChecklistTaskAdded="addNewChecklistTask"/>
 				</div>
 				<div class="edit-btns">
 					<button @click.stop="toggleModal('card-label-edit')">Labels</button>
@@ -75,13 +61,13 @@ import cardEditModal from '../cmps/card/card-edit-modal.cmp';
 import cardLabelEdit from '../cmps/card/card-label-edit.cmp';
 import cardChecklistEdit from '../cmps/card/card-checklist-edit.cmp';
 import cardAttachments from '../cmps/card/card-attachments.cmp';
+import cardChecklists from '../cmps/card/card-checklists.cmp';
 export default {
 	data() {
 		return {
 			board: null,
 			card: null,
 			cardId: 0,
-			newTaskTexts: {},
 			// isDescInFocus: false,
 			// isNameInFocus: false,
 			editModal: '',
@@ -120,9 +106,9 @@ export default {
 			this.card.checklists.push(checklist);
 			this.dispatchBoardSave();
 		},
-		addNewChecklistTask(checklist) {
+		addNewChecklistTask(checklist, text) {
 			let task = boardService.getStarterChecklistTask();
-			task.text = this.newTaskTexts[checklist.id];
+			task.text = text;
 			checklist.tasks.push(task);
 			this.dispatchBoardSave();
 		},
@@ -161,61 +147,11 @@ export default {
 		cardEditModal,
 		cardLabelEdit,
 		cardChecklistEdit,
-		cardAttachments
+		cardAttachments,
+		cardChecklists
 	}
 };
 </script>
 
 <style lang="scss">
-.card-details-container {
-	background-color: rgba(0, 0, 0, 0.61);
-	width: 100vw;
-	height: 100%;
-	position: fixed;
-	top: 0;
-	left: 0;
-	overflow-y: auto;
-	padding: 61px 0;
-	.card-details {
-		min-height: 80vh;
-		position: relative;
-		z-index: 2;
-		margin: 0 auto;
-		padding: 5px 15px 20px;
-		width: 85%;
-		background-color: #f4f5f7;
-		.body {
-			display: flex;
-			justify-content: space-around;
-		}
-		.header {
-			display: flex;
-			justify-content: space-between;
-			padding: 0.5rem;
-		}
-		.edit-btns {
-			display: flex;
-			flex-direction: column;
-			button {
-				width: 100%;
-				background-color: #eaecf0;
-				padding: 8px 15px;
-				border-radius: 5px;
-				margin-bottom: 10px;
-				font-size: 0.875rem;
-				transition: 0.3s;
-			}
-			button:hover {
-				background-color: #ccd1db;
-			}
-		}
-		.description {
-			display: flex;
-			flex-direction: column;
-		}
-	}
-}
-textarea {
-	resize: none;
-}
 </style>
