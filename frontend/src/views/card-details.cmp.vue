@@ -23,7 +23,8 @@
 						</ul>
 					</div>
 					<div class="description">
-						<h2>📄 Description</h2>
+						
+						<h2><i class="el-icon-document"></i> Description</h2>
 						<textarea v-model="card.description" placeholder="Add a description..."></textarea>
 						<button @click="dispatchBoardSave">Save</button>
 					</div>
@@ -32,6 +33,8 @@
 						:checklists="card.checklists"
 						@dispatchBoardSave="dispatchBoardSave"
 						@newChecklistTaskAdded="addNewChecklistTask"
+						@checklistRemoved="removeChecklist"
+						@checklistTaskRemoved="removeChecklistTask"
 					/>
 				</div>
 				<div class="edit-btns">
@@ -54,9 +57,6 @@
 			</card-edit-modal>
 		</div>
 	</section>
-	<!-- :card="card" -->
-	<!-- @focus="isDescInFocus=true"
-	@blur="isDescInFocus=false"-->
 </template>
 
 <script>
@@ -73,8 +73,6 @@ export default {
 			board: null,
 			card: null,
 			cardId: 0,
-			// isDescInFocus: false,
-			// isNameInFocus: false,
 			editModal: '',
 			modalLocation: { top: 0, left: 0 }
 		};
@@ -115,6 +113,14 @@ export default {
 			let task = boardService.getStarterChecklistTask();
 			task.text = text;
 			checklist.tasks.push(task);
+			this.dispatchBoardSave();
+		},
+		removeChecklist(checklistId) {
+			boardService.removeChecklist(this.card, checklistId);
+			this.dispatchBoardSave();
+		},
+		removeChecklistTask(tasks, taskId) {
+			boardService.removeChecklistTask(tasks, taskId);
 			this.dispatchBoardSave();
 		},
 		toggleLabel(label) {
