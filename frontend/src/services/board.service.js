@@ -15,7 +15,9 @@ export const boardService = {
 	// saveCardToBoard,
 	getStarterChecklist,
 	getStarterChecklistTask,
-	updateBoardLabel
+	updateBoardLabel,
+	removeChecklist,
+	removeChecklistTask
 };
 
 function query(filterBy) {
@@ -66,9 +68,21 @@ function removeLabels(board) {
 }
 function updateBoardLabel(board, label) {
 	const idx = board.labels.findIndex(
-		(labelToFind) => label.color === labelToFind.color
+		(findLabel) => label.color === findLabel.color
 	);
 	board.labels.splice(idx, 1, label);
+}
+function removeChecklist(card, checklistId) {
+	const idx = card.checklists.findIndex(
+		(findChecklist) => checklistId === findChecklist.id
+	);
+	card.checklists.splice(idx, 1);
+}
+function removeChecklistTask(tasks, taskId) {
+	const idx = tasks.findIndex(
+		(findTask) => taskId === findTask.id
+	);
+	tasks.splice(idx, 1);
 }
 // function saveCardToBoard(board, card) {
 // 	board.topics.find((topic) => {
