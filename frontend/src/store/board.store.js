@@ -68,6 +68,7 @@ export const boardStore = {
                 })
         },
         saveBoard({ commit }, { board }) {
+            console.log(board)
             const type = (board._id) ? 'updateBoard' : 'addBoard'
             return boardService.save(board)
                 .then((savedBoard) => {
