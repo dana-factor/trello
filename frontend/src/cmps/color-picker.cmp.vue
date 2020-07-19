@@ -4,7 +4,7 @@
 			v-for="(color,idx) in colors"
 			:class="{picked: color === selectedColor}"
 			:style="{backgroundColor: color}"
-			@click="setSelectedColor(color)"
+			@click="selectColor(color)"
 			:key="idx"
 		></span>
 	</div>
@@ -34,7 +34,7 @@ export default {
 	},
 	computed: {},
 	methods: {
-        setSelectedColor(color) {
+        selectColor(color) {
       //   this.favColor = this.$refs.colorSelect.value
             this.selectedColor = color;
         console.log(this.selectedColor);

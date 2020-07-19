@@ -7,13 +7,13 @@
 				<hr />
 			</div>
 			<div class="board-menu-nav">
-				<h5>Change Background</h5>
+				<h5 @click="toggleColorPicker">Change Background</h5>
 				<h5>Change Due Date</h5>
 				<h5 @click="removeBoard(boardId)">Delete Board</h5>
 				<hr />
 			</div>
 			<div>
-                <color-picker />
+                <color-picker v-if="colorPickerOpen" @changeBgc="changeBgc"/>
 			</div>
 
     
@@ -27,7 +27,7 @@ export default {
     props:['boardId'],
     data(){
         return{
-
+            colorPickerOpen: false
         }
     },
     computed: {
@@ -37,9 +37,15 @@ export default {
         toggleBoardMenu() {
             this.$emit('toggleBoardMenu');
         },
-        		removeBoard(boardId) {
+        toggleColorPicker() {
+            this.colorPickerOpen = !this.colorPickerOpen;
+        },
+        removeBoard(boardId) {
 			this.$emit("removeBoard", boardId);
         },
+        changeBgc(color) {
+            this.$emit('changeBgc', color);
+        }
 
     },
     created(){

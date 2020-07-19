@@ -19,6 +19,7 @@
 			v-if="boardMenuOpen"
 			@toggleBoardMenu="toggleBoardMenu"
 			@removeBoard="removeBoard"
+			@changeBgc="changeBgc"
 			:boardId="board._id"
 		/>
 		<Container
@@ -100,6 +101,10 @@ export default {
 		updateBoardName(ev) {
 			if (ev.target.innerText) this.boardName = ev.target.innerText;
 			this.board.name = this.boardName;
+			this.saveBoard();
+		},
+		changeBgc(color) {
+			this.board.style.backgroundColor = color;
 			this.saveBoard();
 		},
 		removeBoard(boardId) {
