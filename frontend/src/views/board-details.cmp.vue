@@ -1,5 +1,8 @@
 <template>
-	<section v-if="board" class="board-details">
+	<section
+		v-if="board"
+		class="board-details"
+	>
 		<board-nav>
 			<h2
 				slot="board-name"
@@ -12,26 +15,12 @@
 				@click="toggleBoardMenu"
 			><i class="el-icon-more"></i></button>
 		</board-nav>
-		<div
-			hidden
-			:class="{'board-menu': boardMenuOpen}"
-		>
-			<div class="board-menu-header">
-				<h3>Menu</h3>
-				<button>X</button>
-				<hr />
-			</div>
-			<div class="board-menu-nav">
-				<h5>Change Background</h5>
-				<h5>Change Due Date</h5>
-				<h5>Delete Board</h5>
-				<hr />
-			</div>
-			<div>
-				</div>
-
-		</div>
-
+		<board-edit
+			v-if="boardMenuOpen"
+			@toggleBoardMenu="toggleBoardMenu"
+			@removeBoard="removeBoard"
+			:boardId="board._id"
+		/>
 		<Container
 			orientation="horizontal"
 			@drop="onColumnDrop($event)"
@@ -54,9 +43,19 @@
 				/>
 			</Draggable>
 			<div class="topic-wrapper add-topic">
-				<h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add another list</h2>
-				<input class="topicName" v-if="topicNameInputOpen" v-model="topicName" />
-				<button @click="addTopic" v-if="topicNameInputOpen">Add List</button>
+				<h2
+					v-if="!topicNameInputOpen"
+					@click="topicNameInputOpen = true"
+				>+Add another list</h2>
+				<input
+					class="topicName"
+					v-if="topicNameInputOpen"
+					v-model="topicName"
+				/>
+				<button
+					@click="addTopic"
+					v-if="topicNameInputOpen"
+				>Add List</button>
 			</div>
 		</Container>
 		<router-view :board="board" />
@@ -70,6 +69,8 @@ import { Container, Draggable } from "vue-smooth-dnd";
 import boardTopic from "../cmps/board/board-topic.cmp.vue";
 import boardNav from "../cmps/board/board-nav.cmp.vue";
 import cardDetails from "../views/card-details.cmp.vue";
+import boardEdit from "../cmps/board/board-edit.cmp.vue";
+
 export default {
 	props: [],
 	data() {
@@ -94,14 +95,17 @@ export default {
 	},
 	methods: {
 		toggleBoardMenu() {
-			console.log("toggle borad menu");
 			this.boardMenuOpen = !this.boardMenuOpen;
-			console.log(this.boardMenuOpen);
 		},
 		updateBoardName(ev) {
 			if (ev.target.innerText) this.boardName = ev.target.innerText;
 			this.board.name = this.boardName;
 			this.saveBoard();
+		},
+		removeBoard(boardId) {
+			if (confirm("Are you sure you want to delete this board?")) {
+				this.$store.dispatch({ type: "removeBoard", id: boardId });
+			} else return;
 		},
 		updateTopicName(topicName, topicId) {
 			let currTopic = this.board.topics.find(
@@ -214,7 +218,7 @@ export default {
 	created() {
 		this.loadBoard();
 	},
-	mounted() { },
+	mounted() {},
 	watch: {
 		boardComputed(value) {
 			this.board = JSON.parse(JSON.stringify(value));
@@ -226,7 +230,8 @@ export default {
 		boardNav,
 		cardDetails,
 		Draggable,
-		Container
+		Container,
+		boardEdit
 	}
 };
 </script>

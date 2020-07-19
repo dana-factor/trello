@@ -53,15 +53,10 @@ export default {
 
 <style scoped>
 
-.color-palette {
-    background-color: white;
-    border-radius: 5px;
-    display: flex;
+.color-picker {
+display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* position: absolute;
-    bottom: 6vh;
-    left: 70%; */
 }
 
 .color-picker span {
@@ -72,6 +67,8 @@ export default {
     border-radius: 3px;
     border: 0.5px solid gray;
 }
+
+    
 /* 
   .picked::after {
     content: "✔";
