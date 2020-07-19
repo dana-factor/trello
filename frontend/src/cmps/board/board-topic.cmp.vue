@@ -55,8 +55,10 @@
 		>
 			<p v-if="!editCardNameShown" @click="editCardNameShown = true">+ Add another card</p>
 			<textarea v-if="editCardNameShown" v-model="cardName" @keypress.enter.prevent="addCard" placeholder="Enter a title for this card..."></textarea>
-			<button v-if="editCardNameShown" @click="addCard">Add Card</button>
-			<button v-if="editCardNameShown" @click="editCardNameShown = false">close</button>
+			<div class="btns">
+				<button v-if="editCardNameShown" @click="addCard" class="add">Add Card</button>
+				<button v-if="editCardNameShown" @click="editCardNameShown = false" class="close"><i class="el-icon-close"></i></button>
+			</div>
 		</div>
 	</section>
 </template>
