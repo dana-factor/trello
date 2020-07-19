@@ -8,24 +8,21 @@
 					id="name"
 					contenteditable
 				>{{card.name}}</h1>
-				<router-link to="../">X</router-link>
+				<router-link to="../"><i class="el-icon-close"></i></router-link>
 			</div>
 			<div class="body">
 				<div class="left-side">
 					<div class="members-labels">
 						<!-- members -->
 						<ul>
-							<li
-								v-for="label in card.labels"
-								:key="label.color"
-								:style="{backgroundColor:label.color}"
-							>{{label.title}}</li>
+							<li class="labels" v-for="label in card.labels" :key="label.color" :style="{backgroundColor:label.color}">
+								{{label.title}}
+							</li>
 						</ul>
 					</div>
 					<div class="description">
-						
 						<h2><i class="el-icon-document"></i> Description</h2>
-						<textarea v-model="card.description" placeholder="Add a description..."></textarea>
+						<textarea v-model="card.description" placeholder="Add a more detailed description..."></textarea>
 						<button @click="dispatchBoardSave">Save</button>
 					</div>
 					<card-attachments :attachments="card.attachments" @attachmentRemoved="removeAttachment" />
@@ -37,7 +34,7 @@
 						@checklistTaskRemoved="removeChecklistTask"
 					/>
 				</div>
-				<div class="edit-btns">
+				<div class="right-side">
 					<button @click.stop="toggleModal('card-label-edit')">Labels</button>
 					<button @click.stop="toggleModal('card-checklist-edit')">Checklists</button>
 					<input type="file" @change="onUploadImg" />

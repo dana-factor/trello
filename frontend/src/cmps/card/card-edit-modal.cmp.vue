@@ -3,7 +3,7 @@
 		<!-- <div class="header flex"> -->
 		<header>
 			<slot name="header"></slot>
-			<button @click="close">X</button>
+			<button @click="close"><i class="el-icon-close"></i></button>
 		</header>
 		<!-- </div> -->
 		<slot></slot>

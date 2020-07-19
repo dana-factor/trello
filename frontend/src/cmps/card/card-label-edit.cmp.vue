@@ -6,11 +6,11 @@
 		</div>
 		<ul>
 			<li v-for="label in boardLabels" :key="label.color">
-				<button @click="toggleLabel(label)" :style="{backgroundColor:label.color}">
-					<span v-if="hasLabel(label)">V</span>
+				<button class="label" @click="toggleLabel(label)" :style="{backgroundColor:label.color}">
 					{{label.title}}
+					<span v-if="hasLabel(label)"><i class="el-icon-check"></i></span>
 				</button>
-				<button @click="editTitle(label)">Edit</button>
+				<button @click="editTitle(label)"><i class="el-icon-edit"></i></button>
 			</li>
 		</ul>
 	</section>

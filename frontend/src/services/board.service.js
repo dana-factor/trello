@@ -17,7 +17,7 @@ export const boardService = {
 	getStarterChecklistTask,
 	updateBoardLabel,
 	removeChecklist,
-	removeChecklistTask
+	removeChecklistTask,
 };
 
 function query(filterBy) {
@@ -79,9 +79,7 @@ function removeChecklist(card, checklistId) {
 	card.checklists.splice(idx, 1);
 }
 function removeChecklistTask(tasks, taskId) {
-	const idx = tasks.findIndex(
-		(findTask) => taskId === findTask.id
-	);
+	const idx = tasks.findIndex((findTask) => taskId === findTask.id);
 	tasks.splice(idx, 1);
 }
 // function saveCardToBoard(board, card) {
@@ -96,13 +94,35 @@ function getStarterBoard() {
 		// _id: _makeId(),
 		name: 'starter board',
 		members: [],
+		// green #519839
+		// yellow #d9b51c
+		// orange #ff9f1a
+		// red #b04632
+		// purple #c377e0
+		// blue #0079bf
 		labels: [
 			{
-				color: 'green',
+				color: '#519839',
 				title: '',
 			},
 			{
-				color: 'yellow',
+				color: '#d9b51c',
+				title: '',
+			},
+			{
+				color: '#ff9f1a',
+				title: '',
+			},
+			{
+				color: '#b04632',
+				title: '',
+			},
+			{
+				color: '#c377e0',
+				title: '',
+			},
+			{
+				color: '#0079bf',
 				title: '',
 			},
 		],
