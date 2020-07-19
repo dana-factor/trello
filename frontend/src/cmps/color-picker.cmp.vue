@@ -4,7 +4,7 @@
 			v-for="(color,idx) in colors"
 			:class="{picked: color === selectedColor}"
 			:style="{backgroundColor: color}"
-			@click="setSelectedColor(color)"
+			@click="selectColor(color)"
 			:key="idx"
 		></span>
 	</div>
@@ -25,18 +25,16 @@ export default {
 				"red",
 				"blue",
 				"purple",
-				"yellow",
 				"burlywood",
 				"rgb(219, 88, 110)",
 				"gray",
-				"rgb(0, 247, 255)",
 				"orange"
 			]
 		};
 	},
 	computed: {},
 	methods: {
-        setSelectedColor(color) {
+        selectColor(color) {
       //   this.favColor = this.$refs.colorSelect.value
             this.selectedColor = color;
         console.log(this.selectedColor);
@@ -55,27 +53,24 @@ export default {
 
 <style scoped>
 
-.color-palette {
-    background-color: white;
-    border-radius: 5px;
-    display: flex;
+.color-picker {
+display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* position: absolute;
-    bottom: 6vh;
-    left: 70%; */
 }
 
 .color-picker span {
-    width: 40px;
-    height: 40px;
+    width: 100px;
+    height: 65px;
     display: inline-block;
     margin: 5px;
-    /* border-radius: 50%; */
+    border-radius: 3px;
     border: 0.5px solid gray;
 }
 
+    
+/* 
   .picked::after {
     content: "✔";
-  }
+  } */
 </style>

@@ -1,5 +1,8 @@
 <template>
-	<section v-if="board" class="board-details">
+	<section
+		v-if="board"
+		class="board-details"
+	>
 		<board-nav>
 			<h2
 				slot="board-name"
@@ -7,14 +10,18 @@
 				@keypress.enter.prevent="updateBoardName"
 				@blur="updateBoardName"
 			>{{board.name}}</h2>
-			<button class="menu-btn" @click="toggleEditMenu">
-				<i class="el-icon-more"></i>
-			</button>
-			<div v-if="editMenuOpen">
-				<p>Change Background</p>
-			</div>
+			<button
+				class="menu-btn"
+				@click="toggleBoardMenu"
+			><i class="el-icon-more"></i></button>
 		</board-nav>
-
+		<board-edit
+			v-if="boardMenuOpen"
+			@toggleBoardMenu="toggleBoardMenu"
+			@removeBoard="removeBoard"
+			@changeBgc="changeBgc"
+			:boardId="board._id"
+		/>
 		<Container
 			orientation="horizontal"
 			@drop="onColumnDrop($event)"
@@ -22,7 +29,10 @@
 			drag-class="grab"
 			:drop-placeholder="upperDropPlaceholderOptions"
 		>
-			<Draggable v-for="topic in board.topics" :key="topic.id">
+			<Draggable
+				v-for="topic in board.topics"
+				:key="topic.id"
+			>
 				<board-topic
 					class="topic-wrapper"
 					:topic="topic"
@@ -34,9 +44,19 @@
 				/>
 			</Draggable>
 			<div class="topic-wrapper add-topic">
-				<h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add another list</h2>
-				<input class="topicName" v-if="topicNameInputOpen" v-model="topicName" />
-				<button @click="addTopic" v-if="topicNameInputOpen">Add List</button>
+				<h2
+					v-if="!topicNameInputOpen"
+					@click="topicNameInputOpen = true"
+				>+Add another list</h2>
+				<input
+					class="topicName"
+					v-if="topicNameInputOpen"
+					v-model="topicName"
+				/>
+				<button
+					@click="addTopic"
+					v-if="topicNameInputOpen"
+				>Add List</button>
 			</div>
 		</Container>
 		<router-view :board="board" />
@@ -50,13 +70,15 @@ import { Container, Draggable } from "vue-smooth-dnd";
 import boardTopic from "../cmps/board/board-topic.cmp.vue";
 import boardNav from "../cmps/board/board-nav.cmp.vue";
 import cardDetails from "../views/card-details.cmp.vue";
+import boardEdit from "../cmps/board/board-edit.cmp.vue";
+
 export default {
 	props: [],
 	data() {
 		return {
 			board: null,
-			boardName: '',
-			editMenuOpen: false,
+			boardName: "",
+			boardMenuOpen: false,
 			topicNameInputOpen: false,
 			topicName: "",
 			minimize: false,
@@ -73,13 +95,22 @@ export default {
 		}
 	},
 	methods: {
-		toggleEditMenu() {
-			this.editMenuOpen = !this.editMenuOpen;
+		toggleBoardMenu() {
+			this.boardMenuOpen = !this.boardMenuOpen;
 		},
 		updateBoardName(ev) {
 			if (ev.target.innerText) this.boardName = ev.target.innerText;
 			this.board.name = this.boardName;
 			this.saveBoard()
+		},
+		changeBgc(color) {
+			this.board.style.backgroundColor = color;
+			this.saveBoard();
+		},
+		removeBoard(boardId) {
+			if (confirm("Are you sure you want to delete this board?")) {
+				this.$store.dispatch({ type: "removeBoard", id: boardId });
+			} else return;
 		},
 		updateTopicName(topicName, topicId) {
 			let currTopic = this.board.topics.find(
@@ -190,9 +221,9 @@ export default {
 		}
 	},
 	created() {
-		this.loadBoard()
+		this.loadBoard();
 	},
-	mounted() { },
+	mounted() {},
 	watch: {
 		boardComputed(value) {
 			this.board = JSON.parse(JSON.stringify(value));
@@ -204,7 +235,8 @@ export default {
 		boardNav,
 		cardDetails,
 		Draggable,
-		Container
+		Container,
+		boardEdit
 	}
 };
 </script>

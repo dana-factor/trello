@@ -5,7 +5,7 @@
 			v-for="board in boards"
 			:key="board._id"
 		>
-			<button @click="removeBoard(board._id)">X</button>
+			
             <router-link :to="'/board/'+board._id">
 			<board-preview @updateBoard="updateBoard" :board="board" />
             </router-link>  
@@ -42,9 +42,7 @@ export default {
 			this.$emit('addBoard', boardName);
 			this.isNameInputHidden = true;
 		},
-		removeBoard(boardId) {
-			this.$emit("removeBoard", boardId);
-        },
+
        updateBoard(board) {
             this.$emit('updateBoard', board);
         },
