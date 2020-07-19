@@ -254,10 +254,10 @@ function getStarterBoard() {
 		],
 	};
 }
-function getStarterCard() {
+function getStarterCard(cardName) {
 	return {
 		id: _makeId(),
-		name: 'new card',
+		name: cardName,
 		description: '',
 		createdAt: Date.now(), //will come from server in the near future!
 		members: [],

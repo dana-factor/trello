@@ -35,8 +35,8 @@
             }
             .close-menu{
                 position: absolute;
-                top: 3px;
-                left: 100px;
+                top: -2px;
+                right: -5px;
                 z-index: 3;
             }
             button{
@@ -55,9 +55,29 @@
     .topic-footer{
         transition: 0.2s;
         margin: 0px 8px 8px;
+        display: flex;
+        flex-direction: column;
         p{
             width: 100%;
             cursor: pointer;
+        }
+        textarea{
+            border-radius: 3px;
+            box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+            border: none;
+            font-family: inherit;
+            padding: 6px 8px 2px;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        button{
+            display: block;
+            padding: 6px 12px;
+            border-radius: 3px;
+            color: #fff;
+            font-family: inherit;
+            font-weight: 400;
+            background-color: #cecece;
         }
     }
     .topic-footer:hover{

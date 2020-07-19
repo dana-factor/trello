@@ -43,7 +43,9 @@
 			class="topic-footer"
 			v-if="!minimize"
 		>
-			<p @click="addCard">+ Add another card</p>
+			<p v-if="!editCardNameShown" @click="editCardNameShown = true">+ Add another card</p>
+			<textarea v-if="editCardNameShown" v-model="cardName" @keypress.enter.prevent="addCard" placeholder="Enter a title for this card..."></textarea>
+			<button v-if="editCardNameShown" @click="addCard">Add Card</button>
 		</div>
 	</section>
 </template>
@@ -67,8 +69,10 @@ export default {
 		return {
 			editMenuOpen: false,
 			topicName: "",
+			cardName: "",
 			minimize: false,
 			editListNameShown: false,
+			editCardNameShown: false,
 			dropPlaceholderOptions: {
 				className: "drop-preview",
 				animationDuration: 150,
@@ -91,7 +95,9 @@ export default {
 			this.editMenuOpen = false;
 		},
 		addCard() {
-			this.$emit("addCard", this.topic.id);
+			this.$emit("addCard", this.topic.id, this.cardName);
+			this.editCardNameShown = false
+			this.cardName = ''
 		},
 		toggleMinimize() {
 			this.minimize = !this.minimize;

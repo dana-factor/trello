@@ -56,6 +56,8 @@
 						padding: 8px 0;
 						margin-bottom: 4px;
 						font-weight: 600;
+						overflow: hidden;
+    					text-overflow: ellipsis;
 					}
 					textarea {
 						background-color: transparentize($color: white, $amount: 0.8);

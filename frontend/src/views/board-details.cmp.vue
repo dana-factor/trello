@@ -100,8 +100,8 @@ export default {
 					this.board = JSON.parse(JSON.stringify(savedBoard));
 				});
 		},
-		addCard(topicId) {
-			const starterCard = boardService.getStarterCard();
+		addCard(topicId, cardName) {
+			const starterCard = boardService.getStarterCard(cardName);
 			let currTopic = this.board.topics.find(
 				topic => topic.id === topicId
 			);
