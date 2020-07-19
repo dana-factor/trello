@@ -8,20 +8,25 @@
 					id="name"
 					contenteditable
 				>{{card.name}}</h1>
-				<router-link to="../"><i class="el-icon-close"></i></router-link>
+				<router-link to="../">
+					<i class="el-icon-close"></i>
+				</router-link>
 			</div>
 			<div class="body">
 				<div class="left-side">
 					<div class="members-labels">
-						<!-- members -->
 						<ul>
-							<li v-for="label in card.labels" :key="label.color" :style="{backgroundColor:label.color}">
-								{{label.title}}
-							</li>
+							<li
+								v-for="label in labels"
+								:key="label.color"
+								:style="{backgroundColor:label.color}"
+							>{{label.title}}</li>
 						</ul>
 					</div>
 					<div class="description">
-						<h2><i class="el-icon-document"></i> Description</h2>
+						<h2>
+							<i class="el-icon-document"></i> Description
+						</h2>
 						<textarea v-model="card.description" placeholder="Add a more detailed description..."></textarea>
 						<button @click="dispatchBoardSave">Save</button>
 					</div>
@@ -45,7 +50,7 @@
 				<component
 					:is="editModal"
 					:boardLabels="board.labels"
-					:labels="card.labels"
+					:labels="labels"
 					@modalClose="closeModal"
 					@toggleLabel="toggleLabel"
 					@newChecklist="addNewChecklist"
@@ -65,9 +70,10 @@ import cardChecklistEdit from '../cmps/card/card-checklist-edit.cmp';
 import cardAttachments from '../cmps/card/card-attachments.cmp';
 import cardChecklists from '../cmps/card/card-checklists.cmp';
 export default {
+	props: ['board'],
 	data() {
 		return {
-			board: null,
+			boardToUpdate: null,
 			card: null,
 			cardId: 0,
 			editModal: '',
@@ -78,16 +84,30 @@ export default {
 		modalTitle() {
 			let title = this.editModal.split('-')[1];
 			return title.charAt(0).toUpperCase() + title.slice(1) + 's';
+		},
+		labels() {
+			// if(!card) return null;
+			const boardLabels = this.board.labels;
+			let newLabels = [];
+			// labels = labels.filter((label) => this.board.labels.findIndex(labelObj => labelObj.color === label));
+			boardLabels.forEach(label => {
+				if (this.card.labels.includes(label.color)) newLabels.push(label);
+			});
+			return newLabels;
 		}
+		// boardToShow() {
+		// 	return this.board;
+		// }
 	},
 	methods: {
-		setBoardAndCard(board) {
-			this.board = boardService.addLabels(JSON.parse(
-				JSON.stringify(board)));
-			if (!this.board) this.$router.push('/');
-			this.card = boardService.getCardById(this.board, this.cardId);
-			if (!this.card) this.$router.push('/');
-		},
+		// setBoardAndCard(board) {
+		// 	let board = null;
+		// 	board = boardService.addLabels(JSON.parse(
+		// 		JSON.stringify(this.boardToShow)));
+		// 	if (!this.board) this.$router.push('/');
+		// 	this.card = boardService.getCardById(this.board, this.cardId);
+		// 	if (!this.card) this.$router.push('/');
+		// },
 		updateCardName() {
 			this.card.name = document.querySelector('#name').innerText;
 			this.dispatchBoardSave();
@@ -121,26 +141,26 @@ export default {
 			this.dispatchBoardSave();
 		},
 		toggleLabel(label) {
-			let currLabels = this.card.labels
-			if (this.hasLabel(label)) currLabels.splice(this.getLabelIndex(label), 1)
+			let currLabels = this.card.labels;
+			if (currLabels.includes(label)) currLabels.splice(currLabels.indexOf(label), 1)
 			else currLabels.push(label);
 			this.dispatchBoardSave();
 		},
-		hasLabel(label) {
-			return this.getLabelIndex(label) !== -1;
-		},
-		getLabelIndex(label) {
-			return this.card.labels.findIndex((currLabel) => currLabel.color === label.color);
-		},
+		// hasLabel(label) {
+		// 	return this.getLabelIndex(label) !== -1;
+		// },
+		// getLabelIndex(label) {
+		// 	return this.card.labels.findIndex((currLabel) => currLabel.color === label.color);
+		// },
 		removeAttachment(attachment) {
 			//kinda temp idk
 			this.card.attachments.splice(this.card.attachments.indexOf(attachment), 1);
 			this.dispatchBoardSave();
 		},
 		dispatchBoardSave() {
-			const boardToUpdate = boardService.removeLabels(this.board);
-			this.$store.dispatch({ type: 'saveBoard', board: boardToUpdate })
-				.then(savedBoard => this.setBoardAndCard(savedBoard))
+			// const boardToUpdate = boardService.removeLabels(this.board);
+			this.$store.dispatch({ type: 'saveBoard', board: this.boardToUpdate })
+			// .then(savedBoard => this.setBoardAndCard(savedBoard))
 		},
 		toggleModal(cmpName) {
 			if (this.editModal === cmpName) this.closeModal()
@@ -160,8 +180,11 @@ export default {
 		this.cardId = this.$route.params.cardId;
 		let boardId = this.$route.params.boardId;
 		if (!boardId || !this.cardId) this.$router.push('/');
-		await this.$store.dispatch({ type: 'loadCurrBoard', id: boardId });
-		this.setBoardAndCard(this.$store.getters.board)
+		this.boardToUpdate = JSON.parse(
+			JSON.stringify(this.board));
+		this.card = boardService.getCardById(this.boardToUpdate, this.cardId);
+		// await this.$store.dispatch({ type: 'loadCurrBoard', id: boardId });
+		// this.setBoardAndCard(this.$store.getters.board)
 	},
 	components: {
 		cardEditModal,
