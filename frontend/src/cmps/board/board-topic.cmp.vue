@@ -6,7 +6,9 @@
 				contenteditable
 				@keypress.enter.prevent="updateTopicName"
 				@blur="updateTopicName"
-			>{{topicName}}</h2>
+				@mousemove.stop
+			>{{topicName}}
+			</h2>
 			<!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
 			<button @click="toggleEditMenu" class="close"><i class="el-icon-more"></i></button>
 			<div class="topic-menu" v-if="editMenuOpen">
