@@ -1,8 +1,5 @@
 <template>
-	<section
-		v-if="board"
-		class="board-details"
-	>
+	<section v-if="board" class="board-details">
 		<board-nav>
 			<h2
 				slot="board-name"
@@ -56,23 +53,13 @@
 					@updateDND="saveAfterDnd"
 				/>
 			</Draggable>
-		<div class="topic-wrapper add-topic">
-			<h2
-				v-if="!topicNameInputOpen"
-				@click="topicNameInputOpen = true"
-			>+Add another list</h2>
-			<input
-				class="topicName"
-				v-if="topicNameInputOpen"
-				v-model="topicName"
-			/>
-			<button
-				@click="addTopic"
-				v-if="topicNameInputOpen"
-			>Add List</button>
-		</div>
+			<div class="topic-wrapper add-topic">
+				<h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add another list</h2>
+				<input class="topicName" v-if="topicNameInputOpen" v-model="topicName" />
+				<button @click="addTopic" v-if="topicNameInputOpen">Add List</button>
+			</div>
 		</Container>
-		<router-view :board="board"/>
+		<router-view :board="board" />
 	</section>
 </template>
 
@@ -100,7 +87,11 @@ export default {
 			}
 		};
 	},
-	computed: {},
+	computed: {
+		boardComputed() {
+			return this.$store.getters.board;
+		}
+	},
 	methods: {
 		toggleBoardMenu() {
 			console.log("toggle borad menu");
@@ -161,7 +152,7 @@ export default {
 			this.$store
 				.dispatch({ type: "saveBoard", board: this.board })
 				.then(savedBoard => {
-					this.board = JSON.parse(JSON.stringify(savedBoard));
+					// this.board = JSON.parse(JSON.stringify(savedBoard));
 					this.nameInputOpen = false;
 					this.editMenuOpen = false;
 				});
@@ -171,8 +162,8 @@ export default {
 			this.$store
 				.dispatch({ type: "loadCurrBoard", id: boardId })
 				.then(board => {
-					this.board = JSON.parse(JSON.stringify(board));
-					this.setScene();
+					// this.board = JSON.parse(JSON.stringify(board));
+					// this.setScene();
 				});
 		},
 		setScene() {
@@ -223,10 +214,11 @@ export default {
 	created() {
 		this.loadBoard();
 	},
-	mounted() {},
+	mounted() { },
 	watch: {
-		$route(to) {
-			if (!to.params.cardId) this.loadBoard();
+		boardComputed(value) {
+			this.board = JSON.parse(JSON.stringify(value));
+			this.setScene();
 		}
 	},
 	components: {
