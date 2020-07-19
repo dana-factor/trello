@@ -56,7 +56,6 @@
 					@updateDND="saveAfterDnd"
 				/>
 			</Draggable>
-		</Container>
 		<div class="topic-wrapper add-topic">
 			<h2
 				v-if="!topicNameInputOpen"
@@ -72,7 +71,8 @@
 				v-if="topicNameInputOpen"
 			>Add List</button>
 		</div>
-		<router-view />
+		</Container>
+		<router-view :board="boardToShow"/>
 	</section>
 </template>
 
@@ -101,7 +101,13 @@ export default {
 			}
 		};
 	},
-	computed: {},
+	computed: {
+		boardToShow(){
+			this.board = JSON.parse(JSON.stringify(this.$store.getters.board));
+			this.setScene();
+			return this.$store.getters.board;
+		}
+	},
 	methods: {
 		toggleBoardMenu() {
 			console.log("toggle borad menu");
@@ -124,8 +130,8 @@ export default {
 					this.board = JSON.parse(JSON.stringify(savedBoard));
 				});
 		},
-		addCard(topicId) {
-			const starterCard = boardService.getStarterCard();
+		addCard(topicId, cardName) {
+			const starterCard = boardService.getStarterCard(cardName);
 			let currTopic = this.board.topics.find(
 				topic => topic.id === topicId
 			);
@@ -162,7 +168,7 @@ export default {
 			this.$store
 				.dispatch({ type: "saveBoard", board: this.board })
 				.then(savedBoard => {
-					this.board = JSON.parse(JSON.stringify(savedBoard));
+					// this.board = JSON.parse(JSON.stringify(savedBoard));
 					this.nameInputOpen = false;
 					this.editMenuOpen = false;
 				});
@@ -172,8 +178,8 @@ export default {
 			this.$store
 				.dispatch({ type: "loadCurrBoard", id: boardId })
 				.then(board => {
-					this.board = JSON.parse(JSON.stringify(board));
-					this.setScene();
+					// this.board = JSON.parse(JSON.stringify(board));
+
 				});
 		},
 		setScene() {
@@ -226,9 +232,9 @@ export default {
 	},
 	mounted() {},
 	watch: {
-		$route(to) {
-			if (!to.params.cardId) this.loadBoard();
-		}
+		// $route(to) {
+		// 	if (!to.params.cardId) this.loadBoard();
+		// }
 	},
 	components: {
 		boardTopic,

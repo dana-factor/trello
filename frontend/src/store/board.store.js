@@ -52,11 +52,14 @@ export const boardStore = {
         },
         addBoard(state, { board }) {
             state.boards.push(board)
+            state.currBoard = board;
+
         },
         updateBoard(state, { board }) {
             // console.log('update board store', board)
             const idx = state.boards.findIndex(t => t._id === board._id)
             state.boards.splice(idx, 1, board)
+            state.currBoard = board;
         },
     },
     actions: {

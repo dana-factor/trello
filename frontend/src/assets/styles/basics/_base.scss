@@ -1,5 +1,6 @@
 * {
 	box-sizing: border-box;
+	outline: none;
 }
 
 html {
@@ -36,7 +37,6 @@ button {
 	cursor: pointer;
 	border: none;
 	background-color: transparent;
-	outline: none;
 }
 
 ul {
@@ -49,7 +49,6 @@ li {
 }
 input[type='file'] {
 	color: transparent;
-	outline: none;
 	border-radius: 5px;
 	height: 32.8px;
 	&::-webkit-file-upload-button {
@@ -69,5 +68,12 @@ input[type='file'] {
 	}
 	&:hover::before {
 		background-color: #ccd1db;
+	}
+}
+*[contenteditable] {
+	padding: 7px 15px;
+	outline-color: rgb(92, 92, 92);
+	&:focus {
+		background-color: white;
 	}
 }

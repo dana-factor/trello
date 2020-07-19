@@ -6,13 +6,12 @@
 				contenteditable
 				@keypress.enter.prevent="updateTopicName"
 				@blur="updateTopicName"
-			>{{topicName}}</h2>
+				@mousemove.stop
+			>{{topicName}}
+			</h2>
 			<!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
-			<button @click="toggleEditMenu">...</button>
-			<div
-				class="topic-menu"
-				v-if="editMenuOpen"
-			>
+			<button @click="toggleEditMenu" class="close"><i class="el-icon-more"></i></button>
+			<div class="topic-menu" v-if="editMenuOpen">
 				<h3>List Actions</h3>
 				<button
 					@click="toggleEditMenu"
@@ -54,7 +53,9 @@
 			class="topic-footer"
 			v-if="!minimize"
 		>
-			<p @click="addCard">+ Add another card</p>
+			<p v-if="!editCardNameShown" @click="editCardNameShown = true">+ Add another card</p>
+			<textarea v-if="editCardNameShown" v-model="cardName" @keypress.enter.prevent="addCard" placeholder="Enter a title for this card..."></textarea>
+			<button v-if="editCardNameShown" @click="addCard">Add Card</button>
 		</div>
 	</section>
 </template>
@@ -78,8 +79,10 @@ export default {
 		return {
 			editMenuOpen: false,
 			topicName: "",
+			cardName: "",
 			minimize: false,
 			editListNameShown: false,
+			editCardNameShown: false,
 			dropPlaceholderOptions: {
 				className: "drop-preview",
 				animationDuration: 150,
@@ -102,7 +105,9 @@ export default {
 			this.editMenuOpen = false;
 		},
 		addCard() {
-			this.$emit("addCard", this.topic.id);
+			this.$emit("addCard", this.topic.id, this.cardName);
+			this.editCardNameShown = false
+			this.cardName = ''
 		},
 		toggleMinimize() {
 			this.minimize = !this.minimize;
