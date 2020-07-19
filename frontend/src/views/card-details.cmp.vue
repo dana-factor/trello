@@ -15,7 +15,7 @@
 					<div class="members-labels">
 						<!-- members -->
 						<ul>
-							<li class="labels" v-for="label in card.labels" :key="label.color" :style="{backgroundColor:label.color}">
+							<li v-for="label in card.labels" :key="label.color" :style="{backgroundColor:label.color}">
 								{{label.title}}
 							</li>
 						</ul>

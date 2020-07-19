@@ -20,44 +20,59 @@
 			align-items: center;
 			justify-content: space-between;
 			padding: 0.5rem;
-			h1{
+			h1 {
 				font-weight: 600;
 			}
 		}
 		.body {
 			display: flex;
-			justify-content: space-between;
-			.left-side{
+			// justify-content: space-between;
+			padding: 10px 20px;
+			.left-side {
+				width: 70%;
 				display: flex;
 				flex-direction: column;
-				li.labels{
-					border-radius: 3px;
-					min-width: 40px;
-					padding: 0 12px;
-					height: 32px;
-					line-height: 32px;
-					margin: 0 4px 4px 0;
-					font-weight: 600;
-					color: #fff;
+				margin-right: 20px;
+				.members-labels {
+					ul {
+						display: flex;
+					}
+					li {
+						border-radius: 3px;
+						min-width: 40px;
+						padding: 0 12px;
+						height: 32px;
+						line-height: 32px;
+						margin: 0 4px 4px 0;
+						font-weight: 600;
+						color: #fff;
+					}
 				}
 				.description {
 					display: flex;
 					flex-direction: column;
-					h2{
+					h2 {
 						line-height: rem(20px);
 						padding: 8px 0;
 						margin-bottom: 4px;
 						font-weight: 600;
 					}
-					textarea{
-						background-color: #fff;
+					textarea {
+						background-color: transparentize($color: white, $amount: 0.8);
 						height: rem(108px);
+						cursor: pointer;
 						margin-bottom: 4px;
 						color: #172b4d;
 						padding: 8px 12px;
-						font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
+						font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+							Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
 						border: none;
 						border-radius: 3px;
+						transition: background-color 0.2s;
+						&:focus {
+							background-color: white;
+							cursor: text;
+						}
 					}
 				}
 				.card-checklists {
@@ -83,8 +98,6 @@
 					background-color: #ccd1db;
 				}
 			}
-			
 		}
-
 	}
 }
