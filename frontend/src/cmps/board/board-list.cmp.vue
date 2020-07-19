@@ -1,4 +1,5 @@
 <template>
+<div>
 	<ul class="board-list">
 		<li
 			v-for="board in boards"
@@ -9,8 +10,14 @@
 			<board-preview @updateBoard="updateBoard" :board="board" />
             </router-link>  
 		</li>
-		<li @click="addBoard"> Add Board </li>
+		<li @click="toggleInput"> Add Board </li>
 	</ul>
+	<div :class="{hidden: isNameInputHidden}" class="add-name-modal">
+		<button @click="toggleInput">X</button>
+		<label>Name of your Board</label>
+		<input type="text" autofocus @change="addBoard"/>
+		</div>
+</div>
 </template>
 
 <script>
@@ -21,12 +28,19 @@ export default {
 	name: "board-list",
 	props: ["boards"],
 	data() {
-		return {};
+		return {
+			isNameInputHidden: true
+		};
 	},
 	computed: {},
 	methods: {
-		addBoard() {
-            this.$emit('addBoard')
+		toggleInput() {
+			this.isNameInputHidden = !this.isNameInputHidden;
+		},
+		addBoard(ev) {
+			const boardName = ev.target.value;
+			this.$emit('addBoard', boardName);
+			this.isNameInputHidden = true;
 		},
 		removeBoard(boardId) {
 			this.$emit("removeBoard", boardId);
@@ -45,5 +59,9 @@ export default {
 </script>
 
 <style scoped>
+
+.hidden {
+	visibility: hidden;
+}
 
 </style>

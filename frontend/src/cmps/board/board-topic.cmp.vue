@@ -1,10 +1,12 @@
 <template>
 	<section class="board-topic">
+			<span class="column-drag-handle">
 		<div class="topic-header">
-			<span class="column-drag-handle">✥</span>
-			<h2 contenteditable @keypress.enter.prevent="updateTopicName" @blur="updateTopicName">
-				{{topicName}}
-			</h2>
+			<h2
+				contenteditable
+				@keypress.enter.prevent="updateTopicName"
+				@blur="updateTopicName"
+			>{{topicName}}</h2>
 			<!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
 			<button @click="toggleEditMenu" class="close"><i class="el-icon-more"></i></button>
 			<div class="topic-menu" v-if="editMenuOpen">
@@ -17,6 +19,7 @@
 				<button @click="toggleMinimize(); toggleEditMenu();"><span v-if="!minimize">Minimize</span><span v-if="minimize">Maximize</span></button>
 			</div>
 		</div>
+			</span>
 		<Container
 			class="topic-main"
 			v-if="!minimize"
@@ -66,15 +69,9 @@ export default {
 			topicName: "",
 			minimize: false,
 			editListNameShown: false,
-			// board: null,
-			upperDropPlaceholderOptions: {
-				className: "cards-drop-preview",
-				animationDuration: "150",
-				showOnTop: true
-			},
 			dropPlaceholderOptions: {
 				className: "drop-preview",
-				animationDuration: "150",
+				animationDuration: 150,
 				showOnTop: true
 			}
 		};
@@ -129,7 +126,6 @@ export default {
 	created() {
 		this.topicName = this.topic.name;
         console.log(this.topicName);
-        // this.board = JSON.parse(JSON.stringify(this.boardy));
 	},
 	mounted() {},
 	watch: {},
@@ -142,25 +138,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card-ghost {
-	transition: transform 0.18s ease;
-	transform: rotateZ(5deg);
-}
 
-.card-ghost-drop {
-	transition: transform 0.18s ease-in-out;
-	transform: rotateZ(0deg);
-}
-
-.drop-preview {
-	background-color: rgba(150, 150, 200, 0.1);
-	border: 1px dashed #abc;
-	margin: 5px;
-}
-
-.cards-drop-preview {
-	background-color: rgba(150, 150, 200, 0.1);
-	border: 1px dashed #abc;
-	margin: 5px 45px 5px 5px;
-}
 </style>
