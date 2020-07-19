@@ -32,7 +32,6 @@
 					@updateDND="saveAfterDnd"
 				/>
 			</Draggable>
-		</Container>
 		<div class="topic-wrapper add-topic">
 			<h2
 				v-if="!topicNameInputOpen"
@@ -48,6 +47,7 @@
 				v-if="topicNameInputOpen"
 			>Add List</button>
 		</div>
+		</Container>
 		<router-view />
 	</section>
 </template>

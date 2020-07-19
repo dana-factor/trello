@@ -6,7 +6,7 @@
 				{{topicName}}
 			</h2>
 			<!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
-			<button @click="toggleEditMenu"><i class="el-icon-more"></i></button>
+			<button @click="toggleEditMenu" class="close"><i class="el-icon-more"></i></button>
 			<div class="topic-menu" v-if="editMenuOpen">
 				<h3>List Actions</h3>
 				<button @click="toggleEditMenu" class="close-menu" ><i class="el-icon-close"></i></button>
