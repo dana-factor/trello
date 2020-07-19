@@ -8,25 +8,14 @@
 				@blur="updateTopicName"
 			>{{topicName}}</h2>
 			<!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
-			<button @click="toggleEditMenu">...</button>
-			<div
-				class="topic-menu"
-				v-if="editMenuOpen"
-			>
+			<button @click="toggleEditMenu"><i class="el-icon-more"></i></button>
+			<div class="topic-menu" v-if="editMenuOpen">
 				<h3>List Actions</h3>
-				<button
-					@click="toggleEditMenu"
-					class="close-menu"
-				>X</button>
+				<button @click="toggleEditMenu" class="close-menu" ><i class="el-icon-close"></i></button>
 				<button @click="removeTopic(topic.id); toggleEditMenu();">Delete list</button>
 				<button @click="addCard(); toggleEditMenu();">Add new card</button>
 				<button @click="toggleEditListNameShown">Change list name</button>
-				<input
-					v-if="editListNameShown"
-					v-model="topicName"
-					@keypress.enter.prevent="updateTopicName"
-					@blur="updateTopicName"
-				/>
+				<input v-if="editListNameShown" v-model="topicName" @keypress.enter.prevent="updateTopicName" @blur="updateTopicName"/>
 				<button @click="toggleMinimize(); toggleEditMenu();"><span v-if="!minimize">Minimize</span><span v-if="minimize">Maximize</span></button>
 			</div>
 		</div>

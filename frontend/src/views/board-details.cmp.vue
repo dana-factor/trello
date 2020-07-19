@@ -5,7 +5,7 @@
 	>
 		<board-nav>
 			<h2 slot="board-name" contenteditable @keypress.enter.prevent="updateBoardName" @blur="updateBoardName">{{board.name}}</h2>
-			<button class="menu-btn" @click="toggleEditMenu">...</button>
+			<button  class="menu-btn" @click="toggleEditMenu"><i class="el-icon-more"></i></button>
 			<div v-if="editMenuOpen">
 				<p>Change Background</p>
 			</div>
@@ -19,11 +19,12 @@
 			:drop-placeholder="upperDropPlaceholderOptions"
 		>
 			<Draggable
-				class="topic-wrapper"
+				
 				v-for="topic in board.topics"
 				:key="topic.id"
 			>
 				<board-topic
+					class="topic-wrapper"
 					:topic="topic"
 					:boardy="board"
 					@updateTopicName="updateTopicName"
