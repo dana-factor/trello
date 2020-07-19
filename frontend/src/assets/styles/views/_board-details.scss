@@ -15,4 +15,17 @@
         padding: 6px 8px;
         color: white;
     }
+    .menu-btn {
+        float: right;
+    }
+
+
+    // drag'n'drop
+    .grab {
+        cursor: grabbing;
+    }
+    .drop-preview {
+        background-color: rgba(150, 150, 200, 0.1);
+        margin: 5px;
+    }
 }
