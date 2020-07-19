@@ -72,7 +72,7 @@
 			>Add List</button>
 		</div>
 		</Container>
-		<router-view :board="boardToShow"/>
+		<router-view :board="board"/>
 	</section>
 </template>
 
@@ -83,7 +83,6 @@ import { Container, Draggable } from "vue-smooth-dnd";
 import boardTopic from "../cmps/board/board-topic.cmp.vue";
 import boardNav from "../cmps/board/board-nav.cmp.vue";
 import cardDetails from "../views/card-details.cmp.vue";
-
 export default {
 	props: [],
 	data() {
@@ -101,13 +100,7 @@ export default {
 			}
 		};
 	},
-	computed: {
-		boardToShow(){
-			this.board = JSON.parse(JSON.stringify(this.$store.getters.board));
-			this.setScene();
-			return this.$store.getters.board;
-		}
-	},
+	computed: {},
 	methods: {
 		toggleBoardMenu() {
 			console.log("toggle borad menu");
@@ -168,7 +161,7 @@ export default {
 			this.$store
 				.dispatch({ type: "saveBoard", board: this.board })
 				.then(savedBoard => {
-					// this.board = JSON.parse(JSON.stringify(savedBoard));
+					this.board = JSON.parse(JSON.stringify(savedBoard));
 					this.nameInputOpen = false;
 					this.editMenuOpen = false;
 				});
@@ -178,8 +171,8 @@ export default {
 			this.$store
 				.dispatch({ type: "loadCurrBoard", id: boardId })
 				.then(board => {
-					// this.board = JSON.parse(JSON.stringify(board));
-
+					this.board = JSON.parse(JSON.stringify(board));
+					this.setScene();
 				});
 		},
 		setScene() {
@@ -232,9 +225,9 @@ export default {
 	},
 	mounted() {},
 	watch: {
-		// $route(to) {
-		// 	if (!to.params.cardId) this.loadBoard();
-		// }
+		$route(to) {
+			if (!to.params.cardId) this.loadBoard();
+		}
 	},
 	components: {
 		boardTopic,
