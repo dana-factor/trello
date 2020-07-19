@@ -5,7 +5,7 @@
 	>
 		<board-nav>
 			<h2 slot="board-name">{{board.name}}</h2>
-			<button @click="toggleEditMenu">...</button>
+			<button @click="toggleEditMenu"><i class="el-icon-more"></i></button>
 			<div v-if="editMenuOpen">
 				<p @click="nameInputOpen = true">Change Name</p>
 				<input
@@ -24,11 +24,12 @@
 			:drop-placeholder="upperDropPlaceholderOptions"
 		>
 			<Draggable
-				class="topic-wrapper"
+				
 				v-for="topic in board.topics"
 				:key="topic.id"
 			>
 				<board-topic
+					class="topic-wrapper"
 					:topic="topic"
 					:boardy="board"
 					@updateTopicName="updateTopicName"
