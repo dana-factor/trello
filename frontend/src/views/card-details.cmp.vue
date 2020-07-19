@@ -87,10 +87,13 @@ export default {
 		},
 		labels() {
 			// if(!card) return null;
-			let labels = this.board.labels;
-			labels = labels.filter((label) => this.card.labels.includes(label.color));
-			this.card.labels = labels;
-			return labels;
+			const boardLabels = this.board.labels;
+			let newLabels = [];
+			// labels = labels.filter((label) => this.board.labels.findIndex(labelObj => labelObj.color === label));
+			boardLabels.forEach(label => {
+				if (this.card.labels.includes(label.color)) newLabels.push(label);
+			});
+			return newLabels;
 		}
 		// boardToShow() {
 		// 	return this.board;
@@ -138,11 +141,9 @@ export default {
 			this.dispatchBoardSave();
 		},
 		toggleLabel(label) {
-			console.log(this.card.labels)
 			let currLabels = this.card.labels;
 			if (currLabels.includes(label)) currLabels.splice(currLabels.indexOf(label), 1)
 			else currLabels.push(label);
-						console.log(this.card.labels)
 			this.dispatchBoardSave();
 		},
 		// hasLabel(label) {

@@ -40,7 +40,6 @@ export default {
 			this.labelToEdit = null;
 		},
 		toggleLabel(label) {
-			console.log(this.labels)
 			this.$emit('toggleLabel', label.color);
 		},
 		editTitle(label) {
