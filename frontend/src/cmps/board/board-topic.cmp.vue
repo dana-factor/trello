@@ -122,20 +122,7 @@ export default {
 			) {
 				const boardy = Object.assign({}, this.boardy);
                 const column = boardy.topics.filter(p => p.id === columnId)[0];
-                console.log('columnId', columnId)
                 const columnIndex = boardy.topics.indexOf(column);
-                console.log('column idx', columnIndex)
-
-				// const newColumn = Object.assign({}, column);
-				// newColumn.cards = utilService.applyDrag(
-				// 	newColumn.cards,
-				// 	dropResult
-                // );
-                
-				// boardy.topics.splice(columnIndex, 1, newColumn);
-				console.log("scene", boardy);
-				// this.boardy = boardy;
-                // this.$emit('saveBoardAfterDnd', boardy)
                 this.$emit('updateDND', dropResult, columnIndex, column)
 			}
 		},
@@ -168,4 +155,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card-ghost {
+	transition: transform 0.18s ease;
+	transform: rotateZ(5deg);
+}
+
+.card-ghost-drop {
+	transition: transform 0.18s ease-in-out;
+	transform: rotateZ(0deg);
+}
+
+.drop-preview {
+	background-color: rgba(150, 150, 200, 0.1);
+	border: 1px dashed #abc;
+	margin: 5px;
+}
+
+.cards-drop-preview {
+	background-color: rgba(150, 150, 200, 0.1);
+	border: 1px dashed #abc;
+	margin: 5px 45px 5px 5px;
+}
 </style>
