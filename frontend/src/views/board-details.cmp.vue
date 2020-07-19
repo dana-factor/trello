@@ -1,16 +1,20 @@
 <template>
-	<section
-		v-if="board"
-		class="board-details"
-	>
+	<section v-if="board" class="board-details">
 		<board-nav>
-			<h2 slot="board-name" contenteditable @keypress.enter.prevent="updateBoardName" @blur="updateBoardName">{{board.name}}</h2>
-			<button  class="menu-btn" @click="toggleEditMenu"><i class="el-icon-more"></i></button>
+			<h2
+				slot="board-name"
+				contenteditable
+				@keypress.enter.prevent="updateBoardName"
+				@blur="updateBoardName"
+			>{{board.name}}</h2>
+			<button class="menu-btn" @click="toggleEditMenu">
+				<i class="el-icon-more"></i>
+			</button>
 			<div v-if="editMenuOpen">
 				<p>Change Background</p>
 			</div>
 		</board-nav>
-			
+
 		<Container
 			orientation="horizontal"
 			@drop="onColumnDrop($event)"
@@ -18,11 +22,7 @@
 			drag-class="grab"
 			:drop-placeholder="upperDropPlaceholderOptions"
 		>
-			<Draggable
-				
-				v-for="topic in board.topics"
-				:key="topic.id"
-			>
+			<Draggable v-for="topic in board.topics" :key="topic.id">
 				<board-topic
 					class="topic-wrapper"
 					:topic="topic"
@@ -33,23 +33,13 @@
 					@updateDND="saveAfterDnd"
 				/>
 			</Draggable>
-		<div class="topic-wrapper add-topic">
-			<h2
-				v-if="!topicNameInputOpen"
-				@click="topicNameInputOpen = true"
-			>+Add another list</h2>
-			<input
-				class="topicName"
-				v-if="topicNameInputOpen"
-				v-model="topicName"
-			/>
-			<button
-				@click="addTopic"
-				v-if="topicNameInputOpen"
-			>Add List</button>
-		</div>
+			<div class="topic-wrapper add-topic">
+				<h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add another list</h2>
+				<input class="topicName" v-if="topicNameInputOpen" v-model="topicName" />
+				<button @click="addTopic" v-if="topicNameInputOpen">Add List</button>
+			</div>
 		</Container>
-		<router-view :board="board"/>
+		<router-view :board="board" />
 	</section>
 </template>
 
@@ -77,12 +67,16 @@ export default {
 			}
 		};
 	},
-	computed: {},
+	computed: {
+		boardComputed() {
+			return this.$store.getters.board;
+		}
+	},
 	methods: {
 		toggleEditMenu() {
 			this.editMenuOpen = !this.editMenuOpen;
 		},
-		updateBoardName(ev){
+		updateBoardName(ev) {
 			if (ev.target.innerText) this.boardName = ev.target.innerText;
 			this.board.name = this.boardName;
 			this.saveBoard();
@@ -136,7 +130,7 @@ export default {
 			this.$store
 				.dispatch({ type: "saveBoard", board: this.board })
 				.then(savedBoard => {
-					this.board = JSON.parse(JSON.stringify(savedBoard));
+					// this.board = JSON.parse(JSON.stringify(savedBoard));
 					this.nameInputOpen = false;
 					this.editMenuOpen = false;
 				});
@@ -146,8 +140,8 @@ export default {
 			this.$store
 				.dispatch({ type: "loadCurrBoard", id: boardId })
 				.then(board => {
-					this.board = JSON.parse(JSON.stringify(board));
-					this.setScene();
+					// this.board = JSON.parse(JSON.stringify(board));
+					// this.setScene();
 				});
 		},
 		setScene() {
@@ -176,11 +170,11 @@ export default {
 		saveAfterDnd(dropResult, columnIndex, column) {
 			const newColumn = Object.assign({}, column);
 			newColumn.cards = dragDropService.applyDrag(
-					newColumn.cards,
-					dropResult
-                );
-				this.board.topics.splice(columnIndex, 1, newColumn);
-				this.saveBoard();
+				newColumn.cards,
+				dropResult
+			);
+			this.board.topics.splice(columnIndex, 1, newColumn);
+			this.saveBoard();
 		},
 		getCardPayload(columnId) {
 			return index => {
@@ -198,10 +192,11 @@ export default {
 	created() {
 		this.loadBoard()
 	},
-	mounted() {},
+	mounted() { },
 	watch: {
-		$route(to) {
-			if (!to.params.cardId) this.loadBoard();
+		boardComputed(value) {
+			this.board = JSON.parse(JSON.stringify(value));
+			this.setScene();
 		}
 	},
 	components: {
