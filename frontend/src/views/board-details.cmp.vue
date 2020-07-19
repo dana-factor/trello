@@ -79,7 +79,7 @@ export default {
 		updateBoardName(ev) {
 			if (ev.target.innerText) this.boardName = ev.target.innerText;
 			this.board.name = this.boardName;
-			this.saveBoard();
+			this.saveBoard()
 		},
 		updateTopicName(topicName, topicId) {
 			let currTopic = this.board.topics.find(
