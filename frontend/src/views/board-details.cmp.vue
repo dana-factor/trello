@@ -49,7 +49,7 @@
 			>Add List</button>
 		</div>
 		</Container>
-		<router-view />
+		<router-view :board="boardToShow"/>
 	</section>
 </template>
 
@@ -78,7 +78,13 @@ export default {
 			}
 		};
 	},
-	computed: {},
+	computed: {
+		boardToShow(){
+			this.board = JSON.parse(JSON.stringify(this.$store.getters.board));
+			this.setScene();
+			return this.$store.getters.board;
+		}
+	},
 	methods: {
 		toggleEditMenu() {
 			this.editMenuOpen = !this.editMenuOpen;
@@ -138,7 +144,7 @@ export default {
 			this.$store
 				.dispatch({ type: "saveBoard", board: this.board })
 				.then(savedBoard => {
-					this.board = JSON.parse(JSON.stringify(savedBoard));
+					// this.board = JSON.parse(JSON.stringify(savedBoard));
 					this.nameInputOpen = false;
 					this.editMenuOpen = false;
 				});
@@ -148,8 +154,8 @@ export default {
 			this.$store
 				.dispatch({ type: "loadCurrBoard", id: boardId })
 				.then(board => {
-					this.board = JSON.parse(JSON.stringify(board));
-					this.setScene();
+					// this.board = JSON.parse(JSON.stringify(board));
+
 				});
 		},
 		setScene() {
@@ -202,9 +208,9 @@ export default {
 	},
 	mounted() {},
 	watch: {
-		$route(to) {
-			if (!to.params.cardId) this.loadBoard();
-		}
+		// $route(to) {
+		// 	if (!to.params.cardId) this.loadBoard();
+		// }
 	},
 	components: {
 		boardTopic,
