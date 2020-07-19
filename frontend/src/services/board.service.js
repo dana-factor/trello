@@ -9,8 +9,8 @@ export const boardService = {
 	getStarterBoard,
 	getCardById,
 	getStarterCard,
-	addLabels,
-	removeLabels,
+	// addLabels,
+	// removeLabels,
 	getStarterTopic,
 	// saveCardToBoard,
 	getStarterChecklist,
@@ -42,30 +42,30 @@ function remove(id) {
 function save(board) {
 	return board._id ? _update(board) : _add(board);
 }
-function addLabels(board) {
-	//Should be in server
-	board = JSON.parse(JSON.stringify(board));
-	board.topics.forEach((topic) => {
-		topic.cards.forEach((card) => {
-			let labels = board.labels;
-			labels = labels.filter((label) => card.labels.includes(label.color));
-			card.labels = labels;
-		});
-	});
-	return board;
-}
-function removeLabels(board) {
-	//Should be in server
-	board = JSON.parse(JSON.stringify(board));
-	board.topics.forEach((topic) => {
-		topic.cards.forEach((card) => {
-			let labels = [];
-			card.labels.forEach((label) => labels.push(label.color));
-			card.labels = labels;
-		});
-	});
-	return board;
-}
+// function addLabels(board) {
+// 	//Should be in server
+// 	board = JSON.parse(JSON.stringify(board));
+// 	board.topics.forEach((topic) => {
+// 		topic.cards.forEach((card) => {
+// 			let labels = board.labels;
+// 			labels = labels.filter((label) => card.labels.includes(label.color));
+// 			card.labels = labels;
+// 		});
+// 	});
+// 	return board;
+// }
+// function removeLabels(board) {
+// 	//Should be in server
+// 	board = JSON.parse(JSON.stringify(board));
+// 	board.topics.forEach((topic) => {
+// 		topic.cards.forEach((card) => {
+// 			let labels = [];
+// 			card.labels.forEach((label) => labels.push(label.color));
+// 			card.labels = labels;
+// 		});
+// 	});
+// 	return board;
+// }
 function updateBoardLabel(board, label) {
 	const idx = board.labels.findIndex(
 		(findLabel) => label.color === findLabel.color

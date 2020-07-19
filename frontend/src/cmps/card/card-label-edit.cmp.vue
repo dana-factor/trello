@@ -8,7 +8,7 @@
 			<li v-for="label in boardLabels" :key="label.color">
 				<button class="label" @click="toggleLabel(label)" :style="{backgroundColor:label.color}">
 					{{label.title}}
-					<span v-if="hasLabel(label)"><i class="el-icon-check"></i></span>
+					<span v-if="hasLabel(label.color)"><i class="el-icon-check"></i></span>
 				</button>
 				<button @click="editTitle(label)"><i class="el-icon-edit"></i></button>
 			</li>
@@ -29,17 +29,18 @@ export default {
 	},
 	methods: {
 		hasLabel(label) {
-			return this.getLabelIndex(label) !== -1;
+			// return this.getLabelIndex(label) !== -1;
+			return this.labels.includes(label);
 		},
-		getLabelIndex(label) {
-			return this.labels.findIndex((currLabel) => currLabel.color === label.color);
-		},
+		// getLabelIndex(label) {
+		// 	return this.labels.findIndex((currLabel) => currLabel.color === label.color);
+		// },
 		updateBoardLabels() {
 			this.$emit('boardLabelsUpdate', this.labelToEdit);
 			this.labelToEdit = null;
 		},
 		toggleLabel(label) {
-			this.$emit('toggleLabel', label);
+			this.$emit('toggleLabel', label.color);
 		},
 		editTitle(label) {
 			if (this.labelToEdit && this.labelToEdit.color === label.color) this.labelToEdit = null;
