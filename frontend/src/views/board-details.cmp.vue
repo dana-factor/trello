@@ -5,16 +5,17 @@
 	>
 		<board-nav>
 			<h2 slot="board-name" contenteditable @keypress.enter.prevent="updateBoardName" @blur="updateBoardName">{{board.name}}</h2>
-			<button @click="toggleEditMenu">...</button>
+			<button class="menu-btn" @click="toggleEditMenu">...</button>
 			<div v-if="editMenuOpen">
 				<p>Change Background</p>
 			</div>
 		</board-nav>
+			
 		<Container
 			orientation="horizontal"
 			@drop="onColumnDrop($event)"
-			drag-handle-selector=".column-drag-handle"
 			@drag-start="dragStart"
+			drag-class="grab"
 			:drop-placeholder="upperDropPlaceholderOptions"
 		>
 			<Draggable
@@ -71,12 +72,7 @@ export default {
 			minimize: false,
 			upperDropPlaceholderOptions: {
 				className: "cards-drop-preview",
-				animationDuration: "150",
-				showOnTop: true
-			},
-			dropPlaceholderOptions: {
-				className: "drop-preview",
-				animationDuration: "150",
+				animationDuration: 150,
 				showOnTop: true
 			}
 		};
@@ -220,30 +216,4 @@ export default {
 </script>
 
 <style scoped>
-
-.column-drag-handle {
-	cursor: move;
-	padding: 5px;
-}
-
-.card-ghost {
-	transition: transform 0.18s ease;
-	transform: rotateZ(5deg);
-}
-
-.card-ghost-drop {
-	transition: transform 0.18s ease-in-out;
-	transform: rotateZ(0deg);
-}
-.drop-preview {
-	background-color: rgba(150, 150, 200, 0.1);
-	border: 1px dashed #abc;
-	margin: 5px;
-}
-
-.cards-drop-preview {
-	background-color: rgba(150, 150, 200, 0.1);
-	border: 1px dashed #abc;
-	margin: 5px 45px 5px 5px;
-}
 </style>

@@ -26,8 +26,9 @@ export default {
 		removeBoard(boardId) {
 			this.$store.dispatch({ type: "removeBoard", id: boardId });
 		},
-		addBoard() {
+		addBoard(boardName) {
 			var board = boardService.getStarterBoard();
+			if(boardName) board.name = boardName;
 			this.$store.dispatch({ type: "saveBoard", board })
                 .then((res) => {
 					this.$router.push('/board/' + res._id)
