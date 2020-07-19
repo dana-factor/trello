@@ -34,8 +34,5 @@ export default {
 };
 </script>
 
-<style scoped>
-a {
-	display: block;
-}
+<style lang="scss" scoped>
 </style>
