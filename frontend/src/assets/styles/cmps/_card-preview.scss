@@ -5,6 +5,7 @@
 	min-height: 24px;
 	padding: 6px 8px 2px;
     margin-bottom: 8px;
+    transition: .2s;
 	h2 {
 		display: block;
 		margin-bottom: 4px;
@@ -30,4 +31,7 @@
 		margin: 0 4px 4px 0;
 		display: inline-block;
 	}
+}
+.card-preview:hover{
+    background-color: hsla(0,0%,100%,.5);
 }
