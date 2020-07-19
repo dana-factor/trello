@@ -4,13 +4,37 @@
 		class="board-details"
 	>
 		<board-nav>
-			<h2 slot="board-name" contenteditable @keypress.enter.prevent="updateBoardName" @blur="updateBoardName">{{board.name}}</h2>
-			<button  class="menu-btn" @click="toggleEditMenu"><i class="el-icon-more"></i></button>
-			<div v-if="editMenuOpen">
-				<p>Change Background</p>
-			</div>
+			<h2
+				slot="board-name"
+				contenteditable
+				@keypress.enter.prevent="updateBoardName"
+				@blur="updateBoardName"
+			>{{board.name}}</h2>
+			<button
+				class="menu-btn"
+				@click="toggleBoardMenu"
+			><i class="el-icon-more"></i></button>
 		</board-nav>
-			
+		<div
+			hidden
+			:class="{'board-menu': boardMenuOpen}"
+		>
+			<div class="board-menu-header">
+				<h3>Menu</h3>
+				<button>X</button>
+				<hr />
+			</div>
+			<div class="board-menu-nav">
+				<h5>Change Background</h5>
+				<h5>Change Due Date</h5>
+				<h5>Delete Board</h5>
+				<hr />
+			</div>
+			<div>
+				</div>
+
+		</div>
+
 		<Container
 			orientation="horizontal"
 			@drop="onColumnDrop($event)"
@@ -19,7 +43,6 @@
 			:drop-placeholder="upperDropPlaceholderOptions"
 		>
 			<Draggable
-				
 				v-for="topic in board.topics"
 				:key="topic.id"
 			>
@@ -66,8 +89,8 @@ export default {
 	data() {
 		return {
 			board: null,
-			boardName: '',
-			editMenuOpen: false,
+			boardName: "",
+			boardMenuOpen: false,
 			topicNameInputOpen: false,
 			topicName: "",
 			minimize: false,
@@ -80,14 +103,15 @@ export default {
 	},
 	computed: {},
 	methods: {
-		toggleEditMenu() {
-			this.editMenuOpen = !this.editMenuOpen;
+		toggleBoardMenu() {
+			console.log("toggle borad menu");
+			this.boardMenuOpen = !this.boardMenuOpen;
+			console.log(this.boardMenuOpen);
 		},
-		updateBoardName(ev){
+		updateBoardName(ev) {
 			if (ev.target.innerText) this.boardName = ev.target.innerText;
 			this.board.name = this.boardName;
 			this.saveBoard();
-
 		},
 		updateTopicName(topicName, topicId) {
 			let currTopic = this.board.topics.find(
@@ -178,11 +202,11 @@ export default {
 		saveAfterDnd(dropResult, columnIndex, column) {
 			const newColumn = Object.assign({}, column);
 			newColumn.cards = dragDropService.applyDrag(
-					newColumn.cards,
-					dropResult
-                );
-				this.board.topics.splice(columnIndex, 1, newColumn);
-				this.saveBoard();
+				newColumn.cards,
+				dropResult
+			);
+			this.board.topics.splice(columnIndex, 1, newColumn);
+			this.saveBoard();
 		},
 		getCardPayload(columnId) {
 			return index => {
@@ -198,7 +222,7 @@ export default {
 		}
 	},
 	created() {
-		this.loadBoard()
+		this.loadBoard();
 	},
 	mounted() {},
 	watch: {

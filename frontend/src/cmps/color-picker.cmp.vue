@@ -25,11 +25,9 @@ export default {
 				"red",
 				"blue",
 				"purple",
-				"yellow",
 				"burlywood",
 				"rgb(219, 88, 110)",
 				"gray",
-				"rgb(0, 247, 255)",
 				"orange"
 			]
 		};
@@ -67,15 +65,15 @@ export default {
 }
 
 .color-picker span {
-    width: 40px;
-    height: 40px;
+    width: 100px;
+    height: 65px;
     display: inline-block;
     margin: 5px;
-    /* border-radius: 50%; */
+    border-radius: 3px;
     border: 0.5px solid gray;
 }
-
+/* 
   .picked::after {
     content: "✔";
-  }
+  } */
 </style>
