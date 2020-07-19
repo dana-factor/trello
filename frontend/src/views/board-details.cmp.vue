@@ -4,15 +4,9 @@
 		class="board-details"
 	>
 		<board-nav>
-			<h2 slot="board-name">{{board.name}}</h2>
+			<h2 slot="board-name" contenteditable @keypress.enter.prevent="updateBoardName" @blur="updateBoardName">{{board.name}}</h2>
 			<button @click="toggleEditMenu"><i class="el-icon-more"></i></button>
 			<div v-if="editMenuOpen">
-				<p @click="nameInputOpen = true">Change Name</p>
-				<input
-					v-if="nameInputOpen"
-					v-model="board.name"
-					@change="saveBoard"
-				/>
 				<p>Change Background</p>
 			</div>
 		</board-nav>
@@ -35,11 +29,9 @@
 					@updateTopicName="updateTopicName"
 					@removeTopic="removeTopic"
 					@addCard="addCard"
-
 					@updateDND="saveAfterDnd"
 				/>
 			</Draggable>
-								<!-- @saveBoardAfterDnd="saveBoardAfterDnd" -->
 		</Container>
 		<div class="topic-wrapper add-topic">
 			<h2
@@ -73,8 +65,8 @@ export default {
 	data() {
 		return {
 			board: null,
+			boardName: '',
 			editMenuOpen: false,
-			nameInputOpen: false,
 			topicNameInputOpen: false,
 			topicName: "",
 			minimize: false,
@@ -94,6 +86,12 @@ export default {
 	methods: {
 		toggleEditMenu() {
 			this.editMenuOpen = !this.editMenuOpen;
+		},
+		updateBoardName(ev){
+			if (ev.target.innerText) this.boardName = ev.target.innerText;
+			this.board.name = this.boardName;
+			this.saveBoard();
+
 		},
 		updateTopicName(topicName, topicId) {
 			let currTopic = this.board.topics.find(
@@ -158,10 +156,6 @@ export default {
 					this.setScene();
 				});
 		},
-		// saveBoardAfterDnd(board) {
-		// 	this.board = board;
-		// 	this.saveBoard();
-		// },
 		setScene() {
 			this.board.type = "container";
 			(this.board.props = {
@@ -185,33 +179,12 @@ export default {
 			this.board = board;
 			this.saveBoard();
 		},
-		// onCardDrop(columnId, dropResult) {
-		// 	if (
-		// 		dropResult.removedIndex !== null ||
-		// 		dropResult.addedIndex !== null
-		// 	) {
-		// 		const board = Object.assign({}, this.board);
-		// 		const column = board.topics.filter(p => p.id === columnId)[0];
-		// 		const columnIndex = board.topics.indexOf(column);
-
-		// 		const newColumn = Object.assign({}, column);
-		// 		newColumn.cards = utilService.applyDrag(
-		// 			newColumn.cards,
-		// 			dropResult
-		// 		);
-		// 		board.topics.splice(columnIndex, 1, newColumn);
-		// 		console.log("scene", board);
-		// 		this.board = board;
-		// 		this.saveBoard();
-		// 	}
-		// },
 		saveAfterDnd(dropResult, columnIndex, column) {
 			const newColumn = Object.assign({}, column);
 			newColumn.cards = dragDropService.applyDrag(
 					newColumn.cards,
 					dropResult
                 );
-                
 				this.board.topics.splice(columnIndex, 1, newColumn);
 				this.saveBoard();
 		},
@@ -229,7 +202,7 @@ export default {
 		}
 	},
 	created() {
-		this.loadBoard();
+		this.loadBoard()
 	},
 	mounted() {},
 	watch: {
