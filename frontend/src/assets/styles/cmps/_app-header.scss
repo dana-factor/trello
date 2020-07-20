@@ -16,6 +16,7 @@
         // background-color: hsla(0,0%,100%,.3);
         text-align: center;
         margin: 2px;
+        transition: .2s;
        
     }
     a {
@@ -25,6 +26,7 @@
         padding: 5px;
         margin: 2px;
         border-radius: 3px;
+        transition: .2s;
         &:hover {
             background-color: hsla(0,0%,100%,.2);
         }

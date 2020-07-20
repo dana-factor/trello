@@ -1,7 +1,36 @@
-.board-nav{
+.board-nav {
     padding: 8px 4px;
     position: fixed;
     top: 40px;
     left: 0;
     width: 100vw;
+    margin-bottom: 10px;
+    & > * {
+        border-radius: 3px;
+    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .board-name {
+        font-size: 1rem;
+        font-weight: 700;
+        color:  #172b4d;
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.16);
+        }
+    }
+    .menu-btn {
+        background-color: rgba(0, 0, 0, 0.08);
+        transition: 0.2s;
+        p {
+            font-size: 1rem;
+        }
+
+        .el-icon-more {
+            padding: 8px;
+        }
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.16);
+        }
+    }
 }
