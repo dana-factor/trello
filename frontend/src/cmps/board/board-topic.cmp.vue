@@ -18,9 +18,9 @@
 					@click.stop="toggleTopicMenu"
 					class="close-menu"
 				><i class="el-icon-close"></i></button>
-				<button @click="removeTopic(topic.id); toggleTopicMenu();">Delete list</button>
-				<button @click="addCard(); toggleTopicMenu();">Add new card</button>
-				<button @click="toggleEditListNameShown">Change list name</button>
+				<button @click="removeTopic(topic.id); toggleTopicMenu();">Delete List</button>
+				<button @click="addCard(); toggleTopicMenu();">Add Card</button>
+				<button @click="toggleEditListNameShown">Edit List Name</button>
 				<input
 					v-if="editListNameShown"
 					v-model="topicName"
@@ -59,7 +59,7 @@
 			></textarea>
 			<div class="btns">
 				<button v-if="editCardNameShown" @click="addCard" class="add">Add Card</button>
-				<button v-if="editCardNameShown" @click="editCardNameShown = false" class="close">
+				<button v-if="editCardNameShown" @click="editCardNameShown = false; cardName=''" class="close">
 					<i class="el-icon-close"></i>
 				</button>
 			</div>

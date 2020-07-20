@@ -63,36 +63,78 @@ export const boardStore = {
         },
     },
     actions: {
-        loadBoards({ commit, state }) {
-            return boardService.query(state.filterBy)
-                .then(boards => {
-                    commit({ type: 'setBoards', boards })
-                    return boards
-                })
+        async loadBoards({ commit, state }) {
+            try {
+                const boards = await boardService.query(state.filterBy)
+                commit({ type: 'setBoards', boards })
+                return boards
+            }catch (err) {
+                console.log('ERROR: cannot find boards')
+                throw err;
+            }
         },
-        saveBoard({ commit }, { board }) {
-            const type = (board._id) ? 'updateBoard' : 'addBoard'
-            return boardService.save(board)
-                .then((savedBoard) => {
-                    // console.log('savedBoard, store', savedBoard)
-                    commit({ type, board: savedBoard })
-                    return savedBoard
-                })
+        // loadBoards({ commit, state }) {
+        //     return boardService.query(state.filterBy)
+        //         .then(boards => {
+        //             commit({ type: 'setBoards', boards })
+        //             return boards
+        //         })
+        // },
+        async saveBoard({ commit }, { board }) {
+            try {
+                const type = (board._id) ? 'updateBoard' : 'addBoard'
+                const savedBoard =  await boardService.save(board)
+                commit({ type, board: savedBoard })
+                return savedBoard
+            } catch (err) {
+                console.log(`ERROR: cannot save board`)
+                throw err;
+            }
         },
-        removeBoard({ commit }, { id }) {
-            return boardService.remove(id)
-                .then(() => {
-                    commit({ type: 'removeBoard', id })
-                })
+        // saveBoard({ commit }, { board }) {
+        //     const type = (board._id) ? 'updateBoard' : 'addBoard'
+        //     return boardService.save(board)
+        //         .then((savedBoard) => {
+        //             // console.log('savedBoard, store', savedBoard)
+        //             commit({ type, board: savedBoard })
+        //             return savedBoard
+        //         })
+        // },
+        async removeBoard({ commit }, { id }) {
+            try {
+                await boardService.remove(id)
+                commit({ type: 'removeBoard', id })
+            } catch (err) {
+                console.log(`ERROR: cannot remove board`)
+                throw err;
+            }
         },
-        loadCurrBoard({commit}, { id }) {
-            // console.log(id)
-            return boardService.getById(id)
-                .then(board => {
-                    commit({type: 'setCurrBoard', board})
-                    return board
-                })
+        // removeBoard({ commit }, { id }) {
+        //     console.log('id:',id);
+            
+        //     return boardService.remove(id)
+        //         .then(() => {
+        //             commit({ type: 'removeBoard', id })
+        //         })
+        // },
+        async loadCurrBoard({commit}, { id }) {
+            try {
+                const board = await boardService.getById(id)
+                commit({type: 'setCurrBoard', board})
+                return board
+            } catch (err) {
+                console.log(`ERROR: cannot load board`)
+                throw err;
+            }
         },
+        // loadCurrBoard({commit}, { id }) {
+        //     // console.log(id)
+        //     return boardService.getById(id)
+        //         .then(board => {
+        //             commit({type: 'setCurrBoard', board})
+        //             return board
+        //         })
+        // },
     },
 
 }
