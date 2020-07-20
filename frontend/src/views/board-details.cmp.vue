@@ -2,7 +2,7 @@
 	<section
 		v-if="board"
 		class="board-details"
-	 :style="{backgroundColor: board.style.backgroundColor}"
+		:style="{backgroundColor: board.style.backgroundColor}"
 	>
 		<!-- :style="{backgroundColor: board.style.backgroundColor}" -->
 		<board-nav>
@@ -12,16 +12,16 @@
 				@keypress.enter.prevent="updateBoardName"
 				@blur="updateBoardName"
 			>{{board.name}}</h2>
-			<button
-				class="menu-btn"
-				@click="toggleBoardMenu"
-			><i class="el-icon-more"></i></button>
+			<button class="menu-btn" @click="toggleBoardMenu">
+				<i class="el-icon-more"></i>
+				
+			</button>
 		</board-nav>
 		 <div v-if="deleteModalOpen" class="delete-modal">
                 <h5>Are you sure you want to delete this board?</h5>
 				<div class="btns">
-                <button @click="cancelRemoval" class="cancel-btn">Cancel</button>
-                <button @click="removeBoard(boardId)" class="delete-btn">Delete</button>
+                <button @click="cancelRemoval" class="cancel-btn"><i class="el-icon-close"></i> Cancel</button>
+                <button @click="removeBoard(boardId)" class="delete-btn"><i class="el-icon-delete"></i> Delete</button>
 				</div>
             </div>
 		<board-edit
@@ -35,14 +35,10 @@
 		<Container
 			orientation="horizontal"
 			@drop="onColumnDrop($event)"
-			@drag-start="dragStart"
 			drag-class="grab"
 			:drop-placeholder="upperDropPlaceholderOptions"
 		>
-			<Draggable
-				v-for="topic in board.topics"
-				:key="topic.id"
-			>
+			<Draggable v-for="topic in board.topics" :key="topic.id">
 				<board-topic
 					class="topic-wrapper"
 					:topic="topic"
@@ -54,19 +50,9 @@
 				/>
 			</Draggable>
 			<div class="topic-wrapper add-topic">
-				<h2
-					v-if="!topicNameInputOpen"
-					@click="topicNameInputOpen = true"
-				>+Add another list</h2>
-				<input
-					class="topicName"
-					v-if="topicNameInputOpen"
-					v-model="topicName"
-				/>
-				<button
-					@click="addTopic"
-					v-if="topicNameInputOpen"
-				>Add List</button>
+				<h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add another list</h2>
+				<input class="topicName" v-if="topicNameInputOpen" v-model="topicName" />
+				<button @click="addTopic" v-if="topicNameInputOpen">Add List</button>
 			</div>
 		</Container>
 		<router-view :board="board" />
@@ -75,6 +61,7 @@
 
 <script>
 import { boardService } from "../services/board.service";
+import socketService from '../services/socket.service';
 import { dragDropService } from "../services/drag-drop.service.js";
 import { Container, Draggable } from "vue-smooth-dnd";
 import boardTopic from "../cmps/board/board-topic.cmp.vue";
@@ -120,25 +107,21 @@ export default {
 			this.$emit('changeBgc', color);
 		},
 		openDeleteModal() {
-		 this.deleteModalOpen = true;
+			this.deleteModalOpen = true;
 		},
 		cancelRemoval() {
-            this.deleteModalOpen = false;
-        },
+			this.deleteModalOpen = false;
+		},
 		removeBoard(boardId) {
-				this.$store.dispatch({ type: "removeBoard", id: boardId });
-				this.deleteModalOpen = false;
+			this.$store.dispatch({ type: "removeBoard", id: boardId });
+			this.deleteModalOpen = false;
 		},
 		updateTopicName(topicName, topicId) {
 			let currTopic = this.board.topics.find(
 				topic => topic.id === topicId
 			);
 			currTopic.name = topicName;
-			this.$store
-				.dispatch({ type: "saveBoard", board: this.board })
-				.then(savedBoard => {
-					this.board = JSON.parse(JSON.stringify(savedBoard));
-				});
+			this.saveBoard();
 		},
 		addCard(topicId, cardName) {
 			const starterCard = boardService.getStarterCard(cardName);
@@ -146,51 +129,34 @@ export default {
 				topic => topic.id === topicId
 			);
 			currTopic.cards.push(starterCard);
-			this.$store
-				.dispatch({ type: "saveBoard", board: this.board })
-				.then(savedBoard => {
-					this.board = JSON.parse(JSON.stringify(savedBoard));
-				});
+			this.saveBoard();
 		},
 		removeTopic(topicId) {
 			const idx = this.board.topics.findIndex(
 				topic => topic.id === topicId
 			);
 			this.board.topics.splice(idx, 1);
-			this.$store
-				.dispatch({ type: "saveBoard", board: this.board })
-				.then(savedBoard => {
-					this.board = JSON.parse(JSON.stringify(savedBoard));
-				});
+			this.saveBoard();
 		},
 		addTopic() {
 			const starterTopic = boardService.getStarterTopic(this.topicName);
 			this.topicNameInputOpen = false;
 			this.board.topics.push(starterTopic);
-			this.$store
-				.dispatch({ type: "saveBoard", board: this.board })
-				.then(savedBoard => {
-					this.board = JSON.parse(JSON.stringify(savedBoard));
-				});
+			this.saveBoard();
 		},
-		saveBoard() {
-			if (!this.board.name) return;
-			this.$store
-				.dispatch({ type: "saveBoard", board: this.board })
-				.then(savedBoard => {
-					// this.board = JSON.parse(JSON.stringify(savedBoard));
-					this.nameInputOpen = false;
-					this.editMenuOpen = false;
-				});
+		async saveBoard() {
+			if (!this.board) return;
+			await this.$store.dispatch({ type: "saveBoard", board: this.board })
+			// .then(savedBoard => {
+			// this.board = JSON.parse(JSON.stringify(savedBoard));
+			socketService.emit('boardchanged', this.board._id);
+			this.nameInputOpen = false;
+			this.editMenuOpen = false;
+			// });
 		},
 		loadBoard() {
 			const boardId = this.$route.params.boardId;
-			this.$store
-				.dispatch({ type: "loadCurrBoard", id: boardId })
-				.then(board => {
-					// this.board = JSON.parse(JSON.stringify(board));
-					// this.setScene();
-				});
+			return this.$store.dispatch({ type: "loadCurrBoard", id: boardId })
 		},
 		setScene() {
 			this.board.type = "container";
@@ -230,17 +196,15 @@ export default {
 					.cards[index];
 			};
 		},
-		dragStart() {
-			console.log("drag started");
-		},
-		log(...params) {
-			console.log(...params);
-		}
 	},
-	created() {
-		this.loadBoard()		
+	async created() {
+		await this.loadBoard();
+		socketService.setup();
+		console.log(this.board)
+		socketService.emit('setBoardId', this.board._id)
+		socketService.on('updateboard', this.loadBoard)//change to using obj from socket...
 	},
-	mounted() {},
+	mounted() { },
 	destroyed() {
 		this.$emit('setBgc', 'lightblue')
 	},
