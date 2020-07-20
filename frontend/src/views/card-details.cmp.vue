@@ -3,9 +3,8 @@
 		<div class="card-details" v-if="card" @click.stop="closeModal">
 			<div class="header">
 				<h1
-					@keypress.enter.prevent="updateCardName"
+					@keypress.enter.prevent="updateCardName; $event.target.blur()"
 					@blur="updateCardName"
-					id="name"
 					contenteditable
 				>{{card.name}}</h1>
 				<router-link to="../">
@@ -37,6 +36,7 @@
 						@newChecklistTaskAdded="addNewChecklistTask"
 						@checklistRemoved="removeChecklist"
 						@checklistTaskRemoved="removeChecklistTask"
+						@checklistsUpdated="updateChecklists"
 					/>
 				</div>
 				<div class="right-side">
@@ -53,8 +53,8 @@
 					:labels="labels"
 					@modalClose="closeModal"
 					@toggleLabel="toggleLabel"
-					@newChecklist="addNewChecklist"
 					@boardLabelsUpdate="updateBoardLabels"
+					@newChecklist="addNewChecklist"
 				></component>
 			</card-edit-modal>
 		</div>
@@ -102,8 +102,8 @@ export default {
 		// 	this.card = boardService.getCardById(this.board, this.cardId);
 		// 	if (!this.card) this.$router.push('/');
 		// },
-		updateCardName() {
-			this.card.name = document.querySelector('#name').innerText;
+		updateCardName(ev) {
+			this.card.name = ev.target.innerText;
 			this.dispatchBoardSave();
 		},
 		// updateCard(card) {
@@ -134,28 +134,23 @@ export default {
 			boardService.removeChecklistTask(tasks, taskId);
 			this.dispatchBoardSave();
 		},
+		updateChecklists(checklists) {
+			this.card.checklists = checklists;
+			this.dispatchBoardSave();
+		},
 		toggleLabel(label) {
 			let currLabels = this.card.labels;
 			if (currLabels.includes(label)) currLabels.splice(currLabels.indexOf(label), 1)
 			else currLabels.push(label);
-			console.log(this.card.labels)
 			this.dispatchBoardSave();
 		},
-		// hasLabel(label) {
-		// 	return this.getLabelIndex(label) !== -1;
-		// },
-		// getLabelIndex(label) {
-		// 	return this.card.labels.findIndex((currLabel) => currLabel.color === label.color);
-		// },
 		removeAttachment(attachment) {
 			//kinda temp idk
 			this.card.attachments.splice(this.card.attachments.indexOf(attachment), 1);
 			this.dispatchBoardSave();
 		},
 		dispatchBoardSave() {
-			// const boardToUpdate = boardService.removeLabels(this.board);
 			this.$store.dispatch({ type: 'saveBoard', board: this.boardToUpdate })
-			// .then(savedBoard => this.setBoardAndCard(savedBoard))
 		},
 		toggleModal(cmpName) {
 			if (this.editModal === cmpName) this.closeModal()
@@ -173,13 +168,11 @@ export default {
 	async created() {
 		//todo change push to something nicer
 		this.cardId = this.$route.params.cardId;
-		let boardId = this.$route.params.boardId;
-		if (!boardId || !this.cardId) this.$router.push('/');
+		// let boardId = this.$route.params.boardId;
+		if (!this.cardId) this.$router.push('/');
 		this.boardToUpdate = JSON.parse(
 			JSON.stringify(this.board));
 		this.card = boardService.getCardById(this.boardToUpdate, this.cardId);
-		// await this.$store.dispatch({ type: 'loadCurrBoard', id: boardId });
-		// this.setBoardAndCard(this.$store.getters.board)
 	},
 	components: {
 		cardEditModal,

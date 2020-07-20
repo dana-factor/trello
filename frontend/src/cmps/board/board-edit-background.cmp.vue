@@ -1,35 +1,47 @@
 <template>
     <section class="board-edit-background">
-        <div>
-        <img class="img-collage" src="../../../public/img/collage.jpg" />
+        <div v-if="!isColorPickerOpen && !isImgPickerOpen" class="bgImages-container">
+        <img class="img-collage" src="../../../public/img/collage.jpg" @click="toggleImgPicker"/>
         <h4>Photos</h4>
         </div>
-        <div>
-        <img class="img-colors" src="../../../public/img/colors.jpg" />
+        <div v-if="!isColorPickerOpen && !isImgPickerOpen" class="colors-container">
+        <img class="img-colors" src="../../../public/img/colors.jpg" @click="toggleColorPicker"/>
         <h4>Colors</h4>
         </div>
-
-        <!-- <color-picker @changeBgc="changeBgc" /> -->
+        <color-picker v-if="isColorPickerOpen" @setBgc="setBgc" />
+        <image-picker v-if="isImgPickerOpen" @setBgImg="setBgImg"/>
     </section>
 </template>
 
 <script>
 import colorPicker from '../color-picker.cmp.vue';
+import imagePicker from '../image-picker.cmp.vue';
 
 export default {
     name: 'board-edit-background',
     props:[],
     data(){
         return{
-
+            isColorPickerOpen: false,
+            isImgPickerOpen: false
         }
     },
     computed: {
 
     },
     methods: {
-        changeBgc(color) {
-            this.$emit('changeBgc', color)
+        setBgc(color) {
+            this.$emit('setBgc', color)
+        },
+        setBgImg(imgUrl) {
+            this.$emit('setBgImg', imgUrl)
+        },
+        toggleColorPicker() {
+            // this.$emit('toggleColorPicker');
+            this.isColorPickerOpen = !this.isColorPickerOpen;
+        },
+        toggleImgPicker() {
+            this.isImgPickerOpen = !this.isImgPickerOpen;
         }
 
     },
@@ -43,7 +55,8 @@ export default {
 
     },
     components: {
-        colorPicker
+        colorPicker,
+        imagePicker
     }
 
 }

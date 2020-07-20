@@ -90,6 +90,9 @@
     .topic-main{
         margin: 0 4px;
         padding: 0 4px;
+        // For inner scrollbar:
+        overflow-y: auto;
+        max-height: 75vh;
     }
     .topic-footer{
         transition: 0.2s;

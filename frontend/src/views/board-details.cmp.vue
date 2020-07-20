@@ -2,11 +2,12 @@
 	<section
 		v-if="board"
 		class="board-details"
-		:style="{backgroundColor: board.style.backgroundColor}"
 	>
+		<!-- :style="{backgroundColor: board.style.backgroundColor, backgroundImage: `url('${board.style.imgUrl}')`}" -->
 	<div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
 		<board-nav>
 			<h2
+				class="board-name"
 				slot="board-name"
 				contenteditable
 				@keypress.enter.prevent="updateBoardName"
@@ -14,7 +15,7 @@
 			>{{board.name}}</h2>
 			<button class="menu-btn" @click="toggleBoardMenu">
 				<i class="el-icon-more"></i>
-				
+				<p>Menu</p>
 			</button>
 		</board-nav>
 		 <div v-if="isDeleteModalOpen" class="delete-modal">
@@ -29,7 +30,8 @@
 			@toggleBoardMenu="toggleBoardMenu"
 			@removeBoard="removeBoard"
 			@toggleDeleteModal="toggleDeleteModal"
-			@changeBgc="changeBgc"
+			@setBgc="setBgc"
+			@setBgImg="setBgImg"
 			:boardId="board._id"
 		/>
 		<Container
@@ -126,10 +128,17 @@ export default {
 			if (ev.target.innerText) this.board.name = ev.target.innerText;
 			this.saveBoard()
 		},
-		changeBgc(color) {
+		setBgc(color) {
 			this.board.style.backgroundColor = color;
-			this.saveBoard();
-			this.$emit('changeBgc', color);
+			this.board.style.imgUrl = '';
+			this.$store.dispatch({ type: "saveBoard", board: this.board })
+			this.$emit('setBgc', color);
+		},
+		setBgImg(imgUrl) {
+			this.board.style.imgUrl = imgUrl;
+			this.board.style.backgroundColor = '';
+			this.$store.dispatch({ type: "saveBoard", board: this.board })
+			this.$emit('setBgImg', imgUrl);
 		},
 		removeBoard(boardId) {
 			this.$store.dispatch({ type: "removeBoard", id: boardId });
@@ -234,13 +243,15 @@ export default {
 	},
 	mounted() { },
 	destroyed() {
-		this.$emit('setBgc', 'lightblue')
+		this.$emit('setBgc', '');
+		this.$emit('setBgImg', '');
 	},
 	watch: {
 		boardGetter(value) {
 			this.board = JSON.parse(JSON.stringify(value));
 			this.setScene();
-			this.$emit('setBgc', this.board.style.backgroundColor)
+			if (this.board.style.backgroundColor) this.$emit('setBgc', this.board.style.backgroundColor)
+			else this.$emit('setBgImg', this.board.style.imgUrl);
 		}
 	},
 	components: {

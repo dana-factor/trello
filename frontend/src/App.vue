@@ -1,9 +1,7 @@
 <template>
-<!-- :style="{backgroundColor: background.bgc}" -->
-  <div id="app" :style="{backgroundColor: background.bgc}">
+  <div id="app" :style="{backgroundColor: background.bgc, backgroundImage: `url('${background.imgUrl}')`}">
     <app-header></app-header>
-    <!-- @changeBgc="changeBgc" -->
-    <router-view @setBgc="setBgc" />
+    <router-view @setBgc="setBgc" @setBgImg="setBgImg"/>
   </div>
 </template>
 
@@ -14,20 +12,20 @@ export default {
     data(){
         return {
           background: {
-            image: '',
-            bgc: 'lightblue', 
+            imgUrl: '',
+            bgc: '', 
           }
         }
     },
-    computed: {
-      // bgc() {
-      //   // console.log('bgc', this.$store.getters.board)
-      //   // return this.$store.getters.board.style.backgroundColor;
-      // }
-    },
+    computed: {},
     methods: {
       setBgc(color) {
+        this.background.imgUrl = '';
         this.background.bgc = color;
+      },
+      setBgImg(imgUrl) {
+        this.background.bgc = '';
+        this.background.imgUrl = imgUrl;
       }
     },
     components: {
