@@ -6,13 +6,13 @@
 				<button class="close" @click="toggleBoardMenu"><i class="el-icon-close"></i></button>
 			</div>
 			<div class="board-menu-nav">
-				<h5 @click="toggleColorPicker">Change Background</h5>
+				<h5 @click="toggleEditBg">Change Background</h5>
 				<h5 @click="toggleDatePicker"> Change Due Date</h5>
 				<h5 @click="toggleDeleteModal">Delete Board</h5>
 			</div>
 			<div>
-                <board-edit-background />
-                <color-picker v-if="colorPickerOpen" @changeBgc="changeBgc"/>
+                <board-edit-background v-if="isEditingBg" @toggleColorPicker="toggleColorPicker" @setBgc="setBgc" @setBgImg="setBgImg"/>
+                <!-- <color-picker v-if="isColorPickerOpen" @changeBgc="changeBgc"/> -->
                 <date-picker v-if="datePickerOpen"/>
 			</div>
            
@@ -28,7 +28,8 @@ export default {
     props:['boardId'],
     data(){
         return{
-            colorPickerOpen: false,
+            isEditingBg: false,
+            isColorPickerOpen: false,
             datePickerOpen: false
         }
     },
@@ -39,8 +40,11 @@ export default {
         toggleBoardMenu() {
             this.$emit('toggleBoardMenu');
         },
+        toggleEditBg() {
+            this.isEditingBg = !this.isEditingBg;
+        },
         toggleColorPicker() {
-            this.colorPickerOpen = !this.colorPickerOpen;
+            this.isColorPickerOpen = !this.isColorPickerOpen;
         },
         toggleDatePicker() {
             this.datePickerOpen = !this.datePickerOpen;
@@ -48,8 +52,11 @@ export default {
         toggleDeleteModal() {
            this.$emit('toggleDeleteModal');
         },
-        changeBgc(color) {
-            this.$emit('changeBgc', color);
+        setBgc(color) {
+            this.$emit('setBgc', color);
+        },
+        setBgImg(imgUrl) {
+            this.$emit('setBgImg', imgUrl);
         }
 
     },
