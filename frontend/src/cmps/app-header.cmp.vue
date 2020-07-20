@@ -1,10 +1,14 @@
 <template>
     <section class="app-header">
-        <h1>TRELLA | </h1>
-        <router-link to="/"> Homepage</router-link> |
-        <router-link to="/board/a101">Board Details</router-link> |
-        <router-link to="/board/a101/card/asd">Card Details</router-link> |
-        <router-link to="/login">Login</router-link> |
+        <div>
+        <router-link to="/"> <i class="el-icon-s-home"></i></router-link> 
+        <router-link to="/board/a101">Board Details</router-link> 
+        <router-link to="/board/a101/card/asd">Card Details</router-link> 
+        </div>
+        <h1>TRELLA  </h1>
+        <div>
+        <router-link to="/login">Login</router-link> 
+        </div>
     </section>
 </template>
 
