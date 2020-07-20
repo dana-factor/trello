@@ -1,0 +1,10 @@
+.image-picker {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    img {
+        width: 140px;
+        height: 100px;
+        margin: 5px;
+    }
+}

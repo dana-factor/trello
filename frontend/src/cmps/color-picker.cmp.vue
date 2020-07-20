@@ -2,7 +2,6 @@
 	<div class="color-picker">
 		<span
 			v-for="(color,idx) in colors"
-			:class="{picked: color === selectedColor}"
 			:style="{backgroundColor: color}"
 			@click="selectColor(color)"
 			:key="idx"
@@ -22,12 +21,10 @@ export default {
 				"rgb(170, 209, 245)",
 				"rgb(97, 214, 208)",
 				"rgb(226, 183, 252)",
-				"red",
 				"blue",
 				"purple",
 				"burlywood",
 				"rgb(219, 88, 110)",
-				"gray",
 				"orange"
 			]
 		};
@@ -36,7 +33,7 @@ export default {
 	methods: {
         selectColor(color) {
             this.selectedColor = color;
-        this.$emit('changeBgc', color);
+        this.$emit('setBgc', color);
   }
     },
 	created() {},
