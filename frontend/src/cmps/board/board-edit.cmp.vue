@@ -8,9 +8,10 @@
 			<div class="board-menu-nav">
 				<h5 @click="toggleColorPicker">Change Background</h5>
 				<h5 @click="toggleDatePicker"> Change Due Date</h5>
-				<h5 @click="openDeleteModal">Delete Board</h5>
+				<h5 @click="toggleDeleteModal">Delete Board</h5>
 			</div>
 			<div>
+                <board-edit-background />
                 <color-picker v-if="colorPickerOpen" @changeBgc="changeBgc"/>
                 <date-picker v-if="datePickerOpen"/>
 			</div>
@@ -21,6 +22,7 @@
 <script>
 import colorPicker from '../color-picker.cmp.vue';
 import datePicker from '../date-picker.cmp.vue';
+import boardEditBackground from '../board/board-edit-background.cmp.vue';
 
 export default {
     props:['boardId'],
@@ -43,8 +45,8 @@ export default {
         toggleDatePicker() {
             this.datePickerOpen = !this.datePickerOpen;
         },
-        openDeleteModal() {
-           this.$emit('openDeleteModal');
+        toggleDeleteModal() {
+           this.$emit('toggleDeleteModal');
         },
         changeBgc(color) {
             this.$emit('changeBgc', color);
@@ -62,7 +64,8 @@ export default {
     },
     components: {
         colorPicker,
-        datePicker
+        datePicker,
+        boardEditBackground
     }
 
 }
