@@ -2,8 +2,7 @@
     <section class="app-header">
         <div>
         <router-link to="/"> <i class="el-icon-s-home"></i></router-link> 
-        <router-link to="/board/a101">Board Details</router-link> 
-        <router-link to="/board/a101/card/asd">Card Details</router-link> 
+        <router-link to="/board/a101">Public Board</router-link> 
         </div>
         <h1>TRELLA</h1>
         <div>
