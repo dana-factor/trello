@@ -48,7 +48,7 @@ export default {
 		}
 	},
 	watch: {
-		checklist(value) {
+		checklists(value) {
 			this.checklistsToUpdate = JSON.parse(JSON.stringify(this.checklists));
 		}
 	}

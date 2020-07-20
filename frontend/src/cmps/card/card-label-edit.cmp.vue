@@ -1,16 +1,20 @@
 <template>
 	<section class="card-label-edit">
 		<div v-if="labelToEdit">
-			<input v-model="labelToEdit.title" />
+			<input v-model="labelToEdit.title" v-focus/>
 			<button @click="updateBoardLabels">Save</button>
 		</div>
 		<ul>
 			<li v-for="label in boardLabels" :key="label.color">
 				<button class="label" @click="toggleLabel(label)" :style="{backgroundColor:label.color}">
 					{{label.title}}
-					<span v-if="hasLabel(label.color)"><i class="el-icon-check"></i></span>
+					<span v-if="hasLabel(label.color)">
+						<i class="el-icon-check"></i>
+					</span>
 				</button>
-				<button @click="editTitle(label)"><i class="el-icon-edit"></i></button>
+				<button @click="editTitle(label)">
+					<i class="el-icon-edit"></i>
+				</button>
 			</li>
 		</ul>
 	</section>
@@ -23,9 +27,6 @@ export default {
 		return {
 			labelToEdit: null,
 		}
-	},
-	computed: {
-
 	},
 	methods: {
 		hasLabel(label) {
