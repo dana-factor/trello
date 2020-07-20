@@ -4,6 +4,7 @@
 			v-model="checklistName"
 			@keypress.enter="addChecklist"
 			placeholder="Enter checklist title..."
+			v-focus
 		/>
 		<button @click="addChecklist">Add</button>
 	</section>
@@ -15,9 +16,6 @@ export default {
 		return {
 			checklistName: ''
 		}
-	},
-	computed: {
-
 	},
 	methods: {
 		addChecklist() {
