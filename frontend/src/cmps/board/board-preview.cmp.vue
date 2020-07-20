@@ -21,9 +21,7 @@ export default {
     },
     methods: {
     },
-    created(){
-        console.log(this.board.style.imgUrl)
-    },
+    created(){},
     mounted(){
 
     },

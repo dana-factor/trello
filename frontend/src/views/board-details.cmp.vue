@@ -244,14 +244,13 @@ export default {
 	destroyed() {
 		this.$emit('setBgc', '');
 		this.$emit('setBgImg', '');
-		console.log('destroyed')
 	},
 	watch: {
 		boardGetter(value) {
 			this.board = JSON.parse(JSON.stringify(value));
 			this.setScene();
-			this.$emit('setBgc', this.board.style.backgroundColor);
-			this.$emit('setBgImg', this.board.style.imgUrl);
+			if (this.board.style.backgroundColor) this.$emit('setBgc', this.board.style.backgroundColor)
+			else this.$emit('setBgImg', this.board.style.imgUrl);
 		}
 	},
 	components: {

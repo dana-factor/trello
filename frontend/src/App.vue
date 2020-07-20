@@ -24,7 +24,6 @@ export default {
         this.background.bgc = color;
       },
       setBgImg(imgUrl) {
-        console.log(imgUrl)
         this.background.bgc = '';
         this.background.imgUrl = imgUrl;
       }

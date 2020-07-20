@@ -39,11 +39,8 @@ export default {
 			this.isNameInputHidden = !this.isNameInputHidden;
 		},
 		addBoard(ev) {
-			// const boardName = ev.target.value;
 			this.$emit('addBoard');
-			// this.isNameInputHidden = true;
 		},
-
        updateBoard(board) {
             this.$emit('updateBoard', board);
         },
