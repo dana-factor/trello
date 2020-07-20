@@ -17,18 +17,18 @@
 				
 			</button>
 		</board-nav>
-		 <div v-if="deleteModalOpen" class="delete-modal">
+		 <div v-if="isDeleteModalOpen" class="delete-modal">
                 <h5>Are you sure you want to delete this board?</h5>
 				<div class="btns">
-                <button @click="cancelRemoval" class="cancel-btn"><i class="el-icon-close"></i> Cancel</button>
+                <button @click="toggleDeleteModal" class="cancel-btn"><i class="el-icon-close"></i> Cancel</button>
                 <button @click="removeBoard(boardId)" class="delete-btn"><i class="el-icon-delete"></i> Delete</button>
 				</div>
             </div>
 		<board-edit
-			:class="{'board-menu-open':boardMenuOpen}"
+			:class="{'board-menu-open':isBoardMenuOpen}"
 			@toggleBoardMenu="toggleBoardMenu"
 			@removeBoard="removeBoard"
-			@openDeleteModal="openDeleteModal"
+			@toggleDeleteModal="toggleDeleteModal"
 			@changeBgc="changeBgc"
 			:boardId="board._id"
 		/>
@@ -97,9 +97,8 @@ export default {
 	data() {
 		return {
 			board: null,
-			boardName: "",
-			boardMenuOpen: false,
-			deleteModalOpen: false,
+			isBoardMenuOpen: false,
+			isDeleteModalOpen: false,
 			topicNameInputOpen: false,
 			topicName: "",
 			minimize: false,
@@ -118,11 +117,13 @@ export default {
 	},
 	methods: {
 		toggleBoardMenu() {
-			this.boardMenuOpen = !this.boardMenuOpen;
+			this.isBoardMenuOpen = !this.isBoardMenuOpen;
+		},
+		toggleDeleteModal() {
+			this.isDeleteModalOpen = !this.isDeleteModalOpen;
 		},
 		updateBoardName(ev) {
-			if (ev.target.innerText) this.boardName = ev.target.innerText;
-			this.board.name = this.boardName;
+			if (ev.target.innerText) this.board.name = ev.target.innerText;
 			this.saveBoard()
 		},
 		changeBgc(color) {
@@ -130,15 +131,9 @@ export default {
 			this.saveBoard();
 			this.$emit('changeBgc', color);
 		},
-		openDeleteModal() {
-			this.deleteModalOpen = true;
-		},
-		cancelRemoval() {
-			this.deleteModalOpen = false;
-		},
 		removeBoard(boardId) {
 			this.$store.dispatch({ type: "removeBoard", id: boardId });
-			this.deleteModalOpen = false;
+			this.isDeleteModalOpen = false;
 		},
 		updateTopicName(topicName, topicId) {
 			let currTopic = this.board.topics.find(

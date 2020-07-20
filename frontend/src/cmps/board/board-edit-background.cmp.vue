@@ -1,6 +1,15 @@
 <template>
     <section class="board-edit-background">
-        <color-picker @changeBgc="changeBgc" />
+        <div>
+        <img class="img-collage" src="../../../public/img/collage.jpg" />
+        <h4>Photos</h4>
+        </div>
+        <div>
+        <img class="img-colors" src="../../../public/img/colors.jpg" />
+        <h4>Colors</h4>
+        </div>
+
+        <!-- <color-picker @changeBgc="changeBgc" /> -->
     </section>
 </template>
 

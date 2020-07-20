@@ -10,7 +10,7 @@
 			<board-preview @updateBoard="updateBoard" :board="board" />
             </router-link>  
 		</li>
-		<li @click="toggleInput"><i class="el-icon-plus"></i></li>
+		<li @click="toggleInput" class="add-board"><i class="el-icon-plus"></i></li>
 	</ul>
 	</div>
 	<div :class="{hidden: isNameInputHidden}" class="add-name-modal">
