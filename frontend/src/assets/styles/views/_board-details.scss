@@ -3,16 +3,17 @@
     white-space: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
-    background-color: lightskyblue;
+    // background-color: lightskyblue;
+    padding: 0 4px;
     .topic-wrapper{
         width: 272px;
         margin: 0 4px;
         max-height: 100%;
-        // display: inline-block;
     }
     .add-topic{
         background-color: hsla(0,0%,100%,.24);
         padding: 6px 8px;
+        margin-right: 8px;
         color: white;
     }
     .menu-btn {
@@ -20,12 +21,13 @@
     }
 
 
-    // drag'n'drop
-    .grab {
-        cursor: grabbing;
-    }
-    .drop-preview {
-        background-color: rgba(150, 150, 200, 0.1);
-        margin: 5px;
-    }
+}
+// drag'n'drop
+.grab {
+    cursor: grabbing;
+}
+
+.drop-preview {
+    background-color: rgba(150, 150, 200, 0.1);
+    margin: 5px;
 }

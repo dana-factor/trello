@@ -1,35 +1,36 @@
 <template>
 	<section class="board-topic">
-			<span class="column-drag-handle">
-		<div class="topic-header">
-			<h2
-				contenteditable
-				@keypress.enter.prevent="updateTopicName"
-				@blur="updateTopicName"
-				@mousemove.stop
-			>{{topicName}}
-			</h2>
-			<!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
-			<button @click="toggleEditMenu" class="close"><i class="el-icon-more"></i></button>
-			<div class="topic-menu" v-if="editMenuOpen">
-				<h3>List Actions</h3>
-				<button
-					@click="toggleEditMenu"
-					class="close-menu"
-				>X</button>
-				<button @click="removeTopic(topic.id); toggleEditMenu();">Delete list</button>
-				<button @click="addCard(); toggleEditMenu();">Add new card</button>
-				<button @click="toggleEditListNameShown">Change list name</button>
-				<input
-					v-if="editListNameShown"
-					v-model="topicName"
+		<span class="column-drag-handle">
+			<div class="topic-header">
+				<h2
+					contenteditable
 					@keypress.enter.prevent="updateTopicName"
 					@blur="updateTopicName"
-				/>
-				<button @click="toggleMinimize(); toggleEditMenu();"><span v-if="!minimize">Minimize</span><span v-if="minimize">Maximize</span></button>
+					@mousemove.stop
+				>{{topicName}}</h2>
+				<!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
+				<button @click="toggleEditMenu" class="close">
+					<i class="el-icon-more"></i>
+				</button>
+				<div class="topic-menu" v-if="editMenuOpen">
+					<h3>List Actions</h3>
+					<button @click="toggleEditMenu" class="close-menu">X</button>
+					<button @click="removeTopic(topic.id); toggleEditMenu();">Delete list</button>
+					<button @click="addCard(); toggleEditMenu();">Add new card</button>
+					<button @click="toggleEditListNameShown">Change list name</button>
+					<input
+						v-if="editListNameShown"
+						v-model="topicName"
+						@keypress.enter.prevent="updateTopicName"
+						@blur="updateTopicName"
+					/>
+					<button @click="toggleMinimize(); toggleEditMenu();">
+						<span v-if="!minimize">Minimize</span>
+						<span v-if="minimize">Maximize</span>
+					</button>
+				</div>
 			</div>
-		</div>
-			</span>
+		</span>
 		<Container
 			class="topic-main"
 			v-if="!minimize"
@@ -40,20 +41,24 @@
 			drop-class="card-ghost-drop"
 			:drop-placeholder="dropPlaceholderOptions"
 		>
-			<Draggable
-				v-for="card in topic.cards"
-				:key="card.id"
-			>
+			<Draggable v-for="card in topic.cards" :key="card.id">
 				<card-preview :card="card"></card-preview>
 			</Draggable>
 		</Container>
-		<div
-			class="topic-footer"
-			v-if="!minimize"
-		>
+		<div class="topic-footer" v-if="!minimize">
 			<p v-if="!editCardNameShown" @click="editCardNameShown = true">+ Add another card</p>
-			<textarea v-if="editCardNameShown" v-model="cardName" @keypress.enter.prevent="addCard" placeholder="Enter a title for this card..."></textarea>
-			<button v-if="editCardNameShown" @click="addCard">Add Card</button>
+			<textarea
+				v-if="editCardNameShown"
+				v-model="cardName"
+				@keypress.enter.prevent="addCard"
+				placeholder="Enter a title for this card..."
+			></textarea>
+			<div class="btns">
+				<button v-if="editCardNameShown" @click="addCard" class="add">Add Card</button>
+				<button v-if="editCardNameShown" @click="editCardNameShown = false" class="close">
+					<i class="el-icon-close"></i>
+				</button>
+			</div>
 		</div>
 	</section>
 </template>
@@ -112,16 +117,16 @@ export default {
 		},
 		toggleEditListNameShown() {
 			this.editListNameShown = !this.editListNameShown;
-        },
-        onCardDrop(columnId, dropResult) {
+		},
+		onCardDrop(columnId, dropResult) {
 			if (
 				dropResult.removedIndex !== null ||
 				dropResult.addedIndex !== null
 			) {
 				const boardy = Object.assign({}, this.boardy);
-                const column = boardy.topics.filter(p => p.id === columnId)[0];
-                const columnIndex = boardy.topics.indexOf(column);
-                this.$emit('updateDND', dropResult, columnIndex, column)
+				const column = boardy.topics.filter(p => p.id === columnId)[0];
+				const columnIndex = boardy.topics.indexOf(column);
+				this.$emit('updateDND', dropResult, columnIndex, column)
 			}
 		},
 		getCardPayload(columnId) {
@@ -133,19 +138,18 @@ export default {
 	},
 	created() {
 		this.topicName = this.topic.name;
-        // console.log(this.topicName);
-        // this.board = JSON.parse(JSON.stringify(this.boardy));
+		// console.log(this.topicName);
+		// this.board = JSON.parse(JSON.stringify(this.boardy));
 	},
-	mounted() {},
+	mounted() { },
 	watch: {},
 	components: {
-        cardPreview,
-        Draggable,
+		cardPreview,
+		Draggable,
 		Container
 	}
 };
 </script>
 
 <style lang="scss" scoped>
-
 </style>

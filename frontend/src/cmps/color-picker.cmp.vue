@@ -35,10 +35,7 @@ export default {
 	computed: {},
 	methods: {
         selectColor(color) {
-      //   this.favColor = this.$refs.colorSelect.value
             this.selectedColor = color;
-        console.log(this.selectedColor);
-      //   this.$emit('input', event.target.value)
         this.$emit('changeBgc', color);
   }
     },
@@ -53,24 +50,4 @@ export default {
 
 <style scoped>
 
-.color-picker {
-display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.color-picker span {
-    width: 100px;
-    height: 65px;
-    display: inline-block;
-    margin: 5px;
-    border-radius: 3px;
-    border: 0.5px solid gray;
-}
-
-    
-/* 
-  .picked::after {
-    content: "✔";
-  } */
 </style>

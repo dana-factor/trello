@@ -2,7 +2,9 @@
 	<section
 		v-if="board"
 		class="board-details"
+		:style="{backgroundColor: board.style.backgroundColor}"
 	>
+		<!-- :style="{backgroundColor: board.style.backgroundColor}" -->
 		<board-nav>
 			<h2
 				slot="board-name"
@@ -10,15 +12,20 @@
 				@keypress.enter.prevent="updateBoardName"
 				@blur="updateBoardName"
 			>{{board.name}}</h2>
-			<button
-				class="menu-btn"
-				@click="toggleBoardMenu"
-			><i class="el-icon-more"></i></button>
+			<button class="menu-btn" @click="toggleBoardMenu">
+				<i class="el-icon-more"></i>
+			</button>
 		</board-nav>
+		<div v-if="deleteModalOpen" class="delete-modal">
+			<h5>Are you sure you want to delete this board?</h5>
+			<buton @click="cancelRemoval" class="cancel-btn">Cancel</buton>
+			<button @click="removeBoard(boardId)" class="delete-btn">Delete</button>
+		</div>
 		<board-edit
-			v-if="boardMenuOpen"
+			:class="{'board-menu-open':boardMenuOpen}"
 			@toggleBoardMenu="toggleBoardMenu"
 			@removeBoard="removeBoard"
+			@openDeleteModal="openDeleteModal"
 			@changeBgc="changeBgc"
 			:boardId="board._id"
 		/>
@@ -28,10 +35,7 @@
 			drag-class="grab"
 			:drop-placeholder="upperDropPlaceholderOptions"
 		>
-			<Draggable
-				v-for="topic in board.topics"
-				:key="topic.id"
-			>
+			<Draggable v-for="topic in board.topics" :key="topic.id">
 				<board-topic
 					class="topic-wrapper"
 					:topic="topic"
@@ -43,19 +47,9 @@
 				/>
 			</Draggable>
 			<div class="topic-wrapper add-topic">
-				<h2
-					v-if="!topicNameInputOpen"
-					@click="topicNameInputOpen = true"
-				>+Add another list</h2>
-				<input
-					class="topicName"
-					v-if="topicNameInputOpen"
-					v-model="topicName"
-				/>
-				<button
-					@click="addTopic"
-					v-if="topicNameInputOpen"
-				>Add List</button>
+				<h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add another list</h2>
+				<input class="topicName" v-if="topicNameInputOpen" v-model="topicName" />
+				<button @click="addTopic" v-if="topicNameInputOpen">Add List</button>
 			</div>
 		</Container>
 		<router-view :board="board" />
@@ -79,11 +73,12 @@ export default {
 			board: null,
 			boardName: "",
 			boardMenuOpen: false,
+			deleteModalOpen: false,
 			topicNameInputOpen: false,
 			topicName: "",
 			minimize: false,
 			upperDropPlaceholderOptions: {
-				className: "cards-drop-preview",
+				className: "drop-preview",
 				animationDuration: 150,
 				showOnTop: true
 			}
@@ -105,12 +100,18 @@ export default {
 		},
 		changeBgc(color) {
 			this.board.style.backgroundColor = color;
-			this.saveBoard();
+			this.$store.dispatch({ type: "saveBoard", board: this.board })
+			this.$emit('changeBgc', color);
+		},
+		openDeleteModal() {
+			this.deleteModalOpen = true;
+		},
+		cancelRemoval() {
+			this.deleteModalOpen = false;
 		},
 		removeBoard(boardId) {
-			if (confirm("Are you sure you want to delete this board?")) {
-				this.$store.dispatch({ type: "removeBoard", id: boardId });
-			} else return;
+			this.$store.dispatch({ type: "removeBoard", id: boardId });
+			this.deleteModalOpen = false;
 		},
 		updateTopicName(topicName, topicId) {
 			let currTopic = this.board.topics.find(
@@ -143,12 +144,12 @@ export default {
 		async saveBoard() {
 			if (!this.board) return;
 			await this.$store.dispatch({ type: "saveBoard", board: this.board })
-				// .then(savedBoard => {
-					// this.board = JSON.parse(JSON.stringify(savedBoard));
-			socketService.emit('boardchanged',this.board._id);
+			// .then(savedBoard => {
+			// this.board = JSON.parse(JSON.stringify(savedBoard));
+			socketService.emit('boardchanged', this.board._id);
 			this.nameInputOpen = false;
 			this.editMenuOpen = false;
-				// });
+			// });
 		},
 		loadBoard() {
 			const boardId = this.$route.params.boardId;
@@ -197,14 +198,18 @@ export default {
 		await this.loadBoard();
 		socketService.setup();
 		console.log(this.board)
-		socketService.emit('setBoardId',this.board._id)
-		socketService.on('updateboard',this.loadBoard)//change to using obj from socket...
+		socketService.emit('setBoardId', this.board._id)
+		socketService.on('updateboard', this.loadBoard)//change to using obj from socket...
 	},
-	mounted() {},
+	mounted() { },
+	destroyed() {
+		this.$emit('setBgc', 'lightblue')
+	},
 	watch: {
 		boardComputed(value) {
 			this.board = JSON.parse(JSON.stringify(value));
 			this.setScene();
+			this.$emit('setBgc', this.board.style.backgroundColor)
 		}
 	},
 	components: {
