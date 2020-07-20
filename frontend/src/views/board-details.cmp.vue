@@ -7,6 +7,7 @@
 	<div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
 		<board-nav>
 			<h2
+				class="board-name"
 				slot="board-name"
 				contenteditable
 				@keypress.enter.prevent="updateBoardName"
@@ -14,7 +15,7 @@
 			>{{board.name}}</h2>
 			<button class="menu-btn" @click="toggleBoardMenu">
 				<i class="el-icon-more"></i>
-				
+				<p>Menu</p>
 			</button>
 		</board-nav>
 		 <div v-if="isDeleteModalOpen" class="delete-modal">
