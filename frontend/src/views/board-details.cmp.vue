@@ -4,7 +4,6 @@
 		class="board-details"
 		:style="{backgroundColor: board.style.backgroundColor}"
 	>
-		<!-- :style="{backgroundColor: board.style.backgroundColor}" -->
 		<board-nav>
 			<h2
 				slot="board-name"
