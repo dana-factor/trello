@@ -1,13 +1,15 @@
 <template>
 	<section class="card-checklists">
-		<div class="checklists" v-for="checklist in checklists" :key="checklist.id">
+		<div class="checklists" v-for="checklist in checklistsToUpdate" :key="checklist.id">
 			<i class="el-icon-finished"></i>
-			<input v-model="checklist.name"/>
-			<button @click="removeChecklist(checklist)"><i class="el-icon-delete"></i></button>
+			<input v-model="checklist.name" @blur="updateChecklists" @keydown.enter="updateChecklists; $event.target.blur()" />
+			<button @click="removeChecklist(checklist)">
+				<i class="el-icon-delete"></i>
+			</button>
 			<ul>
 				<li v-for="task in checklist.tasks" :key="task.id">
 					<input type="checkbox" v-model="task.isDone" @change="$emit('dispatchBoardSave')" />
-					{{task.text}}
+					<input v-model="task.text" @blur="updateChecklists" @keydown.enter="updateChecklists; $event.target.blur()" />
 					<button @click="removeChecklistTask(checklist.tasks,task)">X</button>
 				</li>
 			</ul>
@@ -27,7 +29,7 @@ export default {
 	data() {
 		return {
 			newTaskTexts: {},
-			checklistsToUpdate: JSON.parse(JSON.stringify(this.checklists))//not reactive
+			checklistsToUpdate: JSON.parse(JSON.stringify(this.checklists))
 		}
 	},
 	methods: {
@@ -40,10 +42,15 @@ export default {
 		},
 		removeChecklistTask(tasks, task) {
 			this.$emit('checklistTaskRemoved', tasks, task.id);
+		},
+		updateChecklists() {
+			this.$emit('checklistsUpdated', this.checklistsToUpdate);
 		}
 	},
-	watch:{
-		
+	watch: {
+		checklist(value) {
+			this.checklistsToUpdate = JSON.parse(JSON.stringify(this.checklists));
+		}
 	}
 }
 </script>
