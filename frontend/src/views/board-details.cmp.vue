@@ -4,7 +4,6 @@
 		class="board-details"
 		:style="{backgroundColor: board.style.backgroundColor}"
 	>
-		<!-- :style="{backgroundColor: board.style.backgroundColor}" -->
 		<board-nav>
 			<h2
 				slot="board-name"
@@ -14,13 +13,16 @@
 			>{{board.name}}</h2>
 			<button class="menu-btn" @click="toggleBoardMenu">
 				<i class="el-icon-more"></i>
+				
 			</button>
 		</board-nav>
-		<div v-if="deleteModalOpen" class="delete-modal">
-			<h5>Are you sure you want to delete this board?</h5>
-			<buton @click="cancelRemoval" class="cancel-btn">Cancel</buton>
-			<button @click="removeBoard(boardId)" class="delete-btn">Delete</button>
-		</div>
+		 <div v-if="deleteModalOpen" class="delete-modal">
+                <h5>Are you sure you want to delete this board?</h5>
+				<div class="btns">
+                <button @click="cancelRemoval" class="cancel-btn"><i class="el-icon-close"></i> Cancel</button>
+                <button @click="removeBoard(boardId)" class="delete-btn"><i class="el-icon-delete"></i> Delete</button>
+				</div>
+            </div>
 		<board-edit
 			:class="{'board-menu-open':boardMenuOpen}"
 			@toggleBoardMenu="toggleBoardMenu"
