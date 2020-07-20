@@ -4,17 +4,31 @@
 	box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
 	min-height: 24px;
 	padding: 6px 8px 2px;
-    margin-bottom: 8px;
+	margin-bottom: 8px;
+	overflow: hidden;
+    white-space: break-spaces;
     transition: .2s;
 	h2 {
 		display: block;
 		margin-bottom: 4px;
 		line-height: rem(20px);
 		color: #172b4d;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+	button{
+		display: none;
+		background-color: rgba(9, 30, 66, 0.08);
+		border-radius: 3px;
+		font-size: 14px;
+		padding: 2px 4px;
+		position: absolute;
+    	right: 10px;
 	}
 	a {
 		color: rgb(23, 43, 77);
 		display: block;
+		white-space: normal;
 		&,
 		&::after,
 		&::before {
@@ -22,6 +36,9 @@
 			-webkit-user-drag: none;
 			-webkit-app-region: no-drag;
 		}
+	}
+	p{
+		margin-right: 10px;
 	}
 	.card-label {
 		border-radius: 4px;
@@ -33,5 +50,8 @@
 	}
 }
 .card-preview:hover{
-    background-color: hsla(0,0%,100%,.5);
+	background-color: hsla(0,0%,100%,.5);
+	button{
+		display: block;
+	}
 }

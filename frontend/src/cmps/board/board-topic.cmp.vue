@@ -1,37 +1,38 @@
 <template>
 	<section class="board-topic">
-		<span class="column-drag-handle">
-			<div class="topic-header">
-				<h2
-					contenteditable
+			<span class="column-drag-handle">
+		<div class="topic-header">
+			<h2
+				contenteditable
+				@keypress.enter.prevent="updateTopicName"
+				@blur="updateTopicName"
+				@mousemove.stop
+				 @click="closeTopicMenu"
+			>{{topicName}}
+			</h2>
+			<!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
+			<button @click="toggleTopicMenu" class="close"><i class="el-icon-more"></i></button>
+			<div class="topic-menu" v-if="topicMenu">
+				<h3>List Actions</h3>
+				<button
+					@click.stop="toggleTopicMenu"
+					class="close-menu"
+				><i class="el-icon-close"></i></button>
+				<button @click="removeTopic(topic.id); toggleTopicMenu();">Delete list</button>
+				<button @click="addCard(); toggleTopicMenu();">Add new card</button>
+				<button @click="toggleEditListNameShown">Change list name</button>
+				<input
+					v-if="editListNameShown"
+					v-model="topicName"
 					@keypress.enter.prevent="updateTopicName"
 					@blur="updateTopicName"
-					@mousemove.stop
-				>{{topicName}}</h2>
-				<!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
-				<button @click="toggleEditMenu" class="close">
-					<i class="el-icon-more"></i>
-				</button>
-				<div class="topic-menu" v-if="editMenuOpen">
-					<h3>List Actions</h3>
-					<button @click="toggleEditMenu" class="close-menu">X</button>
-					<button @click="removeTopic(topic.id); toggleEditMenu();">Delete list</button>
-					<button @click="addCard(); toggleEditMenu();">Add new card</button>
-					<button @click="toggleEditListNameShown">Change list name</button>
-					<input
-						v-if="editListNameShown"
-						v-model="topicName"
-						@keypress.enter.prevent="updateTopicName"
-						@blur="updateTopicName"
-					/>
-					<button @click="toggleMinimize(); toggleEditMenu();">
-						<span v-if="!minimize">Minimize</span>
-						<span v-if="minimize">Maximize</span>
-					</button>
-				</div>
+				/>
+				<button @click="toggleMinimize(); toggleTopicMenu();"><span v-if="!minimize">Minimize</span><span v-if="minimize">Maximize</span></button>
 			</div>
+		</div>
 		</span>
 		<Container
+			:style="{minHeight: 10 + 'px'}"
 			class="topic-main"
 			v-if="!minimize"
 			group-name="col"
@@ -41,8 +42,11 @@
 			drop-class="card-ghost-drop"
 			:drop-placeholder="dropPlaceholderOptions"
 		>
-			<Draggable v-for="card in topic.cards" :key="card.id">
-				<card-preview :card="card"></card-preview>
+			<Draggable
+				v-for="card in topic.cards"
+				:key="card.id"
+			>
+				<card-preview :card="card" @removeCard="removeCard"></card-preview>
 			</Draggable>
 		</Container>
 		<div class="topic-footer" v-if="!minimize">
@@ -76,11 +80,15 @@ export default {
 		boardy: {
 			type: Object,
 			required: true
+		},
+		topicsMenuOpen: {
+			type: Boolean,
+			required: true
 		}
 	},
 	data() {
 		return {
-			editMenuOpen: false,
+			topicMenuOpen: false,
 			topicName: "",
 			cardName: "",
 			minimize: false,
@@ -93,24 +101,38 @@ export default {
 			}
 		};
 	},
-	computed: {},
+	computed: {
+		topicMenu(){
+			if (this.topicsMenuOpen === false) return this.topicMenuOpen = false
+			else {return this.topicMenuOpen} 
+		}
+	},
 	methods: {
 		removeTopic(topicId) {
 			this.$emit("removeTopic", topicId);
 		},
-		toggleEditMenu() {
-			this.editMenuOpen = !this.editMenuOpen;
+		toggleTopicMenu() {
+			if (!this.topicMenuOpen) this.$emit("topicsMenuOpen");
+			else if (this.topicMenuOpen) this.$emit("topicsMenuClose");
+			this.topicMenuOpen = !this.topicMenuOpen;
+		},
+		closeTopicMenu(){
+			this.$emit("topicsMenuClose");
+			this.topicMenuOpen = false;
 		},
 		updateTopicName(ev) {
 			if (ev.target.innerText) this.topicName = ev.target.innerText;
 			this.$emit("updateTopicName", this.topicName, this.topic.id);
 			this.editListNameShown = false;
-			this.editMenuOpen = false;
+			// this.topicMenuOpen = false;
 		},
 		addCard() {
 			this.$emit("addCard", this.topic.id, this.cardName);
 			this.editCardNameShown = false
 			this.cardName = ''
+		},
+		removeCard(cardId){
+			this.$emit("removeCard", cardId, this.topic.id);
 		},
 		toggleMinimize() {
 			this.minimize = !this.minimize;
