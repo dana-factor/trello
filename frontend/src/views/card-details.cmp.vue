@@ -1,7 +1,6 @@
 <template>
 	<section class="card-details-screen" @click="$router.push('../')">
 		<div class="card-details" v-if="card" @click.stop="closeModal">
-			{{board.labels}}
 			<div class="header">
 				<h1
 					@keypress.enter.prevent="updateCardName"
