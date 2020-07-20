@@ -144,12 +144,9 @@ export default {
 		async saveBoard() {
 			if (!this.board) return;
 			await this.$store.dispatch({ type: "saveBoard", board: this.board })
-			// .then(savedBoard => {
-			// this.board = JSON.parse(JSON.stringify(savedBoard));
 			socketService.emit('boardchanged', this.board._id);
 			this.nameInputOpen = false;
 			this.editMenuOpen = false;
-			// });
 		},
 		loadBoard() {
 			const boardId = this.$route.params.boardId;
