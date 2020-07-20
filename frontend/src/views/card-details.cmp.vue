@@ -144,7 +144,7 @@ export default {
 			let currLabels = this.card.labels;
 			if (currLabels.includes(label)) currLabels.splice(currLabels.indexOf(label), 1)
 			else currLabels.push(label);
-						console.log(this.card.labels)
+			console.log(this.card.labels)
 			this.dispatchBoardSave();
 		},
 		// hasLabel(label) {

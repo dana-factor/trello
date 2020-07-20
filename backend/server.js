@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === 'production') {
 const authRoutes = require('./api/auth/auth.routes')
 const boardRoutes = require('./api/board/board.routes')
 const userRoutes = require('./api/user/user.routes')
-const reviewRoutes = require('./api/review/review.routes')
+// const reviewRoutes = require('./api/review/review.routes')
 const connectSockets = require('./api/socket/socket.routes')
 
 
@@ -47,7 +47,7 @@ connectSockets(io)
 
 
 const logger = require('./services/logger.service')
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 http.listen(port, () => {
     logger.info('Server is running on port: ' + port)
 });

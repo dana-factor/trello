@@ -25,7 +25,6 @@
 		<Container
 			orientation="horizontal"
 			@drop="onColumnDrop($event)"
-			@drag-start="dragStart"
 			drag-class="grab"
 			:drop-placeholder="upperDropPlaceholderOptions"
 		>
@@ -65,6 +64,7 @@
 
 <script>
 import { boardService } from "../services/board.service";
+import socketService from '../services/socket.service';
 import { dragDropService } from "../services/drag-drop.service.js";
 import { Container, Draggable } from "vue-smooth-dnd";
 import boardTopic from "../cmps/board/board-topic.cmp.vue";
@@ -117,11 +117,7 @@ export default {
 				topic => topic.id === topicId
 			);
 			currTopic.name = topicName;
-			this.$store
-				.dispatch({ type: "saveBoard", board: this.board })
-				.then(savedBoard => {
-					this.board = JSON.parse(JSON.stringify(savedBoard));
-				});
+			this.saveBoard();
 		},
 		addCard(topicId, cardName) {
 			const starterCard = boardService.getStarterCard(cardName);
@@ -129,51 +125,34 @@ export default {
 				topic => topic.id === topicId
 			);
 			currTopic.cards.push(starterCard);
-			this.$store
-				.dispatch({ type: "saveBoard", board: this.board })
-				.then(savedBoard => {
-					this.board = JSON.parse(JSON.stringify(savedBoard));
-				});
+			this.saveBoard();
 		},
 		removeTopic(topicId) {
 			const idx = this.board.topics.findIndex(
 				topic => topic.id === topicId
 			);
 			this.board.topics.splice(idx, 1);
-			this.$store
-				.dispatch({ type: "saveBoard", board: this.board })
-				.then(savedBoard => {
-					this.board = JSON.parse(JSON.stringify(savedBoard));
-				});
+			this.saveBoard();
 		},
 		addTopic() {
 			const starterTopic = boardService.getStarterTopic(this.topicName);
 			this.topicNameInputOpen = false;
 			this.board.topics.push(starterTopic);
-			this.$store
-				.dispatch({ type: "saveBoard", board: this.board })
-				.then(savedBoard => {
-					this.board = JSON.parse(JSON.stringify(savedBoard));
-				});
+			this.saveBoard();
 		},
-		saveBoard() {
-			if (!this.board.name) return;
-			this.$store
-				.dispatch({ type: "saveBoard", board: this.board })
-				.then(savedBoard => {
+		async saveBoard() {
+			if (!this.board) return;
+			await this.$store.dispatch({ type: "saveBoard", board: this.board })
+				// .then(savedBoard => {
 					// this.board = JSON.parse(JSON.stringify(savedBoard));
-					this.nameInputOpen = false;
-					this.editMenuOpen = false;
-				});
+			socketService.emit('boardchanged',this.board._id);
+			this.nameInputOpen = false;
+			this.editMenuOpen = false;
+				// });
 		},
 		loadBoard() {
 			const boardId = this.$route.params.boardId;
-			this.$store
-				.dispatch({ type: "loadCurrBoard", id: boardId })
-				.then(board => {
-					// this.board = JSON.parse(JSON.stringify(board));
-					// this.setScene();
-				});
+			return this.$store.dispatch({ type: "loadCurrBoard", id: boardId })
 		},
 		setScene() {
 			this.board.type = "container";
@@ -213,15 +192,13 @@ export default {
 					.cards[index];
 			};
 		},
-		dragStart() {
-			console.log("drag started");
-		},
-		log(...params) {
-			console.log(...params);
-		}
 	},
-	created() {
-		this.loadBoard();
+	async created() {
+		await this.loadBoard();
+		socketService.setup();
+		console.log(this.board)
+		socketService.emit('setBoardId',this.board._id)
+		socketService.on('updateboard',this.loadBoard)//change to using obj from socket...
 	},
 	mounted() {},
 	watch: {

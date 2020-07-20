@@ -35,8 +35,6 @@
 			v-if="!minimize"
 			group-name="col"
 			@drop="(e) => onCardDrop(topic.id, e)"
-			@drag-start="(e) => log('drag start', e)"
-			@drag-end="(e) => log('drag end', e)"
 			:get-child-payload="getCardPayload(topic.id)"
 			drag-class="card-ghost"
 			drop-class="card-ghost-drop"
@@ -132,16 +130,10 @@ export default {
 					.cards[index];
 			};
 		},
-		dragStart() {
-			console.log("drag started");
-		},
-		log(...params) {
-			console.log(...params);
-        },
 	},
 	created() {
 		this.topicName = this.topic.name;
-        console.log(this.topicName);
+        // console.log(this.topicName);
         // this.board = JSON.parse(JSON.stringify(this.boardy));
 	},
 	mounted() {},
