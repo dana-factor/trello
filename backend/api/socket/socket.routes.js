@@ -6,7 +6,7 @@ function connectSockets(io) {
         // console.log('connection made!');
         socket.on('boardchanged', ()=>{
             // console.log('board socket update')
-            io.to(socket.boardId).emit('updateboard')
+            socket.broadcast.to(socket.boardId).emit('updateboard')
         })
         socket.on('setBoardId', newBoardId=>{
             if (socket.boardId) {

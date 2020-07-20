@@ -112,7 +112,7 @@ export default {
 		};
 	},
 	computed: {
-		boardComputed() {
+		boardGetter() {
 			return this.$store.getters.board;
 		}
 	},
@@ -127,7 +127,7 @@ export default {
 		},
 		changeBgc(color) {
 			this.board.style.backgroundColor = color;
-			this.$store.dispatch({ type: "saveBoard", board: this.board })
+			this.saveBoard();
 			this.$emit('changeBgc', color);
 		},
 		openDeleteModal() {
@@ -241,7 +241,7 @@ export default {
 		this.$emit('setBgc', 'lightblue')
 	},
 	watch: {
-		boardComputed(value) {
+		boardGetter(value) {
 			this.board = JSON.parse(JSON.stringify(value));
 			this.setScene();
 			this.$emit('setBgc', this.board.style.backgroundColor)
