@@ -46,7 +46,7 @@
 				v-for="card in topic.cards"
 				:key="card.id"
 			>
-				<card-preview :card="card" @removeCard="removeCard"></card-preview>
+				<card-preview :card="card" :boardLabels="boardy.labels" @removeCard="removeCard"></card-preview>
 			</Draggable>
 		</Container>
 		<div class="topic-footer" v-if="!minimize">

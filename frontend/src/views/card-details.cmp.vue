@@ -45,7 +45,7 @@
 					<input type="file" @change="onUploadImg" />
 				</div>
 			</div>
-			<card-edit-modal v-if="editModal" :modalLocation="modalLocation" @modalClose="closeModal">
+			<card-edit-modal v-if="editModal" @modalClose="closeModal">
 				<template v-slot:header>{{modalTitle}}</template>
 				<component
 					:is="editModal"
@@ -77,7 +77,6 @@ export default {
 			card: null,
 			cardId: 0,
 			editModal: '',
-			modalLocation: { top: 0, left: 0 }
 		};
 	},
 	computed: {
@@ -86,18 +85,13 @@ export default {
 			return title.charAt(0).toUpperCase() + title.slice(1) + 's';
 		},
 		labels() {
-			// if(!card) return null;
 			const boardLabels = this.board.labels;
-			let newLabels = [];
-			// labels = labels.filter((label) => this.board.labels.findIndex(labelObj => labelObj.color === label));
+			let labelsToShow = [];
 			boardLabels.forEach(label => {
-				if (this.card.labels.includes(label.color)) newLabels.push(label);
+				if (this.card.labels.includes(label.color)) labelsToShow.push(label);
 			});
-			return newLabels;
+			return labelsToShow;
 		}
-		// boardToShow() {
-		// 	return this.board;
-		// }
 	},
 	methods: {
 		// setBoardAndCard(board) {
@@ -117,7 +111,7 @@ export default {
 		// 	this.dispatchBoardSave();
 		// },
 		updateBoardLabels(labelToUpdate) {
-			boardService.updateBoardLabel(this.board, labelToUpdate);
+			boardService.updateBoardLabel(this.boardToUpdate, labelToUpdate);
 			this.dispatchBoardSave();
 		},
 		addNewChecklist(name) {
