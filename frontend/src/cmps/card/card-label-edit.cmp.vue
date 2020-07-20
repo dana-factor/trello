@@ -29,12 +29,8 @@ export default {
 	},
 	methods: {
 		hasLabel(label) {
-			// return this.getLabelIndex(label) !== -1;
 			return this.labels.includes(label);
 		},
-		// getLabelIndex(label) {
-		// 	return this.labels.findIndex((currLabel) => currLabel.color === label.color);
-		// },
 		updateBoardLabels() {
 			this.$emit('boardLabelsUpdate', this.labelToEdit);
 			this.labelToEdit = null;
