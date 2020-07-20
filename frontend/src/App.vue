@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" :style="{backgroundColor: background.bgc}">
     <app-header></app-header>
-    <router-view/>
+    <router-view @changeBgc="changeBgc"/>
   </div>
 </template>
 
@@ -11,8 +11,16 @@ import appHeader from '../src/cmps/app-header.cmp'
 export default {
     data(){
         return {
-
+          background: {
+            image: '',
+            bgc: '',
+          }
         }
+    },
+    methods: {
+      changeBgc(color) {
+        this.background.bgc = color;
+      }
     },
     components: {
       appHeader

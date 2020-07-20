@@ -1,0 +1,45 @@
+.board-edit {
+    color: #172b4d;
+    visibility: visible;
+    font-size: 1.5rem;
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    z-index: 1;
+    height: 100vh;
+    background-color: white;
+    transform: translateX(0%);
+    transition: transform 1s;
+    .board-menu-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 7vh;
+
+        border-bottom: 1px solid #172b4d ;
+        button {
+            font-weight: bold;
+            margin: 5px;
+        }
+        h3{
+            font-weight: bold;
+            margin-left: 20px;
+        }
+    }
+    .board-menu-nav{
+        display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+        h5 {
+            padding: 10px 20px;
+            &:hover{
+                background-color: rgba(9,30,66,.08)
+            }
+        }
+    }
+
+}

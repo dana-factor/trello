@@ -1,5 +1,6 @@
 <template>
     <section class="date-picker">
+        <input type="date"/>
     
     </section>
 </template>

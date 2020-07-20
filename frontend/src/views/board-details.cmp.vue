@@ -2,6 +2,7 @@
 	<section
 		v-if="board"
 		class="board-details"
+		
 	>
 		<board-nav>
 			<h2
@@ -105,7 +106,8 @@ export default {
 		},
 		changeBgc(color) {
 			this.board.style.backgroundColor = color;
-			this.saveBoard();
+			this.$store.dispatch({ type: "saveBoard", board: this.board })
+			this.$emit('changeBgc', color);
 		},
 		removeBoard(boardId) {
 			if (confirm("Are you sure you want to delete this board?")) {
