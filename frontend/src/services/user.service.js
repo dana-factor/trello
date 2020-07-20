@@ -1,15 +1,24 @@
 import httpService from './http.service';
 
-export default {
+export const userService = {
 	login,
 	logout,
 	signup,
+	getUsers,
 	getById,
-	getLoggedinUser,
+	remove,
+	update,
 };
 
 function getById(userId) {
 	return httpService.get(`user/${userId}`);
+}
+function remove(userId) {
+	return httpService.delete(`user/${userId}`);
+}
+
+function update(user) {
+	return httpService.put(`user/${user._id}`, user);
 }
 
 async function login(userCred) {
@@ -24,13 +33,12 @@ async function logout() {
 	await httpService.post('auth/logout');
 	sessionStorage.clear();
 }
+function getUsers() {
+	return httpService.get('user');
+}
 
 function _handleLogin(user) {
+	if (!user) return;
 	sessionStorage.setItem('user', JSON.stringify(user));
 	return user;
-}
-function getLoggedinUser() {
-	const user = sessionStorage.getItem('user');
-	if (!user) return '';
-	return JSON.parse(user);
 }
