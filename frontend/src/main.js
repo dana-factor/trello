@@ -8,13 +8,17 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
+
 Vue.directive('focus', {
-	inserted: function(el) {
+	inserted(el) {
+		el.focus();
+	},
+	update(el) {
 		el.focus();
 	},
 });
-Vue.config.productionTip = false;
 
+Vue.config.productionTip = false;
 new Vue({
 	router,
 	store,
