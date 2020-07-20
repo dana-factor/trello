@@ -29,16 +29,13 @@
 				/>
 				<button @click="toggleMinimize(); toggleTopicMenu();"><span v-if="!minimize">Minimize</span><span v-if="minimize">Maximize</span></button>
 			</div>
-		</div>
-			</span>
+		</span>
 		<Container
 			:style="{minHeight: 10 + 'px'}"
 			class="topic-main"
 			v-if="!minimize"
 			group-name="col"
 			@drop="(e) => onCardDrop(topic.id, e)"
-			@drag-start="(e) => log('drag start', e)"
-			@drag-end="(e) => log('drag end', e)"
 			:get-child-payload="getCardPayload(topic.id)"
 			drag-class="card-ghost"
 			drop-class="card-ghost-drop"
@@ -51,15 +48,19 @@
 				<card-preview :card="card" @removeCard="removeCard"></card-preview>
 			</Draggable>
 		</Container>
-		<div
-			class="topic-footer"
-			v-if="!minimize"
-		>
+		<div class="topic-footer" v-if="!minimize">
 			<p v-if="!editCardNameShown" @click="editCardNameShown = true">+ Add another card</p>
-			<textarea v-if="editCardNameShown" v-model="cardName" @keypress.enter.prevent="addCard" placeholder="Enter a title for this card..."></textarea>
+			<textarea
+				v-if="editCardNameShown"
+				v-model="cardName"
+				@keypress.enter.prevent="addCard"
+				placeholder="Enter a title for this card..."
+			></textarea>
 			<div class="btns">
 				<button v-if="editCardNameShown" @click="addCard" class="add">Add Card</button>
-				<button v-if="editCardNameShown" @click="editCardNameShown = false" class="close"><i class="el-icon-close"></i></button>
+				<button v-if="editCardNameShown" @click="editCardNameShown = false" class="close">
+					<i class="el-icon-close"></i>
+				</button>
 			</div>
 		</div>
 	</section>
@@ -137,16 +138,16 @@ export default {
 		},
 		toggleEditListNameShown() {
 			this.editListNameShown = !this.editListNameShown;
-        },
-        onCardDrop(columnId, dropResult) {
+		},
+		onCardDrop(columnId, dropResult) {
 			if (
 				dropResult.removedIndex !== null ||
 				dropResult.addedIndex !== null
 			) {
 				const boardy = Object.assign({}, this.boardy);
-                const column = boardy.topics.filter(p => p.id === columnId)[0];
-                const columnIndex = boardy.topics.indexOf(column);
-                this.$emit('updateDND', dropResult, columnIndex, column)
+				const column = boardy.topics.filter(p => p.id === columnId)[0];
+				const columnIndex = boardy.topics.indexOf(column);
+				this.$emit('updateDND', dropResult, columnIndex, column)
 			}
 		},
 		getCardPayload(columnId) {
@@ -155,28 +156,21 @@ export default {
 					.cards[index];
 			};
 		},
-		dragStart() {
-			console.log("drag started");
-		},
-		log(...params) {
-			console.log(...params);
-        },
 	},
 	created() {
 		this.topicName = this.topic.name;
-        console.log(this.topicName);
-        // this.board = JSON.parse(JSON.stringify(this.boardy));
+		// console.log(this.topicName);
+		// this.board = JSON.parse(JSON.stringify(this.boardy));
 	},
-	mounted() {},
+	mounted() { },
 	watch: {},
 	components: {
-        cardPreview,
-        Draggable,
+		cardPreview,
+		Draggable,
 		Container
 	}
 };
 </script>
 
 <style lang="scss" scoped>
-
 </style>

@@ -9,8 +9,6 @@ export const boardService = {
 	getStarterBoard,
 	getCardById,
 	getStarterCard,
-	// addLabels,
-	// removeLabels,
 	getStarterTopic,
 	// saveCardToBoard,
 	getStarterChecklist,
@@ -18,18 +16,10 @@ export const boardService = {
 	updateBoardLabel,
 	removeChecklist,
 	removeChecklistTask,
+	searchBoard
 };
-
 function query(filterBy) {
-	return (
-		httpService
-			.get(`board`)
-			// return axios.get(`${_getURL()}?name=${filterBy.searchStr}`)
-			.then((res) => {
-				// res.forEach((board) => _addLabels(board));
-				return res;
-			})
-	);
+	return httpService.get(`board`);
 }
 function getById(id) {
 	return httpService.get(`board/${id}`).then((res) => res);
@@ -42,30 +32,6 @@ function remove(id) {
 function save(board) {
 	return board._id ? _update(board) : _add(board);
 }
-// function addLabels(board) {
-// 	//Should be in server
-// 	board = JSON.parse(JSON.stringify(board));
-// 	board.topics.forEach((topic) => {
-// 		topic.cards.forEach((card) => {
-// 			let labels = board.labels;
-// 			labels = labels.filter((label) => card.labels.includes(label.color));
-// 			card.labels = labels;
-// 		});
-// 	});
-// 	return board;
-// }
-// function removeLabels(board) {
-// 	//Should be in server
-// 	board = JSON.parse(JSON.stringify(board));
-// 	board.topics.forEach((topic) => {
-// 		topic.cards.forEach((card) => {
-// 			let labels = [];
-// 			card.labels.forEach((label) => labels.push(label.color));
-// 			card.labels = labels;
-// 		});
-// 	});
-// 	return board;
-// }
 function updateBoardLabel(board, label) {
 	const idx = board.labels.findIndex(
 		(findLabel) => label.color === findLabel.color
@@ -302,6 +268,9 @@ function getCardById(board, id) {
 		});
 		if (card) return card;
 	}
+}
+function searchBoard(id, text){
+	return httpService.get(`board/${id}/search?text=${text}`);
 }
 function _makeId(length = 5) {
 	var txt = '';

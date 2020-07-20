@@ -3,31 +3,31 @@
 			>
 			<div class="board-menu-header">
 				<h3>Menu</h3>
-				<button @click="toggleBoardMenu">X</button>
-				<hr />
+				<button class="close" @click="toggleBoardMenu"><i class="el-icon-close"></i></button>
 			</div>
 			<div class="board-menu-nav">
 				<h5 @click="toggleColorPicker">Change Background</h5>
-				<h5>Change Due Date</h5>
-				<h5 @click="removeBoard(boardId)">Delete Board</h5>
-				<hr />
+				<h5 @click="toggleDatePicker"> Change Due Date</h5>
+				<h5 @click="openDeleteModal">Delete Board</h5>
 			</div>
 			<div>
                 <color-picker v-if="colorPickerOpen" @changeBgc="changeBgc"/>
+                <date-picker v-if="datePickerOpen"/>
 			</div>
-
-    
+           
     </div>
 </template>
 
 <script>
 import colorPicker from '../color-picker.cmp.vue';
+import datePicker from '../date-picker.cmp.vue';
 
 export default {
     props:['boardId'],
     data(){
         return{
-            colorPickerOpen: false
+            colorPickerOpen: false,
+            datePickerOpen: false
         }
     },
     computed: {
@@ -40,8 +40,11 @@ export default {
         toggleColorPicker() {
             this.colorPickerOpen = !this.colorPickerOpen;
         },
-        removeBoard(boardId) {
-			this.$emit("removeBoard", boardId);
+        toggleDatePicker() {
+            this.datePickerOpen = !this.datePickerOpen;
+        },
+        openDeleteModal() {
+           this.$emit('openDeleteModal');
         },
         changeBgc(color) {
             this.$emit('changeBgc', color);
@@ -58,7 +61,8 @@ export default {
 
     },
     components: {
-        colorPicker
+        colorPicker,
+        datePicker
     }
 
 }

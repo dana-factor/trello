@@ -1,22 +1,23 @@
 <template>
 <div>
-	<ul class="board-list">
+	<div class="board-list">
+	<ul >
 		<li
 			v-for="board in boards"
 			:key="board._id"
 		>
-			
             <router-link :to="'/board/'+board._id">
 			<board-preview @updateBoard="updateBoard" :board="board" />
             </router-link>  
 		</li>
-		<li @click="toggleInput"> Add Board </li>
+		<li @click="toggleInput"><i class="el-icon-plus"></i></li>
 	</ul>
+	</div>
 	<div :class="{hidden: isNameInputHidden}" class="add-name-modal">
 		<button @click="toggleInput">X</button>
 		<label>Name of your Board</label>
 		<input type="text" autofocus @change="addBoard"/>
-		</div>
+	</div>
 </div>
 </template>
 

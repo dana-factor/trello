@@ -1,10 +1,11 @@
 <template>
-    <section class="board-preview">
+    <div class="board-preview">
         <!-- contenteditable="true" @change="saveBoardName" -->
-        <h4 > {{board.name}}</h4> 
+        <!-- <p> {{board.name}}</p>  -->
         <img class="board-img" v-if="board.style.imgUrl" :src="board.style.imgUrl" />
         <div class="board-bgc" v-if="board.style.backgroundColor" :style="{backgroundColor: board.style.backgroundColor}"></div>
-    </section>
+        <div class="board-name">{{board.name}}</div>
+    </div>
 </template>
 
 <script>

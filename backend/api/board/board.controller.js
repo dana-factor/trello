@@ -1,38 +1,69 @@
-const boardService = require('./board.service')
-const logger = require('../../services/logger.service')
+const boardService = require('./board.service');
+const logger = require('../../services/logger.service');
 
 async function getBoard(req, res) {
-    const board = await boardService.getById(req.params.id)
-    res.send(board)
+	try {
+		const board = await boardService.getById(req.params.id);
+		res.send(board);
+	} catch (err) {
+		logger.error(err.message);
+		res.status(404).end();
+	}
 }
-  
+
 async function getBoards(req, res) {
-    const boards = await boardService.query(req.query)
-    logger.debug(boards);
-    res.send(boards)
+	try {
+		const boards = await boardService.query();
+		logger.debug(boards);
+		res.send(boards);
+	} catch (err) {
+		logger.error(err.message);
+		res.status(500).end();
+	}
 }
 
 async function deleteBoard(req, res) {
-    await boardService.remove(req.params.id)
-    res.end()
+	try {
+		await boardService.remove(req.params.id);
+		res.end();
+	} catch (err) {
+		res.status(500).end();
+	}
 }
 
 async function updateBoard(req, res) {
-    const board = req.body;
-    await boardService.update(board)
-    res.send(board)
+	try {
+		const board = req.body;
+		await boardService.update(board);
+		res.send(board);
+	} catch (err) {
+		res.status(500).end();
+	}
 }
 
 async function addBoard(req, res) {
-    const board = req.body;
-    await boardService.add(board)
-    res.send(board)
+	try {
+		const board = req.body;
+		await boardService.add(board);
+		res.send(board);
+	} catch (err) {
+		res.status(500).end();
+	}
 }
-
+async function searchBoard(req,res){
+	try {
+		const topics = await boardService.searchBoard(req.params.id,req.query.text);
+		res.send(topics);
+	} catch (err) {
+		logger.error(err.message);
+		res.status(404).end();
+	}
+}
 module.exports = {
-    getBoard,
-    getBoards,
-    deleteBoard,
-    updateBoard,
-    addBoard
-}
+	getBoard,
+	getBoards,
+	deleteBoard,
+	updateBoard,
+    addBoard,
+    searchBoard
+};

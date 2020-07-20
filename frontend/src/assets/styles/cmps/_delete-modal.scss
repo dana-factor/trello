@@ -1,0 +1,36 @@
+.delete-modal{position: fixed;
+top: 30%;
+left: 30%;
+background-color: #f4f5f7;
+height: 20vh;
+border-radius: 3px;
+z-index: 3;
+h5 {
+    display: block;
+    padding: 10px 20px;
+    color: #172b4d;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.btns {
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+    .cancel-btn, .delete-btn {
+        padding: 8px;
+        font-size: 1rem;
+        color: white;
+        border-radius: 3px;
+        margin: 5px;
+    }
+    .cancel-btn {
+        // background-color: rgb(136, 135, 135)
+        border: 1px solid  #172b4d;
+        color:  #172b4d;
+  
+    }
+    .delete-btn {
+        background-color: #D81B60;
+    }
+}
+}

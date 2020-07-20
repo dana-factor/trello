@@ -4,7 +4,6 @@
 		<board-list
             @updateBoard="updateBoard"
 			@addBoard="addBoard"
-			@removeBoard="removeBoard"
 			:boards="boards"
 		/> 
 	</section>
@@ -23,9 +22,9 @@ export default {
 	},
 	computed: {},
 	methods: {
-		removeBoard(boardId) {
-			this.$store.dispatch({ type: "removeBoard", id: boardId });
-		},
+		// removeBoard(boardId) {
+		// 	this.$store.dispatch({ type: "removeBoard", id: boardId });
+		// },
 		addBoard(boardName) {
 			var board = boardService.getStarterBoard();
 			if(boardName) board.name = boardName;
