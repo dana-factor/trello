@@ -5,19 +5,19 @@
     display: flex;
     flex-direction: column;
     max-height: 100%;
-    >*{
-        margin: 4px;
-        padding: 4px;
-    }
+
     .topic-header{
         display: flex;
         justify-content: space-between;
+        align-items: center;
         height: 40px;
+        margin: 0 4px;
         h2{
-            font-size: rem(20px);
+            font-weight: 600;
         }
         button.close{
             color: #6b778c;
+            padding: 10px;
         }
         .topic-menu{
             position: absolute;
@@ -52,14 +52,26 @@
             }
         }
     }
+    .topic-main{
+        margin: 0 4px;
+        padding: 0 4px;
+    }
     .topic-footer{
         transition: 0.2s;
         margin: 0px 8px 8px;
         display: flex;
         flex-direction: column;
+        justify-content: stretch;
+        min-height: 28px;
         p{
             width: 100%;
+            height: 100%;
             cursor: pointer;
+            padding: 6px;
+        }
+        p:hover{
+            background-color: rgba(9,30,66,.08);
+            border-radius: 3px;
         }
         textarea{
             border-radius: 3px;
@@ -68,21 +80,38 @@
             font-family: inherit;
             padding: 6px 8px 2px;
             font-size: 16px;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
+        }
+        .btns{
+            display: flex;
+            justify-content: space-between;
         }
         button{
-            display: block;
-            padding: 6px 12px;
             border-radius: 3px;
-            color: #fff;
             font-family: inherit;
             font-weight: 400;
-            background-color: #cecece;
+            transition: .2s;
+        }
+        button.add{
+            padding: 6px 12px;
+            color: #fff;
+            background-color: #beb7b7;
+            width: 86%;
+            font-size: rem(15px);
+        }
+        button.add:hover{
+            padding: 6px 12px;
+            background-color: #d8d1d1;
+        }
+        button.close{
+            font-size: rem(21px);
+            color: #6b778c
+        }
+        button.close:hover{
+            color: #46484b
         }
     }
-    .topic-footer:hover{
-        background-color: rgba(9,30,66,.08)
-    }
+    
      // drag'n'drop:
      .card-ghost {
         transition: transform 0.18s ease;
