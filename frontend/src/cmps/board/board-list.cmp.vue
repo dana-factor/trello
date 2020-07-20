@@ -10,14 +10,14 @@
 			<board-preview @updateBoard="updateBoard" :board="board" />
             </router-link>  
 		</li>
-		<li @click="toggleInput" class="add-board"><i class="el-icon-plus"></i></li>
+		<li @click="addBoard" class="add-board"><i class="el-icon-plus"></i></li>
 	</ul>
 	</div>
-	<div :class="{hidden: isNameInputHidden}" class="add-name-modal">
+	<!-- <div :class="{hidden: isNameInputHidden}" class="add-name-modal">
 		<button @click="toggleInput">X</button>
 		<label>Name of your Board</label>
 		<input type="text" autofocus @change="addBoard"/>
-	</div>
+	</div> -->
 </div>
 </template>
 
@@ -30,7 +30,7 @@ export default {
 	props: ["boards"],
 	data() {
 		return {
-			isNameInputHidden: true
+			// isNameInputHidden: true
 		};
 	},
 	computed: {},
@@ -39,9 +39,9 @@ export default {
 			this.isNameInputHidden = !this.isNameInputHidden;
 		},
 		addBoard(ev) {
-			const boardName = ev.target.value;
-			this.$emit('addBoard', boardName);
-			this.isNameInputHidden = true;
+			// const boardName = ev.target.value;
+			this.$emit('addBoard');
+			// this.isNameInputHidden = true;
 		},
 
        updateBoard(board) {

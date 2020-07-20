@@ -2,8 +2,8 @@
 	<section
 		v-if="board"
 		class="board-details"
-		:style="{backgroundColor: board.style.backgroundColor, backgroundImage: `url('${board.style.imgUrl}')`}"
 	>
+		<!-- :style="{backgroundColor: board.style.backgroundColor, backgroundImage: `url('${board.style.imgUrl}')`}" -->
 	<div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
 		<board-nav>
 			<h2
@@ -242,13 +242,16 @@ export default {
 	},
 	mounted() { },
 	destroyed() {
-		this.$emit('setBgc', '')
+		this.$emit('setBgc', '');
+		this.$emit('setBgImg', '');
+		console.log('destroyed')
 	},
 	watch: {
 		boardGetter(value) {
 			this.board = JSON.parse(JSON.stringify(value));
 			this.setScene();
-			this.$emit('setBgc', this.board.style.backgroundColor)
+			this.$emit('setBgc', this.board.style.backgroundColor);
+			this.$emit('setBgImg', this.board.style.imgUrl);
 		}
 	},
 	components: {
