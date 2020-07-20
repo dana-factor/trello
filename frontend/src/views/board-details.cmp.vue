@@ -19,8 +19,10 @@
 		</board-nav>
 		 <div v-if="deleteModalOpen" class="delete-modal">
                 <h5>Are you sure you want to delete this board?</h5>
-                <buton @click="cancelRemoval" class="cancel-btn">Cancel</buton>
+				<div class="btns">
+                <button @click="cancelRemoval" class="cancel-btn">Cancel</button>
                 <button @click="removeBoard(boardId)" class="delete-btn">Delete</button>
+				</div>
             </div>
 		<board-edit
 			:class="{'board-menu-open':boardMenuOpen}"
