@@ -1,7 +1,8 @@
 <template>
 	<section class="card-checklists">
 		<div class="checklists" v-for="checklist in checklists" :key="checklist.id">
-			<i class="el-icon-finished"></i>{{checklist.name}}
+			<i class="el-icon-finished"></i>
+			<input v-model="checklist.name"/>
 			<button @click="removeChecklist(checklist)"><i class="el-icon-delete"></i></button>
 			<ul>
 				<li v-for="task in checklist.tasks" :key="task.id">
@@ -26,7 +27,7 @@ export default {
 	data() {
 		return {
 			newTaskTexts: {},
-
+			checklistsToUpdate: JSON.parse(JSON.stringify(this.checklists))//not reactive
 		}
 	},
 	methods: {
@@ -41,6 +42,9 @@ export default {
 			this.$emit('checklistTaskRemoved', tasks, task.id);
 		}
 	},
+	watch:{
+		
+	}
 }
 </script>
 
