@@ -58,7 +58,7 @@ function removeChecklistTask(tasks, taskId) {
 function getStarterBoard() {
 	return {
 		// _id: _makeId(),
-		name: 'starter board',
+		name: 'New Board',
 		members: [],
 		// green #519839
 		// yellow #d9b51c
