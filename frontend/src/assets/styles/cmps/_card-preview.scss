@@ -41,6 +41,7 @@
 	p{
 		margin-right: 10px;
 		color: #6b778c;
+		font-size: rem(14px);
 	}
 	.card-label {
 		border-radius: 4px;
@@ -49,6 +50,19 @@
 		width: 40px;
 		margin: 0 4px 4px 0;
 		display: inline-block;
+		transition: .2s ease-in;
+		.label-title {
+			color: white;
+			padding: 0 4px;
+			text-align: center;
+			vertical-align: super;
+			font-size: 12px;
+			line-height: 16px;
+			font-weight: 700;
+			overflow: hidden;
+    		text-overflow: ellipsis;
+			width: 100%;
+		}
 	}
 }
 .card-preview:hover{

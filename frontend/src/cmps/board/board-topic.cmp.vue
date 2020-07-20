@@ -127,7 +127,8 @@ export default {
 			// this.topicMenuOpen = false;
 		},
 		addCard() {
-			this.$emit("addCard", this.topic.id, this.cardName);
+			let cardName = (this.cardName) ? this.cardName : 'New Card'
+			this.$emit("addCard", this.topic.id, cardName);
 			this.editCardNameShown = false
 			this.cardName = ''
 		},
