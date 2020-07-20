@@ -29,6 +29,7 @@
 				/>
 				<button @click="toggleMinimize(); toggleTopicMenu();"><span v-if="!minimize">Minimize</span><span v-if="minimize">Maximize</span></button>
 			</div>
+		</div>
 		</span>
 		<Container
 			:style="{minHeight: 10 + 'px'}"
