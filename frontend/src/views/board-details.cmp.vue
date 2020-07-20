@@ -3,6 +3,7 @@
 		v-if="board"
 		class="board-details"
 	>
+	<div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
 		<board-nav>
 			<h2
 				slot="board-name"
@@ -37,9 +38,13 @@
 					class="topic-wrapper"
 					:topic="topic"
 					:boardy="board"
+					:topicsMenuOpen="topicsMenuOpen"
+					@topicsMenuClose="topicsMenuOpen = false"
+					@topicsMenuOpen="topicsMenuOpen = true"
 					@updateTopicName="updateTopicName"
 					@removeTopic="removeTopic"
 					@addCard="addCard"
+					@removeCard="removeCard"
 					@updateDND="saveAfterDnd"
 				/>
 			</Draggable>
@@ -49,14 +54,23 @@
 					@click="topicNameInputOpen = true"
 				>+Add another list</h2>
 				<input
+					placeholder="Enter list title..."
 					class="topicName"
 					v-if="topicNameInputOpen"
 					v-model="topicName"
 				/>
-				<button
-					@click="addTopic"
-					v-if="topicNameInputOpen"
-				>Add List</button>
+				<div class="btns-container">
+					<button
+						class="add"
+						@click="addTopic"
+						v-if="topicNameInputOpen"
+					>Add List</button>
+					<button
+						class="close"
+						@click="topicNameInputOpen = false; topicName='';"
+						v-if="topicNameInputOpen"
+					><i class="el-icon-close"></i></button>
+				</div>	
 			</div>
 		</Container>
 		<router-view :board="board" />
@@ -86,7 +100,8 @@ export default {
 				className: "cards-drop-preview",
 				animationDuration: 150,
 				showOnTop: true
-			}
+			},
+			topicsMenuOpen: false
 		};
 	},
 	computed: {
@@ -131,6 +146,17 @@ export default {
 			currTopic.cards.push(starterCard);
 			this.$store
 				.dispatch({ type: "saveBoard", board: this.board })
+				.then(savedBoard => {
+					this.board = JSON.parse(JSON.stringify(savedBoard));
+				});
+		},
+		removeCard(cardId, topicId){
+			const topicIdx = this.board.topics.findIndex(
+				topic => topic.id === topicId
+			);
+			const cardIdx = this.board.topics[topicIdx].cards.findIndex(card => card.id === cardId)
+			this.board.topics[topicIdx].cards.splice(cardIdx, 1)
+			this.$store.dispatch({ type: "saveBoard", board: this.board })
 				.then(savedBoard => {
 					this.board = JSON.parse(JSON.stringify(savedBoard));
 				});

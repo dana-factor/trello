@@ -73,7 +73,26 @@ input[type='file'] {
 *[contenteditable] {
 	padding: 7px 15px;
 	outline-color: rgb(92, 92, 92);
+	border-radius: 3px;
 	&:focus {
 		background-color: white;
 	}
+}
+::-webkit-scrollbar {
+	height: 12px;
+	width: 12px;
+	// background-color: transparent;
+	border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+	background: rgba(0,0,0,.2);
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: transparent;
+}
+::-webkit-scrollbar-button {
+	width: 0;
+	height: 0;
 }
