@@ -21,7 +21,7 @@
                 <h5>Are you sure you want to delete this board?</h5>
 				<div class="btns">
                 <button @click="toggleDeleteModal" class="cancel-btn"><i class="el-icon-close"></i> Cancel</button>
-                <button @click="removeBoard(boardId)" class="delete-btn"><i class="el-icon-delete"></i> Delete</button>
+                <button @click="removeBoard(board._id)" class="delete-btn"><i class="el-icon-delete"></i> Delete</button>
 				</div>
             </div>
 		<board-edit
@@ -134,6 +134,7 @@ export default {
 		removeBoard(boardId) {
 			this.$store.dispatch({ type: "removeBoard", id: boardId });
 			this.isDeleteModalOpen = false;
+			this.$router.push('/')
 		},
 		updateTopicName(topicName, topicId) {
 			let currTopic = this.board.topics.find(

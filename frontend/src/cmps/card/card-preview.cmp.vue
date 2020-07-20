@@ -1,7 +1,7 @@
 <template>
 	<section onclick class="card-preview">
 		<button @click.stop="removeCard">
-			<i class="el-icon-close"></i>
+			<i class="el-icon-delete"></i>
 		</button>
 		<div
 			class="card-label"
