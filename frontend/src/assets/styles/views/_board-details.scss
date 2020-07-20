@@ -21,12 +21,13 @@
     }
 
 
-    // drag'n'drop
-    .grab {
-        cursor: grabbing;
-    }
-    .drop-preview {
-        background-color: rgba(150, 150, 200, 0.1);
-        margin: 5px;
-    }
+}
+// drag'n'drop
+.grab {
+    cursor: grabbing;
+}
+
+.drop-preview {
+    background-color: rgba(150, 150, 200, 0.1);
+    margin: 5px;
 }

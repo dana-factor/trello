@@ -3,19 +3,18 @@
 			>
 			<div class="board-menu-header">
 				<h3>Menu</h3>
-				<button class="close" @click="toggleBoardMenu">X</button>
+				<button class="close" @click="toggleBoardMenu"><i class="el-icon-close"></i></button>
 			</div>
 			<div class="board-menu-nav">
 				<h5 @click="toggleColorPicker">Change Background</h5>
 				<h5 @click="toggleDatePicker"> Change Due Date</h5>
-				<h5 @click="removeBoard(boardId)">Delete Board</h5>
+				<h5 @click="openDeleteModal">Delete Board</h5>
 			</div>
 			<div>
                 <color-picker v-if="colorPickerOpen" @changeBgc="changeBgc"/>
                 <date-picker v-if="datePickerOpen"/>
 			</div>
-
-    
+           
     </div>
 </template>
 
@@ -41,12 +40,11 @@ export default {
         toggleColorPicker() {
             this.colorPickerOpen = !this.colorPickerOpen;
         },
-        
         toggleDatePicker() {
             this.datePickerOpen = !this.datePickerOpen;
         },
-        removeBoard(boardId) {
-			this.$emit("removeBoard", boardId);
+        openDeleteModal() {
+           this.$emit('openDeleteModal');
         },
         changeBgc(color) {
             this.$emit('changeBgc', color);

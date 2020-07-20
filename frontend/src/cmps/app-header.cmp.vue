@@ -5,7 +5,7 @@
         <router-link to="/board/a101">Board Details</router-link> 
         <router-link to="/board/a101/card/asd">Card Details</router-link> 
         </div>
-        <h1>TRELLA  </h1>
+        <h1>TRELLA</h1>
         <div>
         <router-link to="/login">Login</router-link> 
         </div>
