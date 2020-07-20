@@ -12,7 +12,6 @@
 			</div>
 			<div>
                 <board-edit-background v-if="isEditingBg" @toggleColorPicker="toggleColorPicker" @setBgc="setBgc" @setBgImg="setBgImg"/>
-                <!-- <color-picker v-if="isColorPickerOpen" @changeBgc="changeBgc"/> -->
                 <date-picker v-if="datePickerOpen"/>
 			</div>
            
