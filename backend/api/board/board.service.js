@@ -8,7 +8,7 @@ module.exports = {
 	remove,
 	update,
 	add,
-	searchBoard
+	searchBoard,
 };
 
 async function query(text = '') {
@@ -42,10 +42,22 @@ async function remove(boardId) {
 	}
 }
 
-async function update(board) {
+async function update(
+	board,
+	activity = { text: 'Unspecified Activity', cardId: null },
+	user
+) {
 	const collection = await dbService.getCollection('board');
 	board._id = ObjectId(board._id);
-
+	// console.log('activity', activity);
+	// console.log('user', user);
+	const activityToAdd = {
+		text: activity.text,
+		cardId: activity.cardId,
+		user,
+		createdAt: Date.now(),
+	};
+	board.activities.unshift(activityToAdd);
 	try {
 		await collection.replaceOne({ _id: board._id }, { $set: board });
 		return board;
@@ -65,7 +77,7 @@ async function add(board) {
 		throw err;
 	}
 }
-async function searchBoard(boardId, text = ''){
+async function searchBoard(boardId, text = '') {
 	const collection = await dbService.getCollection('board');
 	try {
 		let board = await collection.findOne({ _id: ObjectId(boardId) });

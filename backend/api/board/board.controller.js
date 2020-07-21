@@ -33,9 +33,14 @@ async function deleteBoard(req, res) {
 
 async function updateBoard(req, res) {
 	try {
-		const board = req.body;
-		await boardService.update(board);
-		res.send(board);
+		const board = req.body.board;
+		let activity = req.body.activity;
+		if (activity && !activity.text) activity.text = 'Unspecified Activity';
+		let user = req.session.user;
+		if (!user) user = { fullName: 'Guest' };
+		else delete user.username;
+		const addedBoard = await boardService.update(board, activity, user);
+		res.send(addedBoard);
 	} catch (err) {
 		res.status(500).end();
 	}
@@ -50,9 +55,12 @@ async function addBoard(req, res) {
 		res.status(500).end();
 	}
 }
-async function searchBoard(req,res){
+async function searchBoard(req, res) {
 	try {
-		const topics = await boardService.searchBoard(req.params.id,req.query.text);
+		const topics = await boardService.searchBoard(
+			req.params.id,
+			req.query.text
+		);
 		res.send(topics);
 	} catch (err) {
 		logger.error(err.message);
@@ -64,6 +72,6 @@ module.exports = {
 	getBoards,
 	deleteBoard,
 	updateBoard,
-    addBoard,
-    searchBoard
+	addBoard,
+	searchBoard,
 };

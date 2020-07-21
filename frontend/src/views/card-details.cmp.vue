@@ -32,7 +32,7 @@
 							<i class="el-icon-document"></i> Description
 						</h2>
 						<textarea v-model="card.description" placeholder="Add a more detailed description..."></textarea>
-						<button @click="dispatchBoardSave">Save</button>
+						<button @click="dispatchBoardSave('has updated the description')">Save</button>
 					</div>
 					<card-attachments :attachments="card.attachments" @attachmentRemoved="removeAttachment" />
 					<card-checklists
@@ -45,9 +45,15 @@
 					/>
 				</div>
 				<div class="right-side">
-					<button @click.stop="toggleModal('card-label-edit')"><i class="el-icon-collection-tag"></i> Labels</button>
-					<button @click.stop="toggleModal('card-checklist-edit')"><i class="el-icon-document-checked"></i> Checklists</button>
-					<button @click.stop="toggleModal('card-due-edit')"><i class="el-icon-time"></i> Due Date</button>
+					<button @click.stop="toggleModal('card-label-edit')">
+						<i class="el-icon-collection-tag"></i> Labels
+					</button>
+					<button @click.stop="toggleModal('card-checklist-edit')">
+						<i class="el-icon-document-checked"></i> Checklists
+					</button>
+					<button @click.stop="toggleModal('card-due-edit')">
+						<i class="el-icon-time"></i> Due Date
+					</button>
 					<input type="file" @change="onUploadImg" />
 				</div>
 			</div>
@@ -121,7 +127,7 @@ export default {
 		// },
 		updateCardName(ev) {
 			this.card.name = ev.target.innerText;
-			this.dispatchBoardSave();
+			this.dispatchBoardSave('has updated a card name');
 		},
 		// updateCard(card) {
 		// 	boardService.saveCardToBoard(this.board, card);
@@ -129,51 +135,51 @@ export default {
 		// },
 		updateBoardLabels(labelToUpdate) {
 			boardService.updateBoardLabel(this.boardToUpdate, labelToUpdate);
-			this.dispatchBoardSave();
+			this.dispatchBoardSave('has updated a label\'s color');
 		},
 		addNewChecklist(name) {
 			let checklist = boardService.getStarterChecklist();
 			checklist.name = name;
 			this.card.checklists.push(checklist);
-			this.dispatchBoardSave();
+			this.dispatchBoardSave('has added a new checklist');
 		},
 		addNewChecklistTask(checklistId, text) {
 			let task = boardService.getStarterChecklistTask();
 			let checklist = this.card.checklists.find(checklistToFind => checklistId === checklistToFind.id)
 			task.text = text;
 			checklist.tasks.push(task);
-			this.dispatchBoardSave();
+			this.dispatchBoardSave('has added a new checklist task');
 		},
 		removeChecklist(checklistId) {
 			boardService.removeChecklist(this.card, checklistId);
-			this.dispatchBoardSave();
+			this.dispatchBoardSave('has removed a checklist');
 		},
 		removeChecklistTask(checklistId, taskId) {
 			boardService.removeChecklistTask(this.card, checklistId, taskId);
-			this.dispatchBoardSave();
+			this.dispatchBoardSave('has remove a checklist task');
 		},
 		updateChecklists(checklists) {
 			this.card.checklists = checklists;
-			this.dispatchBoardSave();
+			this.dispatchBoardSave('has updated a checklist');
 		},
 		toggleLabel(label) {
 			let currLabels = this.card.labels;
 			if (currLabels.includes(label)) currLabels.splice(currLabels.indexOf(label), 1)
 			else currLabels.push(label);
-			this.dispatchBoardSave();
+			this.dispatchBoardSave('has toggled a label');
 		},
 		removeAttachment(attachment) {
 			//kinda temp idk
 			this.card.attachments.splice(this.card.attachments.indexOf(attachment), 1);
-			this.dispatchBoardSave();
+			this.dispatchBoardSave('has removed an attachment');
 		},
 		saveDueDate(date) {
 			this.card.dueDate = date;
 			this.card.isCardDone = true;
-			this.dispatchBoardSave();
+			this.dispatchBoardSave('has updated the due date to ' + this.card.dueDate);
 		},
-		dispatchBoardSave() {
-			this.$store.dispatch({ type: 'saveBoard', board: this.boardToUpdate })
+		dispatchBoardSave(action) {
+			this.$store.dispatch({ type: 'saveBoard', board: this.boardToUpdate, activity: { text: action + ' in card ' + this.card.name, cardId: this.card.id } });
 		},
 		toggleModal(cmpName) {
 			if (this.editModal === cmpName) this.closeModal()
@@ -182,20 +188,19 @@ export default {
 		async onUploadImg(ev) {
 			const res = await uploadImg(ev);
 			this.card.attachments.push({ imgUrl: res.url });
-			this.dispatchBoardSave();
+			this.dispatchBoardSave('has added an image');
 		},
 		closeModal() {
 			this.editModal = '';
 		}
 	},
 	async created() {
-		//todo change push to something nicer
 		this.cardId = this.$route.params.cardId;
-		// let boardId = this.$route.params.boardId;
-		if (!this.cardId) this.$router.push('/');
+		if (!this.cardId) this.$router.push('/404');
 		this.boardToUpdate = JSON.parse(
 			JSON.stringify(this.board));
 		this.card = boardService.getCardById(this.boardToUpdate, this.cardId);
+		if (!this.card) this.$router.push('/404');
 	},
 	components: {
 		cardEditModal,

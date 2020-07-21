@@ -26,9 +26,6 @@ Vue.directive('focus', {
 	inserted(el) {
 		el.focus();
 	},
-	update(el) {
-		el.focus();
-	},
 });
 
 Vue.config.productionTip = false;

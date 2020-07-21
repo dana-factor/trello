@@ -29,8 +29,8 @@ function remove(id) {
 	return httpService.delete(`board/${id}`);
 }
 
-function save(board) {
-	return board._id ? _update(board) : _add(board);
+function save(board,activity) {
+	return board._id ? _update(board,activity) : _add(board);
 }
 function updateBoardLabel(board, label) {
 	const idx = board.labels.findIndex(
@@ -257,8 +257,10 @@ function getStarterTopic(topicName) {
 		cards: [],
 	};
 }
-function _update(board) {
-	return httpService.put(`board/${board._id}`, board).then((res) => res);
+function _update(board, activity) {
+	return httpService
+		.put(`board/${board._id}`, { board, activity })
+		.then((res) => res);
 }
 
 function _add(board) {

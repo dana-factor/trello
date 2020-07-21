@@ -123,18 +123,18 @@ export default {
 		},
 		updateBoardName(ev) {
 			if (ev.target.innerText) this.board.name = ev.target.innerText;
-			this.saveBoard()
+			this.saveBoard('has updated board name')
 		},
 		setBgc(color) {
 			this.board.style.backgroundColor = color;
 			this.board.style.imgUrl = '';
-			this.$store.dispatch({ type: "saveBoard", board: this.board })
+			this.saveBoard('has changed the background color');
 			this.$emit('setBgc', color);
 		},
 		setBgImg(imgUrl) {
 			this.board.style.imgUrl = imgUrl;
 			this.board.style.backgroundColor = '';
-			this.$store.dispatch({ type: "saveBoard", board: this.board })
+			this.saveBoard('has changed the background image');
 			this.$emit('setBgImg', imgUrl);
 		},
 		removeBoard(boardId) {
@@ -147,7 +147,7 @@ export default {
 				topic => topic.id === topicId
 			);
 			currTopic.name = topicName;
-			this.saveBoard();
+			this.saveBoard('has updated a topic');
 		},
 		addCard(topicId, cardName) {
 			const starterCard = boardService.getStarterCard(cardName);
@@ -155,7 +155,7 @@ export default {
 				topic => topic.id === topicId
 			);
 			currTopic.cards.push(starterCard);
-			this.saveBoard();
+			this.saveBoard('has added a card');
 		},
 		async removeCard(cardId, topicId) {
 			const topicIdx = this.board.topics.findIndex(
@@ -171,17 +171,17 @@ export default {
 				topic => topic.id === topicId
 			);
 			this.board.topics.splice(idx, 1);
-			this.saveBoard();
+			this.saveBoard('has removed a topic');
 		},
 		addTopic() {
 			const starterTopic = boardService.getStarterTopic(this.topicName);
 			this.topicNameInputOpen = false;
 			this.board.topics.push(starterTopic);
-			this.saveBoard();
+			this.saveBoard('has added a topic');
 		},
-		async saveBoard() {
+		saveBoard(action) {
 			if (!this.board) return;
-			await this.$store.dispatch({ type: "saveBoard", board: this.board })
+			this.$store.dispatch({ type: 'saveBoard', board: this.board, activity: { text: action } });
 		},
 		loadBoard() {
 			const boardId = this.$route.params.boardId;
@@ -236,6 +236,7 @@ export default {
 	},
 	watch: {
 		boardGetter(value) {
+			// console.log('activity:', value.activities[0].text);
 			this.board = JSON.parse(JSON.stringify(value));
 			this.setScene();
 			if (this.board.style.backgroundColor) this.$emit('setBgc', this.board.style.backgroundColor)
