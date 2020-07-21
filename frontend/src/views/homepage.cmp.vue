@@ -1,6 +1,8 @@
 <template>
 	<section class="homepage">
 		<h1>homepage</h1>
+		<img width="100%" src="../../public/img/teamwork.png" />
+		
 		<board-list
             @updateBoard="updateBoard"
 			@addBoard="addBoard"
@@ -22,9 +24,6 @@ export default {
 	},
 	computed: {},
 	methods: {
-		// removeBoard(boardId) {
-		// 	this.$store.dispatch({ type: "removeBoard", id: boardId });
-		// },
 		addBoard(boardName) {
 			var board = boardService.getStarterBoard();
 			if(boardName) board.name = boardName;

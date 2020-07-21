@@ -3,7 +3,6 @@
 		v-if="board"
 		class="board-details"
 	>
-		<!-- :style="{backgroundColor: board.style.backgroundColor, backgroundImage: `url('${board.style.imgUrl}')`}" -->
 	<div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
 		<board-nav>
 			<h2

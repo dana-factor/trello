@@ -1,6 +1,7 @@
 <template>
 <div>
 	<div class="board-list">
+    <h1>Boards</h1>
 	<ul >
 		<li
 			v-for="board in boards"
@@ -22,29 +23,42 @@
 </template>
 
 <script>
-import boardPreview from "./board-preview.cmp.vue";
+import boardPreview from "../cmps/board/board-preview.cmp.vue";
+import { boardService } from '../services/board.service.js';
 
 
 export default {
 	name: "board-list",
-	props: ["boards"],
+	props: [],
 	data() {
 		return {
+            	boards: []
 		};
 	},
 	computed: {},
 	methods: {
-		// toggleInput() {
-		// 	this.isNameInputHidden = !this.isNameInputHidden;
-		// },
-		addBoard(ev) {
-			this.$emit('addBoard');
-		},
-       updateBoard(board) {
-            this.$emit('updateBoard', board);
+		addBoard(boardName) {
+			var board = boardService.getStarterBoard();
+			if(boardName) board.name = boardName;
+			this.$store.dispatch({ type: "saveBoard", board })
+                .then((res) => {
+					this.$router.push('/board/' + res._id)
+				})
+				.catch(err => {
+					console.log("ERROR, cannot add a board", err);
+				});
         },
+        updateBoard(board) {
+            this.$store.commit({type: 'saveBoard', board})
+        }
 	},
-	created() {},
+	created() {
+          this.$store.dispatch({type: 'loadBoards'})
+        .then(() => {
+             this.boards = this.$store.getters.boards
+             })
+
+    },
 	mounted() {},
 	watch: {},
 	components: {
