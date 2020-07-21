@@ -14,12 +14,12 @@
 		</div>
 		<router-link :to="'card/'+card.id" append>
 			<h2>{{card.name}}</h2>
-			<div v-if="hasImg">
+			<div class="card-img" v-if="hasImg">
 			<img v-for="attachment in card.attachments" :key="attachment.imgUrl" :src="attachment.imgUrl" />
 			</div>
 			<p v-if="card.dueDate" class="card-status" :class="{overdue: isOverdue, completed: card.isCardDone}">
 				<i class="el-icon-time"></i>
-				<span> {{ dueDateShort}}</span>
+				<span> {{ dueDateShort }}</span>
 			</p>
 			<p v-if="card.description">
 				<i class="el-icon-document"></i>
