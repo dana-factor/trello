@@ -44,7 +44,7 @@ async function remove(boardId) {
 
 async function update(
 	board,
-	activity = { activity: 'Unspecified Activity', card: null },
+	activity = { text: 'Unspecified Activity', cardId: null },
 	user
 ) {
 	const collection = await dbService.getCollection('board');

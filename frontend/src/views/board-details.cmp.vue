@@ -124,7 +124,7 @@ export default {
 		},
 		updateBoardName(ev) {
 			if (ev.target.innerText) this.board.name = ev.target.innerText;
-			this.saveBoard()
+			this.saveBoard('has updated board name')
 		},
 		setBgc(color) {
 			this.board.style.backgroundColor = color;
@@ -148,7 +148,7 @@ export default {
 				topic => topic.id === topicId
 			);
 			currTopic.name = topicName;
-			this.saveBoard();
+			this.saveBoard('has updated a topic');
 		},
 		addCard(topicId, cardName) {
 			const starterCard = boardService.getStarterCard(cardName);
@@ -156,7 +156,7 @@ export default {
 				topic => topic.id === topicId
 			);
 			currTopic.cards.push(starterCard);
-			this.saveBoard();
+			this.saveBoard('has added a card');
 		},
 		async removeCard(cardId, topicId) {
 			const topicIdx = this.board.topics.findIndex(
@@ -172,17 +172,17 @@ export default {
 				topic => topic.id === topicId
 			);
 			this.board.topics.splice(idx, 1);
-			this.saveBoard();
+			this.saveBoard('has removed a topic');
 		},
 		addTopic() {
 			const starterTopic = boardService.getStarterTopic(this.topicName);
 			this.topicNameInputOpen = false;
 			this.board.topics.push(starterTopic);
-			this.saveBoard();
+			this.saveBoard('has added a topic');
 		},
-		async saveBoard() {
+		saveBoard(action) {
 			if (!this.board) return;
-			await this.$store.dispatch({ type: "saveBoard", board: this.board })
+			this.$store.dispatch({ type: 'saveBoard', board: this.board, activity: { text: action } });
 		},
 		loadBoard() {
 			const boardId = this.$route.params.boardId;
