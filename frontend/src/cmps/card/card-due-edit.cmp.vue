@@ -8,13 +8,10 @@
 				placeholder="Select date and time"
                 @blur="saveDueDate"
                 @change="saveDueDate"
-                default-time="12:00:00"
-
+                default-time="12:30:00"
 			>
 			</el-date-picker>
-		</div>
-    <!-- <input type="datetime-local" /> -->
-    
+		</div>    
     </section>
 </template>
 
@@ -37,11 +34,11 @@ export default {
         }
     },
     created(){
-        document.querySelector('input').focus();
+       
 
     },
     mounted(){
-
+        // document.querySelector('input').focus();
     },
     watch: {
 

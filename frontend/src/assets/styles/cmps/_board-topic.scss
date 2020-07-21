@@ -93,6 +93,9 @@
         // For inner scrollbar:
         overflow-y: auto;
         max-height: 75vh;
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
     }
     .topic-footer{
         transition: 0.2s;

@@ -24,8 +24,8 @@
 					</div>
 					<div v-if="card.dueDate" class="due-date">
 						<h5>Due Date</h5>
-						<input type="checkbox" v-model="isCardDone"/>
-						<p> {{ dueDateToShow}} </p><span class="card-status completed" v-if="isCardDone">completed</span><span  class="card-status overdue" v-if="isOverdue">overdue</span>
+						<input type="checkbox" v-model="card.isCardDone" @change="dispatchBoardSave"/>
+						<p> {{ dueDateToShow}} </p><span class="card-status completed" v-if="card.isCardDone">completed</span><span  class="card-status overdue" v-if="isOverdue">overdue</span>
 					</div>
 					<div class="description">
 						<h2>
@@ -85,8 +85,7 @@ export default {
 			boardToUpdate: null,
 			card: null,
 			cardId: 0,
-			editModal: '',
-			isCardDone: false,			
+			editModal: ''			
 		};
 	},
 	computed: {
@@ -107,6 +106,7 @@ export default {
 			return utilService.formatTime(this.card.dueDate);
 		},
 		isOverdue() {
+			if (this.card.isCardDone) return;
 			return this.card.dueDate < Date.now();
 		}
 	},
@@ -169,6 +169,7 @@ export default {
 		},
 		saveDueDate(date) {
 			this.card.dueDate = date;
+			this.card.isCardDone = true;
 			this.dispatchBoardSave();
 		},
 		dispatchBoardSave() {

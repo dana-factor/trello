@@ -15,7 +15,7 @@
 		<router-link :to="'card/'+card.id" append>
 			<h2>{{card.name}}</h2>
 
-			<p v-if="card.dueDate" class="card-status" :class="{overdue: isOverdue}">
+			<p v-if="card.dueDate" class="card-status" :class="{overdue: isOverdue, completed: card.isCardDone}">
 				<i class="el-icon-time"></i>
 				<span> {{ dueDateShort}}</span>
 			</p>
@@ -69,6 +69,7 @@ export default {
 			return utilService.getDateShort(this.card.dueDate);
 		},
 		isOverdue() {
+			if (this.card.isCardDone) return;
 			return this.card.dueDate < Date.now();
 		}
 	},

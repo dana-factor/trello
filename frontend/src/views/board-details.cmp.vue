@@ -47,7 +47,7 @@
 				<board-topic
 					class="topic-wrapper"
 					:topic="topic"
-					:boardy="board"
+					:board="board"
 					:topicsMenuOpen="topicsMenuOpen"
 					@topicsMenuClose="topicsMenuOpen = false"
 					@topicsMenuOpen="topicsMenuOpen = true"
@@ -104,8 +104,7 @@ export default {
 			minimize: false,
 			upperDropPlaceholderOptions: {
 				className: "drop-preview",
-				animationDuration: 150,
-				showOnTop: true
+				animationDuration: 150
 			},
 			topicsMenuOpen: false
 		};
