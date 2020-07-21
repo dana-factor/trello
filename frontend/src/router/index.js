@@ -3,7 +3,8 @@ import VueRouter from 'vue-router';
 import homepage from '../views/homepage.cmp.vue';
 import boardDetails from '../views/board-details.cmp.vue';
 import cardDetails from '../views/card-details.cmp.vue';
-import login from '../views/login.cmp.vue';
+import userLogin from '../views/user-login.cmp.vue';
+import userSignup from '../views/user-signup.cmp.vue';
 import boardListPage from '../views/board-list-page.cmp.vue';
 import testPage from '../views/test-page.cmp.vue';
 
@@ -32,12 +33,16 @@ const routes = [
 			},
 		],
 	},
-
 	{
 		path: '/login',
 		name: 'Login',
-		component: login,
-	}
+		component: userLogin,
+	},
+	{
+		path: '/signup',
+		name: 'Signup',
+		component: userSignup,
+	},
 ];
 
 const router = new VueRouter({

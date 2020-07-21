@@ -34,7 +34,6 @@ export default {
 	computed: {},
 	methods: {
 		selectImage(imgUrl) {
-            console.log('imgurl', imgUrl)
 			this.selectedImgUrl = imgUrl.target.src;
 			this.$emit("setBgImg", this.selectedImgUrl);
 		}
