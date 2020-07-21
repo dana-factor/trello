@@ -5,7 +5,7 @@ const logger = require('../../services/logger.service');
 const saltRounds = 10;
 
 async function login(username, password) {
-	logger.debug(`auth.service - login with username: ${username}`);
+	logger.debug(`auth.service - login with username: ${username} and password ${password}`);
 	if (!username || !password)
 		return Promise.reject('username and password are required!');
 
