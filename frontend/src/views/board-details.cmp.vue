@@ -140,7 +140,7 @@ export default {
 		removeBoard(boardId) {
 			this.$store.dispatch({ type: "removeBoard", id: boardId });
 			this.isDeleteModalOpen = false;
-			this.$router.push('/')
+			this.$router.push('/board')
 		},
 		updateTopicName(topicName, topicId) {
 			let currTopic = this.board.topics.find(
@@ -157,16 +157,14 @@ export default {
 			currTopic.cards.push(starterCard);
 			this.saveBoard();
 		},
-		removeCard(cardId, topicId) {
+		async removeCard(cardId, topicId) {
 			const topicIdx = this.board.topics.findIndex(
 				topic => topic.id === topicId
 			);
 			const cardIdx = this.board.topics[topicIdx].cards.findIndex(card => card.id === cardId)
 			this.board.topics[topicIdx].cards.splice(cardIdx, 1)
-			this.$store.dispatch({ type: "saveBoard", board: this.board })
-				.then(savedBoard => {
+			const savedBoard = await this.$store.dispatch({ type: "saveBoard", board: this.board })
 					this.board = JSON.parse(JSON.stringify(savedBoard));
-				});
 		},
 		removeTopic(topicId) {
 			const idx = this.board.topics.findIndex(
@@ -184,8 +182,6 @@ export default {
 		async saveBoard() {
 			if (!this.board) return;
 			await this.$store.dispatch({ type: "saveBoard", board: this.board })
-			this.nameInputOpen = false;
-			this.editMenuOpen = false;
 		},
 		loadBoard() {
 			const boardId = this.$route.params.boardId;

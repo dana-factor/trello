@@ -1,13 +1,14 @@
 <template>
 	<section class="homepage">
-		<h1>homepage</h1>
+		<!-- <h1>homepage</h1> -->
 		<img width="100%" src="../../public/img/teamwork.png" />
 		
 		<board-list
-            @updateBoard="updateBoard"
-			@addBoard="addBoard"
+
 			:boards="boards"
 		/> 
+		            <!-- @updateBoard="updateBoard" -->
+			<!-- @addBoard="addBoard" -->
 	</section>
 </template>
 
@@ -24,20 +25,20 @@ export default {
 	},
 	computed: {},
 	methods: {
-		addBoard(boardName) {
-			var board = boardService.getStarterBoard();
-			if(boardName) board.name = boardName;
-			this.$store.dispatch({ type: "saveBoard", board })
-                .then((res) => {
-					this.$router.push('/board/' + res._id)
-				})
-				.catch(err => {
-					console.log("ERROR, cannot add a board", err);
-				});
-        },
-        updateBoard(board) {
-            this.$store.commit({type: 'saveBoard', board})
-        }
+		// addBoard(boardName) {
+		// 	var board = boardService.getStarterBoard();
+		// 	if(boardName) board.name = boardName;
+		// 	this.$store.dispatch({ type: "saveBoard", board })
+        //         .then((res) => {
+		// 			this.$router.push('/board/' + res._id)
+		// 		})
+		// 		.catch(err => {
+		// 			console.log("ERROR, cannot add a board", err);
+		// 		});
+        // },
+        // updateBoard(board) {
+        //     this.$store.commit({type: 'saveBoard', board})
+        // }
 	},
 	created() {
         this.$store.dispatch({type: 'loadBoards'})
