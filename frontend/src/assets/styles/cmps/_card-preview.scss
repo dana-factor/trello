@@ -67,6 +67,17 @@
 			width: 100%;
 		}
 	}
+	.card-status {
+		color: white;
+		padding: 2px;
+		border-radius: 3px;
+		&.completed {
+			background: rgb(5, 178, 5);
+		}
+		&.overdue {
+			background-color: #f44e8b;
+		}
+	}
 }
 .card-preview:hover{
 	background-color: hsla(0,0%,100%,.5);

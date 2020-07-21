@@ -22,6 +22,11 @@
 							>{{label.title}}</li>
 						</ul>
 					</div>
+					<div v-if="card.dueDate" class="due-date">
+						<h5>Due Date</h5>
+						<input type="checkbox" v-model="isCardDone"/>
+						<p> {{ dueDateToShow}} </p><span class="card-status completed" v-if="isCardDone">completed</span><span  class="card-status overdue" v-if="isOverdue">overdue</span>
+					</div>
 					<div class="description">
 						<h2>
 							<i class="el-icon-document"></i> Description
@@ -40,8 +45,9 @@
 					/>
 				</div>
 				<div class="right-side">
-					<button @click.stop="toggleModal('card-label-edit')">Labels</button>
-					<button @click.stop="toggleModal('card-checklist-edit')">Checklists</button>
+					<button @click.stop="toggleModal('card-label-edit')"><i class="el-icon-collection-tag"></i> Labels</button>
+					<button @click.stop="toggleModal('card-checklist-edit')"><i class="el-icon-document-checked"></i> Checklists</button>
+					<button @click.stop="toggleModal('card-due-edit')"><i class="el-icon-time"></i> Due Date</button>
 					<input type="file" @change="onUploadImg" />
 				</div>
 			</div>
@@ -55,6 +61,7 @@
 					@toggleLabel="toggleLabel"
 					@boardLabelsUpdate="updateBoardLabels"
 					@newChecklist="addNewChecklist"
+					@saveDueDate="saveDueDate"
 				></component>
 			</card-edit-modal>
 		</div>
@@ -63,12 +70,14 @@
 
 <script>
 import { boardService } from '../services/board.service.js';
+import { utilService } from '../services/util.service.js';
 import { uploadImg } from '../services/img-upload.service.js';
 import cardEditModal from '../cmps/card/card-edit-modal.cmp';
 import cardLabelEdit from '../cmps/card/card-label-edit.cmp';
 import cardChecklistEdit from '../cmps/card/card-checklist-edit.cmp';
 import cardAttachments from '../cmps/card/card-attachments.cmp';
 import cardChecklists from '../cmps/card/card-checklists.cmp';
+import cardDueEdit from '../cmps/card/card-due-edit.cmp';
 export default {
 	props: ['board'],
 	data() {
@@ -77,10 +86,12 @@ export default {
 			card: null,
 			cardId: 0,
 			editModal: '',
+			isCardDone: false,			
 		};
 	},
 	computed: {
 		modalTitle() {
+			if (this.editModal === 'card-due-edit') return 'Due Date';
 			let title = this.editModal.split('-')[1];
 			return title.charAt(0).toUpperCase() + title.slice(1) + 's';
 		},
@@ -91,6 +102,12 @@ export default {
 				if (this.card.labels.includes(label.color)) labelsToShow.push(label);
 			});
 			return labelsToShow;
+		},
+		dueDateToShow() {
+			return utilService.formatTime(this.card.dueDate);
+		},
+		isOverdue() {
+			return this.card.dueDate < Date.now();
 		}
 	},
 	methods: {
@@ -149,6 +166,10 @@ export default {
 			this.card.attachments.splice(this.card.attachments.indexOf(attachment), 1);
 			this.dispatchBoardSave();
 		},
+		saveDueDate(date) {
+			this.card.dueDate = date;
+			this.dispatchBoardSave();
+		},
 		dispatchBoardSave() {
 			this.$store.dispatch({ type: 'saveBoard', board: this.boardToUpdate })
 		},
@@ -179,7 +200,8 @@ export default {
 		cardLabelEdit,
 		cardChecklistEdit,
 		cardAttachments,
-		cardChecklists
+		cardChecklists,
+		cardDueEdit
 	}
 };
 </script>
