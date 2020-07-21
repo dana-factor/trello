@@ -17,13 +17,17 @@
 				<p>Menu</p>
 			</button>
 		</board-nav>
-		 <div v-if="isDeleteModalOpen" class="delete-modal">
-                <h5>Are you sure you want to delete this board?</h5>
-				<div class="btns">
-                <button @click="toggleDeleteModal" class="cancel-btn"><i class="el-icon-close"></i> Cancel</button>
-                <button @click="removeBoard(board._id)" class="delete-btn"><i class="el-icon-delete"></i> Delete</button>
-				</div>
-            </div>
+		<div v-if="isDeleteModalOpen" class="delete-modal">
+			<h5>Are you sure you want to delete this board?</h5>
+			<div class="btns">
+				<button @click="toggleDeleteModal" class="cancel-btn">
+					<i class="el-icon-close"></i> Cancel
+				</button>
+				<button @click="removeBoard(board._id)" class="delete-btn">
+					<i class="el-icon-delete"></i> Delete
+				</button>
+			</div>
+		</div>
 		<board-edit
 			:class="{'board-menu-open':isBoardMenuOpen}"
 			@toggleBoardMenu="toggleBoardMenu"
@@ -55,10 +59,7 @@
 				/>
 			</Draggable>
 			<div class="topic-wrapper add-topic">
-				<h2
-					v-if="!topicNameInputOpen"
-					@click="topicNameInputOpen = true"
-				>+Add another list</h2>
+				<h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add another list</h2>
 				<input
 					placeholder="Enter list title..."
 					class="topicName"
@@ -66,17 +67,15 @@
 					v-model="topicName"
 				/>
 				<div class="btns-container">
-					<button
-						class="add"
-						@click="addTopic"
-						v-if="topicNameInputOpen"
-					>Add List</button>
+					<button class="add" @click="addTopic" v-if="topicNameInputOpen">Add List</button>
 					<button
 						class="close"
 						@click="topicNameInputOpen = false; topicName='';"
 						v-if="topicNameInputOpen"
-					><i class="el-icon-close"></i></button>
-				</div>	
+					>
+						<i class="el-icon-close"></i>
+					</button>
+				</div>
 			</div>
 		</Container>
 		<router-view :board="board" />
@@ -85,7 +84,6 @@
 
 <script>
 import { boardService } from "../services/board.service";
-import socketService from '../services/socket.service';
 import { dragDropService } from "../services/drag-drop.service.js";
 import { Container, Draggable } from "vue-smooth-dnd";
 import boardTopic from "../cmps/board/board-topic.cmp.vue";
@@ -159,7 +157,7 @@ export default {
 			currTopic.cards.push(starterCard);
 			this.saveBoard();
 		},
-		removeCard(cardId, topicId){
+		removeCard(cardId, topicId) {
 			const topicIdx = this.board.topics.findIndex(
 				topic => topic.id === topicId
 			);
@@ -186,7 +184,6 @@ export default {
 		async saveBoard() {
 			if (!this.board) return;
 			await this.$store.dispatch({ type: "saveBoard", board: this.board })
-			socketService.emit('boardchanged', this.board._id);
 			this.nameInputOpen = false;
 			this.editMenuOpen = false;
 		},
@@ -235,10 +232,6 @@ export default {
 	},
 	async created() {
 		await this.loadBoard();
-		socketService.setup();
-		console.log(this.board)
-		socketService.emit('setBoardId', this.board._id)
-		socketService.on('updateboard', this.loadBoard)//change to using obj from socket...
 	},
 	mounted() { },
 	destroyed() {
