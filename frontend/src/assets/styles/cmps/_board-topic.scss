@@ -91,6 +91,7 @@
         margin: 0 4px;
         padding: 0 4px;
         // For inner scrollbar:
+        overflow-x: hidden;
         overflow-y: auto;
         max-height: 75vh;
         &::-webkit-scrollbar {
