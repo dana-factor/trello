@@ -1,10 +1,11 @@
 .board-nav {
-    padding: 8px 4px;
+    padding: 5px 4px;
     position: fixed;
     top: 40px;
     left: 0;
     width: 100vw;
-    margin-bottom: 10px;
+    z-index: 2;
+    background-color: hsla(0,0%,100%,.322);
     & > * {
         border-radius: 3px;
     }
@@ -17,6 +18,63 @@
         color:  #172b4d;
         &:hover {
             background-color: rgba(0, 0, 0, 0.16);
+        }
+    }
+    .search-container{
+        display: flex;
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 5px 8px;
+        border-radius: 3px;
+        transition: .5s ease-in;
+        &:hover{
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        button{
+            font-size: 20px;
+            padding: 0;
+        }
+        input{
+            border-radius: 3px;
+            border: none;
+            height: 26px;
+            margin-right: 4px;
+            padding: 2px 7px;
+            transition: .4s ease-in;
+        }
+    }
+    .filter-modal{
+        position: fixed;
+        background-color: white;
+        z-index: 2;
+        width: 300px;
+        top: 86px;
+        right: 35%;
+        border-radius: 3px;
+        padding: 0 10px;
+        box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25), 0 0 0 1px rgba(9, 30, 66, 0.08);
+        max-height: 80vh;
+        overflow-y: auto;
+        .filter-res{
+            a{
+                display: flex;
+                flex-direction: column;
+                border-bottom: 1px solid rgba(9, 30, 66, 0.13);
+                padding: 10px;
+                color: inherit;
+                
+                h2{
+                    font-size: rem(16px);
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                }
+                p{
+                    font-size: rem(14px);
+                    margin-bottom: 5px;
+                }
+            }
+            a:hover{
+                color: #151313;
+            }
         }
     }
     .menu-btn {

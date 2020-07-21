@@ -2,9 +2,10 @@
 	<section
 		v-if="board"
 		class="board-details"
+		@click="isFilterModalOpen=false; isFilterInputShown=false;"
 	>
 	<div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
-		<board-nav>
+		<board-nav @filterSet="setFilter" :filteredTopics="filteredTopics" :isFilterModalOpen="isFilterModalOpen" @openFilterModal="isFilterModalOpen=true" :isFilterInputShown="isFilterInputShown" @showFilterInput="isFilterInputShown=true">
 			<h2
 				class="board-name"
 				slot="board-name"
@@ -107,7 +108,10 @@ export default {
 				animationDuration: 150,
 				showOnTop: true
 			},
-			topicsMenuOpen: false
+			topicsMenuOpen: false,
+			filteredTopics: [],
+			isFilterModalOpen: false,
+			isFilterInputShown: false
 		};
 	},
 	computed: {
@@ -125,6 +129,53 @@ export default {
 		updateBoardName(ev) {
 			if (ev.target.innerText) this.board.name = ev.target.innerText;
 			this.saveBoard()
+		},
+		setFilter(filterBy){
+			const exp = new RegExp(`.*${filterBy.searchStr}.*`, 'i');
+			const topicsToFilter = JSON.parse(JSON.stringify(this.board.topics))
+			const filteredTopics = topicsToFilter.filter((topic) => {
+				topic.cards = topic.cards.filter((card) => card.name.match(exp) || card.description.match(exp));
+				return topic.cards.length;
+			});
+			this.filteredTopics = filteredTopics
+			// const filteredcards = filteredTopics.forEach(topic =>topic.cards)
+			// const filteredcards = filteredTopics.forEach(topic =>{
+			// 	return {
+			// 		topicName: topic.name,
+			// 		cards: topic.cards
+			// 	}
+			// })
+			// filteredcards.forEach(card=>{
+			// 	card.topicName = filteredTopics.find((topic)=>{topic.cards})
+			// })
+		},
+		setFilter1(filterBy){
+			const exp = new RegExp(filterBy.searchStr, 'i');
+			console.log(filterBy.searchStr);
+			
+			const filteredTopics = this.board.topics.filter((topic) => {
+				return topic.cards.filter((card) => {
+					console.log('222', card.name.match(exp));
+					return
+					card.name.toLowerCase().includes(filterBy.searchStr.toLowerCase())
+					})
+			});
+			console.log('filteredTopics:', filteredTopics);
+			// const filteredCards = filteredTopics.map(topic=>{
+			// 	return {
+			// 		topicName: topic.name,
+			// 		cardDetails: topic.cards.map((card)=>{
+
+			// 		})
+			// 		cardId: card.id,
+			// 		cardName: card.name,
+			// 		cardDescription: card.description,
+			// 	}
+			// })
+			// console.log('filteredCards2:', filteredCards);
+			
+			// this.$store.commit({type: "setFilter", filterBy});
+      		// this.$store.dispatch({type: "loadToys"})
 		},
 		setBgc(color) {
 			this.board.style.backgroundColor = color;
