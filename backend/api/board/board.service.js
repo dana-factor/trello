@@ -42,12 +42,21 @@ async function remove(boardId) {
 	}
 }
 
-async function update(board, activity = 'Unspecified Activity', user) {
+async function update(
+	board,
+	activity = { activity: 'Unspecified Activity', card: null },
+	user
+) {
 	const collection = await dbService.getCollection('board');
 	board._id = ObjectId(board._id);
 	console.log('activity', activity);
 	console.log('user', user);
-	const activityToAdd = { text: activity, user, createdAt: Date.now() };
+	const activityToAdd = {
+		text: activity.text,
+		cardId: activity.cardId,
+		user,
+		createdAt: Date.now(),
+	};
 	board.activities.unshift(activityToAdd);
 	try {
 		await collection.replaceOne({ _id: board._id }, { $set: board });
