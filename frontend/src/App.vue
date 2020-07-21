@@ -1,39 +1,48 @@
 <template>
-  <div id="app" :style="{backgroundColor: background.bgc, backgroundImage: `url('${background.imgUrl}')`}">
-    <app-header></app-header>
-    <router-view @setBgc="setBgc" @setBgImg="setBgImg"/>
-  </div>
+	<div
+		id="app"
+		:style="{backgroundColor: background.bgc, backgroundImage: `url('${background.imgUrl}')`}"
+	>
+		<app-header :loggedInUser="loggedInUser" @logout="logout"></app-header>
+		<router-view @setBgc="setBgc" @setBgImg="setBgImg" />
+	</div>
 </template>
 
 <script>
 
 import appHeader from '../src/cmps/app-header.cmp'
 export default {
-    data(){
-        return {
-          background: {
-            imgUrl: '',
-            bgc: '', 
-          }
-        }
-    },
-    computed: {},
-    methods: {
-      setBgc(color) {
-        this.background.imgUrl = '';
-        this.background.bgc = color;
-      },
-      setBgImg(imgUrl) {
-        this.background.bgc = '';
-        this.background.imgUrl = imgUrl;
-      }
-    },
-    components: {
-      appHeader
-    }
+	data() {
+		return {
+			background: {
+				imgUrl: '',
+				bgc: '',
+			}
+		}
+	},
+	computed: {
+		loggedInUser() {
+			return this.$store.getters.loggedinUser;
+		}
+	},
+	methods: {
+		setBgc(color) {
+			this.background.imgUrl = '';
+			this.background.bgc = color;
+		},
+		setBgImg(imgUrl) {
+			this.background.bgc = '';
+			this.background.imgUrl = imgUrl;
+		},
+		async logout() {
+			const user = await this.$store.dispatch({ type: 'logout' })
+		},
+	},
+	components: {
+		appHeader
+	}
 }
 </script>
 
 <style lang="scss">
-
 </style>

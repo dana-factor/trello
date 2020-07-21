@@ -91,8 +91,12 @@
         margin: 0 4px;
         padding: 0 4px;
         // For inner scrollbar:
-        overflow-y: auto;
+        overflow-x: hidden;
+        // overflow-y: auto;
         max-height: 75vh;
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
     }
     .topic-footer{
         transition: 0.2s;

@@ -47,7 +47,7 @@
 				v-for="card in topic.cards"
 				:key="card.id"
 			>
-				<card-preview :card="card" :boardLabels="boardy.labels" @removeCard="removeCard"></card-preview>
+				<card-preview :card="card" :boardLabels="board.labels" @removeCard="removeCard"></card-preview>
 			</Draggable>
 		</Container>
 		<div class="topic-footer" v-if="!minimize">
@@ -79,7 +79,7 @@ export default {
 			required: true,
 			type: Object
 		},
-		boardy: {
+		board: {
 			type: Object,
 			required: true
 		},
@@ -98,8 +98,7 @@ export default {
 			editCardNameShown: false,
 			dropPlaceholderOptions: {
 				className: "drop-preview",
-				animationDuration: 150,
-				showOnTop: true
+				animationDuration: 150
 			}
 		};
 	},
@@ -148,15 +147,16 @@ export default {
 				dropResult.removedIndex !== null ||
 				dropResult.addedIndex !== null
 			) {
-				const boardy = Object.assign({}, this.boardy);
-				const column = boardy.topics.filter(p => p.id === columnId)[0];
-				const columnIndex = boardy.topics.indexOf(column);
+				const board = Object.assign({}, this.board);
+				const column = board.topics.filter(p => p.id === columnId)[0];
+				const columnIndex = board.topics.indexOf(column);
+				// console.log('column', column, 'columnidx', columnIndex)
 				this.$emit('updateDND', dropResult, columnIndex, column)
 			}
 		},
 		getCardPayload(columnId) {
 			return index => {
-				return this.boardy.topics.filter(p => p.id === columnId)[0]
+				return this.board.topics.filter(p => p.id === columnId)[0]
 					.cards[index];
 			};
 		},
@@ -164,7 +164,7 @@ export default {
 	created() {
 		this.topicName = this.topic.name;
 		// console.log(this.topicName);
-		// this.board = JSON.parse(JSON.stringify(this.boardy));
+		// this.board = JSON.parse(JSON.stringify(this.board));
 	},
 	mounted() { },
 	watch: {},

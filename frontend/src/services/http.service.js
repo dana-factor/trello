@@ -8,6 +8,19 @@ import Axios from 'axios';
 var axios = Axios.create({
 	withCredentials: true,
 });
+axios.interceptors.response.use(null, (error) => {
+	let path = '';
+	switch (error.response.status) {
+		// case 401:
+		// 	path = '/login';
+		// 	break;
+		case 404:
+			path = '/404';
+			break;
+	}
+	if (path) router.push(path);
+	return Promise.reject(error);
+});
 
 export default {
 	get(endpoint, data) {
@@ -33,8 +46,6 @@ async function ajax(endpoint, method = 'get', data = null) {
 		});
 		return res.data;
 	} catch (err) {
-		if (err.response.status === 401) {
-			router.push('/');
-		}
+		throw err.response.data.error;
 	}
 }

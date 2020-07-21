@@ -80,10 +80,10 @@ export const boardStore = {
 		//             return boards
 		//         })
 		// },
-		async saveBoard({ commit }, { board }) {
+		async saveBoard({ commit }, { board, activity }) {
 			try {
 				const type = board._id ? 'updateBoard' : 'addBoard';
-				const savedBoard = await boardService.save(board);
+				const savedBoard = await boardService.save(board, activity);
 				this._vm.$socket.client.emit('boardChanged', board);
 				commit({ type, board: savedBoard });
 				return savedBoard;
@@ -132,6 +132,7 @@ export const boardStore = {
 		socket_updateBoard({ commit }, board) {
 			commit({ type: 'setCurrBoard' , board});
 		},
+
 		// loadCurrBoard({commit}, { id }) {
 		//     // console.log(id)
 		//     return boardService.getById(id)

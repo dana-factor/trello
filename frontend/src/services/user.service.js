@@ -23,11 +23,13 @@ export const userService = {
 
 async function login(userCred) {
 	const user = await httpService.post('auth/login', userCred);
-	return _handleLogin(user);
+	_handleLogin(user);
+	return user;
 }
 async function signup(userCred) {
 	const user = await httpService.post('auth/signup', userCred);
-	return _handleLogin(user);
+	_handleLogin(user);
+	return user;
 }
 async function logout() {
 	await httpService.post('auth/logout');
@@ -38,7 +40,5 @@ function getUsers() {
 }
 
 function _handleLogin(user) {
-	if (!user) return;
 	sessionStorage.setItem('user', JSON.stringify(user));
-	return user;
 }

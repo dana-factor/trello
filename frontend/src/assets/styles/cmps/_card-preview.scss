@@ -18,6 +18,13 @@
 	}
 	img {
 		width: 100%;
+		&,
+		&::after,
+		&::before {
+			-webkit-user-select: none;
+			-webkit-user-drag: none;
+			-webkit-app-region: no-drag;
+		}
 	}
 	button{
 		display: none;
@@ -65,6 +72,19 @@
 			overflow: hidden;
     		text-overflow: ellipsis;
 			width: 100%;
+		}
+	}
+	.card-status {
+
+		padding: 2px;
+		border-radius: 3px;
+		&.completed {
+			background-color: rgb(5, 178, 5);
+			color: white;
+		}
+		&.overdue {
+			background-color: #f44e8b;
+			color: white;
 		}
 	}
 }
