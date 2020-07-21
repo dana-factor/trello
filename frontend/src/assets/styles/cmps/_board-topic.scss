@@ -75,8 +75,15 @@
                 background-color: rgba(9,30,66,.04);
             }
             input{
-                width: 104px;
-                margin: 6px 12px;
+                width: 134px;
+                margin: 2px 8px;
+                border-radius: 3px;
+                border: none;
+                background-color: #ebecf0;
+                padding: 5px 10px;
+                color: inherit;
+                font-family: inherit;
+                font-size: rem(14px);
             }
         }
     }

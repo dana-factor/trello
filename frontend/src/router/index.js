@@ -4,6 +4,7 @@ import homepage from '../views/homepage.cmp.vue';
 import boardDetails from '../views/board-details.cmp.vue';
 import cardDetails from '../views/card-details.cmp.vue';
 import login from '../views/login.cmp.vue';
+import boardListPage from '../views/board-list-page.cmp.vue';
 import testPage from '../views/test-page.cmp.vue';
 
 Vue.use(VueRouter);
@@ -13,6 +14,11 @@ const routes = [
 		path: '/',
 		name: 'Home',
 		component: homepage,
+	},
+	{
+		path:'/board',
+		name: 'Board List',
+		component: boardListPage
 	},
 	{
 		path: '/board/:boardId',
@@ -31,12 +37,7 @@ const routes = [
 		path: '/login',
 		name: 'Login',
 		component: login,
-	},
-	{
-		path: '/test',
-		name: 'Test',
-		component: testPage,
-	},
+	}
 ];
 
 const router = new VueRouter({
