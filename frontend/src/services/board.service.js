@@ -16,7 +16,7 @@ export const boardService = {
 	updateBoardLabel,
 	removeChecklist,
 	removeChecklistTask,
-	searchBoard
+	searchBoard,
 };
 function query(filterBy) {
 	return httpService.get(`board`);
@@ -44,9 +44,12 @@ function removeChecklist(card, checklistId) {
 	);
 	card.checklists.splice(idx, 1);
 }
-function removeChecklistTask(tasks, taskId) {
-	const idx = tasks.findIndex((findTask) => taskId === findTask.id);
-	tasks.splice(idx, 1);
+function removeChecklistTask(card, checklistId, taskId) {
+	const checklist = card.checklists.find(
+		(checklist) => checklistId === checklist.id
+	);
+	const idx = checklist.tasks.findIndex((findTask) => taskId === findTask.id);
+	checklist.tasks.splice(idx, 1);
 }
 // function saveCardToBoard(board, card) {
 // 	board.topics.find((topic) => {
@@ -269,7 +272,7 @@ function getCardById(board, id) {
 		if (card) return card;
 	}
 }
-function searchBoard(id, text){
+function searchBoard(id, text) {
 	return httpService.get(`board/${id}/search?text=${text}`);
 }
 function _makeId(length = 5) {

@@ -120,8 +120,9 @@ export default {
 			this.card.checklists.push(checklist);
 			this.dispatchBoardSave();
 		},
-		addNewChecklistTask(checklist, text) {
+		addNewChecklistTask(checklistId, text) {
 			let task = boardService.getStarterChecklistTask();
+			let checklist = this.card.checklists.find(checklistToFind => checklistId === checklistToFind.id)
 			task.text = text;
 			checklist.tasks.push(task);
 			this.dispatchBoardSave();
@@ -130,8 +131,8 @@ export default {
 			boardService.removeChecklist(this.card, checklistId);
 			this.dispatchBoardSave();
 		},
-		removeChecklistTask(tasks, taskId) {
-			boardService.removeChecklistTask(tasks, taskId);
+		removeChecklistTask(checklistId, taskId) {
+			boardService.removeChecklistTask(this.card, checklistId, taskId);
 			this.dispatchBoardSave();
 		},
 		updateChecklists(checklists) {
