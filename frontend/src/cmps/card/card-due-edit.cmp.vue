@@ -1,7 +1,7 @@
 <template>
     <section class="card-due-edit">
     	<div class="block">
-			<span class="demonstration"></span>
+			<!-- <span class="demonstration"></span> -->
 			<el-date-picker
 				v-model="value"
 				type="datetime"
