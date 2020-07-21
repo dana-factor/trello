@@ -21,7 +21,13 @@ export default {
                 'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595257679/cdvgktjmmsoznwssjzso.jpg',
                 'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595257734/bbarpby4naz9ylnffwqn.jpg',
                 'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595257759/vexglerwamwj6hmilkjc.jpg',
-                'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595257780/qyse9g8vtia73btrliqh.jpg'
+				'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595257780/qyse9g8vtia73btrliqh.jpg',
+				'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595317869/in3rirgiuy9056gxunam.jpg',
+				'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595317909/fxkp583iqxcbvy8x02ed.jpg',
+				'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595317933/akw7galczskf0pt1ya1p.jpg',
+				'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595317959/yqnzpcwbddqrnrzt9m1t.jpg',
+				'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595317981/fxjuqwiu1knhcali6g4f.jpg',
+				'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595318188/ysas5hxlpkxfu6ocrf7p.jpg'
 			]
 		};
 	},

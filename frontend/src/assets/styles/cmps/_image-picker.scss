@@ -6,25 +6,12 @@
         width: 140px;
         height: 100px;
         margin: 5px;
+        border-radius: 5px;
     }
-    overflow-y: scroll;
-    
+    overflow: auto;
+    max-height: 70vh;
+
     &::-webkit-scrollbar {
-        height: 12px;
-        width: 12px;
-        // background-color: transparent;
-        border-radius: 10px;
-    }
-    &::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        background: rgba(0,0,0,.2);
-    }
-    &::-webkit-scrollbar-track {
-        border-radius: 10px;
-        background: transparent;
-    }
-    &::-webkit-scrollbar-button {
-        width: 0;
-        height: 0;
+        width: 8px;
     }
 }
