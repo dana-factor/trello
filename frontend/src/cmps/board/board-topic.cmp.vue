@@ -150,6 +150,7 @@ export default {
 				const board = Object.assign({}, this.board);
 				const column = board.topics.filter(p => p.id === columnId)[0];
 				const columnIndex = board.topics.indexOf(column);
+				// console.log('column', column, 'columnidx', columnIndex)
 				this.$emit('updateDND', dropResult, columnIndex, column)
 			}
 		},
