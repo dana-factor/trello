@@ -65,6 +65,7 @@
 					class="topicName"
 					v-if="topicNameInputOpen"
 					v-model="topicName"
+					v-focus
 				/>
 				<div class="btns-container">
 					<button class="add" @click="addTopic" v-if="topicNameInputOpen">Add List</button>

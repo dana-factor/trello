@@ -1,19 +1,18 @@
 <template>
     <section class="user-signup">
-        <h1>Signup:</h1>
-        <div v-if="loggedinUser">
-            <h3>Currently logged as: {{loggedinUser.username}}</h3>
-            <p>If you want to add another user, please logout first</p>
-            <button @click="logout">Logout</button>
+        <div class="signup-container">
+            <h1>Sign up for your account</h1>
+            <form @submit.prevent="signup">
+                <h2>{{msg}}</h2>
+                <input v-focus type="text" placeholder="Enter full name" v-model="credentials.fullName"/>
+                <input type="text" placeholder="Enter user name" v-model="credentials.username"/>
+                <input type="password" placeholder="Create password" v-model="credentials.password" show-password/>
+                <input type="file" @change="onUploadImg"/>
+                <button>Sign Up</button>
+            </form>
+            <hr/>
+            <p>Already have an account? <router-link to="/login">Log In</router-link></p>
         </div>
-        <form v-else @submit.prevent="signup">
-            <h2>{{msg}}</h2>
-            <input type="text" placeholder="Please input full name" v-model="credentials.fullName"/>
-            <input type="text" placeholder="Please input user name" v-model="credentials.username"/>
-            <input type="password" placeholder="Please input password" v-model="credentials.password" show-password/>
-            <input type="file" @change="onUploadImg"/>
-            <button>Signup</button>
-        </form>
     </section>
 </template>
 
@@ -39,15 +38,15 @@ export default {
     },
     methods: {
         async signup(){
-            if (!credentials.username || !credentials.password) return this.msg = 'Please enter username/password'
+            if (!credentials.username || !credentials.password || !credentials.fullName) return this.msg = 'Please enter username/password'
             let user = await this.$store.dispatch({type: 'signup', userCred: this.credentials})
-            this.$router.push('/login')
+            this.$router.push('/')
         },
-        async logout(){
-            let user = await this.$store.dispatch({type: 'logout'})
-            console.log('loggedout user:', user);
-            this.loggedinUser = this.$store.getters.loggedinUser
-        },
+        // async logout(){
+        //     let user = await this.$store.dispatch({type: 'logout'})
+        //     console.log('loggedout user:', user);
+        //     this.loggedinUser = this.$store.getters.loggedinUser
+        // },
         async onUploadImg(ev){
             // this.saveDisabled = true
             const imgData = await uploadImg(ev)
@@ -57,7 +56,7 @@ export default {
     },
     created(){
         let user = this.$store.getters.loggedinUser
-        if (user) this.loggedinUser = user
+        if (user) this.$router.push('/login')
     },
     mounted(){
 

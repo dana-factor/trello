@@ -24,6 +24,7 @@
 				<input
 					v-if="editListNameShown"
 					v-model="topicName"
+					v-focus
 					@keypress.enter.prevent="updateTopicName"
 					@blur="updateTopicName"
 				/>
@@ -54,6 +55,7 @@
 			<textarea
 				v-if="editCardNameShown"
 				v-model="cardName"
+				v-focus
 				@keypress.enter.prevent="addCard"
 				placeholder="Enter a title for this card..."
 			></textarea>
