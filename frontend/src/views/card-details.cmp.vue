@@ -196,12 +196,12 @@ export default {
 		}
 	},
 	async created() {
-		//todo change push to something nicer
 		this.cardId = this.$route.params.cardId;
-		if (!this.cardId) this.$router.push('/');
+		if (!this.cardId) this.$router.push('/404');
 		this.boardToUpdate = JSON.parse(
 			JSON.stringify(this.board));
 		this.card = boardService.getCardById(this.boardToUpdate, this.cardId);
+		if (!this.card) this.$router.push('/404');
 	},
 	components: {
 		cardEditModal,

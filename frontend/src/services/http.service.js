@@ -8,6 +8,19 @@ import Axios from 'axios';
 var axios = Axios.create({
 	withCredentials: true,
 });
+axios.interceptors.response.use(null, (error) => {
+	let path = '/error';
+	switch (error.response.status) {
+		case 401:
+			path = '/login';
+			break;
+		case 404:
+			path = '/404';
+			break;
+	}
+	router.push(path);
+	return Promise.reject(error);
+});
 
 export default {
 	get(endpoint, data) {

@@ -129,9 +129,9 @@ export const boardStore = {
 				throw err;
 			}
 		},
-		// socket_updateBoard({ commit }, board) {
-		// 	commit({ type: 'setCurrBoard' , board});
-		// },
+		socket_updateBoard({ commit }, board) {
+			commit({ type: 'setCurrBoard' , board});
+		},
 
 		// loadCurrBoard({commit}, { id }) {
 		//     // console.log(id)
