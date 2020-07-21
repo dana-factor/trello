@@ -14,6 +14,11 @@
 		</div>
 		<router-link :to="'card/'+card.id" append>
 			<h2>{{card.name}}</h2>
+
+			<p v-if="card.dueDate" class="card-status" :class="{overdue: isOverdue}">
+				<i class="el-icon-time"></i>
+				<span> {{ dueDateShort}}</span>
+			</p>
 			<p v-if="card.description">
 				<i class="el-icon-document"></i>
 			</p>
@@ -29,6 +34,8 @@
 </template>
 
 <script>
+import { utilService } from '../../services/util.service.js';
+
 export default {
 	props: ['card','boardLabels'],
 	data() {
@@ -57,6 +64,12 @@ export default {
 		},
 		labelWidth(){
 			return (this.isLabelTitleShown) ? '56px' : '40px'
+		},
+		dueDateShort() {
+			return utilService.getDateShort(this.card.dueDate);
+		},
+		isOverdue() {
+			return this.card.dueDate < Date.now();
 		}
 	},
 	methods: {

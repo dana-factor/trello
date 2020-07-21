@@ -8,6 +8,9 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import socketio from 'socket.io-client';
 import VueSocketIOExt from 'vue-socket.io-extended';
+import locale from 'element-ui/lib/locale/lang/en'
+Vue.use(ElementUI, { locale })
+
 
 const BASE_URL =
 	process.env.NODE_ENV === 'production' ? '/' : '//localhost:3000';
@@ -31,3 +34,5 @@ new Vue({
 	store,
 	render: (h) => h(App),
 }).$mount('#app');
+
+
