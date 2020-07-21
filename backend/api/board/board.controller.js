@@ -34,7 +34,8 @@ async function deleteBoard(req, res) {
 async function updateBoard(req, res) {
 	try {
 		const board = req.body.board;
-		const activity = req.body.activity;
+		let activity = req.body.activity;
+		if (activity && !activity.text) activity.text = 'Unspecified Activity';
 		let user = req.session.user;
 		if (!user) user = { fullName: 'Guest' };
 		else delete user.username;

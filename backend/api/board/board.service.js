@@ -49,8 +49,8 @@ async function update(
 ) {
 	const collection = await dbService.getCollection('board');
 	board._id = ObjectId(board._id);
-	console.log('activity', activity);
-	console.log('user', user);
+	// console.log('activity', activity);
+	// console.log('user', user);
 	const activityToAdd = {
 		text: activity.text,
 		cardId: activity.cardId,

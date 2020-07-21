@@ -34,7 +34,7 @@
 							<i class="el-icon-document"></i> Description
 						</h2>
 						<textarea v-model="card.description" placeholder="Add a more detailed description..."></textarea>
-						<button @click="dispatchBoardSave">Save</button>
+						<button @click="dispatchBoardSave('has updated the description')">Save</button>
 					</div>
 					<card-attachments :attachments="card.attachments" @attachmentRemoved="removeAttachment" />
 					<card-checklists

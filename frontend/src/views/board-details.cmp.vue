@@ -129,13 +129,13 @@ export default {
 		setBgc(color) {
 			this.board.style.backgroundColor = color;
 			this.board.style.imgUrl = '';
-			this.$store.dispatch({ type: "saveBoard", board: this.board })
+			this.saveBoard('has changed the background color');
 			this.$emit('setBgc', color);
 		},
 		setBgImg(imgUrl) {
 			this.board.style.imgUrl = imgUrl;
 			this.board.style.backgroundColor = '';
-			this.$store.dispatch({ type: "saveBoard", board: this.board })
+			this.saveBoard('has changed the background image');
 			this.$emit('setBgImg', imgUrl);
 		},
 		removeBoard(boardId) {
@@ -237,6 +237,7 @@ export default {
 	},
 	watch: {
 		boardGetter(value) {
+			console.log('activity:', value.activities[0].text);
 			this.board = JSON.parse(JSON.stringify(value));
 			this.setScene();
 			if (this.board.style.backgroundColor) this.$emit('setBgc', this.board.style.backgroundColor)
