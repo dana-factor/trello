@@ -16,7 +16,10 @@
 			<br />
 			<button>Login</button>
 		</form>
-		<p v-if="!loggedinUser">Not registered yet? <button @click="signup">Sign Up!</button></p>
+		<p v-if="!loggedinUser">
+			Not registered yet?
+			<button @click="signup">Sign Up!</button>
+		</p>
 		<hr />
 		<button @click="getAllUsers">Get All Users</button>
 		<ul>
@@ -37,7 +40,7 @@ export default {
 			credentials: {
 				username: '',
 				password: '',
-      		},
+			},
 			msg: '',
 		}
 	},
@@ -48,28 +51,31 @@ export default {
 	},
 	methods: {
 		async login() {
-			const cred = this.credentials
-			if (!cred.username || !cred.password) return this.msg = 'Please enter username/password'
-			await this.$store.dispatch({ type: 'login', userCred: cred });
-			this.loadLoggedinUser()
-			this.loginCred = {};
-			this.$router.push('/')
+			const cred = this.credentials;
+			if (!cred.username || !cred.password) return this.msg = 'Please enter username and password';
+			try {
+				await this.$store.dispatch({ type: 'login', userCred: cred });
+				this.loadLoggedinUser();
+			} catch (err) {
+				this.msg = err;
+				this.loginCred = {};
+			}
 		},
 		async getAllUsers() {//for debugging
 			const users = await this.$store.dispatch({ type: 'loadUsers' })
 			return users
 		},
 		async logout() {
-			const user = await this.$store.dispatch({type: 'logout'})//todo, move to navbar or something
-      		console.log('loggedout user:', user);
-      		this.loadLoggedinUser()
+			const user = await this.$store.dispatch({ type: 'logout' })//todo, move to navbar or something
+			console.log('loggedout user:', user);
+			this.loadLoggedinUser()
 		},
-		signup(){
+		signup() {
 			this.$router.push('/signup')
 		},
-		loadLoggedinUser(){
+		loadLoggedinUser() {
 			this.loggedinUser = this.$store.getters.loggedinUser
-    	}
+		}
 		// removeUser(userId) {
 		//   this.$store.dispatch({ type: 'removeUser', userId })
 		// },
@@ -80,6 +86,6 @@ export default {
 	created() {
 		this.loadLoggedinUser()
 		console.log('this.loggedinUser', this.loggedinUser)
-  	},
+	},
 }
 </script>

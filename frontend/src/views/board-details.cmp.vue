@@ -242,7 +242,6 @@ export default {
 	watch: {
 		boardGetter(value) {
 			// console.log('activity:', value.activities[0].text);
-			console.log('activity')
 			this.board = JSON.parse(JSON.stringify(value));
 			this.setScene();
 			if (this.board.style.backgroundColor) this.$emit('setBgc', this.board.style.backgroundColor)
