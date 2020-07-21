@@ -4,14 +4,15 @@
 			<h1>Sign up for your account</h1>
 			<form @submit.prevent="signup">
 				<h2>{{msg}}</h2>
-				<input v-focus type="text" placeholder="Enter full name" v-model="credentials.fullName" required/>
-				<input type="text" placeholder="Enter user name" v-model="credentials.username" required/>
 				<input
-					type="password"
-					placeholder="Create password"
-					v-model="credentials.password"
-                    required
+					v-focus
+					type="text"
+					placeholder="Enter full name"
+					v-model="credentials.fullName"
+					required
 				/>
+				<input type="text" placeholder="Enter user name" v-model="credentials.username" required />
+				<input type="password" placeholder="Create password" v-model="credentials.password" required />
 				<input type="file" @change="onUploadImg" />
 				<button>Sign Up</button>
 			</form>
@@ -46,23 +47,23 @@ export default {
 	},
 	methods: {
 		async signup() {
-            // const cred = this.credentials;
+			// const cred = this.credentials;
 			// if (!cred.username || !cred.password || !cred.fullName) return this.msg = 'Username, password, name are required!'
 			try {
-                await this.$store.dispatch({ type: 'signup', userCred: this.credentials })
-                this.$router.push('/board');
+				await this.$store.dispatch({ type: 'signup', userCred: this.credentials })
+				this.$router.push('/board');
 			} catch (err) {
 				this.msg = err;
 			}
 		},
 		async onUploadImg(ev) {
-			const imgData = await uploadImg(ev)
-			this.credentials.imgUrl = imgData.url
+			const imgData = await uploadImg(ev);
+			this.credentials.imgUrl = imgData.url;
 		}
 	},
 	created() {
-		let user = this.$store.getters.loggedinUser
-		if (user) this.$router.push('/login')
+		const user = this.$store.getters.loggedinUser;
+		if (user) this.$router.push('/login');
 	},
 	mounted() {
 
