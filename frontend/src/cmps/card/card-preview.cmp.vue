@@ -15,7 +15,7 @@
 				<span></span>
 			</div>
 			<h2>{{card.name}}</h2>
-			<div v-if="hasImg">
+			<div class="card-img" v-if="hasImg">
 				<img v-for="attachment in card.attachments" :key="attachment.imgUrl" :src="attachment.imgUrl" />
 			</div>
 			<p
@@ -24,7 +24,7 @@
 				:class="{overdue: isOverdue, completed: card.isCardDone}"
 			>
 				<i class="el-icon-time"></i>
-				<span>{{ dueDateShort}}</span>
+				<span>{{ dueDateShort }}</span>
 			</p>
 			<p v-if="card.description">
 				<i class="el-icon-document"></i>
