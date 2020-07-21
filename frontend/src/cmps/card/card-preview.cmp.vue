@@ -52,12 +52,13 @@ export default {
 	},
 	computed: {
 		checklistCount() {
+			const tasksCount = this.card.checklists.reduce((enteries, checklist) => enteries += checklist.tasks.length, 0);
+			if (!tasksCount) return '';
 			return this.card.checklists.reduce(
 				(doneEnteries, checklist) => doneEnteries + checklist.tasks.reduce(
 					(doneEnteriesInTask, task) => task.isDone ? doneEnteriesInTask + 1 : doneEnteriesInTask
 					, 0), 0) +
-				'/' +
-				this.card.checklists.reduce((enteries, checklist) => enteries += checklist.tasks.length, 0)
+				'/' + tasksCount
 		},
 		labels() {
 			let labelsToShow = [];
