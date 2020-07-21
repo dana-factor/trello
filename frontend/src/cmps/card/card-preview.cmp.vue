@@ -4,11 +4,12 @@
 			<i class="el-icon-delete"></i>
 		</button>
 		<div
+			@click="isLabelTitleShown = !isLabelTitleShown"
 			class="card-label"
 			v-for="label in labels"
 			:key="label.color"
-			:style="{backgroundColor: label.color}"
-		>
+			:style="{backgroundColor: label.color, height: labelHeight, width: labelWidth}"
+		>	<p v-if="isLabelTitleShown" class="label-title">{{label.title}}</p>
 			<span></span>
 		</div>
 		<router-link :to="'card/'+card.id" append>
@@ -31,7 +32,9 @@
 export default {
 	props: ['card','boardLabels'],
 	data() {
-		return {};
+		return {
+			isLabelTitleShown: false
+		};
 	},
 	computed: {
 		checklistCount() {
@@ -48,6 +51,12 @@ export default {
 				if (this.card.labels.includes(label.color)) labelsToShow.push(label);
 			});
 			return labelsToShow;
+		},
+		labelHeight(){
+			return (this.isLabelTitleShown) ? '16px' : '8px'
+		},
+		labelWidth(){
+			return (this.isLabelTitleShown) ? '56px' : '40px'
 		}
 	},
 	methods: {
