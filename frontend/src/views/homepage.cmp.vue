@@ -4,11 +4,8 @@
 		<img width="100%" src="../../public/img/teamwork.png" />
 		
 		<board-list
-
 			:boards="boards"
 		/> 
-		            <!-- @updateBoard="updateBoard" -->
-			<!-- @addBoard="addBoard" -->
 	</section>
 </template>
 

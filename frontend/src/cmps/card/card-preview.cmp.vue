@@ -14,7 +14,9 @@
 		</div>
 		<router-link :to="'card/'+card.id" append>
 			<h2>{{card.name}}</h2>
-
+			<div v-if="hasImg">
+			<img v-for="attachment in card.attachments" :key="attachment.imgUrl" :src="attachment.imgUrl" />
+			</div>
 			<p v-if="card.dueDate" class="card-status" :class="{overdue: isOverdue, completed: card.isCardDone}">
 				<i class="el-icon-time"></i>
 				<span> {{ dueDateShort}}</span>
@@ -71,6 +73,11 @@ export default {
 		isOverdue() {
 			if (this.card.isCardDone) return;
 			return this.card.dueDate < Date.now();
+		},
+		hasImg() {
+			if (!this.card.attachments.length) return;
+			var imgs = this.card.attachments.filter(attachment => attachment.imgUrl);
+			return imgs.length;
 		}
 	},
 	methods: {
