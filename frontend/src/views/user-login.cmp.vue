@@ -53,6 +53,7 @@ export default {
 			await this.$store.dispatch({ type: 'login', userCred: cred });
 			this.loadLoggedinUser()
 			this.loginCred = {};
+			this.$router.push('/')
 		},
 		async getAllUsers() {//for debugging
 			const users = await this.$store.dispatch({ type: 'loadUsers' })
