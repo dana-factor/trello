@@ -1,7 +1,7 @@
 <template>
     <ul class="user-list">
         <li v-for="user in users" :key="user._id" @click="addMember(user._id)">
-             <avatar :src="user.imgUrl" :username="user.fullName" :size="25" />
+             <avatar :src="user.imgUrl" :username="user.fullName" :size="32" />
            <span class="name">{{user.fullName}}</span></li>
     </ul>
 </template>

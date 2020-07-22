@@ -2,7 +2,7 @@
 	<section class="card-label-edit">
 		<div v-if="labelToEdit">
 			<input v-model="labelToEdit.title" v-focus/>
-			<button @click="updateBoardLabels">Save</button>
+			<button class="save" @click="updateBoardLabels">Save</button>
 		</div>
 		<ul>
 			<li v-for="label in boardLabels" :key="label.color">
