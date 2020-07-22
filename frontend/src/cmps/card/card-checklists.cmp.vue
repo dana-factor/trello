@@ -3,11 +3,12 @@
 		<div class="checklists" v-for="checklist in checklistsToUpdate" :key="checklist.id">
 			<i class="el-icon-finished"></i>
 			<input
+				class="checklist-name"
 				v-model="checklist.name"
 				@blur="updateChecklists"
 				@keydown.enter="updateChecklists; $event.target.blur()"
 			/>
-			<button @click="removeChecklist(checklist)">
+			<button class="remove-checklist" @click="removeChecklist(checklist)">
 				<i class="el-icon-delete"></i>
 			</button>
 			<ul>
@@ -18,15 +19,16 @@
 						@blur="updateChecklists"
 						@keydown.enter="updateChecklists; $event.target.blur()"
 					/>
-					<button @click="removeChecklistTask(checklist,task)">X</button>
+					<button @click="removeChecklistTask(checklist,task)"><i class="el-icon-delete"></i></button>
 				</li>
 			</ul>
 			<input
+				class="add-task"
 				@keypress.enter="addNewChecklistTask(checklist)"
 				v-model="newTaskTexts[checklist.id]"
-				placeholder="Enter new task..."
+				placeholder="Add an item"
 			/>
-			<button @click="addNewChecklistTask(checklist)">Add</button>
+			<!-- <button @click="addNewChecklistTask(checklist)">Add</button> -->
 		</div>
 	</section>
 </template>

@@ -1,0 +1,54 @@
+.card-attachments {
+    i.el-icon-paperclip{
+        font-size: 22px;
+        font-weight: 500;
+        display: inline-block;
+        margin-right: 13px;
+        &::before{
+            vertical-align: middle;
+        }
+    }
+    h2 {
+        line-height: rem(20px);
+        font-size: rem(16px);
+        font-weight: 600;
+        margin-bottom: 7px;
+    }
+    ul{
+        max-width: 100%;
+        white-space: pre-wrap;
+        li{
+            display: inline-block;
+            position: relative;
+            margin: 0 4px 4px 0;
+            img {
+                max-width: 200px;
+                display: inline-block;
+                margin-left: 35px;
+            }
+            button{
+                display: none;
+                position: absolute;
+                right: 4px;
+                background-color: #e4e4e499;
+                border-radius: 3px;
+                font-size: 16px;
+                padding: 2px 4px;
+                top: 4px;   
+            }
+            &:hover{
+                button{
+                    display: block;
+                }
+            }
+        }
+    }
+	// li {
+	// 	display: flex;
+	// 	flex-direction: column;
+	// }
+	// div {
+	// 	display: flex;
+	// 	justify-content: space-between;
+	// }
+}
