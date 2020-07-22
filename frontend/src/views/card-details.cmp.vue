@@ -1,6 +1,6 @@
 <template>
-	<section class="card-details-screen" @mousedown="$router.push('../')">
-		<div class="card-details" v-if="card" @mousedown.stop="closeModal">
+	<section class="card-details-screen" @mousedown.self="$router.push('../')">
+		<div class="card-details" v-if="card" @mousedown="closeModal">
 			<div class="header">
 				<i class="el-icon-postcard"></i>
 				<h1
@@ -15,6 +15,17 @@
 			<div class="body">
 				<div class="left-side">
 					<div class="members-labels-due">
+						<div v-if="card.members.length">
+						<h3 >Members</h3>
+						<ul>
+							<li
+								v-for="member in card.members"
+								:key="member._id"
+								:title="member.fullName"
+								class="card-members"
+							><avatar :src="member.imgUrl" :username="member.fullName" :size="25" /></li>
+						</ul>
+						</div>
 						<h3 v-if="labels.length">Labels</h3>
 						<ul>
 							<li
@@ -26,8 +37,9 @@
 						<div v-if="card.dueDate" class="due-date-container">
 							<h3>Due Date</h3>
 							<div class="due-date-info">
-								<input type="checkbox" v-model="card.isCardDone" @change="dispatchBoardSave"/>
+								<input type="checkbox" v-model="card.isCardDone" @change="dispatchBoardSave('has marked as done')"/>
 								<p> {{ dueDateToShow}} </p><span class="card-status completed" v-if="card.isCardDone">complete</span><span  class="card-status overdue" v-if="isOverdue">overdue</span>
+							<i class="el-icon-delete" @click="removeDueDate"></i>
 							</div>
 						</div>
 					</div>
@@ -50,14 +62,17 @@
 					<activities :activities="activities"/>
 				</div>
 				<div class="right-side">
-					<button @click="toggleModal('card-label-edit')" @mousedown.stop>
+					<button @click="toggleModal('card-label-edit')">
 						<i class="el-icon-collection-tag"></i> Labels
 					</button>
-					<button @click="toggleModal('card-checklist-edit')" @mousedown.stop>
-						<i class="el-icon-document-checked"></i> Checklist
+					<button @click="toggleModal('card-checklist-edit')">
+						<i class="el-icon-document-checked"></i> Checklists
 					</button>
-					<button @click="toggleModal('card-due-edit')" @mousedown.stop>
+					<button @click="toggleModal('card-due-edit')">
 						<i class="el-icon-time"></i> Due Date
+					</button>
+					<button @click="toggleModal('card-member-edit')">
+						<i class="el-icon-user"></i> Members
 					</button>
 					<input type="file" @change="onUploadImg" />
 				</div>
@@ -68,11 +83,13 @@
 					:is="editModal"
 					:boardLabels="board.labels"
 					:labels="labels"
+					:members="board.members"
 					@modalClose="closeModal"
 					@toggleLabel="toggleLabel"
 					@boardLabelsUpdate="updateBoardLabels"
 					@newChecklist="addNewChecklist"
 					@saveDueDate="saveDueDate"
+					@addMember="addMember"
 				></component>
 			</card-edit-modal>
 		</div>
@@ -81,6 +98,7 @@
 
 <script>
 import { boardService } from '../services/board.service.js';
+import { userService } from '../services/user.service.js';
 import { utilService } from '../services/util.service.js';
 import { uploadImg } from '../services/img-upload.service.js';
 import cardEditModal from '../cmps/card/card-edit-modal.cmp';
@@ -89,7 +107,10 @@ import cardChecklistEdit from '../cmps/card/card-checklist-edit.cmp';
 import cardAttachments from '../cmps/card/card-attachments.cmp';
 import cardChecklists from '../cmps/card/card-checklists.cmp';
 import cardDueEdit from '../cmps/card/card-due-edit.cmp';
+import cardMemberEdit from '../cmps/card/card-member-edit.cmp';
 import activities from '../cmps/activities.cmp';
+import Avatar from 'vue-avatar';
+import moment from 'moment';
 export default {
 	props: ['board'],
 	data() {
@@ -166,7 +187,7 @@ export default {
 		},
 		removeChecklistTask(checklistId, taskId) {
 			boardService.removeChecklistTask(this.card, checklistId, taskId);
-			this.dispatchBoardSave('has remove a checklist task');
+			this.dispatchBoardSave('has removed a checklist task');
 		},
 		updateChecklists(checklists) {
 			this.card.checklists = checklists;
@@ -185,8 +206,23 @@ export default {
 		},
 		saveDueDate(date) {
 			this.card.dueDate = date;
-			this.card.isCardDone = true;
-			this.dispatchBoardSave('has updated the due date to ' + this.card.dueDate);
+			this.card.isCardDone = false;
+			this.editModal = '';
+			this.dispatchBoardSave('has updated the due date to ' + moment(date).format('DD.MM.YY h:mm'));
+		},
+		removeDueDate() {
+			this.card.dueDate = null;
+			this.card.isCardDone = false;
+			this.dispatchBoardSave('has updated the due date to ' + moment(date).format('DD.MM.YY h:mm'));
+		},
+		async addMember(userId) {
+			// console.log(member)
+			if (this.card.members.find(member => member._id === userId)) return;
+			const user = await userService.getById(userId);
+			this.card.members.push(user);
+			// this.card.members.push(JSON.parse(member));
+			console.log(this.card.members)
+			this.dispatchBoardSave('has added' + user.fullName + 'as a member');
 		},
 		dispatchBoardSave(action) {
 			this.$store.dispatch({ type: 'saveBoard', board: this.boardToUpdate, activity: { text: action + ' in card ' + this.card.name, cardId: this.card.id } });
@@ -219,7 +255,9 @@ export default {
 		cardAttachments,
 		cardChecklists,
 		cardDueEdit,
-		activities
+		activities,
+		cardMemberEdit,
+		Avatar
 	}
 };
 </script>

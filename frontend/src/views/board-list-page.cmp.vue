@@ -38,6 +38,9 @@ export default {
 	methods: {
 		async addBoard(boardName) {
 			var board = boardService.getStarterBoard();
+			// const loggedinUser = this.$store.getters.loggedinUser;
+			// board.creatorId = loggedinUser._id;
+			// board.members.push(loggedinUser);
 			try {
 				const res = await this.$store.dispatch({ type: "saveBoard", board });
 				this.$router.push("/board/" + res._id);

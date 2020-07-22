@@ -5,7 +5,7 @@
 		@click="isFilterModalOpen=false; isFilterInputShown=false;"
 	>
 	<div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
-		<board-nav @filterSet="setFilter" :filteredTopics="filteredTopics" :isFilterModalOpen="isFilterModalOpen" @openFilterModal="isFilterModalOpen=true" :isFilterInputShown="isFilterInputShown" @showFilterInput="isFilterInputShown=true">
+		<board-nav @filterSet="setFilter" :filteredTopics="filteredTopics" :isFilterModalOpen="isFilterModalOpen" @openFilterModal="isFilterModalOpen=true" :isFilterInputShown="isFilterInputShown" @showFilterInput="isFilterInputShown=true" @toggleUserList="toggleUserList" :users="users" :members="board.members">
 			<h2
 				class="board-name"
 				slot="board-name"
@@ -17,6 +17,12 @@
 				<i class="el-icon-s-operation"></i>
 			</button>
 		</board-nav>
+		  <div class="member-modal" v-if="isUserListOpen">
+			<h4>Invite to Board </h4>
+			<i class="el-icon-close" @click="isUserListOpen = false"></i>
+			<app-filter @filterSet="searchMember"/>
+            <user-list :users="filteredUsers" @addMember="addMember"/>
+        </div>
 		<div v-if="isDeleteModalOpen" class="delete-modal">
 			<h5>Are you sure you want to delete this board?</h5>
 			<div class="btns">
@@ -85,12 +91,15 @@
 
 <script>
 import { boardService } from "../services/board.service";
+import { userService } from '../services/user.service.js';
 import { dragDropService } from "../services/drag-drop.service.js";
 import { Container, Draggable } from "vue-smooth-dnd";
 import boardTopic from "../cmps/board/board-topic.cmp.vue";
 import boardNav from "../cmps/board/board-nav.cmp.vue";
 import cardDetails from "../views/card-details.cmp.vue";
 import boardEdit from "../cmps/board/board-edit.cmp.vue";
+import userList from '../cmps/user-list.cmp';
+import appFilter from '../cmps/app-filter.cmp';
 
 export default {
 	props: [],
@@ -109,12 +118,17 @@ export default {
 			topicsMenuOpen: false,
 			filteredTopics: [],
 			isFilterModalOpen: false,
-			isFilterInputShown: false
+			isFilterInputShown: false,
+			isUserListOpen: false,
+			filteredUsers: []
 		};
 	},
 	computed: {
 		boardGetter() {
 			return this.$store.getters.board;
+		},
+		users() {
+			return this.$store.getters.users;
 		}
 	},
 	methods: {
@@ -124,11 +138,33 @@ export default {
 		toggleDeleteModal() {
 			this.isDeleteModalOpen = !this.isDeleteModalOpen;
 		},
+		toggleUserList() {
+			this.isUserListOpen = !this.isUserListOpen;
+			console.log(this.isUserListOpen)
+        },
 		updateBoardName(ev) {
 			if (ev.target.innerText) this.board.name = ev.target.innerText;
 			this.saveBoard('has updated board name')
 		},
+		async addMember(userId) {
+			if (this.board.members.find(member => member._id === userId)) return;
+			const user = await userService.getById(userId);
+			this.board.members.push(user);
+			this.saveBoard('has added a member');
+		},
+		searchMember(filterBy) {
+			const exp = new RegExp(`.*${filterBy.searchStr}.*`, 'i');
+			const filteredUsers = this.users.filter(user => {
+				return user.fullName.match(exp) || user.username.match(exp);
+				
+			})
+			this.filteredUsers = filteredUsers;
+		},
 		setFilter(filterBy){
+			if (!filterBy.searchStr) {
+				this.filteredUsers = this.users;
+				return;
+			}
 			const exp = new RegExp(`.*${filterBy.searchStr}.*`, 'i');
 			const topicsToFilter = JSON.parse(JSON.stringify(this.board.topics))
 			const filteredTopics = topicsToFilter.filter((topic) => {
@@ -283,6 +319,10 @@ export default {
 	},
 	async created() {
 		await this.loadBoard();
+		await this.$store.dispatch({ type: "loadUsers" })
+		console.log(this.board)
+		this.filteredUsers = this.users;
+		console.log(this.filteredUsers)
 	},
 	mounted() { },
 	destroyed() {
@@ -304,7 +344,9 @@ export default {
 		cardDetails,
 		Draggable,
 		Container,
-		boardEdit
+		boardEdit,
+		userList,
+		appFilter
 	}
 };
 </script>

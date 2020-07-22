@@ -6,8 +6,8 @@
 	padding: 6px 8px 2px;
 	margin-bottom: 8px;
 	overflow: hidden;
-    white-space: break-spaces;
-    // transition: .2s ease-in;
+	white-space: break-spaces;
+	// transition: .2s ease-in;
 	h2 {
 		display: block;
 		margin-bottom: 4px;
@@ -26,7 +26,7 @@
 			-webkit-app-region: no-drag;
 		}
 	}
-	button{
+	button {
 		display: none;
 		border-radius: 3px;
 		font-size: 16px;
@@ -34,7 +34,7 @@
 		position: absolute;
 		right: 6px;
 		color: #6b778c;
-		transition: .2s ease-in;
+		transition: 0.2s ease-in;
 	}
 	a {
 		color: rgb(23, 43, 77);
@@ -48,10 +48,17 @@
 			-webkit-app-region: no-drag;
 		}
 	}
-	p{
+	p {
 		margin-right: 10px;
 		color: #6b778c;
 		font-size: rem(14px);
+	}
+	.members-preview {
+		display: flex;
+		justify-content: flex-end;
+		li {
+			margin: 2px;
+		}
 	}
 	.card-label {
 		border-radius: 4px;
@@ -60,7 +67,7 @@
 		width: 40px;
 		margin: 0 4px 4px 0;
 		display: inline-block;
-		transition: .2s ease-in;
+		transition: 0.2s ease-in;
 		.label-title {
 			color: white;
 			padding: 0 4px;
@@ -70,12 +77,11 @@
 			line-height: 16px;
 			font-weight: 700;
 			overflow: hidden;
-    		text-overflow: ellipsis;
+			text-overflow: ellipsis;
 			width: 100%;
 		}
 	}
 	.card-status {
-
 		padding: 2px;
 		border-radius: 3px;
 		&.completed {
@@ -88,12 +94,12 @@
 		}
 	}
 }
-.card-preview:hover{
-	background-color: hsla(0,0%,100%,.5);
-	button{
+.card-preview:hover {
+	background-color: hsla(0, 0%, 100%, 0.5);
+	button {
 		display: block;
 	}
-	button:hover{
+	button:hover {
 		background-color: rgba(9, 30, 66, 0.08);
 	}
 }

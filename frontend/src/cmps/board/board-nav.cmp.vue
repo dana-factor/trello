@@ -1,6 +1,10 @@
 <template>
     <section class="board-nav">
         <slot name="board-name"></slot>
+        <div class="nav-members">
+        <member-avatars :members="members"/>
+        <h5 @click="toggleUserList" >Invite</h5>
+        </div>
         <div class="btns-container">
             <div @click.stop class="search-container">
                 <app-filter
@@ -27,16 +31,19 @@
 </template>
 
 <script>
-import appFilter from '../app-filter.cmp'
+import appFilter from '../app-filter.cmp';
+import memberAvatars from '../member-avatars.cmp';
+
+
 export default {
-    props:['filteredTopics', 'isFilterModalOpen', 'isFilterInputShown'],
+    props:['filteredTopics', 'isFilterModalOpen', 'isFilterInputShown', 'members'],
     data(){
         return{
-
+           
         }
     },
     computed: {
-
+        
     },
     methods: {
         filterSet(filterBy) {
@@ -47,7 +54,13 @@ export default {
         },
         showFilterInput(){
             this.$emit('showFilterInput')
-        }
+        },
+        toggleUserList() {
+            this.$emit('toggleUserList');
+        },
+        // addMember(userId) {
+        //     this.$emit('addMember', userId);
+        // }
     },
     created(){
 
@@ -59,7 +72,9 @@ export default {
 
     },
     components: {
-        appFilter
+        appFilter,
+        memberAvatars
+
     }
 
 }
