@@ -46,7 +46,6 @@
 		<Container
 			orientation="horizontal"
 			@drop="onColumnDrop($event)"
-			drag-class="grab"
 			:drop-placeholder="upperDropPlaceholderOptions"
 		>
 			<Draggable v-for="topic in board.topics" :key="topic.id">
@@ -306,9 +305,7 @@ export default {
 			var lengthBefore = this.board.topics[columnIndex].cards.length;
 			this.board.topics.splice(columnIndex, 1, newColumn);
 			var lengthAfter = this.board.topics[columnIndex].cards.length;
-			// console.log('be4', lengthBefore, 'aft', lengthAfter)
 			if (lengthBefore > lengthAfter) return;
-			// console.log('go save')
 			this.saveBoard();
 		},
 		getCardPayload(columnId) {
@@ -320,7 +317,6 @@ export default {
 	async created() {
 		await this.loadBoard();
 		await this.$store.dispatch({ type: "loadUsers" })
-		console.log(this.board)
 		this.filteredUsers = this.users;
 		console.log(this.filteredUsers)
 	},

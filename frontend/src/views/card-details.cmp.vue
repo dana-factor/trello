@@ -111,6 +111,7 @@ import cardMemberEdit from '../cmps/card/card-member-edit.cmp';
 import activities from '../cmps/activities.cmp';
 import Avatar from 'vue-avatar';
 import moment from 'moment';
+
 export default {
 	props: ['board'],
 	data() {
@@ -207,21 +208,18 @@ export default {
 		saveDueDate(date) {
 			this.card.dueDate = date;
 			this.card.isCardDone = false;
-			this.editModal = '';
+			this.closeModal();
 			this.dispatchBoardSave('has updated the due date to ' + moment(date).format('DD.MM.YY h:mm'));
 		},
 		removeDueDate() {
 			this.card.dueDate = null;
 			this.card.isCardDone = false;
-			this.dispatchBoardSave('has updated the due date to ' + moment(date).format('DD.MM.YY h:mm'));
+			this.dispatchBoardSave('has deleted the due date');
 		},
 		async addMember(userId) {
-			// console.log(member)
 			if (this.card.members.find(member => member._id === userId)) return;
 			const user = await userService.getById(userId);
 			this.card.members.push(user);
-			// this.card.members.push(JSON.parse(member));
-			console.log(this.card.members)
 			this.dispatchBoardSave('has added' + user.fullName + 'as a member');
 		},
 		dispatchBoardSave(action) {
