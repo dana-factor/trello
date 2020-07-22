@@ -15,6 +15,17 @@
 			<div class="body">
 				<div class="left-side">
 					<div class="members-labels-due">
+						<div v-if="card.members.length">
+						<h3 >Members</h3>
+						<ul>
+							<li
+								v-for="member in card.members"
+								:key="member._id"
+								:title="member.fullName"
+								class="card-members"
+							><avatar :src="member.imgUrl" :username="member.fullName" :size="25" /></li>
+						</ul>
+						</div>
 						<h3 v-if="labels.length">Labels</h3>
 						<ul>
 							<li
@@ -59,6 +70,9 @@
 					<button @click="toggleModal('card-due-edit')">
 						<i class="el-icon-time"></i> Due Date
 					</button>
+					<button @click="toggleModal('card-member-edit')">
+						<i class="el-icon-user"></i> Members
+					</button>
 					<input type="file" @change="onUploadImg" />
 				</div>
 			</div>
@@ -68,11 +82,13 @@
 					:is="editModal"
 					:boardLabels="board.labels"
 					:labels="labels"
+					:members="board.members"
 					@modalClose="closeModal"
 					@toggleLabel="toggleLabel"
 					@boardLabelsUpdate="updateBoardLabels"
 					@newChecklist="addNewChecklist"
 					@saveDueDate="saveDueDate"
+					@addMember="addMember"
 				></component>
 			</card-edit-modal>
 		</div>
@@ -81,6 +97,7 @@
 
 <script>
 import { boardService } from '../services/board.service.js';
+import { userService } from '../services/user.service.js';
 import { utilService } from '../services/util.service.js';
 import { uploadImg } from '../services/img-upload.service.js';
 import cardEditModal from '../cmps/card/card-edit-modal.cmp';
@@ -89,7 +106,9 @@ import cardChecklistEdit from '../cmps/card/card-checklist-edit.cmp';
 import cardAttachments from '../cmps/card/card-attachments.cmp';
 import cardChecklists from '../cmps/card/card-checklists.cmp';
 import cardDueEdit from '../cmps/card/card-due-edit.cmp';
+import cardMemberEdit from '../cmps/card/card-member-edit.cmp';
 import activities from '../cmps/activities.cmp';
+import Avatar from 'vue-avatar';
 import moment from 'moment';
 export default {
 	props: ['board'],
@@ -189,6 +208,15 @@ export default {
 			this.card.isCardDone = true;
 			this.dispatchBoardSave('has updated the due date to ' + moment(date).format('DD.MM.YY h:mm'));
 		},
+		async addMember(userId) {
+			// console.log(member)
+			if (this.card.members.find(member => member._id === userId)) return;
+			const user = await userService.getById(userId);
+			this.card.members.push(user);
+			// this.card.members.push(JSON.parse(member));
+			console.log(this.card.members)
+			this.dispatchBoardSave('has added' + user.fullName + 'as a member');
+		},
 		dispatchBoardSave(action) {
 			this.$store.dispatch({ type: 'saveBoard', board: this.boardToUpdate, activity: { text: action + ' in card ' + this.card.name, cardId: this.card.id } });
 		},
@@ -220,7 +248,9 @@ export default {
 		cardAttachments,
 		cardChecklists,
 		cardDueEdit,
-		activities
+		activities,
+		cardMemberEdit,
+		Avatar
 	}
 };
 </script>

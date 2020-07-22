@@ -1,0 +1,22 @@
+.card-member-edit {
+    input {
+        border-radius: 3px;
+        height: 26px;
+        margin: 4px 1px;
+        padding: 2px 7px;
+        border: 1px solid  rgba(9, 30, 66, 0.13);
+    }
+    li {
+        display: flex;
+        margin: 5px;
+        transition: .2s;
+        cursor: pointer;
+        .name {
+            margin-left: 5px;
+        }
+                &:hover {
+                    background-color: #ebecf0;
+                    border-radius: 3px;
+                }
+    }
+}

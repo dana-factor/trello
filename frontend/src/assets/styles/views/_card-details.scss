@@ -119,6 +119,10 @@
 						color: #fff;
 						overflow: hidden;
 						// text-overflow: ellipsis;
+						&.card-members {
+							min-width: 0;
+							padding: 0;
+						}
 					}
 					.due-date-container {
 						h3 {
