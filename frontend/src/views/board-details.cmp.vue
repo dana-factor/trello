@@ -238,11 +238,12 @@ export default {
 			return this.$store.dispatch({ type: "loadCurrBoard", id: boardId })
 		},
 		setScene() {
-			this.board.type = "container";
-			(this.board.props = {
+			const boardCopy = JSON.parse(JSON.stringify(this.board));
+			boardCopy.type = "container";
+			(boardCopy.props = {
 				orientation: "horizontal"
 			}),
-				this.board.topics.forEach(topic => {
+				boardCopy.topics.forEach(topic => {
 					(topic.type = "container"),
 						(topic.props = {
 							orientation: "vertical",
