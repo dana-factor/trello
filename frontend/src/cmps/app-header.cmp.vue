@@ -7,7 +7,7 @@
 			<router-link to="/board">Boards</router-link>
 			<router-link to="/board/a101">Public Board</router-link>
 		</div>
-		<h1>TRELLA</h1>
+		<h1>trella</h1>
 		<div>
 			<template v-if="!loggedInUser">
 				<router-link to="/login">Login</router-link>

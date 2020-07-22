@@ -6,17 +6,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    // h1 {
-    //     font-family: Sedgwick;
-    //     font-size: rem(22px);
-    //     margin-top: 4px;
-    // }
+    h1 {
+        font-family: Sedgwick;
+        font-size: rem(22px);
+        margin-top: 4px;
+    }
     i {
         font-size: rem(20px);
         color:white;
         font-weight: 400;
         text-align: center;
-        margin: 2px;
+        margin: 4px;
         transition: .2s;
     }
     a {
@@ -24,7 +24,7 @@
         color: white;
         background-color: rgba(255, 255, 255, 0.2);
         padding: 5px;
-        margin: 2px;
+        margin: 4px;
         border-radius: 3px;
         transition: .2s;
         &:hover {
