@@ -1,6 +1,6 @@
 <template>
-	<section class="card-details-screen" @click="$router.push('../')">
-		<div class="card-details" v-if="card" @click.stop="closeModal">
+	<section class="card-details-screen" @mousedown="$router.push('../')">
+		<div class="card-details" v-if="card" @mousedown.stop="closeModal">
 			<div class="header">
 				<h1
 					@keypress.enter.prevent="updateCardName; $event.target.blur()"
@@ -45,13 +45,13 @@
 					/>
 				</div>
 				<div class="right-side">
-					<button @click.stop="toggleModal('card-label-edit')">
+					<button @click="toggleModal('card-label-edit')" @mousedown.stop>
 						<i class="el-icon-collection-tag"></i> Labels
 					</button>
-					<button @click.stop="toggleModal('card-checklist-edit')">
+					<button @click="toggleModal('card-checklist-edit')" @mousedown.stop>
 						<i class="el-icon-document-checked"></i> Checklists
 					</button>
-					<button @click.stop="toggleModal('card-due-edit')">
+					<button @click="toggleModal('card-due-edit')" @mousedown.stop>
 						<i class="el-icon-time"></i> Due Date
 					</button>
 					<input type="file" @change="onUploadImg" />

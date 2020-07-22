@@ -13,6 +13,7 @@
 			<div>
                 <board-edit-background v-if="isEditingBg" @toggleColorPicker="toggleColorPicker" @setBgc="setBgc" @setBgImg="setBgImg"/>
                 <date-picker v-if="datePickerOpen"/>
+                <activites :activities="board.activities"/>
 			</div>
            
     </div>
@@ -22,9 +23,10 @@
 import colorPicker from '../color-picker.cmp.vue';
 import datePicker from '../date-picker.cmp.vue';
 import boardEditBackground from '../board/board-edit-background.cmp.vue';
+import activites from '../activities.cmp.vue';
 
 export default {
-    props:['boardId'],
+    props:['board'],
     data(){
         return{
             isEditingBg: false,
@@ -71,7 +73,8 @@ export default {
     components: {
         colorPicker,
         datePicker,
-        boardEditBackground
+        boardEditBackground,
+        activites
     }
 
 }
