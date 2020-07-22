@@ -2,18 +2,20 @@
 	<section class="card-details-screen" @mousedown.self="$router.push('../')">
 		<div class="card-details" v-if="card" @mousedown="closeModal">
 			<div class="header">
+				<i class="el-icon-postcard"></i>
 				<h1
 					@keypress.enter.prevent="updateCardName; $event.target.blur()"
 					@blur="updateCardName"
 					contenteditable
-				>{{card.name}}</h1>
+				> {{card.name}}</h1>
 				<router-link to="../">
 					<i class="el-icon-close"></i>
 				</router-link>
 			</div>
 			<div class="body">
 				<div class="left-side">
-					<div class="members-labels">
+					<div class="members-labels-due">
+						<h3 v-if="labels.length">Labels</h3>
 						<ul>
 							<li
 								v-for="label in labels"
@@ -21,18 +23,20 @@
 								:style="{backgroundColor:label.color}"
 							>{{label.title}}</li>
 						</ul>
-					</div>
-					<div v-if="card.dueDate" class="due-date">
-						<h5>Due Date</h5>
-						<input type="checkbox" v-model="card.isCardDone" @change="dispatchBoardSave('has marked as done')"/>
-						<p> {{ dueDateToShow}} </p><span class="card-status completed" v-if="card.isCardDone">completed</span><span  class="card-status overdue" v-if="isOverdue">overdue</span>
+						<div v-if="card.dueDate" class="due-date-container">
+							<h3>Due Date</h3>
+							<div class="due-date-info">
+								<input type="checkbox" v-model="card.isCardDone" @change="dispatchBoardSave('has marked as done')"/>
+								<p> {{ dueDateToShow}} </p><span class="card-status completed" v-if="card.isCardDone">complete</span><span  class="card-status overdue" v-if="isOverdue">overdue</span>
+							</div>
+						</div>
 					</div>
 					<div class="description">
-						<h2>
-							<i class="el-icon-document"></i> Description
-						</h2>
-						<textarea v-model="card.description" placeholder="Add a more detailed description..."></textarea>
-						<button @click="dispatchBoardSave('has updated the description')">Save</button>
+						<i class="el-icon-document"></i>
+						<h2>Description</h2>
+						<textarea v-model="card.description" @input="isDescriptionSaveShown = true" placeholder="Add a more detailed description..."></textarea>
+						<button v-if="isDescriptionSaveShown" @click="dispatchBoardSave('has updated the description'); isDescriptionSaveShown=false" class="save">Save</button>
+						<button v-if="isDescriptionSaveShown" @click="card.description = ''; isDescriptionSaveShown=false"><i class="el-icon-close"></i></button>
 					</div>
 					<card-attachments :attachments="card.attachments" @attachmentRemoved="removeAttachment" />
 					<card-checklists
@@ -94,7 +98,8 @@ export default {
 			boardToUpdate: null,
 			card: null,
 			cardId: 0,
-			editModal: ''			
+			editModal: '',
+			isDescriptionSaveShown: false			
 		};
 	},
 	computed: {
