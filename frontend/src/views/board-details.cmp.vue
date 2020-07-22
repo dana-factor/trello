@@ -14,8 +14,7 @@
 				@blur="updateBoardName"
 			>{{board.name}}</h2>
 			<button class="menu-btn" @click="toggleBoardMenu">
-				<i class="el-icon-more"></i>
-				<p>Menu</p>
+				<i class="el-icon-s-operation"></i>
 			</button>
 		</board-nav>
 		<div v-if="isDeleteModalOpen" class="delete-modal">
