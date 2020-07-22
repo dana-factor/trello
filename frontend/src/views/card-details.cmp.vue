@@ -1,6 +1,6 @@
 <template>
-	<section class="card-details-screen" @mousedown="$router.push('../')">
-		<div class="card-details" v-if="card" @mousedown.stop="closeModal">
+	<section class="card-details-screen" @mousedown.self="$router.push('../')">
+		<div class="card-details" v-if="card" @mousedown="closeModal">
 			<div class="header">
 				<h1
 					@keypress.enter.prevent="updateCardName; $event.target.blur()"
@@ -24,7 +24,7 @@
 					</div>
 					<div v-if="card.dueDate" class="due-date">
 						<h5>Due Date</h5>
-						<input type="checkbox" v-model="card.isCardDone" @change="dispatchBoardSave"/>
+						<input type="checkbox" v-model="card.isCardDone" @change="dispatchBoardSave('has marked as done')"/>
 						<p> {{ dueDateToShow}} </p><span class="card-status completed" v-if="card.isCardDone">completed</span><span  class="card-status overdue" v-if="isOverdue">overdue</span>
 					</div>
 					<div class="description">
@@ -46,13 +46,13 @@
 					<activities :activities="activities"/>
 				</div>
 				<div class="right-side">
-					<button @click="toggleModal('card-label-edit')" @mousedown.stop>
+					<button @click="toggleModal('card-label-edit')">
 						<i class="el-icon-collection-tag"></i> Labels
 					</button>
-					<button @click="toggleModal('card-checklist-edit')" @mousedown.stop>
+					<button @click="toggleModal('card-checklist-edit')">
 						<i class="el-icon-document-checked"></i> Checklists
 					</button>
-					<button @click="toggleModal('card-due-edit')" @mousedown.stop>
+					<button @click="toggleModal('card-due-edit')">
 						<i class="el-icon-time"></i> Due Date
 					</button>
 					<input type="file" @change="onUploadImg" />
@@ -86,6 +86,7 @@ import cardAttachments from '../cmps/card/card-attachments.cmp';
 import cardChecklists from '../cmps/card/card-checklists.cmp';
 import cardDueEdit from '../cmps/card/card-due-edit.cmp';
 import activities from '../cmps/activities.cmp';
+import moment from 'moment';
 export default {
 	props: ['board'],
 	data() {
@@ -161,7 +162,7 @@ export default {
 		},
 		removeChecklistTask(checklistId, taskId) {
 			boardService.removeChecklistTask(this.card, checklistId, taskId);
-			this.dispatchBoardSave('has remove a checklist task');
+			this.dispatchBoardSave('has removed a checklist task');
 		},
 		updateChecklists(checklists) {
 			this.card.checklists = checklists;
@@ -181,7 +182,7 @@ export default {
 		saveDueDate(date) {
 			this.card.dueDate = date;
 			this.card.isCardDone = true;
-			this.dispatchBoardSave('has updated the due date to ' + this.card.dueDate);
+			this.dispatchBoardSave('has updated the due date to ' + moment(date).format('DD.MM.YY h:mm'));
 		},
 		dispatchBoardSave(action) {
 			this.$store.dispatch({ type: 'saveBoard', board: this.boardToUpdate, activity: { text: action + ' in card ' + this.card.name, cardId: this.card.id } });
