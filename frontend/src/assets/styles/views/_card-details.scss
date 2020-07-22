@@ -9,26 +9,72 @@
 	padding: 61px 0;
 	z-index: 3;
 	.card-details {
-		min-height: 80vh;
+		min-height: 600px;
 		position: relative;
 		z-index: 4;
 		margin: 0 auto;
-		padding: 5px 15px 20px;
+		padding: 12px 16px 8px 23px;
 		width: 85%;
 		background-color: #f4f5f7;
+		h3{
+			color: #5e6c84;
+			font-size: rem(12px);
+			font-weight: 700;
+			letter-spacing: .04em;
+			text-transform: uppercase;
+			line-height: 20px;
+			margin-bottom: 4px;
+			line-height: rem(20px);
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 		.header {
 			display: flex;
 			align-items: center;
-			justify-content: space-between;
-			padding: 0.5rem;
+			// padding: 0.5rem;
+			i{
+				font-size: 22px;
+				font-weight: 500;
+				&::before{
+					vertical-align: middle;
+				}
+			}
 			h1 {
 				font-weight: 600;
+				font-size: rem(20px);
+				overflow: hidden;
+				overflow-wrap: break-word;
+				color: #40506c;
+				line-height: 24px;
+				margin-left: 5px;
+    			padding-left: 2px;
+			}
+			a{
+				color: #42526e;
+				border-radius: 50%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				position: absolute;
+				top: 8px;
+				right: 8px;
+				// z-index: 2;
+				height: 32px;
+				overflow: hidden;
+				padding: 8px 6px;
+				font-size: 20px;
+				height: 32px;
+				line-height: 32px;
+				font-weight: 400;
+				&:hover{
+					background-color: rgba(9,30,66,.08);
+				}
 			}
 		}
 		.body {
 			display: flex;
-			// justify-content: space-between;
-			padding: 10px 20px;
+			justify-content: space-between;
+			// padding: 10px 20px;
 			.left-side {
 				width: 70%;
 				display: flex;
@@ -53,9 +99,14 @@
 						cursor: text;
 					}
 				}
-				.members-labels {
+				.members-labels-due {
+					margin-left: 35px;
+					h3{
+						margin-bottom: 0;
+					}
 					ul {
 						display: flex;
+						margin-bottom: 8px;
 					}
 					li {
 						border-radius: 3px;
@@ -66,21 +117,95 @@
 						margin: 0 4px 4px 0;
 						font-weight: 600;
 						color: #fff;
+						overflow: hidden;
+						// text-overflow: ellipsis;
+					}
+					.due-date-container {
+						h3 {
+							display: block;
+							margin-bottom: 5px;
+						}
+						.due-date-info{
+							background-color: rgba(9,30,66,.04);
+							border-radius: 3px;
+							width: fit-content;
+							padding: 6px 4px 6px 0;
+							margin-bottom: 25px;
+							p{
+								font-size: rem(14px);
+								line-height: 20px;
+								font-weight: 500;
+								margin: 0 6px;
+							}
+							.card-status {
+								text-transform: uppercase;
+								font-size: rem(12px);
+								line-height: 16px;
+								// margin: 0 6px;
+								// letter-spacing: -0.5px;
+								color: white;
+								padding: 0 4px;
+								border-radius: 3px;
+								&.completed {
+									background: rgb(5, 178, 5);
+								}
+								&.overdue {
+									background-color: #f44e8b;
+								}
+							}
+						}
 					}
 				}
 				.description {
-					display: flex;
-					flex-direction: column;
+					i{
+						font-size: 22px;
+						font-weight: 500;
+						display: inline-block;
+						margin-right: 13px;
+						&::before{
+							vertical-align: middle;
+						}
+					}
 					h2 {
 						line-height: rem(20px);
-						padding: 8px 0;
-						margin-bottom: 4px;
+						font-size: rem(16px);
 						font-weight: 600;
-						overflow: hidden;
-						text-overflow: ellipsis;
 					}
 					textarea {
-						height: rem(108px);
+						min-height: 40px;
+						display: block;
+						margin-left: 35px;
+						background-color: rgba(9,30,66,.04);
+						width: -webkit-fill-available;
+						color: #172b4d;
+						&:hover{
+							background-color: rgba(9,30,66,.08);
+						}
+						&:focus{
+							background-color: white;
+							height: 105px;
+						}
+					}
+					button.save{
+						color: #fff;
+						padding: 6px 12px;
+						border-radius: 3px;
+						background-color: rgba(9, 30, 66, 0.3);
+						font-size: rem(14px);
+						font-weight: 400;
+						line-height: 20px;
+						margin-left: 35px;
+						&:hover{
+							background-color: rgba(9, 30, 66, 0.4);
+							color: white;
+						}
+					}
+					button{
+						height: 32px;
+						color: #42526e;
+						&:hover{
+							color: #172b4d;
+						}
 					}
 				}
 				.card-checklists {
@@ -89,42 +214,40 @@
 						flex-direction: column;
 					}
 				}
-				.due-date {
-					h5 {
-						display: block;
-						margin-bottom: 5px;
-					}
-					.card-status {
-						text-transform: uppercase;
-						font-size: 11px;
-						margin: 10px;
-						letter-spacing: -0.5px;
-						color: white;
-						padding: 0 4px;
-						border-radius: 3px;
-						&.completed {
-							background: rgb(5, 178, 5);
-						}
-						&.overdue {
-							background-color: #f44e8b;
-						}
-					}
-				}
 			}
 			.right-side {
 				display: flex;
 				flex-direction: column;
-				button {
+				max-width: 160px;
+				h2{
+					color: #5e6c84;
+					font-size: rem(12px);
+					font-weight: 700;
+					letter-spacing: .04em;
+					line-height: 16px;
+					text-transform: uppercase;
+					line-height: 20px;
+					margin-bottom: 8px;
+				}
+				i{
+					margin: 0 6px -6px 0;
+				}
+				button, input::before{
 					width: 100%;
-					background-color: #eaecf0;
-					padding: 8px 15px;
+					background-color:rgba(9,30,66,.04);
+					padding: 6px 12px;
 					border-radius: 5px;
-					margin-bottom: 10px;
-					font-size: 0.875rem;
+					margin-bottom: 8px;
+					font-size: 14px;
+					line-height: 20px;
+					font-weight: 400;
 					transition: 0.3s;
+					text-align: left;
+					color: #172b4d;
+					font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
 				}
 				button:hover {
-					background-color: #ccd1db;
+					background-color: rgba(9,30,66,.08);
 				}
 			}
 		}
