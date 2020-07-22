@@ -1,6 +1,6 @@
 <template>
-	<section class="card-details-screen" @click="$router.push('../')">
-		<div class="card-details" v-if="card" @click.stop="closeModal">
+	<section class="card-details-screen" @mousedown="$router.push('../')">
+		<div class="card-details" v-if="card" @mousedown.stop="closeModal">
 			<div class="header">
 				<i class="el-icon-postcard"></i>
 				<h1
@@ -47,16 +47,16 @@
 						@checklistTaskRemoved="removeChecklistTask"
 						@checklistsUpdated="updateChecklists"
 					/>
+					<activities :activities="activities"/>
 				</div>
 				<div class="right-side">
-					<h3>Add to card</h3>
-					<button @click.stop="toggleModal('card-label-edit')">
+					<button @click="toggleModal('card-label-edit')" @mousedown.stop>
 						<i class="el-icon-collection-tag"></i> Labels
 					</button>
-					<button @click.stop="toggleModal('card-checklist-edit')">
+					<button @click="toggleModal('card-checklist-edit')" @mousedown.stop>
 						<i class="el-icon-document-checked"></i> Checklist
 					</button>
-					<button @click.stop="toggleModal('card-due-edit')">
+					<button @click="toggleModal('card-due-edit')" @mousedown.stop>
 						<i class="el-icon-time"></i> Due Date
 					</button>
 					<input type="file" @change="onUploadImg" />
@@ -89,6 +89,7 @@ import cardChecklistEdit from '../cmps/card/card-checklist-edit.cmp';
 import cardAttachments from '../cmps/card/card-attachments.cmp';
 import cardChecklists from '../cmps/card/card-checklists.cmp';
 import cardDueEdit from '../cmps/card/card-due-edit.cmp';
+import activities from '../cmps/activities.cmp';
 export default {
 	props: ['board'],
 	data() {
@@ -120,6 +121,9 @@ export default {
 		isOverdue() {
 			if (this.card.isCardDone) return;
 			return this.card.dueDate < Date.now();
+		},
+		activities(){
+			return this.board.activities.filter(activity => activity.cardId === this.card.id)
 		}
 	},
 	methods: {
@@ -214,7 +218,8 @@ export default {
 		cardChecklistEdit,
 		cardAttachments,
 		cardChecklists,
-		cardDueEdit
+		cardDueEdit,
+		activities
 	}
 };
 </script>

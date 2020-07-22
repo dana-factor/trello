@@ -35,7 +35,7 @@
 			@toggleDeleteModal="toggleDeleteModal"
 			@setBgc="setBgc"
 			@setBgImg="setBgImg"
-			:boardId="board._id"
+			:board="board"
 		/>
 		<Container
 			orientation="horizontal"
@@ -188,12 +188,12 @@ export default {
 			this.$emit('setBgImg', imgUrl);
 		},
 		removeBoard(boardId) {
-			this.$store.dispatch({ type: "removeBoard", id: boardId });
+			this.$store.dispatch({ type: 'removeBoard', id: boardId });
 			this.isDeleteModalOpen = false;
 			this.$router.push('/board')
 		},
 		updateTopicName(topicName, topicId) {
-			let currTopic = this.board.topics.find(
+			const currTopic = this.board.topics.find(
 				topic => topic.id === topicId
 			);
 			currTopic.name = topicName;
@@ -277,8 +277,7 @@ export default {
 		},
 		getCardPayload(columnId) {
 			return index => {
-				return this.board.topics.filter(p => p.id === columnId)[0]
-					.cards[index];
+				return this.board.topics.find(p => p.id === columnId).cards[index];
 			};
 		},
 	},
@@ -292,7 +291,7 @@ export default {
 	},
 	watch: {
 		boardGetter(value) {
-			// console.log('activity:', value.activities[0].text);
+			// console.log('activity:', value.activities[0]);
 			this.board = JSON.parse(JSON.stringify(value));
 			this.setScene();
 			if (this.board.style.backgroundColor) this.$emit('setBgc', this.board.style.backgroundColor)
