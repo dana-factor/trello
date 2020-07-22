@@ -15,9 +15,10 @@
 				<span></span>
 			</div>
 			<h2>{{card.name}}</h2>
-			<div class="card-img" v-if="hasImg">
-				<img v-for="attachment in card.attachments" :key="attachment.imgUrl" :src="attachment.imgUrl" />
-			</div>
+			<!-- <div class="card-img" v-if="hasImg"> -->
+				<!-- v-for="attachment in card.attachments" :key="attachment.imgUrl" -->
+				<img class="card-img" v-if="hasImg" :src="card.attachments[0].imgUrl" />
+			<!-- </div> -->
 			<p
 				v-if="card.dueDate"
 				class="card-status"
