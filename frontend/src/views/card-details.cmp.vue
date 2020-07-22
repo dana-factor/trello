@@ -43,6 +43,7 @@
 						@checklistTaskRemoved="removeChecklistTask"
 						@checklistsUpdated="updateChecklists"
 					/>
+					<activities :activities="activities"/>
 				</div>
 				<div class="right-side">
 					<button @click="toggleModal('card-label-edit')" @mousedown.stop>
@@ -84,6 +85,7 @@ import cardChecklistEdit from '../cmps/card/card-checklist-edit.cmp';
 import cardAttachments from '../cmps/card/card-attachments.cmp';
 import cardChecklists from '../cmps/card/card-checklists.cmp';
 import cardDueEdit from '../cmps/card/card-due-edit.cmp';
+import activities from '../cmps/activities.cmp';
 export default {
 	props: ['board'],
 	data() {
@@ -114,6 +116,9 @@ export default {
 		isOverdue() {
 			if (this.card.isCardDone) return;
 			return this.card.dueDate < Date.now();
+		},
+		activities(){
+			return this.board.activities.filter(activity => activity.cardId === this.card.id)
 		}
 	},
 	methods: {
@@ -208,7 +213,8 @@ export default {
 		cardChecklistEdit,
 		cardAttachments,
 		cardChecklists,
-		cardDueEdit
+		cardDueEdit,
+		activities
 	}
 };
 </script>
