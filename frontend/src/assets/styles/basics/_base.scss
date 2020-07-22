@@ -64,12 +64,16 @@ input[type='file'] {
 		visibility: visible;
 		display: block;
 		background-color: #eaecf0;
-		padding: 8px 15px;
 		cursor: pointer;
 		color: black;
 		font-size: 0.875rem;
 		transition: 0.3s;
 		text-align: center;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+	
 	}
 	&:hover::before {
 		background-color: #ccd1db;

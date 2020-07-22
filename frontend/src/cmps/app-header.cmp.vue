@@ -1,47 +1,54 @@
 <template>
-    <section class="app-header">
-        <div>
-        <router-link to="/"> <i class="el-icon-s-home"></i></router-link> 
-        <router-link to="/board">Boards</router-link>
-        <router-link to="/board/a101">Public Board</router-link> 
-        </div>
-        <h1>TRELLA</h1>
-        <div>
-        <router-link to="/login">Login</router-link> 
-        </div>
-    </section>
+	<section class="app-header">
+		<div>
+			<router-link to="/">
+				<i class="el-icon-s-home"></i>
+			</router-link>
+			<router-link to="/board">Boards</router-link>
+			<router-link to="/board/a101">Public Board</router-link>
+		</div>
+		<h1>TRELLA</h1>
+		<div>
+			<template v-if="!loggedInUser">
+				<router-link to="/login">Login</router-link>
+			</template>
+            <template v-else>
+                Hey {{loggedInUser.fullName}}!
+                <button @click="$emit('logout')">Logout</button>
+            </template>
+		</div>
+	</section>
 </template>
 
 <script>
 export default {
-    props:[],
-    data(){
-        return{
+	props: ['loggedInUser'],
+	data() {
+		return {
 
-        }
-    },
-    computed: {
+		}
+	},
+	computed: {
 
-    },
-    methods: {
+	},
+	methods: {
 
-    },
-    created(){
+	},
+	created() {
 
-    },
-    mounted(){
+	},
+	mounted() {
 
-    },
-    watch: {
+	},
+	watch: {
 
-    },
-    components: {
+	},
+	components: {
 
-    }
+	}
 
 }
 </script>
 
 <style>
-
 </style>
