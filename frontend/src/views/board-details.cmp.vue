@@ -17,7 +17,7 @@
 				<i class="el-icon-s-operation"></i>
 			</button>
 		</board-nav>
-		  <div class="member-modal" v-if="isUserListOpen" >
+		  <div class="member-modal" v-if="isUserListOpen">
 			<h4>Invite to Board </h4>
 			<i class="el-icon-close" @click="isUserListOpen = false"></i>
 			<app-filter @filterSet="searchMember"/>
@@ -129,10 +129,7 @@ export default {
 		},
 		users() {
 			return this.$store.getters.users;
-		},
-		// filteredUsers() {
-			
-		// }
+		}
 	},
 	methods: {
 		toggleBoardMenu() {
@@ -322,9 +319,10 @@ export default {
 	},
 	async created() {
 		await this.loadBoard();
-		this.$store.dispatch({ type: "loadUsers" })
+		await this.$store.dispatch({ type: "loadUsers" })
 		console.log(this.board)
 		this.filteredUsers = this.users;
+		console.log(this.filteredUsers)
 	},
 	mounted() { },
 	destroyed() {
