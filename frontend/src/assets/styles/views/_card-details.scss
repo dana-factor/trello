@@ -14,8 +14,9 @@
 		z-index: 4;
 		margin: 0 auto;
 		padding: 12px 16px 8px 23px;
-		width: 85%;
+		max-width: 760px;
 		background-color: #f4f5f7;
+		// overflow-y: auto;
 		h3{
 			color: #5e6c84;
 			font-size: rem(12px);
@@ -76,12 +77,11 @@
 			justify-content: space-between;
 			// padding: 10px 20px;
 			.left-side {
-				width: 70%;
+				width: 100%;
 				display: flex;
 				flex-direction: column;
-				margin-right: 20px;
-				textarea,
-				input {
+				margin-right: 30px;
+				textarea {
 					background-color: transparent;
 					cursor: pointer;
 					margin-bottom: 4px;
@@ -91,9 +91,9 @@
 					border: none;
 					border-radius: 3px;
 					transition: background-color 0.2s;
-					&:hover {
-						background-color: transparentize($color: white, $amount: 0.6);
-					}
+					// &:hover {
+					// 	background-color: transparentize($color: white, $amount: 0.6);
+					// }
 					&:focus {
 						background-color: white;
 						cursor: text;
@@ -135,11 +135,14 @@
 							width: fit-content;
 							padding: 6px 4px 6px 0;
 							margin-bottom: 25px;
+							display: flex;
+    						align-items: center;
 							p{
 								font-size: rem(14px);
 								line-height: 20px;
-								font-weight: 500;
+								font-weight: 400;
 								margin: 0 6px;
+								color: #172b4d;;
 							}
 							i {
 								margin-left: 10px;
@@ -181,13 +184,14 @@
 						line-height: rem(20px);
 						font-size: rem(16px);
 						font-weight: 600;
+						margin-bottom: 7px;
 					}
 					textarea {
 						min-height: 40px;
 						display: block;
 						margin-left: 35px;
 						background-color: rgba(9,30,66,.04);
-						width: -webkit-fill-available;
+						min-width: 60%;
 						color: #172b4d;
 						&:hover{
 							background-color: rgba(9,30,66,.08);
@@ -195,6 +199,7 @@
 						&:focus{
 							background-color: white;
 							height: 105px;
+							width: -webkit-fill-available;
 						}
 					}
 					button.save{

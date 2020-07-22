@@ -1,11 +1,12 @@
 <template>
 	<section class="card-attachments">
+		<i class="el-icon-paperclip"></i>
+		<h2>Attachments</h2>
 		<ul>
 			<li v-for="attachment in attachments" :key="attachment.imgUrl">
-				<div>
-					<label for="image"><i class="el-icon-paperclip"></i> Image</label>
-					<button @click="removeAttachment(attachment)">X</button>
-				</div>
+				<button @click="removeAttachment(attachment)">
+					<i class="el-icon-delete"></i>
+				</button>
 				<img id="image" :src="attachment.imgUrl" />
 			</li>
 		</ul>
@@ -45,17 +46,5 @@ export default {
 </script>
 
 <style lang="scss">
-.card-attachments {
-	img {
-		width: 250px;
-	}
-	li {
-		display: flex;
-		flex-direction: column;
-	}
-	div {
-		display: flex;
-		justify-content: space-between;
-	}
-}
+
 </style>

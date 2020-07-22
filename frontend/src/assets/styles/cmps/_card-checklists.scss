@@ -1,0 +1,88 @@
+.card-checklists{
+    
+    .checklists{
+        position: relative;
+        &:hover{
+            button.remove-checklist{
+                display: inline-block;
+            }
+        }
+        i.el-icon-finished{
+            font-size: 22px;
+            font-weight: 500;
+            display: inline-block;
+            margin-right: 1px;
+            &::before{
+                vertical-align: middle;
+            }
+            
+        }
+        input.checklist-name {
+            line-height: rem(20px);
+            font-size: rem(16px);
+            font-weight: 600;
+            margin: 0 0 2px 6px;
+            padding: 5px 12px 5px 6px;
+            width: 100%;
+            cursor: text;
+            &:focus{
+                background-color: white;
+            }
+            &:hover{
+                button{
+                    display: inline-block;
+                }
+            }
+            // margin-left: 35px;
+        }
+        li{
+            margin-left: 35px;
+            &:hover{
+                background-color:rgba(9, 30, 66, 0.04);
+                button{
+                    display: inline-block;
+                }
+            }
+        }
+        input {
+            font-size: rem(14px);
+            color: #172b4d;
+            background-color: transparent;
+			cursor: pointer;
+            font-family: inherit;
+            border: none;
+            margin-right: 7px;
+        }
+        input[type=checkbox]{
+            margin: 0 7px 10px 0;
+        }
+        button{
+            position: absolute;
+            right: 0;
+            display: none;
+            font-size: rem(16px);
+            color: inherit;
+        }
+        .add-task{
+            margin: 0 0 5px 35px;
+            background-color: rgba(9,30,66,.04);
+            padding: 6px 12px;
+            width: 100px;
+            ::placeholder {
+                
+            }
+            &:focus{
+                background-color: white;
+                width: -webkit-fill-available;
+                cursor: text;
+            }
+            &:hover{
+                background-color: rgba(9,30,66,.08);
+            }
+        }
+        input.add-task::placeholder{
+            color: #172b4d;
+        }
+
+    }
+}
