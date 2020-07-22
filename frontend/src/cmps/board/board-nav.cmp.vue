@@ -57,10 +57,7 @@ export default {
         },
         toggleUserList() {
             this.$emit('toggleUserList');
-        },
-        // addMember(userId) {
-        //     this.$emit('addMember', userId);
-        // }
+        }
     },
     created(){
 

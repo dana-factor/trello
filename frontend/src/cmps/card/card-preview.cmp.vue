@@ -100,7 +100,7 @@ export default {
 			this.$emit('removeCard', this.card.id)
 		}
 	},
-	created() { console.log(this.card.members)},
+	created() {},
 	components: {
 		Avatar
 	}
