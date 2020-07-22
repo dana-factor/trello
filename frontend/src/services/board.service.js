@@ -59,10 +59,14 @@ function removeChecklistTask(card, checklistId, taskId) {
 // 	});
 // }
 function getStarterBoard() {
+	// var board = {};
+	var user = JSON.parse(sessionStorage.getItem('user'));
+	var guestId = _makeId();
+	if (!user) user = { fullName: 'Guest', '_id': guestId };
 	return {
 		// _id: _makeId(),
 		name: 'New Board',
-		members: [],
+		members: [user],
 		// green #519839
 		// yellow #d9b51c
 		// orange #ff9f1a
@@ -100,7 +104,7 @@ function getStarterBoard() {
 			backgroundColor: 'lightblue',
 			imgUrl: '',
 		},
-		creatorId: '',
+		creatorId: user._id,
 		description: '',
 		topics: [
 			{
@@ -264,6 +268,12 @@ function _update(board, activity) {
 }
 
 function _add(board) {
+	// var user = sessionStorage.getItem('user');
+	// board.creatorId = user._id;
+	// if (!user) user = { fullName: 'Guest' };
+	// console.log(user)
+	// board.members.push(user);
+	// console.log(board.members)
 	return httpService.post(`board/`, board).then((board) => board);
 }
 function getCardById(board, id) {

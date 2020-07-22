@@ -5,14 +5,14 @@ export const userService = {
 	logout,
 	signup,
 	getUsers,
-	// getById,
+	getById,
 	// remove,
 	// update,
 };
 
-// function getById(userId) {
-// 	return httpService.get(`user/${userId}`);
-// }
+function getById(userId) {
+	return httpService.get(`user/${userId}`);
+}
 // function remove(userId) {
 // 	return httpService.delete(`user/${userId}`);
 // }
