@@ -13,7 +13,7 @@
 			</button>
 			<ul>
 				<li v-for="task in checklist.tasks" :key="task.id">
-					<input type="checkbox" v-model="task.isDone" @change="$emit('dispatchBoardSave')" />
+					<input type="checkbox" v-model="task.isDone" @change="updateChecklists" />
 					<input
 						v-model="task.text"
 						@blur="updateChecklists"
