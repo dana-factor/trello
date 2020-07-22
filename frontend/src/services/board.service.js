@@ -75,11 +75,11 @@ function getStarterBoard() {
 		// blue #0079bf
 		labels: [
 			{
-				color: '#519839',
+				color: '#61bd4f',
 				title: '',
 			},
 			{
-				color: '#d9b51c',
+				color: '#f2d600',
 				title: '',
 			},
 			{
@@ -87,7 +87,7 @@ function getStarterBoard() {
 				title: '',
 			},
 			{
-				color: '#b04632',
+				color: '#eb5a46',
 				title: '',
 			},
 			{
