@@ -37,7 +37,6 @@
 			<p v-if="card.attachments.length">
 				<i class="el-icon-paperclip"></i>
 			</p>
-			<!-- <p > -->
 				<ul v-if="card.members.length" class="members-preview">
 							<li
 								v-for="member in card.members"
@@ -45,7 +44,6 @@
 								:title="member.fullName"
 							><avatar :src="member.imgUrl" :username="member.fullName" :size="25" /></li>
 						</ul>
-			<!-- </p> -->
 		</router-link>
 	</section>
 </template>

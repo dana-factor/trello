@@ -141,6 +141,13 @@
 								font-weight: 500;
 								margin: 0 6px;
 							}
+							i {
+								margin-left: 10px;
+								cursor: pointer;
+							}
+							&:hover{
+								color: black;
+							}
 							.card-status {
 								text-transform: uppercase;
 								font-size: rem(12px);

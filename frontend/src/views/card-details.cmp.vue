@@ -39,6 +39,7 @@
 							<div class="due-date-info">
 								<input type="checkbox" v-model="card.isCardDone" @change="dispatchBoardSave('has marked as done')"/>
 								<p> {{ dueDateToShow}} </p><span class="card-status completed" v-if="card.isCardDone">complete</span><span  class="card-status overdue" v-if="isOverdue">overdue</span>
+							<i class="el-icon-delete" @click="removeDueDate"></i>
 							</div>
 						</div>
 					</div>
@@ -205,7 +206,13 @@ export default {
 		},
 		saveDueDate(date) {
 			this.card.dueDate = date;
-			this.card.isCardDone = true;
+			this.card.isCardDone = false;
+			this.editModal = '';
+			this.dispatchBoardSave('has updated the due date to ' + moment(date).format('DD.MM.YY h:mm'));
+		},
+		removeDueDate() {
+			this.card.dueDate = null;
+			this.card.isCardDone = false;
 			this.dispatchBoardSave('has updated the due date to ' + moment(date).format('DD.MM.YY h:mm'));
 		},
 		async addMember(userId) {
