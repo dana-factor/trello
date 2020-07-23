@@ -2,6 +2,7 @@
 	<section class="activities">
 		<div>
 			<div class="activity" v-for="activity in activitiesToShow" :key="activity.createdAt">
+				<avatar :src="activity.user.imgUrl" :username="activity.user.fullName" :lighten="100" :size="28" />
 				<p><span>{{activity.user.fullName}}</span> {{activity.text}}</p>
 				<p class="time">{{activity.createdAt | timeSince}}</p>
 			</div>
@@ -11,6 +12,7 @@
 
 <script>
 import moment from 'moment';
+import Avatar from 'vue-avatar'
 export default {
 	props: ['activities'],
 	computed: {
@@ -22,6 +24,9 @@ export default {
 		timeSince(timestamp) {
 			return moment(timestamp).fromNow()
 		}
+	},
+	components: {
+		Avatar
 	}
 }
 </script>
