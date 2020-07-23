@@ -8,6 +8,27 @@
 	overflow: hidden;
 	white-space: break-spaces;
 	// transition: .2s ease-in;
+	.card-label {
+		border-radius: 4px;
+		overflow: hidden;
+		height: 8px;
+		width: 40px;
+		margin: 0 4px 4px 0;
+		display: inline-block;
+		transition: 0.2s ease-in;
+		.label-title {
+			color: white;
+			padding: 0 4px;
+			text-align: center;
+			vertical-align: super;
+			font-size: 12px;
+			line-height: 16px;
+			font-weight: 700;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			width: 100%;
+		}
+	}
 	h2 {
 		display: block;
 		margin-bottom: 4px;
@@ -48,49 +69,39 @@
 			-webkit-app-region: no-drag;
 		}
 	}
-	p {
-		margin-right: 10px;
-		color: #6b778c;
-		font-size: rem(14px);
-	}
-	.members-preview {
+	.card-footer {
 		display: flex;
-		justify-content: flex-end;
-		li {
-			margin: 2px;
+		justify-content: space-between;
+		align-items: center;
+		.card-badges {
+			p {
+				margin-right: 10px;
+				color: #6b778c;
+				font-size: rem(14px);
+				height: 100%;
+			}
+			.card-status {
+				padding: 2px;
+				border-radius: 3px;
+				margin: 0 8px 4px 0;
+				&.completed {
+					background-color: #61bd4f;
+					color: white;
+				}
+				&.overdue {
+					background-color: #ec9488;
+					color: white;
+				}
+			}
 		}
-	}
-	.card-label {
-		border-radius: 4px;
-		overflow: hidden;
-		height: 8px;
-		width: 40px;
-		margin: 0 4px 4px 0;
-		display: inline-block;
-		transition: 0.2s ease-in;
-		.label-title {
-			color: white;
-			padding: 0 4px;
-			text-align: center;
-			vertical-align: super;
-			font-size: 12px;
-			line-height: 16px;
-			font-weight: 700;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			width: 100%;
-		}
-	}
-	.card-status {
-		padding: 2px;
-		border-radius: 3px;
-		&.completed {
-			background-color: #61bd4f;
-			color: white;
-		}
-		&.overdue {
-			background-color: #ec9488;
-			color: white;
+		.members-preview {
+			float: right;
+			margin-bottom: 2px;
+			li {
+				margin: 2px;
+				display: inline-block;
+				vertical-align: middle;
+			}
 		}
 	}
 }
