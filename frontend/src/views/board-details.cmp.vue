@@ -21,7 +21,7 @@
 			<h4>Invite to Board </h4>
 			<i class="el-icon-close" @click="isUserListOpen = false"></i>
 			<app-filter @filterSet="searchMember"/>
-            <user-list :users="filteredUsers" @toggleMember="toggleMember"/>
+            <user-list :users="filteredUsers" :memberOf="board" @toggleMember="toggleMember"/>
         </div>
 		<div v-if="isDeleteModalOpen" class="delete-modal">
 			<h5>Are you sure you want to delete this board?</h5>
