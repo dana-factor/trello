@@ -1,12 +1,12 @@
 <template>
 	<section class="activities">
-		<div>
 			<div class="activity" v-for="activity in activitiesToShow" :key="activity.createdAt">
 				<avatar :src="activity.user.imgUrl" :username="activity.user.fullName" :lighten="100" :size="28" />
-				<p><span>{{activity.user.fullName}}</span> {{activity.text}}</p>
-				<p class="time">{{activity.createdAt | timeSince}}</p>
+				<div class="content">
+					<p><span>{{activity.user.fullName}}</span> {{activity.text}}</p>
+					<p class="time">{{activity.createdAt | timeSince}}</p>
+				</div>
 			</div>
-		</div>
 	</section>
 </template>
 
