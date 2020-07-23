@@ -1,7 +1,7 @@
 <template>
     <section class="card-member-edit">
 			<app-filter @filterSet="searchMember"/>
-            <user-list v-if="filteredUsers" :users="filteredUsers" @addMember="addMember"/>
+            <user-list v-if="filteredUsers" :users="filteredUsers" @toggleMember="toggleMember"/>
     </section>
 </template>
 
@@ -20,7 +20,6 @@ export default {
     },
     methods: {
         searchMember(filterBy) {
-            console.log(filterBy)
             const exp = new RegExp(`.*${filterBy.searchStr}.*`, 'i');
 			const filteredUsers = this.members.filter(user => {
                 if (user.fullName === 'Guest') return false;
@@ -28,8 +27,8 @@ export default {
 			})
 			this.filteredUsers = filteredUsers;
         },
-        addMember(userId) {
-            this.$emit('addMember', userId);
+        toggleMember(userId) {
+            this.$emit('toggleMember', userId);
         }
 
     },

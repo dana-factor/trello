@@ -8,7 +8,7 @@
 		</div>
 		<div class="board-menu-nav">
 			<h5 @click="toggleCmp('board-edit-background')">Change Background</h5>
-			<h5 @click="toggleCmp('date-picker')">Change Due Date</h5>
+			<!-- <h5 @click="toggleCmp('date-picker')">Change Due Date</h5> -->
 			<h5 @click="toggleDeleteModal">Delete Board</h5>
 		</div>
 		<div>
