@@ -59,7 +59,11 @@
 						@checklistTaskRemoved="removeChecklistTask"
 						@checklistsUpdated="updateChecklists"
 					/>
-					<activities :activities="activities"/>
+					<div class="activities-container">
+						<i class="el-icon-notebook-1"></i>
+						<h2>Activities</h2>
+						<activities :activities="activities"/>
+					</div>
 				</div>
 				<div class="right-side">
 					<button @click="toggleModal('card-label-edit')">
