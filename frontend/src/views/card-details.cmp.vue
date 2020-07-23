@@ -1,6 +1,6 @@
 <template>
 	<section class="card-details-screen" @mousedown.self="$router.push('../')">
-		<div class="card-details" v-if="card" @mousedown="closeModal">
+		<div class="card-details" v-if="card" @mousedown="closeModal" :style="{backgroundColor: card.backgroundColor}">
 			<div class="header">
 				<i class="el-icon-postcard"></i>
 				<h1
@@ -83,6 +83,9 @@
 						<input type="file" @change="onUploadImg" />
 						<i class="el-icon-user"></i> Add Image
 					</button>
+					<button @click="toggleModal('card-background-edit')">
+						<i class="el-icon-brush"></i> Background Color
+					</button>
 				</div>
 			</div>
 			<card-edit-modal v-if="editModal" @modalClose="closeModal">
@@ -99,6 +102,7 @@
 					@newChecklist="addNewChecklist"
 					@saveDueDate="saveDueDate"
 					@toggleMember="toggleMember"
+					@setBgc="setBgc"
 				></component>
 			</card-edit-modal>
 		</div>
@@ -117,6 +121,7 @@ import cardAttachments from '../cmps/card/card-attachments.cmp';
 import cardChecklists from '../cmps/card/card-checklists.cmp';
 import cardDueEdit from '../cmps/card/card-due-edit.cmp';
 import cardMemberEdit from '../cmps/card/card-member-edit.cmp';
+import cardBackgroundEdit from '../cmps/card/card-background-edit.cmp';
 import activities from '../cmps/activities.cmp';
 import Avatar from 'vue-avatar';
 import moment from 'moment';
@@ -129,7 +134,7 @@ export default {
 			card: null,
 			cardId: 0,
 			editModal: '',
-			isDescriptionSaveShown: false			
+			isDescriptionSaveShown: false		
 		};
 	},
 	computed: {
@@ -225,6 +230,11 @@ export default {
 			this.card.isCardDone = false;
 			this.dispatchBoardSave('has deleted the due date');
 		},
+		setBgc(color) {
+			this.card.backgroundColor = color;
+			this.closeModal();
+			this.dispatchBoardSave('has changed the background color');
+		},
 		async toggleMember(userId) {
 			// remove member
 			if (this.card.members.find(member => member._id === userId)) {
@@ -272,7 +282,8 @@ export default {
 		cardDueEdit,
 		activities,
 		cardMemberEdit,
-		Avatar
+		Avatar,
+		cardBackgroundEdit
 	}
 };
 </script>

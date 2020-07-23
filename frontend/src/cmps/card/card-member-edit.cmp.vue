@@ -1,7 +1,7 @@
 <template>
     <section class="card-member-edit">
 			<app-filter @filterSet="searchMember"/>
-            <user-list v-if="filteredUsers" :users="filteredUsers" @toggleMember="toggleMember"/>
+            <user-list v-if="filteredUsers" :users="filteredUsers" :memberOf="card" @toggleMember="toggleMember"/>
     </section>
 </template>
 
@@ -9,7 +9,7 @@
 import appFilter from '../app-filter.cmp.vue';
 import userList from '../user-list.cmp.vue';
 export default {
-    props:['members'],
+    props:['members', 'card'],
     data(){
         return{
             filteredUsers: []
