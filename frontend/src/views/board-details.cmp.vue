@@ -5,6 +5,9 @@
 		@click="isFilterModalOpen=false; isFilterInputShown=false;"
 	>
 	<div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
+	<div class="dashboard-modal" v-if="isDashboardOpen">
+		<dashboard :board="board" />
+	</div>
 		<board-nav @filterSet="setFilter" :filteredTopics="filteredTopics" :isFilterModalOpen="isFilterModalOpen" @openFilterModal="isFilterModalOpen=true" :isFilterInputShown="isFilterInputShown" @showFilterInput="isFilterInputShown=true" @toggleUserList="toggleUserList" :users="users" :members="board.members">
 			<h2
 				class="board-name"
@@ -13,6 +16,9 @@
 				@keypress.enter.prevent="updateBoardName"
 				@blur="updateBoardName"
 			>{{board.name}}</h2>
+			<button class="dashboard-btn" @click="isDashboardOpen = !isDashboardOpen">
+				<i class="el-icon-s-data"></i>
+			</button>
 			<button class="menu-btn" @click="toggleBoardMenu">
 				<i class="el-icon-s-operation"></i>
 			</button>
@@ -99,6 +105,7 @@ import cardDetails from "../views/card-details.cmp.vue";
 import boardEdit from "../cmps/board/board-edit.cmp.vue";
 import userList from '../cmps/user-list.cmp';
 import appFilter from '../cmps/app-filter.cmp';
+import dashboard from '../cmps/board/dashboard.cmp';
 
 export default {
 	props: [],
@@ -119,7 +126,8 @@ export default {
 			isFilterModalOpen: false,
 			isFilterInputShown: false,
 			isUserListOpen: false,
-			filteredUsers: []
+			filteredUsers: [],
+			isDashboardOpen: false
 		};
 	},
 	computed: {
@@ -350,7 +358,8 @@ export default {
 		Container,
 		boardEdit,
 		userList,
-		appFilter
+		appFilter,
+		dashboard
 	}
 };
 </script>

@@ -1,0 +1,18 @@
+.dashboard {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0;
+}
+
+.dashboard-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 90vw;
+    height: 80vh;
+    margin-top: -40vh; /* Negative half of height. */
+    margin-left: -45vw; /* Negative half of width. */
+    background-color: white;
+    z-index: 10;
+    overflow-y: auto;
+}
