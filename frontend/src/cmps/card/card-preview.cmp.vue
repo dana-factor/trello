@@ -16,44 +16,46 @@
 			</div>
 			<h2>{{card.name}}</h2>
 			<!-- <div class="card-img" v-if="hasImg"> -->
-				<!-- v-for="attachment in card.attachments" :key="attachment.imgUrl" -->
-				<img class="card-img" v-if="hasImg" :src="card.attachments[0].imgUrl" />
+			<!-- v-for="attachment in card.attachments" :key="attachment.imgUrl" -->
+			<img class="card-img" v-if="hasImg" :src="card.attachments[0].imgUrl" />
 			<!-- </div> -->
-			<p
-				v-if="card.dueDate"
-				class="card-status"
-				:class="{overdue: isOverdue, completed: card.isCardDone}"
-			>
-				<i class="el-icon-time"></i>
-				<span>{{ dueDateShort }}</span>
-			</p>
-			<p v-if="card.description">
-				<i class="el-icon-document"></i>
-			</p>
-			<p v-if="card.checklists.length">
-				<i class="el-icon-finished"></i>
-				{{checklistCount}}
-			</p>
-			<p v-if="card.attachments.length">
-				<i class="el-icon-paperclip"></i>
-			</p>
+			<div class="card-footer">
+				<div class="card-badges">
+					<p
+						v-if="card.dueDate"
+						class="card-status"
+						:class="{overdue: isOverdue, completed: card.isCardDone}"
+					>
+						<i class="el-icon-time"></i>
+						<span>{{ dueDateShort }}</span>
+					</p>
+					<p v-if="card.description">
+						<i class="el-icon-document"></i>
+					</p>
+					<p v-if="card.checklists.length">
+						<i class="el-icon-finished"></i>
+						{{checklistCount}}
+					</p>
+					<p v-if="card.attachments.length">
+						<i class="el-icon-paperclip"></i>
+					</p>
+				</div>
 				<ul v-if="card.members.length" class="members-preview">
-							<li
-								v-for="member in card.members"
-								:key="member._id"
-								:title="member.fullName"
-							><avatar :src="member.imgUrl" :username="member.fullName" :size="28" /></li>
-						</ul>
+					<li v-for="member in card.members" :key="member._id" :title="member.fullName">
+						<avatar :src="member.imgUrl" :username="member.fullName" :size="28" />
+					</li>
+				</ul>
+			</div>
 		</router-link>
 	</section>
 </template>
 
 <script>
-import { utilService } from '../../services/util.service.js';
-import Avatar from 'vue-avatar';
+import { utilService } from "../../services/util.service.js";
+import Avatar from "vue-avatar";
 
 export default {
-	props: ['card', 'boardLabels'],
+	props: ["card", "boardLabels"],
 	data() {
 		return {
 			isLabelTitleShown: false
@@ -61,13 +63,25 @@ export default {
 	},
 	computed: {
 		checklistCount() {
-			const tasksCount = this.card.checklists.reduce((enteries, checklist) => enteries += checklist.tasks.length, 0);
-			if (!tasksCount) return '';
-			return this.card.checklists.reduce(
-				(doneEnteries, checklist) => doneEnteries + checklist.tasks.reduce(
-					(doneEnteriesInTask, task) => task.isDone ? doneEnteriesInTask + 1 : doneEnteriesInTask
-					, 0), 0) +
-				'/' + tasksCount
+			const tasksCount = this.card.checklists.reduce(
+				(enteries, checklist) => (enteries += checklist.tasks.length),
+				0
+			);
+			if (!tasksCount) return "";
+			return (
+				this.card.checklists.reduce(
+					(doneEnteries, checklist) =>
+						doneEnteries +
+						checklist.tasks.reduce(
+							(doneEnteriesInTask, task) =>
+								task.isDone ? doneEnteriesInTask + 1 : doneEnteriesInTask,
+							0
+						),
+					0
+				) +
+				"/" +
+				tasksCount
+			);
 		},
 		labels() {
 			let labelsToShow = [];
@@ -77,10 +91,10 @@ export default {
 			return labelsToShow;
 		},
 		labelHeight() {
-			return (this.isLabelTitleShown) ? '16px' : '8px'
+			return this.isLabelTitleShown ? "16px" : "8px";
 		},
 		labelWidth() {
-			return (this.isLabelTitleShown) ? '56px' : '40px'
+			return this.isLabelTitleShown ? "56px" : "40px";
 		},
 		dueDateShort() {
 			return utilService.getDateShort(this.card.dueDate);
@@ -97,7 +111,7 @@ export default {
 	},
 	methods: {
 		removeCard() {
-			this.$emit('removeCard', this.card.id)
+			this.$emit("removeCard", this.card.id);
 		}
 	},
 	created() {},
