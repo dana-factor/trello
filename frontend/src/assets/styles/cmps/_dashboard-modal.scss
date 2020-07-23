@@ -1,7 +1,13 @@
-.dashboard {
+.charts {
     display: flex;
     justify-content: space-evenly;
     margin: 0;
+    text-align: center;
+    h2 {
+        font-weight: bold;
+        margin: 20px;
+        font-size: 20px;
+    }
 }
 
 .dashboard-modal {
@@ -15,4 +21,5 @@
     background-color: white;
     z-index: 10;
     overflow-y: auto;
+    border-radius: 3px;
 }

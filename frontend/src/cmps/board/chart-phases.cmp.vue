@@ -26,11 +26,17 @@ export default {
       datasets: [
         {
           label: 'Cards per Phase',
-          backgroundColor: ['#6B4C9A', '#948B3D', '#396AB1', '#DA7C30', '#3E9651', '#CC2529', '#535154', '#922428'],
+          backgroundColor: ['#6B4C9A','#396AB1', '#DA7C30', '#CC2529', '#535154', '#922428', '#948B3D', '#3E9651'],
           data: this.data
         }
       ]
-    })
+    },
+    {
+      legend: {
+        display: true
+      }
+    }
+    )
 
     }
 

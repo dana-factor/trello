@@ -1,5 +1,11 @@
 <template>
 	<section class="dashboard">
+        <div class="facts">
+            <div>
+                <i class="el-icon-user"></i>
+            </div>
+        </div>
+        <div class="charts">
 		<div>
 			<h2>Cards per Phase </h2>
 			<chart-phases
@@ -12,7 +18,7 @@
 			<h2>Cards per Member </h2>
 			<chart-members class="chart chart-members" :labels="members" :data="numsOfCardsPerMember"/>
 		</div>
-
+        </div>
 	</section>
 </template>
 
@@ -23,8 +29,6 @@ export default {
 	props: ["board"],
 	data() {
 		return {
-			// topicNames: this.board.topics.map(topic => topic.name),
-			// numOfCardsPerTopic: this.board.topics.map(topic => topic.cards.length),
 		};
 	},
 	computed: {
@@ -52,7 +56,6 @@ export default {
 	methods: {},
 	created() {},
 	mounted() {
-		console.log(this.numsOfCardsPerMember);
 	},
 	watch: {},
 	components: {
