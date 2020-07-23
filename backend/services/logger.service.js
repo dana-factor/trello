@@ -20,7 +20,7 @@ function doLog(line, level='Debug') {
 
 module.exports = {
     debug(line){
-        doLog(line, "Debug")
+        // doLog(line, "Debug")
     },
     info(line){
         doLog(line, "Info")

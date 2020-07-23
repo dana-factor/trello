@@ -1,13 +1,13 @@
 <template>
 	<section class="card-details-screen" @mousedown.self="$router.push('../')">
-		<div class="card-details" v-if="card" @mousedown="closeModal" >
+		<div class="card-details" v-if="card" @mousedown="closeModal">
 			<div class="header">
 				<i class="el-icon-postcard"></i>
 				<h1
 					@keypress.enter.prevent="updateCardName; $event.target.blur()"
 					@blur="updateCardName"
 					contenteditable
-				> {{card.name}}</h1>
+				>{{card.name}}</h1>
 				<router-link to="../">
 					<i class="el-icon-close"></i>
 				</router-link>
@@ -16,15 +16,17 @@
 				<div class="left-side">
 					<div class="members-labels-due">
 						<div v-if="card.members.length">
-						<h3 >Members</h3>
-						<ul>
-							<li
-								v-for="member in card.members"
-								:key="member._id"
-								:title="member.fullName"
-								class="card-members"
-							><avatar :src="member.imgUrl" :username="member.fullName" :size="25" /></li>
-						</ul>
+							<h3>Members</h3>
+							<ul>
+								<li
+									v-for="member in card.members"
+									:key="member._id"
+									:title="member.fullName"
+									class="card-members"
+								>
+									<avatar :src="member.imgUrl" :username="member.fullName" :size="25" />
+								</li>
+							</ul>
 						</div>
 						<h3 v-if="labels.length">Labels</h3>
 						<ul>
@@ -37,23 +39,41 @@
 						<div v-if="card.dueDate" class="due-date-container">
 							<h3>Due Date</h3>
 							<div class="due-date-info">
-								<input type="checkbox" v-model="card.isCardDone" @change="dispatchBoardSave('has marked as done')"/>
-								<p> {{ dueDateToShow}} </p><span class="card-status completed" v-if="card.isCardDone">complete</span><span  class="card-status overdue" v-if="isOverdue">overdue</span>
-							<i class="el-icon-delete" @click="removeDueDate"></i>
+								<input
+									type="checkbox"
+									v-model="card.isCardDone"
+									@change="dispatchBoardSave('marked as done')"
+								/>
+								<p>{{ dueDateToShow}}</p>
+								<span class="card-status completed" v-if="card.isCardDone">complete</span>
+								<span class="card-status overdue" v-if="isOverdue">overdue</span>
+								<i class="el-icon-delete" @click="removeDueDate"></i>
 							</div>
 						</div>
 					</div>
 					<div class="description">
 						<i class="el-icon-document"></i>
 						<h2>Description</h2>
-						<textarea v-model="card.description" @input="isDescriptionSaveShown = true" placeholder="Add a more detailed description..."></textarea>
-						<button v-if="isDescriptionSaveShown" @click="dispatchBoardSave('has updated the description'); isDescriptionSaveShown=false" class="save">Save</button>
-						<button v-if="isDescriptionSaveShown" @click="card.description = ''; isDescriptionSaveShown=false"><i class="el-icon-close"></i></button>
+						<textarea
+							v-model="card.description"
+							@input="isDescriptionSaveShown = true"
+							placeholder="Add a more detailed description..."
+						></textarea>
+						<button
+							v-if="isDescriptionSaveShown"
+							@click="dispatchBoardSave('updated the description'); isDescriptionSaveShown=false"
+							class="save"
+						>Save</button>
+						<button
+							v-if="isDescriptionSaveShown"
+							@click="card.description = ''; isDescriptionSaveShown=false"
+						>
+							<i class="el-icon-close"></i>
+						</button>
 					</div>
 					<card-attachments :attachments="card.attachments" @attachmentRemoved="removeAttachment" />
 					<card-checklists
 						:checklists="card.checklists"
-						@dispatchBoardSave="dispatchBoardSave"
 						@newChecklistTaskAdded="addNewChecklistTask"
 						@checklistRemoved="removeChecklist"
 						@checklistTaskRemoved="removeChecklistTask"
@@ -62,7 +82,8 @@
 					<div class="activities-container">
 						<i class="el-icon-notebook-1"></i>
 						<h2>Activities</h2>
-						<activities :activities="activities"/>
+						<input v-model="comment" @keypress.enter="addComment" />
+						<activities :activities="activities" isShowInCard="false" />
 					</div>
 				</div>
 				<div class="right-side">
@@ -134,7 +155,8 @@ export default {
 			card: null,
 			cardId: 0,
 			editModal: '',
-			isDescriptionSaveShown: false		
+			isDescriptionSaveShown: false,
+			comment: ''
 		};
 	},
 	computed: {
@@ -158,7 +180,7 @@ export default {
 			if (this.card.isCardDone) return;
 			return this.card.dueDate < Date.now();
 		},
-		activities(){
+		activities() {
 			return this.board.activities.filter(activity => activity.cardId === this.card.id)
 		}
 	},
@@ -173,7 +195,7 @@ export default {
 		// },
 		updateCardName(ev) {
 			this.card.name = ev.target.innerText;
-			this.dispatchBoardSave('has updated a card name');
+			this.dispatchBoardSave('updated a card name');
 		},
 		// updateCard(card) {
 		// 	boardService.saveCardToBoard(this.board, card);
@@ -181,54 +203,54 @@ export default {
 		// },
 		updateBoardLabels(labelToUpdate) {
 			boardService.updateBoardLabel(this.boardToUpdate, labelToUpdate);
-			this.dispatchBoardSave('has updated a label\'s color');
+			this.dispatchBoardSave('updated a label\'s color');
 		},
 		addNewChecklist(name) {
 			let checklist = boardService.getStarterChecklist();
 			checklist.name = name;
 			this.card.checklists.push(checklist);
-			this.dispatchBoardSave('has added a new checklist');
+			this.dispatchBoardSave('added a new checklist');
 		},
 		addNewChecklistTask(checklistId, text) {
 			let task = boardService.getStarterChecklistTask();
 			let checklist = this.card.checklists.find(checklistToFind => checklistId === checklistToFind.id)
 			task.text = text;
 			checklist.tasks.push(task);
-			this.dispatchBoardSave('has added a new checklist task');
+			this.dispatchBoardSave('added a new checklist task');
 		},
 		removeChecklist(checklistId) {
 			boardService.removeChecklist(this.card, checklistId);
-			this.dispatchBoardSave('has removed a checklist');
+			this.dispatchBoardSave('removed a checklist');
 		},
 		removeChecklistTask(checklistId, taskId) {
 			boardService.removeChecklistTask(this.card, checklistId, taskId);
-			this.dispatchBoardSave('has removed a checklist task');
+			this.dispatchBoardSave('removed a checklist task');
 		},
 		updateChecklists(checklists) {
 			this.card.checklists = checklists;
-			this.dispatchBoardSave('has updated a checklist');
+			this.dispatchBoardSave('updated a checklist');
 		},
 		toggleLabel(label) {
 			let currLabels = this.card.labels;
 			if (currLabels.includes(label)) currLabels.splice(currLabels.indexOf(label), 1)
 			else currLabels.push(label);
-			this.dispatchBoardSave('has toggled a label');
+			this.dispatchBoardSave('toggled a label');
 		},
 		removeAttachment(attachment) {
 			//kinda temp idk
 			this.card.attachments.splice(this.card.attachments.indexOf(attachment), 1);
-			this.dispatchBoardSave('has removed an attachment');
+			this.dispatchBoardSave('removed an attachment');
 		},
 		saveDueDate(date) {
 			this.card.dueDate = date;
 			this.card.isCardDone = false;
 			this.closeModal();
-			this.dispatchBoardSave('has updated the due date to ' + moment(date).format('DD.MM.YY h:mm'));
+			this.dispatchBoardSave('updated the due date to ' + moment(date).format('DD.MM.YY h:mm'));
 		},
 		removeDueDate() {
 			this.card.dueDate = null;
 			this.card.isCardDone = false;
-			this.dispatchBoardSave('has deleted the due date');
+			this.dispatchBoardSave('deleted the due date');
 		},
 		setBgc(color) {
 			this.card.backgroundColor = color;
@@ -243,14 +265,14 @@ export default {
 				this.card.members.splice(idx, 1);
 				this.dispatchBoardSave('has removed ' + name + ' as a member');
 			} else {
-			// add member
-			const user = await userService.getById(userId);
-			this.card.members.push(user);
-			this.dispatchBoardSave('has added ' + user.fullName + ' as a member');
+				// add member
+				const user = await userService.getById(userId);
+				this.card.members.push(user);
+				this.dispatchBoardSave('added' + user.fullName + 'as a member');
 			}
 		},
-		dispatchBoardSave(action) {
-			this.$store.dispatch({ type: 'saveBoard', board: this.boardToUpdate, activity: { text: action + ' in card ' + this.card.name, cardId: this.card.id } });
+		dispatchBoardSave(action, isComment = false) {
+			this.$store.dispatch({ type: 'saveBoard', board: this.boardToUpdate, activity: { text: action + ' in card ' + this.card.name, cardId: this.card.id, isComment: !!isComment } });
 		},
 		toggleModal(cmpName) {
 			if (this.editModal === cmpName) this.closeModal()
@@ -259,10 +281,14 @@ export default {
 		async onUploadImg(ev) {
 			const res = await uploadImg(ev);
 			this.card.attachments.push({ imgUrl: res.url });
-			this.dispatchBoardSave('has added an image');
+			this.dispatchBoardSave('added an image');
 		},
 		closeModal() {
 			this.editModal = '';
+		},
+		addComment() {
+			this.dispatchBoardSave(`${this.comment}`, true);
+			this.comment = '';
 		}
 	},
 	async created() {
@@ -272,6 +298,13 @@ export default {
 			JSON.stringify(this.board));
 		this.card = boardService.getCardById(this.boardToUpdate, this.cardId);
 		if (!this.card) this.$router.push('/404');
+	},
+	watch: {
+		board(value) {
+			this.boardToUpdate = JSON.parse(
+				JSON.stringify(value));
+			this.card = boardService.getCardById(this.boardToUpdate, this.cardId);
+		}
 	},
 	components: {
 		cardEditModal,

@@ -84,7 +84,7 @@
 				</div>
 			</div>
 		</Container>
-		<router-view :board="board" />
+		<router-view :board="boardGetter" />
 	</section>
 </template>
 
@@ -143,7 +143,7 @@ export default {
         },
 		updateBoardName(ev) {
 			if (ev.target.innerText) this.board.name = ev.target.innerText;
-			this.saveBoard('has updated board name')
+			this.saveBoard('updated board name')
 		},
 		async toggleMember(userId) {
 			// remove member
@@ -151,12 +151,12 @@ export default {
 				const idx = this.board.members.findIndex(member => member._id === userId);
 				const name = this.board.members[idx].fullName; // keep the name for the action-txt before the splice
 				this.board.members.splice(idx, 1);
-				this.saveBoard('has removed ' + name + ' as a member')
+				this.saveBoard('removed ' + name + ' as a member')
 			} else {
 			// add member
 				const user = await userService.getById(userId);
 				this.board.members.unshift(user);
-				this.saveBoard('has added ' + user.fullName + ' as a member');
+				this.saveBoard('added ' + user.fullName + ' as a member');
 			}
 
 		},
@@ -221,13 +221,13 @@ export default {
 		setBgc(color) {
 			this.board.style.backgroundColor = color;
 			this.board.style.imgUrl = '';
-			this.saveBoard('has changed the background color');
+			this.saveBoard('changed the background color');
 			this.$emit('setBgc', color);
 		},
 		setBgImg(imgUrl) {
 			this.board.style.imgUrl = imgUrl;
 			this.board.style.backgroundColor = '';
-			this.saveBoard('has changed the background image');
+			this.saveBoard('changed the background image');
 			this.$emit('setBgImg', imgUrl);
 		},
 		removeBoard(boardId) {
@@ -240,7 +240,7 @@ export default {
 				topic => topic.id === topicId
 			);
 			currTopic.name = topicName;
-			this.saveBoard('has updated a topic');
+			this.saveBoard('updated a topic');
 		},
 		addCard(topicId, cardName) {
 			const starterCard = boardService.getStarterCard(cardName);
@@ -248,7 +248,7 @@ export default {
 				topic => topic.id === topicId
 			);
 			currTopic.cards.push(starterCard);
-			this.saveBoard('has added a card');
+			this.saveBoard('added a card');
 		},
 		async removeCard(cardId, topicId) {
 			const topicIdx = this.board.topics.findIndex(
@@ -264,13 +264,13 @@ export default {
 				topic => topic.id === topicId
 			);
 			this.board.topics.splice(idx, 1);
-			this.saveBoard('has removed a topic');
+			this.saveBoard('removed a topic');
 		},
 		addTopic() {
 			const starterTopic = boardService.getStarterTopic(this.topicName);
 			this.topicNameInputOpen = false;
 			this.board.topics.push(starterTopic);
-			this.saveBoard('has added a topic');
+			this.saveBoard('added a topic');
 		},
 		saveBoard(action) {
 			if (!this.board) return;
@@ -335,7 +335,7 @@ export default {
 	},
 	watch: {
 		boardGetter(value) {
-			// console.log('activity:', value.activities[0]);
+			// console.log('activity:', value.activities.length);
 			this.board = JSON.parse(JSON.stringify(value));
 			this.setScene();
 			if (this.board.style.backgroundColor) this.$emit('setBgc', this.board.style.backgroundColor)
