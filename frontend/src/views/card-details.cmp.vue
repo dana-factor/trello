@@ -1,6 +1,6 @@
 <template>
 	<section class="card-details-screen" @mousedown.self="$router.push('../')">
-		<div class="card-details" v-if="card" @mousedown="closeModal" :style="{backgroundColor: card.backgroundColor}">
+		<div class="card-details" v-if="card" @mousedown="closeModal" >
 			<div class="header">
 				<i class="el-icon-postcard"></i>
 				<h1
