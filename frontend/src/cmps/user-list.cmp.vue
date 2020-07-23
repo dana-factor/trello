@@ -28,7 +28,6 @@ export default {
         }
     },
     created(){
-        console.log(this.users)
     },
     mounted(){
 
