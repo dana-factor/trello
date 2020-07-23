@@ -1,4 +1,5 @@
 .card-attachments {
+    margin-bottom: 8px;
     i.el-icon-paperclip{
         font-size: 22px;
         font-weight: 500;
@@ -17,14 +18,14 @@
     ul{
         max-width: 100%;
         white-space: pre-wrap;
+        margin-left: 35px;
         li{
             display: inline-block;
             position: relative;
-            margin: 0 4px 4px 0;
+            margin-right: 4px;
             img {
                 max-width: 200px;
                 display: inline-block;
-                margin-left: 35px;
             }
             button{
                 display: none;

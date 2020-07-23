@@ -66,6 +66,7 @@
 					</div>
 				</div>
 				<div class="right-side">
+					<h2>Add To Card</h2>
 					<button @click="toggleModal('card-label-edit')">
 						<i class="el-icon-collection-tag"></i> Labels
 					</button>
@@ -78,7 +79,10 @@
 					<button @click="toggleModal('card-member-edit')">
 						<i class="el-icon-user"></i> Members
 					</button>
-					<input type="file" @change="onUploadImg" />
+					<button>
+						<input type="file" @change="onUploadImg" />
+						<i class="el-icon-user"></i> Add Image
+					</button>
 				</div>
 			</div>
 			<card-edit-modal v-if="editModal" @modalClose="closeModal">

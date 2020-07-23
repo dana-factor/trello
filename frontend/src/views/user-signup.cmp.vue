@@ -13,8 +13,11 @@
 				/>
 				<input type="text" placeholder="Enter user name" v-model="credentials.username" required />
 				<input type="password" placeholder="Create password" v-model="credentials.password" required />
-				<input type="file" @change="onUploadImg" />
-				<button>Sign Up</button>
+				<button class="add-image">
+					Add Profile Image
+					<input type="file" @change="onUploadImg" />
+				</button>
+				<button class="signup">Sign Up</button>
 			</form>
 			<hr />
 			<p>
