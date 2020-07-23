@@ -2,7 +2,7 @@
     <ul class="user-list">
         <li v-for="user in users" :key="user._id" @click="toggleMember(user._id)">
             <div class="avatar-name">
-             <avatar :src="user.imgUrl" :username="user.fullName" :size="25" />
+             <avatar :src="user.imgUrl" :username="user.fullName" :size="32" />
            <span class="name">{{user.fullName}}</span>
             </div>
            <!-- <i v-if="user.isMember" class="el-icon-check"></i> -->
