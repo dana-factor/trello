@@ -85,11 +85,11 @@
 		padding: 2px;
 		border-radius: 3px;
 		&.completed {
-			background-color: rgb(5, 178, 5);
+			background-color: #61bd4f;
 			color: white;
 		}
 		&.overdue {
-			background-color: #f44e8b;
+			background-color: #ec9488;
 			color: white;
 		}
 	}

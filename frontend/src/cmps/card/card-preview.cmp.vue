@@ -42,7 +42,7 @@
 								v-for="member in card.members"
 								:key="member._id"
 								:title="member.fullName"
-							><avatar :src="member.imgUrl" :username="member.fullName" :size="25" /></li>
+							><avatar :src="member.imgUrl" :username="member.fullName" :size="28" /></li>
 						</ul>
 		</router-link>
 	</section>

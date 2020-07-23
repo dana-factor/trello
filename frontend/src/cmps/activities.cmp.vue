@@ -1,11 +1,9 @@
 <template>
 	<section class="activities">
-		<h2>Activities</h2>
 		<div>
-			<div v-for="activity in activitiesToShow" :key="activity.createdAt">
-				<span>{{activity.user.fullName}}</span>
-				{{activity.text}}
-				<div>{{activity.createdAt | timeSince}}</div>
+			<div class="activity" v-for="activity in activitiesToShow" :key="activity.createdAt">
+				<p><span>{{activity.user.fullName}}</span> {{activity.text}}</p>
+				<p class="time">{{activity.createdAt | timeSince}}</p>
 			</div>
 		</div>
 	</section>
@@ -29,14 +27,42 @@ export default {
 </script>
 
 <style lang="scss">
-.activities {
-	cursor: auto;
-	> div {
-		word-wrap: break-word;
-		font-size: 1rem;
-		max-height: 50vh;
-		overflow-y: auto;
-		width: 100%;
-	}
-}
+// .activities {
+// 	cursor: auto;
+// 	i{
+// 		font-size: 22px;
+// 		font-weight: 500;
+// 		display: inline-block;
+// 		margin-right: 13px;
+// 		&::before{
+// 			vertical-align: middle;
+// 		}
+// 	}
+// 	h2 {
+// 		line-height: rem(20px);
+// 		font-size: rem(16px);
+// 		font-weight: 600;
+// 		margin-bottom: 7px;
+// 	}
+// 	> div {
+// 		word-wrap: break-word;
+// 		font-size: 1rem;
+// 		max-height: 50vh;
+// 		overflow-y: auto;
+// 		width: 100%;
+// 		margin-left: 35px;
+// 		color: #172b4d;
+// 		font-size: rem(14px);
+// 		line-height: 20px;
+// 		font-weight: 400;
+// 		span{
+// 			font-weight: 700;
+// 		}
+// 		p.time{
+// 			display: block;
+// 			color: #5e6c84;
+// 			font-size: rem(12px);
+// 		}
+// 	}
+// }
 </style>
