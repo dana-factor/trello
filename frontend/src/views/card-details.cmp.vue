@@ -227,7 +227,6 @@ export default {
 			this.dispatchBoardSave('has deleted the due date');
 		},
 		setBgc(color) {
-			console.log(this.card)
 			this.card.backgroundColor = color;
 			this.closeModal();
 			this.dispatchBoardSave('has changed the background color');
