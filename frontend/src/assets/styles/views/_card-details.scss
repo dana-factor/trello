@@ -249,7 +249,7 @@
 						margin-bottom: 7px;
 					}
 					.activities {
-						max-height: 50vh;
+						max-height: 35vh;
 						overflow-y: auto;
 						// overflow-x: hidden;
 						cursor: auto;
@@ -262,8 +262,8 @@
 							line-height: 20px;
 							font-weight: 400;
 							padding: 8px 0;
+							margin-left: 35px;
 							.content{
-								
 								margin-left: 8px;
 							}
 							p{
@@ -272,7 +272,7 @@
 								font-size: rem(14px);
 								line-height: 20px;	
 							}
-							span{
+							span.name{
 								font-weight: 700;
 							}
 							p.time{

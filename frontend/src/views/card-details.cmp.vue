@@ -102,7 +102,7 @@
 					</button>
 					<button>
 						<input type="file" @change="onUploadImg" />
-						<i class="el-icon-user"></i> Add Image
+						<i class="el-icon-picture-outline"></i> Add Image
 					</button>
 					<button @click="toggleModal('card-background-edit')">
 						<i class="el-icon-brush"></i> Background Color
