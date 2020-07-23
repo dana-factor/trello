@@ -1,5 +1,5 @@
 <template>
-	<section class="card-preview">
+	<section class="card-preview" :style="{backgroundColor: card.backgroundColor}">
 		<button @click.stop="removeCard">
 			<i class="el-icon-delete"></i>
 		</button>

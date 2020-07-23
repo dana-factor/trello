@@ -118,7 +118,7 @@ function getStarterBoard() {
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
 						labels: [],
-						backgroundColor: 'lightcoral',
+						backgroundColor: 'white',
 						attachments: [],
 						checklists: [],
 					},
@@ -129,7 +129,7 @@ function getStarterBoard() {
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
 						labels: [],
-						backgroundColor: 'lightgrey',
+						backgroundColor: 'white',
 						attachments: [],
 						checklists: [],
 					},
@@ -140,7 +140,7 @@ function getStarterBoard() {
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
 						labels: [],
-						backgroundColor: 'lightgrey',
+						backgroundColor: 'white',
 						attachments: [],
 						checklists: [],
 					},
@@ -157,7 +157,7 @@ function getStarterBoard() {
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
 						labels: [],
-						backgroundColor: 'lightcoral',
+						backgroundColor: 'white',
 						attachments: [],
 						checklists: [],
 					},
@@ -168,7 +168,7 @@ function getStarterBoard() {
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
 						labels: [],
-						backgroundColor: 'lightgrey',
+						backgroundColor: 'white',
 						attachments: [],
 						checklists: [],
 					},
@@ -179,7 +179,7 @@ function getStarterBoard() {
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
 						labels: [],
-						backgroundColor: 'lightgrey',
+						backgroundColor: 'white',
 						attachments: [],
 						checklists: [],
 					},
@@ -196,7 +196,7 @@ function getStarterBoard() {
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
 						labels: [],
-						backgroundColor: 'lightcoral',
+						backgroundColor: 'white',
 						attachments: [],
 						checklists: [],
 					},
@@ -207,7 +207,7 @@ function getStarterBoard() {
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
 						labels: [],
-						backgroundColor: 'lightgrey',
+						backgroundColor: 'white',
 						attachments: [],
 						checklists: [],
 					},
@@ -218,7 +218,7 @@ function getStarterBoard() {
 						createdAt: Date.now(), //will come from server in the near future!
 						members: [],
 						labels: [],
-						backgroundColor: 'lightgrey',
+						backgroundColor: 'white',
 						attachments: [],
 						checklists: [],
 					},
