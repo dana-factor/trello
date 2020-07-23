@@ -21,7 +21,7 @@
 			<h4>Invite to Board </h4>
 			<i class="el-icon-close" @click="isUserListOpen = false"></i>
 			<app-filter @filterSet="searchMember"/>
-            <user-list :users="filteredUsers" @addMember="addMember"/>
+            <user-list :users="filteredUsers" @toggleMember="toggleMember"/>
         </div>
 		<div v-if="isDeleteModalOpen" class="delete-modal">
 			<h5>Are you sure you want to delete this board?</h5>
@@ -145,17 +145,25 @@ export default {
 			if (ev.target.innerText) this.board.name = ev.target.innerText;
 			this.saveBoard('has updated board name')
 		},
-		async addMember(userId) {
-			if (this.board.members.find(member => member._id === userId)) return;
-			const user = await userService.getById(userId);
-			this.board.members.push(user);
-			this.saveBoard('has added a member');
+		async toggleMember(userId) {
+			// remove member
+			if (this.board.members.find(member => member._id === userId)) {
+				const idx = this.board.members.findIndex(member => member._id === userId);
+				const name = this.board.members[idx].fullName; // keep the name for the action-txt before the splice
+				this.board.members.splice(idx, 1);
+				this.saveBoard('has removed ' + name + ' as a member')
+			} else {
+			// add member
+				const user = await userService.getById(userId);
+				this.board.members.unshift(user);
+				this.saveBoard('has added ' + user.fullName + ' as a member');
+			}
+
 		},
 		searchMember(filterBy) {
 			const exp = new RegExp(`.*${filterBy.searchStr}.*`, 'i');
 			const filteredUsers = this.users.filter(user => {
 				return user.fullName.match(exp) || user.username.match(exp);
-				
 			})
 			this.filteredUsers = filteredUsers;
 		},

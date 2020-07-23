@@ -84,12 +84,13 @@
 					:boardLabels="board.labels"
 					:labels="labels"
 					:members="board.members"
+					:card="card"
 					@modalClose="closeModal"
 					@toggleLabel="toggleLabel"
 					@boardLabelsUpdate="updateBoardLabels"
 					@newChecklist="addNewChecklist"
 					@saveDueDate="saveDueDate"
-					@addMember="addMember"
+					@toggleMember="toggleMember"
 				></component>
 			</card-edit-modal>
 		</div>
@@ -216,11 +217,19 @@ export default {
 			this.card.isCardDone = false;
 			this.dispatchBoardSave('has deleted the due date');
 		},
-		async addMember(userId) {
-			if (this.card.members.find(member => member._id === userId)) return;
+		async toggleMember(userId) {
+			// remove member
+			if (this.card.members.find(member => member._id === userId)) {
+				const idx = this.card.members.findIndex(member => member._id === userId);
+				const name = this.card.members[idx].fullName; // keep the name for the action-txt before the splice
+				this.card.members.splice(idx, 1);
+				this.dispatchBoardSave('has removed ' + name + ' as a member');
+			} else {
+			// add member
 			const user = await userService.getById(userId);
 			this.card.members.push(user);
-			this.dispatchBoardSave('has added' + user.fullName + 'as a member');
+			this.dispatchBoardSave('has added ' + user.fullName + ' as a member');
+			}
 		},
 		dispatchBoardSave(action) {
 			this.$store.dispatch({ type: 'saveBoard', board: this.boardToUpdate, activity: { text: action + ' in card ' + this.card.name, cardId: this.card.id } });

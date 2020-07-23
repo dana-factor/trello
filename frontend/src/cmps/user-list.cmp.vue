@@ -1,27 +1,30 @@
 <template>
     <ul class="user-list">
-        <li v-for="user in users" :key="user._id" @click="addMember(user._id)">
+        <li v-for="user in users" :key="user._id" @click="toggleMember(user._id)">
+            <div class="avatar-name">
              <avatar :src="user.imgUrl" :username="user.fullName" :size="25" />
-           <span class="name">{{user.fullName}}</span></li>
+           <span class="name">{{user.fullName}}</span>
+            </div>
+           <!-- <i v-if="user.isMember" class="el-icon-check"></i> -->
+        </li>
     </ul>
 </template>
 
 <script>
-import Avatar from 'vue-avatar'
+import Avatar from 'vue-avatar';
+import { userService } from '../services/user.service.js';
 
 export default {
     props:['users'],
     data(){
         return{
-
         }
     },
     computed: {
-
     },
     methods: {
-        addMember(userId) {
-            this.$emit('addMember', userId)
+        toggleMember(userId) {
+            this.$emit('toggleMember', userId);
         }
     },
     created(){
@@ -40,6 +43,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.hidden {
+    visibility: hidden;
+}
 
 </style>
