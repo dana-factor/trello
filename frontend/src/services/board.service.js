@@ -235,9 +235,9 @@ function getStarterCard(cardName) {
 		createdAt: Date.now(), //will come from server in the near future!
 		members: [],
 		labels: [],
-		backgroundColor: 'lightgrey',
+		backgroundColor: 'white',
 		attachments: [],
-		checklists: [],
+		checklists: []
 	};
 }
 function getStarterChecklist() {
