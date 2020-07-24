@@ -267,8 +267,7 @@ export default {
 		},
 		setBgc(color) {
 			this.card.backgroundColor = color;
-			this.closeModal();
-			this.dispatchBoardSave('has changed the background color');
+			this.dispatchBoardSave('changed the background color');
 		},
 		async toggleMember(userId) {
 			// remove member
