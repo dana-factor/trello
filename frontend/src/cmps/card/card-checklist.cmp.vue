@@ -7,7 +7,7 @@
 			@blur="updateChecklistTitle"
 			@keydown.enter="updateChecklistTitle; $event.target.blur()"
 		/>
-		<div class="progress">
+		<div v-if="checklist.tasks.length" class="progress">
 			{{checklistProgress}}
 			<div>
 				<div :style="{width:checklistProgress}"></div>
@@ -17,12 +17,12 @@
 			<i class="el-icon-delete"></i>
 		</button>
 		<ul>
-			<li v-for="task in checklistToUpdate.tasks" :key="task.id">
+			<li v-for="(task,index) in checklistToUpdate.tasks" :key="task.id">
 				<input type="checkbox" v-model="task.isDone" @change="saveToggledTask(task)" />
 				<input
 					v-model="task.text"
-					@blur="updateChecklistTaskText(task)"
-					@keydown.enter="updateChecklistTaskText(task); $event.target.blur()"
+					@blur="updateChecklistTaskText(task,index)"
+					@keydown.enter="updateChecklistTaskText(task,index); $event.target.blur()"
 				/>
 				<button @click="removeChecklistTask(task)">
 					<i class="el-icon-delete"></i>
@@ -66,9 +66,11 @@ export default {
 			this.$emit('checklistTaskRemoved', this.checklist, task.id);
 		},
 		updateChecklistTitle() {
+			if (this.checklistToUpdate.name === this.checklist.name) return;
 			this.$emit('checklistTitleUpdated', this.checklistToUpdate)
 		},
-		updateChecklistTaskText(task) {
+		updateChecklistTaskText(task, index) {
+			if (this.checklist.tasks[index].text === task.text) return;
 			this.$emit('checklistTaskTextUpdated', this.checklist, task);
 		},
 		removeChecklist() {
