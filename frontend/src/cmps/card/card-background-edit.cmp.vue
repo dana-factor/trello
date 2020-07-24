@@ -5,6 +5,7 @@
 			:style="{backgroundColor: color}"
 			@click="selectColor(color)"
 			:key="idx"
+			:class="{selected: color === selectedColor}"
 		></span>
 	</div>
 </template>
@@ -14,6 +15,7 @@ export default {
 	props: [],
 	data() {
 		return {
+			selectedColor: 'white',
 			colors: [
 				"white",
 				"#f5cbf5",
@@ -29,7 +31,8 @@ export default {
 	computed: {},
 	methods: { 
         selectColor(color) {
-        this.$emit('setBgc', color);
+			this.selectedColor = color;
+        	this.$emit('setBgc', color);
   }},
 	created() {},
 	mounted() {},
@@ -44,6 +47,13 @@ export default {
     height: 50px;
     border-radius: 50%;
 }
+
+  .selected::after {
+	content: "✔";
+	position: relative;
+    top: 25%;
+    left: 35%;
+  }
 
 
 </style>
