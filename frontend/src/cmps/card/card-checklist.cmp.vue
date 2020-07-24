@@ -7,7 +7,7 @@
 			@blur="updateChecklistTitle"
 			@keydown.enter="updateChecklistTitle; $event.target.blur()"
 		/>
-		<div class="progress">
+		<div v-if="checklist.tasks.length" class="progress">
 			{{checklistProgress}}
 			<div>
 				<div :style="{width:checklistProgress}"></div>
