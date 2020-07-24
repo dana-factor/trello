@@ -78,6 +78,7 @@
 						</button>
 					</div>
 					<card-attachments :attachments="card.attachments" @attachmentRemoved="removeAttachment" />
+					<h2 v-if="isAddingImage">Adding image...</h2>
 					<div class="checklists" v-for="checklist in card.checklists" :key="checklist.id">
 						<card-checklist
 							:checklist="checklist"
@@ -111,7 +112,7 @@
 						<i class="el-icon-user"></i> Members
 					</button>
 					<button>
-						<input type="file" @change="onUploadImg" />
+						<input type="file" @change="onUploadImg" accept="image/*" />
 						<i class="el-icon-user"></i> Add Image
 					</button>
 					<button @click="toggleModal('card-background-edit')">
@@ -165,7 +166,8 @@ export default {
 			cardId: 0,
 			editModal: '',
 			isDescriptionSaveShown: false,
-			comment: ''
+			comment: '',
+			isAddingImage: false
 		};
 	},
 	computed: {
@@ -290,8 +292,11 @@ export default {
 			else this.editModal = cmpName;
 		},
 		async onUploadImg(ev) {
+			this.isAddingImage = true;
 			const res = await uploadImg(ev);
 			this.card.attachments.push({ imgUrl: res.url });
+			ev.target.value = '';
+			this.isAddingImage = false;
 			this.dispatchBoardSave('added an image');
 		},
 		closeModal() {
