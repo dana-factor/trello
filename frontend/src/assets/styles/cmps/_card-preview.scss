@@ -16,6 +16,10 @@
 		margin: 0 4px 4px 0;
 		display: inline-block;
 		transition: 0.2s ease-in;
+		&.title-shown{
+			height: 16px;
+			width: 56px;
+		}
 		.label-title {
 			color: white;
 			padding: 0 4px;
