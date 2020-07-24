@@ -52,6 +52,8 @@
 		<Container
 			orientation="horizontal"
 			@drop="onColumnDrop($event)"
+			drag-class="card-ghost"
+			drop-class="card-ghost-drop"
 			:drop-placeholder="upperDropPlaceholderOptions"
 		>
 			<Draggable v-for="topic in board.topics" :key="topic.id">
@@ -327,10 +329,10 @@ export default {
 			this.board.topics.splice(columnIndex, 1, newColumn);
 			// var lengthAfter = this.board.topics[columnIndex].cards.length;
 			// if (lengthBefore > lengthAfter) return;
-			console.log(activityTxt)
-			if(activityTxt) {
+			// console.log(activityTxt)
+			if (activityTxt) {
 				this.saveBoard(activityTxt);
-				console.log('saved')
+				// console.log('saved')
 				this.topicNameBefore = '';
 				this.topicNameAfter = '';
 			}
