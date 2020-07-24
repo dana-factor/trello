@@ -16,7 +16,7 @@
 			<component v-if="cmpToShow" :is="cmpToShow" @setBgc="setBgc" @setBgImg="setBgImg" />
 			<!-- <board-edit-background v-if="isEditingBg" @toggleColorPicker="toggleColorPicker" @setBgc="setBgc" @setBgImg="setBgImg"/>
 			<date-picker v-if="datePickerOpen"/>-->
-				<activites :activities="board.activities" />
+				<!-- <activites :activities="board.activities" /> -->
 		</div>
 			<div class="board-activities">
 				<h5><i class="el-icon-notebook-1"></i>
