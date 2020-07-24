@@ -4,11 +4,21 @@
 		class="board-details"
 		@click="isFilterModalOpen=false; isFilterInputShown=false;"
 	>
-	<div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
-	<div class="dashboard-modal" v-if="isDashboardOpen">
-		<dashboard :board="board" @closeDashboard="isDashboardOpen = false" />
-	</div>
-		<board-nav @filterSet="setFilter" :filteredTopics="filteredTopics" :isFilterModalOpen="isFilterModalOpen" @openFilterModal="isFilterModalOpen=true" :isFilterInputShown="isFilterInputShown" @showFilterInput="isFilterInputShown=true" @toggleUserList="toggleUserList" :users="users" :members="board.members">
+		<div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
+		<div class="dashboard-modal" v-if="isDashboardOpen">
+			<dashboard :board="board" @closeDashboard="isDashboardOpen = false" />
+		</div>
+		<board-nav
+			@filterSet="setFilter"
+			:filteredTopics="filteredTopics"
+			:isFilterModalOpen="isFilterModalOpen"
+			@openFilterModal="isFilterModalOpen=true"
+			:isFilterInputShown="isFilterInputShown"
+			@showFilterInput="isFilterInputShown=true"
+			@toggleUserList="toggleUserList"
+			:users="users"
+			:members="board.members"
+		>
 			<h2
 				class="board-name"
 				slot="board-name"
@@ -23,12 +33,12 @@
 				<i class="el-icon-s-operation"></i>
 			</button>
 		</board-nav>
-		  <div class="member-modal" v-if="isUserListOpen">
-			<h4>Invite to Board </h4>
+		<div class="member-modal" v-if="isUserListOpen">
+			<h4>Invite to Board</h4>
 			<i class="el-icon-close" @click="isUserListOpen = false"></i>
-			<app-filter @filterSet="searchMember"/>
-            <user-list :users="filteredUsers" :memberOf="board" @toggleMember="toggleMember"/>
-        </div>
+			<app-filter @filterSet="searchMember" />
+			<user-list :users="filteredUsers" :memberOf="board" @toggleMember="toggleMember" />
+		</div>
 		<div v-if="isDeleteModalOpen" class="delete-modal">
 			<h5>Are you sure you want to delete this board?</h5>
 			<div class="btns">
@@ -152,7 +162,7 @@ export default {
 		toggleUserList() {
 			this.isUserListOpen = !this.isUserListOpen;
 			console.log(this.isUserListOpen)
-        },
+		},
 		updateBoardName(ev) {
 			if (ev.target.innerText) this.board.name = ev.target.innerText;
 			this.saveBoard('updated board name')
@@ -165,7 +175,7 @@ export default {
 				this.board.members.splice(idx, 1);
 				this.saveBoard('removed ' + name + ' as a member')
 			} else {
-			// add member
+				// add member
 				const user = await userService.getById(userId);
 				this.board.members.unshift(user);
 				this.saveBoard('added ' + user.fullName + ' as a member');
@@ -179,7 +189,7 @@ export default {
 			})
 			this.filteredUsers = filteredUsers;
 		},
-		setFilter(filterBy){
+		setFilter(filterBy) {
 			if (!filterBy.searchStr) {
 				this.filteredUsers = this.users;
 				return;
@@ -202,16 +212,16 @@ export default {
 			// 	card.topicName = filteredTopics.find((topic)=>{topic.cards})
 			// })
 		},
-		setFilter1(filterBy){
+		setFilter1(filterBy) {
 			const exp = new RegExp(filterBy.searchStr, 'i');
 			console.log(filterBy.searchStr);
-			
+
 			const filteredTopics = this.board.topics.filter((topic) => {
 				return topic.cards.filter((card) => {
 					console.log('222', card.name.match(exp));
 					return
 					card.name.toLowerCase().includes(filterBy.searchStr.toLowerCase())
-					})
+				})
 			});
 			console.log('filteredTopics:', filteredTopics);
 			// const filteredCards = filteredTopics.map(topic=>{
@@ -226,9 +236,9 @@ export default {
 			// 	}
 			// })
 			// console.log('filteredCards2:', filteredCards);
-			
+
 			// this.$store.commit({type: "setFilter", filterBy});
-      		// this.$store.dispatch({type: "loadToys"})
+			// this.$store.dispatch({type: "loadToys"})
 		},
 		setBgc(color) {
 			this.board.style.backgroundColor = color;
@@ -266,10 +276,11 @@ export default {
 			const topicIdx = this.board.topics.findIndex(
 				topic => topic.id === topicId
 			);
-			const cardIdx = this.board.topics[topicIdx].cards.findIndex(card => card.id === cardId)
-			this.board.topics[topicIdx].cards.splice(cardIdx, 1)
-			const savedBoard = await this.$store.dispatch({ type: "saveBoard", board: this.board })
-					this.board = JSON.parse(JSON.stringify(savedBoard));
+			const topic = this.board.topics[topicIdx];
+			const cardIdx = topic.cards.findIndex(card => card.id === cardId)
+			const activity = 'removed card ' + topic.cards[cardIdx].name + ' from ' + topic.name;
+			this.board.topics[topicIdx].cards.splice(cardIdx, 1);
+			this.saveBoard(activity);
 		},
 		removeTopic(topicId) {
 			const idx = this.board.topics.findIndex(
@@ -317,9 +328,9 @@ export default {
 			this.saveBoard();
 		},
 		saveAfterDnd(dropResult, columnIndex, column) {
-			if(dropResult.removedIndex !== null) this.topicNameBefore = this.board.topics[columnIndex].name;
-			if(dropResult.addedIndex !== null) this.topicNameAfter = this.board.topics[columnIndex].name;
-			if (this.topicNameAfter && this.topicNameBefore) var activityTxt = 'moved ' + dropResult.payload.name + ' from ' + this.topicNameBefore + ' to ' + this.topicNameAfter; 
+			if (dropResult.removedIndex !== null) this.topicNameBefore = this.board.topics[columnIndex].name;
+			if (dropResult.addedIndex !== null) this.topicNameAfter = this.board.topics[columnIndex].name;
+			if (this.topicNameAfter && this.topicNameBefore) var activityTxt = 'moved ' + dropResult.payload.name + ' from ' + this.topicNameBefore + ' to ' + this.topicNameAfter;
 			const newColumn = Object.assign({}, column);
 			newColumn.cards = dragDropService.applyDrag(
 				newColumn.cards,
@@ -330,9 +341,13 @@ export default {
 			// var lengthAfter = this.board.topics[columnIndex].cards.length;
 			// if (lengthBefore > lengthAfter) return;
 			// console.log(activityTxt)
-			if (activityTxt) {
+			if (this.topicNameBefore === this.topicNameAfter) {
+				this.saveBoard();
+				this.topicNameBefore = '';
+				this.topicNameAfter = '';
+			}
+			else if (activityTxt) {
 				this.saveBoard(activityTxt);
-				// console.log('saved')
 				this.topicNameBefore = '';
 				this.topicNameAfter = '';
 			}
