@@ -54,7 +54,7 @@ export default {
 			const doneTaskCount = this.checklist.tasks.reduce(
 				(doneEnteriesInTask, task) =>
 					task.isDone ? doneEnteriesInTask + 1 : doneEnteriesInTask, 0);
-			return ((doneTaskCount / tasksCount) * 100) + '%';
+			return ((doneTaskCount / tasksCount) * 100).toFixed() + '%';
 		}
 	},
 	methods: {
