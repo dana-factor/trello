@@ -42,7 +42,7 @@
 				</div>
 				<ul v-if="card.members.length" class="members-preview">
 					<li v-for="member in card.members" :key="member._id" :title="member.fullName">
-						<avatar :src="member.imgUrl" :username="member.fullName" :size="28" />
+						<avatar :src="member.imgUrl" :username="member.fullName" :size="28" background-color="#dfe1e6" color="#172b4d"/>
 					</li>
 				</ul>
 			</div>

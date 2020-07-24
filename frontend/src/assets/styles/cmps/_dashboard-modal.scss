@@ -1,3 +1,17 @@
+.dashboard {
+    .el-icon-close {
+            float: right;
+            margin: 2px 5px;
+            font-size: 22px;
+            font-weight: 500;
+            cursor: pointer;
+            &::before{
+                vertical-align: middle;
+            }
+    
+    }
+}
+
 .charts {
     display: flex;
     justify-content: space-evenly;
@@ -22,4 +36,28 @@
     z-index: 10;
     overflow-y: auto;
     border-radius: 3px;
+}
+.facts {
+    display: flex;
+    .info-box {
+        display: flex;
+        align-items: center;
+        i {
+            font-size: rem(35px);
+        }
+        .info {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            h4 {
+                font-size: 20px;
+                font-weight: bold;
+            }
+            p {
+                text-transform: uppercase;
+                font-size: 14px;
+            }
+        }
+    }
+
 }

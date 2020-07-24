@@ -1,8 +1,27 @@
 <template>
 	<section class="dashboard">
+        <i class="el-icon-close" @click="closeDashboard"></i>
         <div class="facts">
-            <div>
+            <div class="info-box">
                 <i class="el-icon-user"></i>
+                <div class="info">
+                <h4> {{members.length}} </h4>
+                <p> members </p>
+                </div>
+            </div>
+            <div class="info-box">
+              <i class="el-icon-postcard"></i>
+                <div class="info">
+                <h4> {{numOfCardsTotal}} </h4>
+                <p> total cards </p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="el-icon-question"></i>
+                <div class="info">
+                <h4> {{numOfUnassignedCards}} </h4>
+                <p> unassigned cards </p>
+                </div>
             </div>
         </div>
         <div class="charts">
@@ -43,18 +62,41 @@ export default {
 		},
 		numsOfCardsPerMember() {
 			return this.board.members.map(member => {
-                var sum = 0;
-				this.board.topics.forEach(topic => {
-                    topic.cards.forEach(card => {
-                        if (card.members.find(cardMember => cardMember._id === member._id)) sum++;
-                    })
-				});
-                 return sum;
+                var total = this.board.topics.reduce((acc,topic) => {
+                    var sum = topic.cards.reduce((acc,card) => {
+                        if (card.members.find(cardMember => cardMember._id === member._id)) return acc + 1;
+                        else return acc;
+                    }, 0);
+                    return sum + acc;
+                }, 0);
+                 return total;
 			});
-		}
+        },
+        numOfCardsTotal() {
+            var sum = this.board.topics.reduce((acc, topic) => {
+                return topic.cards.length + acc;
+            }, 0)
+            return sum;
+        },
+        numOfUnassignedCards() {
+           return this.board.topics.reduce((acc,topic) => {
+                var sum = topic.cards.reduce((acc, card) => {
+                    if(!card.members.length) return acc + 1;
+                    else return acc;
+                }, 0)
+                return sum + acc;
+            }, 0)
+    },
+	mounted() {
+        }
 	},
-	methods: {},
-	created() {},
+	methods: {
+        closeDashboard() {
+            this.$emit('closeDashboard')
+        }
+    },
+	created() {
+    },
 	mounted() {
 	},
 	watch: {},
