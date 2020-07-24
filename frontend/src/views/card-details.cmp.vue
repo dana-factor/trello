@@ -268,7 +268,7 @@ export default {
 				// add member
 				const user = await userService.getById(userId);
 				this.card.members.push(user);
-				this.dispatchBoardSave('added' + user.fullName + 'as a member');
+				this.dispatchBoardSave('added ' + user.fullName + ' as a member');
 			}
 		},
 		dispatchBoardSave(action, isComment = false) {
