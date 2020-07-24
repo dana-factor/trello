@@ -1,6 +1,8 @@
 <template>
     <div class="board-preview">
-        <img class="board-img" v-if="board.style.imgUrl" :src="board.style.imgUrl" />
+        <!-- <div class="board-img" v-if="board.style.imgUrl" :src="board.style.imgUrl"></div> -->
+        <div class="board-img" v-if="board.style.imgUrl" :style="{backgroundImage: `url(${board.style.imgUrl})`, backgroundRepeat: 'round'}"></div>
+        <!-- <div class="board-bgc" v-else :style="{backgroundImage: board.style.imgUrl}"></div> -->
         <div class="board-bgc" v-else :style="{backgroundColor: board.style.backgroundColor}"></div>
         <div class="board-name">{{board.name}}</div>
     </div>

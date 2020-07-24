@@ -1,11 +1,26 @@
 <template>
 	<section class="homepage">
 		<!-- <h1>homepage</h1> -->
-		<img width="100%" src="../../public/img/teamwork.png" />
-		
-		<board-list
+		<div class="hero-container">
+			<!-- <img src="../../public/img/5545.jpg" /> -->
+			<img src="../../src/assets/img/hero.png" />
+			<h1>try trella now</h1>
+		</div>
+		<!-- <board-list
 			:boards="boards"
-		/> 
+		/>  -->
+		<div class="green-note note">
+			<h2>Web Sockets</h2>
+			<p>With the power of web sockets, you and your team can enjoy a workspace that updates in real-time.</p>
+		</div>
+		<div class="yellow-note note">
+			<h2>Drag n Drop</h2>
+			<p>Try our Drag n Drop technology to easily move & update your tasks with your mouse or finger.</p>
+		</div>
+		<div class="blue-note note">
+			<h2>Make it yours</h2>
+			<p>Make it feel like home for you and your team. Customize the board's appearancets to fit the team's flow.</p>
+		</div>
 	</section>
 </template>
 
