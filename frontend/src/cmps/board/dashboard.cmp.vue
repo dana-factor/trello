@@ -1,4 +1,5 @@
 <template>
+<section class="dashboard-screen">
 	<section class="dashboard">
         <i class="el-icon-close" @click="closeDashboard"></i>
         <div class="facts">
@@ -23,6 +24,13 @@
                 <p> unassigned cards </p>
                 </div>
             </div>
+            <div class="info-box">
+                <i class="el-icon-thumb"></i>
+                <div class="info">
+                <h4> {{numOfActivities}} </h4>
+                <p> activities </p>
+                </div>
+            </div>
         </div>
         <div class="charts">
 		<div>
@@ -39,6 +47,7 @@
 		</div>
         </div>
 	</section>
+</section>
 </template>
 
 <script>
@@ -86,13 +95,14 @@ export default {
                 }, 0)
                 return sum + acc;
             }, 0)
-    },
-	mounted() {
+        },
+        numOfActivities() {
+            return this.board.activities.length;
         }
-	},
+    },
 	methods: {
         closeDashboard() {
-            this.$emit('closeDashboard')
+            this.$emit('closeDashboard');
         }
     },
 	created() {

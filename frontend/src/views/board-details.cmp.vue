@@ -6,7 +6,7 @@
 	>
 	<div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
 	<div class="dashboard-modal" v-if="isDashboardOpen">
-		<dashboard :board="board" @closeDashboard="isDashboardOpen = false"/>
+		<dashboard :board="board" @closeDashboard="isDashboardOpen = false" />
 	</div>
 		<board-nav @filterSet="setFilter" :filteredTopics="filteredTopics" :isFilterModalOpen="isFilterModalOpen" @openFilterModal="isFilterModalOpen=true" :isFilterInputShown="isFilterInputShown" @showFilterInput="isFilterInputShown=true" @toggleUserList="toggleUserList" :users="users" :members="board.members">
 			<h2
