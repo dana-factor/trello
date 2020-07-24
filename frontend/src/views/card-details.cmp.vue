@@ -200,7 +200,7 @@ export default {
 		},
 		updateBoardLabels(labelToUpdate) {
 			boardService.updateBoardLabel(this.boardToUpdate, labelToUpdate);
-			this.dispatchBoardSave('updated a label\'s color');
+			this.dispatchBoardSave('updated a label\'s title to ' + labelToUpdate.title);
 		},
 		addNewChecklist(name) {
 			let checklist = boardService.getStarterChecklist();
@@ -245,7 +245,7 @@ export default {
 			let currLabels = this.card.labels;
 			if (currLabels.includes(label)) currLabels.splice(currLabels.indexOf(label), 1)
 			else currLabels.push(label);
-			this.dispatchBoardSave('toggled a label');
+			this.dispatchBoardSave('toggled the label ' + label.title);
 		},
 		removeAttachment(attachment) {
 			//kinda temp idk
