@@ -347,7 +347,6 @@ export default {
 		await this.loadBoard();
 		await this.$store.dispatch({ type: "loadUsers" })
 		this.filteredUsers = this.users;
-		console.log(this.filteredUsers)
 	},
 	mounted() { },
 	destroyed() {
@@ -356,7 +355,6 @@ export default {
 	},
 	watch: {
 		boardGetter(value) {
-			// console.log('activity:', value.activities.length);
 			this.board = JSON.parse(JSON.stringify(value));
 			this.setScene();
 			if (this.board.style.backgroundColor) this.$emit('setBgc', this.board.style.backgroundColor)

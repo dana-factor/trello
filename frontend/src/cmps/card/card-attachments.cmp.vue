@@ -26,7 +26,7 @@ export default {
 	},
 	methods: {
 		removeAttachment(attachment) {
-			this.$emit('attachmentRemoved', this.attachment);
+			this.$emit('attachmentRemoved', attachment);
 		}
 	},
 	created() {
