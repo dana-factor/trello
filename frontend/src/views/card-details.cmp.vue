@@ -24,7 +24,7 @@
 									:title="member.fullName"
 									class="card-members"
 								>
-									<avatar :src="member.imgUrl" :username="member.fullName" :size="25" />
+									<avatar :src="member.imgUrl" :username="member.fullName" :size="25" background-color="#dfe1e6" color="#172b4d"/>
 								</li>
 							</ul>
 						</div>
