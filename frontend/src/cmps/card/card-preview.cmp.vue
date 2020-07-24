@@ -67,7 +67,7 @@ export default {
 				(enteries, checklist) => (enteries += checklist.tasks.length),
 				0
 			);
-			if (!tasksCount) return "";
+			if (!tasksCount) return '';
 			return (
 				this.card.checklists.reduce(
 					(doneEnteries, checklist) =>
