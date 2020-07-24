@@ -78,7 +78,7 @@ export default {
                     }, 0);
                     return sum + acc;
                 }, 0);
-                 return total;
+                return total;
 			});
         },
         numOfCardsTotal() {
