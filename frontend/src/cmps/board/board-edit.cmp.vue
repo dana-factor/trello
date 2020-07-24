@@ -12,15 +12,10 @@
 			<h5 @click="toggleDeleteModal">Delete Board</h5>
 		</div>
 		<div>
-			<component
-				v-if="cmpToShow"
-				:is="cmpToShow"
-				@setBgc="setBgc"
-				@setBgImg="setBgImg"
-			/>
+			<component v-if="cmpToShow" :is="cmpToShow" @setBgc="setBgc" @setBgImg="setBgImg" />
 			<!-- <board-edit-background v-if="isEditingBg" @toggleColorPicker="toggleColorPicker" @setBgc="setBgc" @setBgImg="setBgImg"/>
 			<date-picker v-if="datePickerOpen"/>-->
-			<activites :activities="board.activities" />
+				<activites :activities="board.activities" />
 		</div>
 	</div>
 </template>
@@ -66,7 +61,7 @@ export default {
 		setBgImg(imgUrl) {
 			this.$emit('setBgImg', imgUrl);
 		},
-        toggleCmp(cmpName) {
+		toggleCmp(cmpName) {
 			if (cmpName === this.cmpToShow) this.cmpToShow = '';
 			else this.cmpToShow = cmpName;
 		}

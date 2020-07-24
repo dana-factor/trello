@@ -1,20 +1,26 @@
 <template>
-	<section class="activities">
-		<div class="activity" v-for="activity in activitiesToShow" :key="activity.createdAt">
-			<avatar
-				:src="activity.user.imgUrl"
-				:username="activity.user.fullName"
-				:lighten="100"
-				:size="28"
-			/>
-			<div class="content" :class="{comment:activity.isComment}">
-				<p>
-					<span>{{activity.user.fullName}}</span>&nbsp;
-					<span v-if="activity.isComment">left a comment&nbsp;</span>
-					<span v-if="isShowInCard">{{activity.text | removeInCard}}</span>
-					<span v-else>{{activity.text}}</span>
-				</p>
-				<p class="time">{{activity.createdAt | timeSince}}</p>
+	<section class="activities-container">
+		<div class="activities">
+			<div>
+				<i class="el-icon-notebook-1"></i>
+				<h2>Activities</h2>
+			</div>
+			<div class="activity" v-for="activity in activitiesToShow" :key="activity.createdAt">
+				<avatar
+					:src="activity.user.imgUrl"
+					:username="activity.user.fullName"
+					:lighten="100"
+					:size="28"
+				/>
+				<div class="content" :class="{comment:activity.isComment}">
+					<p>
+						<span>{{activity.user.fullName}}</span>&nbsp;
+						<span v-if="activity.isComment">left a comment&nbsp;</span>
+						<span v-if="isShowInCard">{{activity.text | removeInCard}}</span>
+						<span v-else>{{activity.text}}</span>
+					</p>
+					<p class="time">{{activity.createdAt | timeSince}}</p>
+				</div>
 			</div>
 		</div>
 	</section>

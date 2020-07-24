@@ -90,12 +90,8 @@
 							@taskToggled="saveToggledTask"
 						/>
 					</div>
-					<div class="activities-container">
-						<i class="el-icon-notebook-1"></i>
-						<h2>Activities</h2>
-						<input v-model="comment" @keypress.enter="addComment" />
-						<activities :activities="activities" isShowInCard="false" />
-					</div>
+					<input v-model="comment" @keypress.enter="addComment" />
+					<activities :activities="activities" isShowInCard="false" />
 				</div>
 				<div class="right-side">
 					<h2>Add To Card</h2>
