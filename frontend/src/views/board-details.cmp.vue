@@ -127,7 +127,9 @@ export default {
 			isFilterInputShown: false,
 			isUserListOpen: false,
 			filteredUsers: [],
-			isDashboardOpen: false
+			isDashboardOpen: false,
+			topicNameBefore: '',
+			topicNameAfter: ''
 		};
 	},
 	computed: {
@@ -313,16 +315,25 @@ export default {
 			this.saveBoard();
 		},
 		saveAfterDnd(dropResult, columnIndex, column) {
+			if(dropResult.removedIndex !== null) this.topicNameBefore = this.board.topics[columnIndex].name;
+			if(dropResult.addedIndex !== null) this.topicNameAfter = this.board.topics[columnIndex].name;
+			if (this.topicNameAfter && this.topicNameBefore) var activityTxt = 'moved ' + dropResult.payload.name + ' from ' + this.topicNameBefore + ' to ' + this.topicNameAfter; 
 			const newColumn = Object.assign({}, column);
 			newColumn.cards = dragDropService.applyDrag(
 				newColumn.cards,
 				dropResult
 			);
-			var lengthBefore = this.board.topics[columnIndex].cards.length;
+			// var lengthBefore = this.board.topics[columnIndex].cards.length;
 			this.board.topics.splice(columnIndex, 1, newColumn);
-			var lengthAfter = this.board.topics[columnIndex].cards.length;
-			if (lengthBefore > lengthAfter) return;
-			this.saveBoard();
+			// var lengthAfter = this.board.topics[columnIndex].cards.length;
+			// if (lengthBefore > lengthAfter) return;
+			console.log(activityTxt)
+			if(activityTxt) {
+				this.saveBoard(activityTxt);
+				console.log('saved')
+				this.topicNameBefore = '';
+				this.topicNameAfter = '';
+			}
 		},
 		getCardPayload(columnId) {
 			return index => {
