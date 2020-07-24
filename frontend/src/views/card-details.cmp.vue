@@ -24,7 +24,13 @@
 									:title="member.fullName"
 									class="card-members"
 								>
-									<avatar :src="member.imgUrl" :username="member.fullName" :size="25" background-color="#dfe1e6" color="#172b4d"/>
+									<avatar
+										:src="member.imgUrl"
+										:username="member.fullName"
+										:size="25"
+										background-color="#dfe1e6"
+										color="#172b4d"
+									/>
 								</li>
 							</ul>
 						</div>
@@ -72,19 +78,20 @@
 						</button>
 					</div>
 					<card-attachments :attachments="card.attachments" @attachmentRemoved="removeAttachment" />
-					<card-checklists
-						:checklists="card.checklists"
-						@newChecklistTaskAdded="addNewChecklistTask"
-						@checklistRemoved="removeChecklist"
-						@checklistTaskRemoved="removeChecklistTask"
-						@checklistsUpdated="updateChecklists"
-					/>
-					<div class="activities-container">
-						<i class="el-icon-notebook-1"></i>
-						<h2>Activities</h2>
-						<input v-model="comment" @keypress.enter="addComment" />
-						<activities :activities="activities" isShowInCard="false" />
+					<h2 v-if="isAddingImage">Adding image...</h2>
+					<div class="checklists" v-for="checklist in card.checklists" :key="checklist.id">
+						<card-checklist
+							:checklist="checklist"
+							@newChecklistTaskAdded="addNewChecklistTask"
+							@checklistRemoved="removeChecklist"
+							@checklistTaskRemoved="removeChecklistTask"
+							@checklistTitleUpdated="updateChecklistTitle"
+							@checklistTaskTextUpdated="updateChecklistTaskText"
+							@taskToggled="saveToggledTask"
+						/>
 					</div>
+					<input v-model="comment" @keypress.enter="addComment" />
+					<activities :activities="activities" isShowInCard="false" />
 				</div>
 				<div class="right-side">
 					<h2>Add To Card</h2>
@@ -101,8 +108,8 @@
 						<i class="el-icon-user"></i> Members
 					</button>
 					<button>
-						<input type="file" @change="onUploadImg" />
-						<i class="el-icon-picture-outline"></i> Add Image
+						<input type="file" @change="onUploadImg" accept="image/*" />
+						<i class="el-icon-user"></i> Add Image
 					</button>
 					<button @click="toggleModal('card-background-edit')">
 						<i class="el-icon-brush"></i> Background Color
@@ -139,14 +146,13 @@ import cardEditModal from '../cmps/card/card-edit-modal.cmp';
 import cardLabelEdit from '../cmps/card/card-label-edit.cmp';
 import cardChecklistEdit from '../cmps/card/card-checklist-edit.cmp';
 import cardAttachments from '../cmps/card/card-attachments.cmp';
-import cardChecklists from '../cmps/card/card-checklists.cmp';
 import cardDueEdit from '../cmps/card/card-due-edit.cmp';
 import cardMemberEdit from '../cmps/card/card-member-edit.cmp';
 import cardBackgroundEdit from '../cmps/card/card-background-edit.cmp';
 import activities from '../cmps/activities.cmp';
 import Avatar from 'vue-avatar';
 import moment from 'moment';
-
+import cardChecklist from '../cmps/card/card-checklist.cmp';
 export default {
 	props: ['board'],
 	data() {
@@ -156,7 +162,8 @@ export default {
 			cardId: 0,
 			editModal: '',
 			isDescriptionSaveShown: false,
-			comment: ''
+			comment: '',
+			isAddingImage: false
 		};
 	},
 	computed: {
@@ -185,25 +192,13 @@ export default {
 		}
 	},
 	methods: {
-		// setBoardAndCard(board) {
-		// 	let board = null;
-		// 	board = boardService.addLabels(JSON.parse(
-		// 		JSON.stringify(this.boardToShow)));
-		// 	if (!this.board) this.$router.push('/');
-		// 	this.card = boardService.getCardById(this.board, this.cardId);
-		// 	if (!this.card) this.$router.push('/');
-		// },
 		updateCardName(ev) {
 			this.card.name = ev.target.innerText;
 			this.dispatchBoardSave('updated a card name');
 		},
-		// updateCard(card) {
-		// 	boardService.saveCardToBoard(this.board, card);
-		// 	this.dispatchBoardSave();
-		// },
 		updateBoardLabels(labelToUpdate) {
 			boardService.updateBoardLabel(this.boardToUpdate, labelToUpdate);
-			this.dispatchBoardSave('updated a label\'s color');
+			this.dispatchBoardSave('updated a label\'s title to ' + labelToUpdate.title);
 		},
 		addNewChecklist(name) {
 			let checklist = boardService.getStarterChecklist();
@@ -211,30 +206,44 @@ export default {
 			this.card.checklists.push(checklist);
 			this.dispatchBoardSave('added a new checklist');
 		},
-		addNewChecklistTask(checklistId, text) {
+		addNewChecklistTask(checklist, text) {
 			let task = boardService.getStarterChecklistTask();
-			let checklist = this.card.checklists.find(checklistToFind => checklistId === checklistToFind.id)
+			// let checklist = this.card.checklists.find(checklistToFind => checklistId === checklistToFind.id)
 			task.text = text;
 			checklist.tasks.push(task);
-			this.dispatchBoardSave('added a new checklist task');
+			this.dispatchBoardSave('added a new checklist task to ' + checklist.name);
 		},
 		removeChecklist(checklistId) {
-			boardService.removeChecklist(this.card, checklistId);
+			const idx = boardService.getChecklistIdxById(this.card.checklists, checklistId);
+			this.card.checklists.splice(idx, 1);
 			this.dispatchBoardSave('removed a checklist');
 		},
-		removeChecklistTask(checklistId, taskId) {
-			boardService.removeChecklistTask(this.card, checklistId, taskId);
+		removeChecklistTask(checklist, task) {
+			const idx = checklist.tasks.findIndex((findTask) => task.id === findTask.id);
+			checklist.tasks.splice(idx, 1);
 			this.dispatchBoardSave('removed a checklist task');
 		},
-		updateChecklists(checklists) {
-			this.card.checklists = checklists;
-			this.dispatchBoardSave('updated a checklist');
+		updateChecklistTitle(checklist) {
+			const idx = boardService.getChecklistIdxById(this.card.checklists, checklist.id);
+			this.card.checklists.splice(idx, 1, checklist);
+			this.dispatchBoardSave('changed a checklist title to ' + checklist.name);
+		},
+		updateChecklistTaskText(checklist, task) {
+			const checklistIdx = boardService.getChecklistIdxById(this.card.checklists, checklist.id);
+			const taskIdx = checklist.tasks.findIndex(taskToFind => taskToFind.id === task.id);
+			checklist.tasks.splice(taskIdx, 1, task);
+			this.dispatchBoardSave('changed a task to ' + task.text);
+		},
+		saveToggledTask(checklist, task) {
+			const taskIdx = checklist.tasks.findIndex(taskToFind => taskToFind.id === task.id);
+			checklist.tasks.splice(taskIdx, 1, task);
+			this.dispatchBoardSave('toggled the task ' + task.text);
 		},
 		toggleLabel(label) {
 			let currLabels = this.card.labels;
 			if (currLabels.includes(label)) currLabels.splice(currLabels.indexOf(label), 1)
 			else currLabels.push(label);
-			this.dispatchBoardSave('toggled a label');
+			this.dispatchBoardSave('toggled the label ' + label.title);
 		},
 		removeAttachment(attachment) {
 			//kinda temp idk
@@ -254,8 +263,7 @@ export default {
 		},
 		setBgc(color) {
 			this.card.backgroundColor = color;
-			this.closeModal();
-			this.dispatchBoardSave('has changed the background color');
+			this.dispatchBoardSave('changed the background color');
 		},
 		async toggleMember(userId) {
 			// remove member
@@ -279,8 +287,11 @@ export default {
 			else this.editModal = cmpName;
 		},
 		async onUploadImg(ev) {
+			this.isAddingImage = true;
 			const res = await uploadImg(ev);
 			this.card.attachments.push({ imgUrl: res.url });
+			ev.target.value = '';
+			this.isAddingImage = false;
 			this.dispatchBoardSave('added an image');
 		},
 		closeModal() {
@@ -311,12 +322,12 @@ export default {
 		cardLabelEdit,
 		cardChecklistEdit,
 		cardAttachments,
-		cardChecklists,
 		cardDueEdit,
 		activities,
 		cardMemberEdit,
 		Avatar,
-		cardBackgroundEdit
+		cardBackgroundEdit,
+		cardChecklist
 	}
 };
 </script>

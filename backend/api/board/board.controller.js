@@ -35,7 +35,6 @@ async function updateBoard(req, res) {
 	try {
 		const board = req.body.board;
 		let activity = req.body.activity;
-		if (activity && !activity.text) activity.text = 'Unspecified Activity';
 		let user = req.session.user;
 		if (!user) user = { fullName: 'Guest' };
 		else delete user.username;
@@ -55,23 +54,10 @@ async function addBoard(req, res) {
 		res.status(500).end();
 	}
 }
-async function searchBoard(req, res) {
-	try {
-		const topics = await boardService.searchBoard(
-			req.params.id,
-			req.query.text
-		);
-		res.send(topics);
-	} catch (err) {
-		logger.error(err.message);
-		res.status(404).end();
-	}
-}
 module.exports = {
 	getBoard,
 	getBoards,
 	deleteBoard,
 	updateBoard,
-	addBoard,
-	searchBoard,
+	addBoard
 };

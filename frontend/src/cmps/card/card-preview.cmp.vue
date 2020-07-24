@@ -9,7 +9,8 @@
 				class="card-label"
 				v-for="label in labels"
 				:key="label.color"
-				:style="{backgroundColor: label.color, height: labelHeight, width: labelWidth}"
+				:class="{'title-shown':isLabelTitleShown}"
+				:style="{backgroundColor: label.color}"
 			>
 				<p v-if="isLabelTitleShown" class="label-title">{{label.title}}</p>
 				<span></span>
@@ -67,7 +68,7 @@ export default {
 				(enteries, checklist) => (enteries += checklist.tasks.length),
 				0
 			);
-			if (!tasksCount) return "";
+			if (!tasksCount) return '';
 			return (
 				this.card.checklists.reduce(
 					(doneEnteries, checklist) =>
@@ -89,12 +90,6 @@ export default {
 				if (this.card.labels.includes(label.color)) labelsToShow.push(label);
 			});
 			return labelsToShow;
-		},
-		labelHeight() {
-			return this.isLabelTitleShown ? "16px" : "8px";
-		},
-		labelWidth() {
-			return this.isLabelTitleShown ? "56px" : "40px";
 		},
 		dueDateShort() {
 			return utilService.getDateShort(this.card.dueDate);

@@ -8,7 +8,6 @@ const router = express.Router()
 
 router.get('/', boardController.getBoards)
 router.get('/:id', boardController.getBoard)
-router.get('/:id/search', boardController.searchBoard)
 router.post('/',boardController.addBoard)
 router.put('/:id',  boardController.updateBoard)
 router.delete('/:id',  boardController.deleteBoard)

@@ -4,19 +4,14 @@
 			<h1>Sign up for your account</h1>
 			<form @submit.prevent="signup">
 				<h2>{{msg}}</h2>
-				<input
-					v-focus
-					type="text"
-					placeholder="Enter full name"
-					v-model="credentials.fullName"
-					required
-				/>
-				<input type="text" placeholder="Enter user name" v-model="credentials.username" required />
-				<input type="password" placeholder="Create password" v-model="credentials.password" required />
+				<input v-focus type="text" placeholder="Full Name" v-model="credentials.fullName" required />
+				<input type="text" placeholder="Username" v-model="credentials.username" required />
+				<input type="password" placeholder="Password" v-model="credentials.password" required />
 				<button class="add-image">
 					Add Profile Image
 					<input type="file" @change="onUploadImg" />
 				</button>
+				<p>{{textNearUpload}}</p>
 				<button class="signup">Sign Up</button>
 			</form>
 			<hr />
@@ -43,6 +38,7 @@ export default {
 				fullName: '',
 				imgUrl: ''
 			},
+			textNearUpload: ''
 		}
 	},
 	computed: {
@@ -52,6 +48,7 @@ export default {
 		async signup() {
 			// const cred = this.credentials;
 			// if (!cred.username || !cred.password || !cred.fullName) return this.msg = 'Username, password, name are required!'
+			if (this.textNearUpload === 'Uploading...') return this.msg = 'Wait for upload to finish!';
 			try {
 				await this.$store.dispatch({ type: 'signup', userCred: this.credentials })
 				this.$router.push('/board');
@@ -60,8 +57,11 @@ export default {
 			}
 		},
 		async onUploadImg(ev) {
+			this.textNearUpload = 'Uploading...';
+			const splitPath = ev.target.value.split('\\');
 			const imgData = await uploadImg(ev);
 			this.credentials.imgUrl = imgData.url;
+			this.textNearUpload = splitPath[splitPath.length - 1];
 		}
 	},
 	created() {

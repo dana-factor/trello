@@ -1,6 +1,6 @@
-.card-checklists{
+.card-checklist{
     
-    .checklists{
+    // .checklists{
         position: relative;
         &:hover{
             button.remove-checklist{
@@ -84,6 +84,17 @@
         input.add-task::placeholder{
             color: #172b4d;
         }
-
+.progress{
+    display: flex;
+    align-items: center;
+    & div{
+        background-color: gray;
+        height: 10px;
+        width: 400px;
+        & div{
+            background-color: red;
+        }
     }
+}
+    // }
 }

@@ -14,9 +14,10 @@ export const boardService = {
 	getStarterChecklist,
 	getStarterChecklistTask,
 	updateBoardLabel,
-	removeChecklist,
-	removeChecklistTask,
-	searchBoard,
+	// removeChecklist,
+	// removeChecklistTask,
+	// searchBoard,
+	getChecklistIdxById
 };
 function query(filterBy) {
 	return httpService.get(`board`);
@@ -29,8 +30,8 @@ function remove(id) {
 	return httpService.delete(`board/${id}`);
 }
 
-function save(board,activity) {
-	return board._id ? _update(board,activity) : _add(board);
+function save(board, activity) {
+	return board._id ? _update(board, activity) : _add(board);
 }
 function updateBoardLabel(board, label) {
 	const idx = board.labels.findIndex(
@@ -38,18 +39,8 @@ function updateBoardLabel(board, label) {
 	);
 	board.labels.splice(idx, 1, label);
 }
-function removeChecklist(card, checklistId) {
-	const idx = card.checklists.findIndex(
-		(findChecklist) => checklistId === findChecklist.id
-	);
-	card.checklists.splice(idx, 1);
-}
-function removeChecklistTask(card, checklistId, taskId) {
-	const checklist = card.checklists.find(
-		(checklist) => checklistId === checklist.id
-	);
-	const idx = checklist.tasks.findIndex((findTask) => taskId === findTask.id);
-	checklist.tasks.splice(idx, 1);
+function getChecklistIdxById(checklists, id) {
+	return checklists.findIndex((checklist) => id === checklist.id);
 }
 // function saveCardToBoard(board, card) {
 // 	board.topics.find((topic) => {
@@ -62,7 +53,7 @@ function getStarterBoard() {
 	// var board = {};
 	var user = JSON.parse(sessionStorage.getItem('user'));
 	var guestId = _makeId();
-	if (!user) user = { fullName: 'Guest', '_id': guestId };
+	if (!user) user = { fullName: 'Guest', _id: guestId };
 	return {
 		// _id: _makeId(),
 		name: 'New Board',
@@ -237,7 +228,7 @@ function getStarterCard(cardName) {
 		labels: [],
 		backgroundColor: 'white',
 		attachments: [],
-		checklists: []
+		checklists: [],
 	};
 }
 function getStarterChecklist() {
@@ -284,9 +275,9 @@ function getCardById(board, id) {
 		if (card) return card;
 	}
 }
-function searchBoard(id, text) {
-	return httpService.get(`board/${id}/search?text=${text}`);
-}
+// function searchBoard(id, text) {
+// 	return httpService.get(`board/${id}/search?text=${text}`);
+// }
 function _makeId(length = 5) {
 	var txt = '';
 	var possible =
