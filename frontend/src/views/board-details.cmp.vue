@@ -326,7 +326,7 @@ export default {
 	},
 	mounted() { },
 	destroyed() {
-		this.$emit('setBgc', '');
+		this.$emit('setBgc', '#fceddd');
 		this.$emit('setBgImg', '');
 	},
 	watch: {
