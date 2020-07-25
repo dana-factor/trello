@@ -22,9 +22,11 @@
             line-height: rem(20px);
             font-size: rem(16px);
             font-weight: 600;
-            margin: 0 0 2px 6px;
-            padding: 5px 12px 5px 6px;
-            width: 100%;
+            margin: 0 0 2px 0px;
+            padding: 5px 12px 5px 2px;
+            width: 90%;
+            overflow: hidden;
+            text-overflow: ellipsis;
             color: #606060;
             cursor: text;
             &:focus{
@@ -86,8 +88,10 @@
             color: #172b4d;
         }
 .progress{
+    margin-left: 35px;
     display: flex;
     align-items: center;
+    padding: 4px 0;
     span {
         width: 45px;
     }
@@ -104,5 +108,5 @@
         }
     }
 }
-    // }
+
 }

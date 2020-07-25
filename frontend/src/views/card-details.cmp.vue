@@ -91,8 +91,7 @@
             />
           </div>
           <h2>
-            <i class="el-icon-notebook-1"></i>
-            Activity
+            <i class="el-icon-notebook-1"></i>Activity
           </h2>
 			<div class="comment">
 			<avatar class="avatar-comment" :src="loggedinUser.imgUrl" :username="loggedinUser.fullName" :lighten="100" :size="28" background-color="#dfe1e6" color="#172b4d" />
@@ -101,25 +100,25 @@
             <activities :activities="activities" isShowInCard="false" />
         </div>
         <div class="right-side">
-          <h2>Add To Card</h2>
+          <h2>Add<span> To Card</span></h2>
           <button @click="toggleModal('card-label-edit')">
-            <i class="el-icon-collection-tag"></i> Labels
+            <i class="el-icon-collection-tag"></i> <span>Labels</span>
           </button>
           <button @click="toggleModal('card-checklist-edit')">
-            <i class="el-icon-document-checked"></i> Checklists
+            <i class="el-icon-document-checked"></i> <span>Checklists</span>
           </button>
           <button @click="toggleModal('card-due-edit')">
-            <i class="el-icon-time"></i> Due Date
+            <i class="el-icon-time"></i> <span>Due Date</span>
           </button>
           <button @click="toggleModal('card-member-edit')">
-            <i class="el-icon-user"></i> Members
+            <i class="el-icon-user"></i> <span>Members</span>
           </button>
           <button>
             <input type="file" @change="onUploadImg" accept="image/*" />
-            <i class="el-icon-picture-outline"></i> Add Image
+            <i class="el-icon-picture-outline"></i><span> Add Image</span>
           </button>
           <button @click="toggleModal('card-background-edit')">
-            <i class="el-icon-brush"></i> Background Color
+            <i class="el-icon-brush"></i> <span>Background Color</span>
           </button>
         </div>
       </div>
@@ -254,7 +253,7 @@ export default {
 			let currLabels = this.card.labels;
 			if (currLabels.includes(label)) currLabels.splice(currLabels.indexOf(label), 1)
 			else currLabels.push(label);
-			this.dispatchBoardSave('toggled the label ' + label.title);
+			this.dispatchBoardSave('toggled a label');
 		},
 		removeAttachment(attachment) {
 			//kinda temp idk
