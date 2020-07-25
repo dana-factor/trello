@@ -57,6 +57,10 @@
         line-height: 20px;
         font-size: rem(16px);
         cursor: pointer;
+        & .el-icon-notebook-1{
+            margin-left: 12px;
+            margin-top: 6px;
+        }
     }
     .board-edit-background {
         display: flex;

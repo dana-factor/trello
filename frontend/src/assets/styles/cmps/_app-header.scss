@@ -6,7 +6,11 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas: 'btns logo login';
-    @include for-narrow-layout {
+    // @include for-narrow-layout {
+    //     grid-template-columns: repeat(2, 1fr);
+    //     grid-template-areas: 'logo logo btns login';
+    // }
+    @include for-normal-layout {
         grid-template-columns: repeat(2, 1fr);
         grid-template-areas: 'logo logo btns login';
     }
@@ -17,8 +21,13 @@
         justify-self: center;
         align-self: center;
         @include for-narrow-layout {
-            justify-self: left;
+            // justify-self: left;
             font-size: rem(20px);
+            // margin-left: 4px;
+        }
+        @include for-normal-layout {
+            justify-self: left;
+            font-size: rem(22px);
             margin-left: 4px;
         }
     }
