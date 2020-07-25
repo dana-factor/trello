@@ -1,140 +1,144 @@
 <template>
-	<section class="card-details-screen" @mousedown.self="$router.push('../')">
-		<div class="card-details" v-if="card" @mousedown="closeModal">
-			<div class="header">
-				<i class="el-icon-postcard"></i>
-				<h1
-					@keypress.enter.prevent="updateCardName; $event.target.blur()"
-					@blur="updateCardName"
-					contenteditable
-				>{{card.name}}</h1>
-				<router-link to="../">
-					<i class="el-icon-close"></i>
-				</router-link>
-			</div>
-			<div class="body">
-				<div class="left-side">
-					<div class="members-labels-due">
-						<div v-if="card.members.length">
-							<h3>Members</h3>
-							<ul>
-								<li
-									v-for="member in card.members"
-									:key="member._id"
-									:title="member.fullName"
-									class="card-members"
-								>
-									<avatar
-										:src="member.imgUrl"
-										:username="member.fullName"
-										:size="25"
-										background-color="#dfe1e6"
-										color="#172b4d"
-									/>
-								</li>
-							</ul>
-						</div>
-						<h3 v-if="labels.length">Labels</h3>
-						<ul>
-							<li
-								v-for="label in labels"
-								:key="label.color"
-								:style="{backgroundColor:label.color}"
-							>{{label.title}}</li>
-						</ul>
-						<div v-if="card.dueDate" class="due-date-container">
-							<h3>Due Date</h3>
-							<div class="due-date-info">
-								<input
-									type="checkbox"
-									v-model="card.isCardDone"
-									@change="dispatchBoardSave('marked as done')"
-								/>
-								<p>{{ dueDateToShow}}</p>
-								<span class="card-status completed" v-if="card.isCardDone">complete</span>
-								<span class="card-status overdue" v-if="isOverdue">overdue</span>
-								<i class="el-icon-delete" @click="removeDueDate"></i>
-							</div>
-						</div>
-					</div>
-					<div class="description">
-						<i class="el-icon-document"></i>
-						<h2>Description</h2>
-						<textarea
-							v-model="card.description"
-							@input="isDescriptionSaveShown = true"
-							placeholder="Add a more detailed description..."
-						></textarea>
-						<button
-							v-if="isDescriptionSaveShown"
-							@click="dispatchBoardSave('updated the description'); isDescriptionSaveShown=false"
-							class="save"
-						>Save</button>
-						<button
-							v-if="isDescriptionSaveShown"
-							@click="card.description = ''; isDescriptionSaveShown=false"
-						>
-							<i class="el-icon-close"></i>
-						</button>
-					</div>
-					<card-attachments :attachments="card.attachments" @attachmentRemoved="removeAttachment" />
-					<h2 v-if="isAddingImage">Adding image...</h2>
-					<div class="checklists" v-for="checklist in card.checklists" :key="checklist.id">
-						<card-checklist
-							:checklist="checklist"
-							@newChecklistTaskAdded="addNewChecklistTask"
-							@checklistRemoved="removeChecklist"
-							@checklistTaskRemoved="removeChecklistTask"
-							@checklistTitleUpdated="updateChecklistTitle"
-							@checklistTaskTextUpdated="updateChecklistTaskText"
-							@taskToggled="saveToggledTask"
-						/>
-					</div>
-					<input v-model="comment" @keypress.enter="addComment" />
-					<activities :activities="activities" isShowInCard="false" />
-				</div>
-				<div class="right-side">
-					<h2>Add To Card</h2>
-					<button @click="toggleModal('card-label-edit')">
-						<i class="el-icon-collection-tag"></i> Labels
-					</button>
-					<button @click="toggleModal('card-checklist-edit')">
-						<i class="el-icon-document-checked"></i> Checklists
-					</button>
-					<button @click="toggleModal('card-due-edit')">
-						<i class="el-icon-time"></i> Due Date
-					</button>
-					<button @click="toggleModal('card-member-edit')">
-						<i class="el-icon-user"></i> Members
-					</button>
-					<button>
-						<input type="file" @change="onUploadImg" accept="image/*" />
-						<i class="el-icon-picture-outline"></i> Add Image
-					</button>
-					<button @click="toggleModal('card-background-edit')">
-						<i class="el-icon-brush"></i> Background Color
-					</button>
-				</div>
-			</div>
-			<card-edit-modal v-if="editModal" @modalClose="closeModal">
-				<template v-slot:header>{{modalTitle}}</template>
-				<component
-					:is="editModal"
-					:boardLabels="board.labels"
-					:labels="labels"
-					:members="board.members"
-					:card="card"
-					@modalClose="closeModal"
-					@toggleLabel="toggleLabel"
-					@boardLabelsUpdate="updateBoardLabels"
-					@newChecklist="addNewChecklist"
-					@saveDueDate="saveDueDate"
-					@toggleMember="toggleMember"
-					@setBgc="setBgc"
-				></component>
-			</card-edit-modal>
-		</div>
-	</section>
+  <section class="card-details-screen" @mousedown.self="$router.push('../')">
+    <div class="card-details" v-if="card" @mousedown="closeModal">
+      <div class="header">
+        <i class="el-icon-postcard"></i>
+        <h1
+          @keypress.enter.prevent="updateCardName; $event.target.blur()"
+          @blur="updateCardName"
+          contenteditable
+        >{{card.name}}</h1>
+        <router-link to="../">
+          <i class="el-icon-close"></i>
+        </router-link>
+      </div>
+      <div class="body">
+        <div class="left-side">
+          <div class="members-labels-due">
+            <div v-if="card.members.length">
+              <h3>Members</h3>
+              <ul>
+                <li
+                  v-for="member in card.members"
+                  :key="member._id"
+                  :title="member.fullName"
+                  class="card-members"
+                >
+                  <avatar
+                    :src="member.imgUrl"
+                    :username="member.fullName"
+                    :size="25"
+                    background-color="#dfe1e6"
+                    color="#172b4d"
+                  />
+                </li>
+              </ul>
+            </div>
+            <h3 v-if="labels.length">Labels</h3>
+            <ul>
+              <li
+                v-for="label in labels"
+                :key="label.color"
+                :style="{backgroundColor:label.color}"
+              >{{label.title}}</li>
+            </ul>
+            <div v-if="card.dueDate" class="due-date-container">
+              <h3>Due Date</h3>
+              <div class="due-date-info">
+                <input
+                  type="checkbox"
+                  v-model="card.isCardDone"
+                  @change="dispatchBoardSave('marked as done')"
+                />
+                <p>{{ dueDateToShow}}</p>
+                <span class="card-status completed" v-if="card.isCardDone">complete</span>
+                <span class="card-status overdue" v-if="isOverdue">overdue</span>
+                <i class="el-icon-delete" @click="removeDueDate"></i>
+              </div>
+            </div>
+          </div>
+          <div class="description">
+            <i class="el-icon-document"></i>
+            <h2>Description</h2>
+            <textarea
+              v-model="card.description"
+              @input="isDescriptionSaveShown = true"
+              placeholder="Add a more detailed description..."
+            ></textarea>
+            <button
+              v-if="isDescriptionSaveShown"
+              @click="dispatchBoardSave('updated the description'); isDescriptionSaveShown=false"
+              class="save"
+            >Save</button>
+            <button
+              v-if="isDescriptionSaveShown"
+              @click="card.description = ''; isDescriptionSaveShown=false"
+            >
+              <i class="el-icon-close"></i>
+            </button>
+          </div>
+          <card-attachments :attachments="card.attachments" @attachmentRemoved="removeAttachment" />
+          <h2 v-if="isAddingImage">Adding image...</h2>
+          <div class="checklists" v-for="checklist in card.checklists" :key="checklist.id">
+            <card-checklist
+              :checklist="checklist"
+              @newChecklistTaskAdded="addNewChecklistTask"
+              @checklistRemoved="removeChecklist"
+              @checklistTaskRemoved="removeChecklistTask"
+              @checklistTitleUpdated="updateChecklistTitle"
+              @checklistTaskTextUpdated="updateChecklistTaskText"
+              @taskToggled="saveToggledTask"
+            />
+          </div>
+          <input v-model="comment" @keypress.enter="addComment" />
+          <h5>
+            <i class="el-icon-notebook-1"></i>
+            Activity Log
+            <activities :activities="activities" isShowInCard="false" />
+          </h5>
+        </div>
+        <div class="right-side">
+          <h2>Add To Card</h2>
+          <button @click="toggleModal('card-label-edit')">
+            <i class="el-icon-collection-tag"></i> Labels
+          </button>
+          <button @click="toggleModal('card-checklist-edit')">
+            <i class="el-icon-document-checked"></i> Checklists
+          </button>
+          <button @click="toggleModal('card-due-edit')">
+            <i class="el-icon-time"></i> Due Date
+          </button>
+          <button @click="toggleModal('card-member-edit')">
+            <i class="el-icon-user"></i> Members
+          </button>
+          <button>
+            <input type="file" @change="onUploadImg" accept="image/*" />
+            <i class="el-icon-picture-outline"></i> Add Image
+          </button>
+          <button @click="toggleModal('card-background-edit')">
+            <i class="el-icon-brush"></i> Background Color
+          </button>
+        </div>
+      </div>
+      <card-edit-modal v-if="editModal" @modalClose="closeModal">
+        <template v-slot:header>{{modalTitle}}</template>
+        <component
+          :is="editModal"
+          :boardLabels="board.labels"
+          :labels="labels"
+          :members="board.members"
+          :card="card"
+          @modalClose="closeModal"
+          @toggleLabel="toggleLabel"
+          @boardLabelsUpdate="updateBoardLabels"
+          @newChecklist="addNewChecklist"
+          @saveDueDate="saveDueDate"
+          @toggleMember="toggleMember"
+          @setBgc="setBgc"
+        ></component>
+      </card-edit-modal>
+    </div>
+  </section>
 </template>
 
 <script>
