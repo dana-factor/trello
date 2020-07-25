@@ -3,7 +3,7 @@
     <div class="activities">
 
       <div class="activity" v-for="activity in activitiesToShow" :key="activity.createdAt">
-        <avatar
+        <avatar background-color="#dfe1e6" color="#172b4d"
 			:src="activity.user.imgUrl"
 			:username="activity.user.fullName"
 			:lighten="100"

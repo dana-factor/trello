@@ -19,15 +19,16 @@ export default {
 						},
 						backgroundColor: ['#fee2b3','#ffa299', '#ad6989', '#562349', '#bbbbbb'],
 						data: this.data,
-						options: {
-							legend: {
-								labels: {
-									fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif'
-								}
-							}
-						}
 					}
 				]
+			},
+				{
+				legend: {
+					labels: {
+						fontFamily:
+							'-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif'
+					}
+				}
 			},
 			{
 				scales: {
