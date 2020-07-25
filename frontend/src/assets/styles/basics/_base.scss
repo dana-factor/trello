@@ -68,6 +68,9 @@ input[type="file"] {
 	padding: 7px 15px;
 	outline-color: rgb(92, 92, 92);
 	border-radius: 3px;
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.2);
+	}
 	&:focus {
 		background-color: white;
 	}

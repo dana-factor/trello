@@ -275,12 +275,12 @@ export default {
 				const idx = this.card.members.findIndex(member => member._id === userId);
 				const name = this.card.members[idx].fullName; // keep the name for the action-txt before the splice
 				this.card.members.splice(idx, 1);
-				this.dispatchBoardSave('has removed ' + name + ' as a member');
+				this.dispatchBoardSave('removed ' + name + ' as a member');
 			} else {
 				// add member
 				const user = await userService.getById(userId);
 				this.card.members.push(user);
-				this.dispatchBoardSave('added' + user.fullName + 'as a member');
+				this.dispatchBoardSave('added ' + user.fullName + ' as a member');
 			}
 		},
 		dispatchBoardSave(action, isComment = false) {
