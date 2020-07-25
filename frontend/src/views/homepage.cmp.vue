@@ -4,7 +4,7 @@
 		<div class="hero-container">
 			<!-- <img src="../../public/img/5545.jpg" /> -->
 			<img src="../../src/assets/img/hero.png" />
-			<h1>try trella now</h1>
+			<h1>try trellA now</h1>
 		</div>
 		<!-- <board-list
 			:boards="boards"
