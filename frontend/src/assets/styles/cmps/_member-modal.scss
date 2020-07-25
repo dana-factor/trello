@@ -5,6 +5,7 @@
   width: 200px;
   top: 85px;
   right: 50vw;
+  transform: translate(50%,0);
   border-radius: 3px;
 //   padding: 0 10px;
   box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25),
@@ -20,6 +21,7 @@
   }
   .app-filter {
     align-self: center;
+    display: flex;
   }
   h4 {
     padding: 0 32px;
