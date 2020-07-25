@@ -63,7 +63,7 @@
             <textarea
               v-model="card.description"
               @input="isDescriptionSaveShown = true"
-              placeholder="Add a more detailed description..."
+              placeholder="Add a description..."
             ></textarea>
             <button
               v-if="isDescriptionSaveShown"
