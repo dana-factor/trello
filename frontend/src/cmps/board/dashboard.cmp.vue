@@ -3,6 +3,7 @@
 	<section class="dashboard">
         <i class="el-icon-close" @click="closeDashboard"></i>
         <div class="facts">
+            <div class="fact-half">
             <div class="info-box">
                 <i class="el-icon-user"></i>
                 <div class="info">
@@ -17,6 +18,8 @@
                 <p> total cards </p>
                 </div>
             </div>
+            </div>
+            <div class="fact-half">
             <div class="info-box">
                 <i class="el-icon-question"></i>
                 <div class="info">
@@ -30,6 +33,7 @@
                 <h4> {{numOfActivities}} </h4>
                 <p> activities </p>
                 </div>
+            </div>
             </div>
         </div>
         <div class="charts">
