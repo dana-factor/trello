@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<div class="board-list">
-			<!-- <h1>Boards</h1> -->
 			<ul>
 				<li
 					v-for="board in boards"
