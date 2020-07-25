@@ -15,7 +15,7 @@
 	},
 	"devDependencies": {},
 	"scripts": {
-		"nodemon": "nodemon start",
+		"nodemon": "nodemon start --ignore 'public'",
 		"start": "node server.js"
 	},
 	"author": "",
