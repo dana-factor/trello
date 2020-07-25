@@ -19,7 +19,7 @@
         margin: 4px;
         transition: .2s;
     }
-    a {
+    a, .logout {
         font-weight: 500;
         color: white;
         background-color: rgba(255, 255, 255, 0.2);
@@ -30,5 +30,9 @@
         &:hover {
             background-color: rgba(255, 255, 255, 0.3);
         }
+    }
+    .logout {
+        font-weight: 600;
+        padding: 7px 5px;
     }
 }

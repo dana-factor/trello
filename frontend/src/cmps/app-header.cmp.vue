@@ -14,7 +14,7 @@
 			</template>
             <template v-else>
                 Hey {{loggedInUser.fullName}}!
-                <button @click="$emit('logout')">Logout</button>
+                <button class="logout" @click="$emit('logout')">Logout</button>
             </template>
 		</div>
 	</section>
