@@ -1,5 +1,4 @@
 const dbService = require('../../services/db.service');
-// const reviewService = require('../review/review.service')
 const ObjectId = require('mongodb').ObjectId;
 
 module.exports = {
@@ -8,7 +7,6 @@ module.exports = {
 	remove,
 	update,
 	add,
-	searchBoard,
 };
 
 async function query(text = '') {
@@ -42,21 +40,19 @@ async function remove(boardId) {
 	}
 }
 
-async function update(
-	board,
-	activity = { text: 'Unspecified Activity', cardId: null },
-	user
-) {
+async function update(board, activity, user) {
 	const collection = await dbService.getCollection('board');
 	board._id = ObjectId(board._id);
-	const activityToAdd = {
-		text: activity.text,
-		cardId: activity.cardId,
-		isComment: activity.isComment,
-		user,
-		createdAt: Date.now(),
-	};
-	board.activities.unshift(activityToAdd);
+	if (activity && activity.text) {
+		const activityToAdd = {
+			text: activity.text,
+			cardId: activity.cardId,
+			isComment: activity.isComment,
+			user,
+			createdAt: Date.now(),
+		};
+		board.activities.unshift(activityToAdd);
+	}
 	try {
 		await collection.replaceOne({ _id: board._id }, { $set: board });
 		return board;
@@ -73,23 +69,6 @@ async function add(board) {
 		return board;
 	} catch (err) {
 		console.log(`ERROR: cannot insert board`);
-		throw err;
-	}
-}
-async function searchBoard(boardId, text = '') {
-	const collection = await dbService.getCollection('board');
-	try {
-		let board = await collection.findOne({ _id: ObjectId(boardId) });
-		const exp = new RegExp(`.*${text}.*`, 'i');
-		board.topics = board.topics.filter((topic) => {
-			topic.cards = topic.cards.filter(
-				(card) => card.name.match(exp) || card.description.match(exp)
-			);
-			return topic.cards.length;
-		});
-		return board.topics;
-	} catch (err) {
-		console.log(`ERROR: while finding board ${boardId}`);
 		throw err;
 	}
 }

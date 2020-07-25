@@ -1,0 +1,70 @@
+.homepage{
+    margin: 0 auto;
+    text-align: center;
+    background-color: #fceddd;
+    overflow: hidden;
+    .hero-container{
+        background-color: #fadec0;
+        overflow: hidden;
+        height: 600px;
+    }
+    img{
+        text-align: center;
+        max-width: 900px;
+        position: relative;
+        bottom: 100px;
+    }
+    h1{
+        word-spacing: 40px;
+        font-family: Monoton;
+        font-size: 80px;
+        position: relative;
+        bottom: 201px;
+        text-align: center;
+        margin: 0 auto;
+        padding: 20px 40px;
+        display: block;
+        background-color: #fceddd;
+        border: 7px solid #ddb191;
+        width: max-content;
+        border-radius: 50px;
+        &:hover{
+                border-color: #ef9a47;
+        }
+    }
+    h2{
+        font-size: rem(25px);
+        font-weight: bold;
+        font-family: Roboto;
+        margin-bottom: 20px;
+    }
+    p{
+        font-size: rem(20px);
+        line-height: rem(40px);
+        font-family: Roboto;
+    }
+    .note{
+        background-repeat: round;
+        height: 400px;
+        width: 400px;
+        display: inline-block;
+        margin: 20px 0 30px;
+    }
+    .green-note{
+        background-image: url('~@/assets/img/note-green.png');
+        margin-right: 40px;
+        padding: 105px 46px 70px;
+    }
+    .yellow-note{
+        background-image: url('~@/assets/img/note-yellow.png');
+        margin-right: 40px;
+        padding: 105px 45px 25px;
+    }
+    .blue-note{
+        background-image: url('~@/assets/img/note-blue.png');
+        width: 420px;
+        // display: inline-block;
+        padding: 105px 78px 34px 47px;
+    
+    }
+}

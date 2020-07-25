@@ -1,11 +1,11 @@
 <template>
     <section class="board-edit-background">
         <div v-if="!isColorPickerOpen && !isImgPickerOpen" class="bgImages-container">
-        <img class="img-collage" src="../../../public/img/collage.jpg" @click="toggleImgPicker"/>
+        <img class="img-collage" src="../../../src/assets/img/collage.jpg" @click="toggleImgPicker"/>
         <h4>Photos</h4>
         </div>
         <div v-if="!isColorPickerOpen && !isImgPickerOpen" class="colors-container">
-        <img class="img-colors" src="../../../public/img/colors.jpg" @click="toggleColorPicker"/>
+        <img class="img-colors" src="../../../src/assets/img/colors.jpg" @click="toggleColorPicker"/>
         <h4>Colors</h4>
         </div>
         <color-picker v-if="isColorPickerOpen" @setBgc="setBgc" />
@@ -62,6 +62,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

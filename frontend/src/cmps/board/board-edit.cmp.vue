@@ -7,21 +7,22 @@
 			</button>
 		</div>
 		<div class="board-menu-nav">
-			<h5 @click="toggleCmp('board-edit-background')">Change Background</h5>
+			<h5 @click="toggleDeleteModal"><i class="el-icon-delete"></i> Delete Board</h5>
+			<h5 @click="toggleCmp('board-edit-background')"><i class="el-icon-brush"></i> Change Background</h5>
 			<!-- <h5 @click="toggleCmp('date-picker')">Change Due Date</h5> -->
 			<h5 @click="toggleDeleteModal">Delete Board</h5>
 		</div>
 		<div>
-			<component
-				v-if="cmpToShow"
-				:is="cmpToShow"
-				@setBgc="setBgc"
-				@setBgImg="setBgImg"
-			/>
+			<component v-if="cmpToShow" :is="cmpToShow" @setBgc="setBgc" @setBgImg="setBgImg" />
 			<!-- <board-edit-background v-if="isEditingBg" @toggleColorPicker="toggleColorPicker" @setBgc="setBgc" @setBgImg="setBgImg"/>
 			<date-picker v-if="datePickerOpen"/>-->
-			<activites :activities="board.activities" />
+				<!-- <activites :activities="board.activities" /> -->
 		</div>
+			<div class="board-activities">
+				<h5><i class="el-icon-notebook-1"></i>
+				 Activity</h5>
+				<activites :activities="board.activities" />
+			</div>
 	</div>
 </template>
 
@@ -66,7 +67,7 @@ export default {
 		setBgImg(imgUrl) {
 			this.$emit('setBgImg', imgUrl);
 		},
-        toggleCmp(cmpName) {
+		toggleCmp(cmpName) {
 			if (cmpName === this.cmpToShow) this.cmpToShow = '';
 			else this.cmpToShow = cmpName;
 		}

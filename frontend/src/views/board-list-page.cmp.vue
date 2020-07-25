@@ -1,13 +1,14 @@
 <template>
 	<div>
 		<div class="board-list">
-			<h1>Boards</h1>
+			<!-- <h1>Boards</h1> -->
 			<ul>
 				<li
 					v-for="board in boards"
 					:key="board._id"
 				>
 					<router-link :to="'/board/'+board._id">
+					<!-- <img src="~@/assets/img/pinned-note.png"/> -->
 						<board-preview
 							:board="board"
 						/>
