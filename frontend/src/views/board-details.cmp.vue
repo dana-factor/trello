@@ -2,7 +2,7 @@
 	<section
 		v-if="board"
 		class="board-details"
-		@click="isFilterModalOpen=false; isFilterInputShown=false;"
+		@click="isFilterModalOpen=false; isFilterInputShown=false; isUserListOpen=false;"
 	>
 		<div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
 		<div class="dashboard-modal" v-if="isDashboardOpen">
@@ -33,7 +33,7 @@
 				<i class="el-icon-s-operation"></i>
 			</button>
 		</board-nav>
-		<div class="member-modal" v-if="isUserListOpen">
+		<div class="member-modal" v-if="isUserListOpen" @click.stop>
 			<h4>Invite to Board</h4>
 			<i class="el-icon-close" @click="isUserListOpen = false"></i>
 			<app-filter @filterSet="searchMember" />
@@ -161,7 +161,7 @@ export default {
 		},
 		toggleUserList() {
 			this.isUserListOpen = !this.isUserListOpen;
-			console.log(this.isUserListOpen)
+			// console.log(this.isUserListOpen)
 		},
 		updateBoardName(ev) {
 			if (ev.target.innerText) this.board.name = ev.target.innerText;
