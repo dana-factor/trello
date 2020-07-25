@@ -2,6 +2,7 @@
     
     // .checklists{
         position: relative;
+        margin-bottom: 10px;
         &:hover{
             button.remove-checklist{
                 display: inline-block;

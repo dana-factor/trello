@@ -21,12 +21,12 @@
       <date-picker v-if="datePickerOpen"/>-->
       <!-- <activites :activities="board.activities" /> -->
     </div>
+    <h5>
+      <i class="el-icon-notebook-1"></i>
+      Activity Log
+    </h5>
     <div class="board-activities">
-      <h5>
-        <i class="el-icon-notebook-1"></i>
-        Activity Log
-        <activites :activities="board.activities" />
-      </h5>
+      <activites :activities="board.activities" />
     </div>
   </div>
 </template>
