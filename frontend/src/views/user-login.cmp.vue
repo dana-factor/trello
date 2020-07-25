@@ -12,7 +12,7 @@
 			</div>
 			<form v-else @submit.prevent="login">
 				<input type="text" v-model="credentials.username" placeholder="Username" />
-				<input type="text" v-model="credentials.password" placeholder="Password" />
+				<input type="password" v-model="credentials.password" placeholder="Password" />
 				<button>Login</button>
 			</form>
 			<hr>

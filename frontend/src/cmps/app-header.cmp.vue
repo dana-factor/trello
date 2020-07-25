@@ -13,14 +13,18 @@
 				<router-link to="/login">Login</router-link>
 			</template>
             <template v-else>
-                Hey {{loggedInUser.fullName}}!
+				<div class="user-header">
+                <avatar class="avatar" :src="loggedInUser.imgUrl" :username="loggedInUser.fullName" :size="32" background-color="#dfe1e6" color="#172b4d"/>
                 <button class="logout" @click="$emit('logout')">Logout</button>
+				</div>
             </template>
 		</div>
 	</section>
 </template>
 
 <script>
+import Avatar from 'vue-avatar'
+
 export default {
 	props: ['loggedInUser'],
 	data() {
@@ -44,7 +48,7 @@ export default {
 
 	},
 	components: {
-
+		Avatar
 	}
 
 }
