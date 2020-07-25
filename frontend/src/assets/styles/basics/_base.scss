@@ -4,8 +4,8 @@
 }
 
 html {
-	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans,
-		Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue,
+		sans-serif;
 	color: #606060;
 }
 
@@ -52,13 +52,13 @@ ul {
 // li {
 // 	display: inline-block;
 // }
-input[type='file'] {
+input[type="file"] {
 	color: transparent;
 	height: 100%;
 	width: 100%;
 	position: absolute;
 	left: 0;
-    top: 0;
+	top: 0;
 	cursor: pointer;
 	&::-webkit-file-upload-button {
 		visibility: hidden;
@@ -79,14 +79,26 @@ input[type='file'] {
 	border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-	background: rgba(0,0,0,.2);
+	border-radius: 10px;
+	background: rgba(0, 0, 0, 0.2);
 }
 ::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background: transparent;
+	border-radius: 10px;
+	background: transparent;
 }
 ::-webkit-scrollbar-button {
 	width: 0;
 	height: 0;
+}
+
+.smooth-dnd-container.horizontal > .smooth-dnd-draggable-wrapper {
+	display: inline-block;
+}
+
+.board-details .topic-wrapper {
+	max-height: 70vh;
+}
+
+.smooth-dnd-disable-touch-action * {
+	touch-action: auto;
 }
