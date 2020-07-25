@@ -7,15 +7,15 @@
 			@blur="updateChecklistTitle"
 			@keydown.enter="updateChecklistTitle; $event.target.blur()"
 		/>
+		<button class="remove-checklist" @click="removeChecklist(checklist)">
+			<i class="el-icon-delete"></i>
+		</button>
 		<div v-if="checklist.tasks.length" class="progress">
 			<span> {{checklistProgress}}</span>
 			<div>
 				<div :class="{completed: checklistCompleted}" :style="{width:checklistProgress}"></div>
 			</div>
 		</div>
-		<button class="remove-checklist" @click="removeChecklist(checklist)">
-			<i class="el-icon-delete"></i>
-		</button>
 		<ul>
 			<li v-for="(task,index) in checklistToUpdate.tasks" :key="task.id">
 				<input type="checkbox" v-model="task.isDone" @change="saveToggledTask(task)" />
