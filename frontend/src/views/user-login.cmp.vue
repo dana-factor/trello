@@ -1,21 +1,23 @@
 <template>
 	<section class="user-login">
+		<div class="login-container">
 		<h1>Login</h1>
-		<h2>{{msg}}</h2>
-		<div v-if="loggedinUser">
+		<!-- <h2>{{msg}}</h2> -->
+		<!-- <div v-if="loggedinUser">
 			<h3>
 				Loggedin User:
 				{{loggedinUser.username}}
 				<button @click="logout">Logout</button>
 			</h3>
-		</div>
-		<form v-else @submit.prevent="login">
-			<input type="text" v-model="credentials.username" placeholder="Username" />
-			<br />
-			<input type="text" v-model="credentials.password" placeholder="Password" />
-			<br />
-			<button>Login</button>
+		</div> -->
+		 <!-- v-else -->
+		<form @submit.prevent="login">
+			<h2>{{msg}}</h2>
+			<input v-focus type="text" v-model="credentials.username" placeholder="Username" required />
+			<input type="password" v-model="credentials.password" placeholder="Password" required />
+			<button class="login">Login</button>
 		</form>
+		<hr />
 		<p v-if="!loggedinUser">
 			Not registered yet?
 			<router-link to="/signup">Sign Up!</router-link>
@@ -28,6 +30,7 @@
 				<button @click="removeUser(user._id)">x</button>
 			</li>
 		</ul> -->
+		</div>
 	</section>
 </template>
 
