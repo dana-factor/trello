@@ -1,15 +1,14 @@
 
 <script>
-import VueCharts from "vue-chartjs";
-import { Bar } from "vue-chartjs";
+import VueCharts from 'vue-chartjs';
+import { Bar } from 'vue-chartjs';
 
 Chart.defaults.global.legend.display = false;
 
 export default {
 	extends: Bar,
-	props: ["labels", "data"],
+	props: ['labels', 'data'],
 	mounted() {
-		console.log(this.labels, this.data);
 		this.renderChart(
 			{
 				labels: this.labels,
@@ -19,14 +18,14 @@ export default {
 							return tooltipItem.yLabel;
 						},
 						backgroundColor: [
-							"#6B4C9A",
-							"#396AB1",
-							"#DA7C30",
-							"#CC2529",
-							"#535154",
-                            "#922428",
-                            "#948B3D",
-							"#3E9651"
+							'#6B4C9A',
+							'#396AB1',
+							'#DA7C30',
+							'#CC2529',
+							'#535154',
+							'#922428',
+							'#948B3D',
+							'#3E9651'
 						],
 						data: this.data
 					}
@@ -34,7 +33,14 @@ export default {
 			},
 			{
 				scales: {
-					yAxes: [{ ticks: { min: 0 } }]
+					yAxes: [
+						{
+							ticks: {
+								min: 0,
+								stepSize: 1
+							}
+						}
+					]
 				},
 				tooltips: {
 					enabled: false
