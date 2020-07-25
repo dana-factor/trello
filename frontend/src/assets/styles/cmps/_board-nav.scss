@@ -12,6 +12,10 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas: 'name members btns';
+    @include for-narrow-layout {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas: 'name members btns';
+    }
     .board-name {
         grid-area: name;
         font-size: rem(18px);
@@ -20,11 +24,17 @@
         margin-left: 4px;
         color:  #172b4d;
         width: fit-content;
+        padding-left: 4px;
         &:hover {
             background-color: rgba(255, 255, 255, 0.2);
         }
         &:hover:focus{
             background-color: white;
+        }
+        @include for-narrow-layout {
+            max-width: 85px;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
     .nav-members {
@@ -32,6 +42,14 @@
         align-items: center;
         grid-area: members;
         justify-self: center;
+        overflow: hidden;
+        @include for-narrow-layout {
+            justify-self: right;
+            margin-right: 7px;
+            ul{
+                display: none;
+            }
+        }
     }
     h5 {
         cursor: pointer;
@@ -43,6 +61,23 @@
         color: #172b4d;
         &:hover{
             background-color: rgba(255, 255, 255, 0.3);
+        }
+        .el-icon-user{
+            display: none;
+        }
+        @include for-narrow-layout {
+            border-radius: 3px;
+            font-size: rem(24px);
+            font-weight: 400;
+            padding: 4px 8px;
+            line-height: 1rem;
+            .el-icon-user{
+                color: white;
+                display: block;
+            }
+            .el-icon-plus{
+                display: none;
+            }
         }
     }
     .btns-container{
@@ -60,7 +95,7 @@
             background-color: rgba(255, 255, 255, 0.3);
         }
         button{
-            padding: 0 3px;
+            padding: 0 2px;
             font-size: rem(20px);
             font-weight: 700;
             color: white;
@@ -72,6 +107,9 @@
             margin-right: 4px;
             padding: 2px 7px;
             transition: .4s ease-in;
+            @include for-narrow-layout {
+                max-width: 85px;
+            }
         }
     }
     .filter-modal{
@@ -86,6 +124,9 @@
         box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25), 0 0 0 1px rgba(9, 30, 66, 0.08);
         max-height: 80vh;
         overflow-y: auto;
+        @include for-narrow-layout {
+            right: 4px;
+        }
         .filter-res{
             a{
                 display: flex;

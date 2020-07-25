@@ -3,7 +3,7 @@
 		<slot name="board-name"></slot>
 		<div class="nav-members">
 			<member-avatars :members="members" />
-			<h5 @click.stop="toggleUserList"><i class="el-icon-plus"></i></h5>
+			<h5 @click.stop="toggleUserList"><i class="el-icon-plus"></i><i class="el-icon-user"></i></h5>
 		</div>
 		<div class="btns-container">
 			<div @click.stop class="search-container">
