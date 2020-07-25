@@ -1,4 +1,6 @@
 .user-signup{
+    height: calc(100vh - 90px);
+    position: relative;
     .signup-container{
         background-color: #FFFFFF;
         border-radius: 3px;
@@ -40,18 +42,23 @@
                 transition: .2s ease-in-out;
                 padding: rem(8px);
                 max-width: 400px;
+                color: #5E6C84;
                 &:hover{
                     background-color: #e5e7e993;
                 }
             }
             button.signup{
-                background: #E2E4E6;
-                color: hsl(0,0%,55%);
+                background-color: #e5e7e993;
+                color: #5E6C84;
                 font-weight: 600;
                 border-radius: 3px;
+                border: 2px solid #DFE1E6;
                 padding: 10px;
                 font-size: rem(14px);
                 margin-top: 20px;
+                &:hover{
+                    background-color:#e5e7e9;
+                }
             }
         }
         hr{

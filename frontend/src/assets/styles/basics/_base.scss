@@ -68,14 +68,17 @@ input[type="file"] {
 	padding: 7px 15px;
 	outline-color: rgb(92, 92, 92);
 	border-radius: 3px;
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.2);
+	}
 	&:focus {
 		background-color: white;
 	}
 }
 ::-webkit-scrollbar {
-	height: 12px;
-	width: 12px;
-	// background-color: transparent;
+	height: 10px;
+	width: 10px;
+	background-color: transparent;
 	border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
@@ -84,7 +87,7 @@ input[type="file"] {
 }
 ::-webkit-scrollbar-track {
 	border-radius: 10px;
-	background: transparent;
+	background: hsla(0,0%,100%,.5);
 }
 ::-webkit-scrollbar-button {
 	width: 0;

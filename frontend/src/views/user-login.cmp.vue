@@ -12,9 +12,7 @@
 			</div>
 			<form v-else @submit.prevent="login">
 				<input type="text" v-model="credentials.username" placeholder="Username" />
-				<br />
 				<input type="text" v-model="credentials.password" placeholder="Password" />
-				<br />
 				<button>Login</button>
 			</form>
 			<hr>
@@ -31,7 +29,7 @@
 				<button @click="removeUser(user._id)">x</button>
 			</li>
 		</ul> -->
-		</div>
+		<!-- </div> -->
 	</section>
 </template>
 

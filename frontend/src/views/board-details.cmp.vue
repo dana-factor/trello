@@ -2,7 +2,7 @@
 	<section
 		v-if="board"
 		class="board-details"
-		@click="isFilterModalOpen=false; isFilterInputShown=false;"
+		@click="isFilterModalOpen=false; isFilterInputShown=false; isUserListOpen=false;"
 	>
 		<div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
 		<div class="dashboard-modal" v-if="isDashboardOpen">
@@ -33,7 +33,7 @@
 				<i class="el-icon-s-operation"></i>
 			</button>
 		</board-nav>
-		<div class="member-modal" v-if="isUserListOpen">
+		<div class="member-modal" v-if="isUserListOpen" @click.stop>
 			<h4>Invite to Board</h4>
 			<i class="el-icon-close" @click="isUserListOpen = false"></i>
 			<app-filter @filterSet="searchMember" />
@@ -161,7 +161,7 @@ export default {
 		},
 		toggleUserList() {
 			this.isUserListOpen = !this.isUserListOpen;
-			console.log(this.isUserListOpen)
+			// console.log(this.isUserListOpen)
 		},
 		updateBoardName(ev) {
 			if (ev.target.innerText) this.board.name = ev.target.innerText;
@@ -180,7 +180,6 @@ export default {
 				this.board.members.unshift(user);
 				this.saveBoard('added ' + user.fullName + ' as a member');
 			}
-
 		},
 		searchMember(filterBy) {
 			const exp = new RegExp(`.*${filterBy.searchStr}.*`, 'i');
@@ -201,44 +200,6 @@ export default {
 				return topic.cards.length;
 			});
 			this.filteredTopics = filteredTopics
-			// const filteredcards = filteredTopics.forEach(topic =>topic.cards)
-			// const filteredcards = filteredTopics.forEach(topic =>{
-			// 	return {
-			// 		topicName: topic.name,
-			// 		cards: topic.cards
-			// 	}
-			// })
-			// filteredcards.forEach(card=>{
-			// 	card.topicName = filteredTopics.find((topic)=>{topic.cards})
-			// })
-		},
-		setFilter1(filterBy) {
-			const exp = new RegExp(filterBy.searchStr, 'i');
-			console.log(filterBy.searchStr);
-
-			const filteredTopics = this.board.topics.filter((topic) => {
-				return topic.cards.filter((card) => {
-					console.log('222', card.name.match(exp));
-					return
-					card.name.toLowerCase().includes(filterBy.searchStr.toLowerCase())
-				})
-			});
-			console.log('filteredTopics:', filteredTopics);
-			// const filteredCards = filteredTopics.map(topic=>{
-			// 	return {
-			// 		topicName: topic.name,
-			// 		cardDetails: topic.cards.map((card)=>{
-
-			// 		})
-			// 		cardId: card.id,
-			// 		cardName: card.name,
-			// 		cardDescription: card.description,
-			// 	}
-			// })
-			// console.log('filteredCards2:', filteredCards);
-
-			// this.$store.commit({type: "setFilter", filterBy});
-			// this.$store.dispatch({type: "loadToys"})
 		},
 		setBgc(color) {
 			this.board.style.backgroundColor = color;
