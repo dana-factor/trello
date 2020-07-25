@@ -1,7 +1,7 @@
 <template>
 	<section class="user-signup">
 		<div class="signup-container">
-			<h1>Sign up for your account</h1>
+			<h1>Sign up for your Trella account</h1>
 			<form @submit.prevent="signup">
 				<h2>{{msg}}</h2>
 				<input v-focus type="text" placeholder="Full Name" v-model="credentials.fullName" required />
