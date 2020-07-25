@@ -9,12 +9,8 @@
     & > * {
         border-radius: 3px;
     }
-    // display: flex;
-    // justify-content: space-between;
-    // align-items: center;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    // grid-template-rows: 1fr;
     grid-template-areas: 'name members btns';
     .board-name {
         grid-area: name;

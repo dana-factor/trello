@@ -73,9 +73,9 @@ input[type="file"] {
 	}
 }
 ::-webkit-scrollbar {
-	height: 12px;
-	width: 12px;
-	// background-color: transparent;
+	height: 10px;
+	width: 10px;
+	background-color: transparent;
 	border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
@@ -84,7 +84,7 @@ input[type="file"] {
 }
 ::-webkit-scrollbar-track {
 	border-radius: 10px;
-	background: transparent;
+	background: hsla(0,0%,100%,.5);
 }
 ::-webkit-scrollbar-button {
 	width: 0;
