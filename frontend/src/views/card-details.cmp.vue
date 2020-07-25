@@ -253,7 +253,7 @@ export default {
 			let currLabels = this.card.labels;
 			if (currLabels.includes(label)) currLabels.splice(currLabels.indexOf(label), 1)
 			else currLabels.push(label);
-			this.dispatchBoardSave('toggled the label ' + label.title);
+			this.dispatchBoardSave('toggled a label');
 		},
 		removeAttachment(attachment) {
 			//kinda temp idk
