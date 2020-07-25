@@ -180,7 +180,6 @@ export default {
 				this.board.members.unshift(user);
 				this.saveBoard('added ' + user.fullName + ' as a member');
 			}
-
 		},
 		searchMember(filterBy) {
 			const exp = new RegExp(`.*${filterBy.searchStr}.*`, 'i');
@@ -201,44 +200,6 @@ export default {
 				return topic.cards.length;
 			});
 			this.filteredTopics = filteredTopics
-			// const filteredcards = filteredTopics.forEach(topic =>topic.cards)
-			// const filteredcards = filteredTopics.forEach(topic =>{
-			// 	return {
-			// 		topicName: topic.name,
-			// 		cards: topic.cards
-			// 	}
-			// })
-			// filteredcards.forEach(card=>{
-			// 	card.topicName = filteredTopics.find((topic)=>{topic.cards})
-			// })
-		},
-		setFilter1(filterBy) {
-			const exp = new RegExp(filterBy.searchStr, 'i');
-			console.log(filterBy.searchStr);
-
-			const filteredTopics = this.board.topics.filter((topic) => {
-				return topic.cards.filter((card) => {
-					console.log('222', card.name.match(exp));
-					return
-					card.name.toLowerCase().includes(filterBy.searchStr.toLowerCase())
-				})
-			});
-			console.log('filteredTopics:', filteredTopics);
-			// const filteredCards = filteredTopics.map(topic=>{
-			// 	return {
-			// 		topicName: topic.name,
-			// 		cardDetails: topic.cards.map((card)=>{
-
-			// 		})
-			// 		cardId: card.id,
-			// 		cardName: card.name,
-			// 		cardDescription: card.description,
-			// 	}
-			// })
-			// console.log('filteredCards2:', filteredCards);
-
-			// this.$store.commit({type: "setFilter", filterBy});
-			// this.$store.dispatch({type: "loadToys"})
 		},
 		setBgc(color) {
 			this.board.style.backgroundColor = color;
