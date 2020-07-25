@@ -6,12 +6,21 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas: 'btns logo login';
+    @include for-narrow-layout {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas: 'logo logo btns login';
+    }
     h1 {
         font-family: Monoton;
         font-size: rem(30px);
         grid-area: logo;
         justify-self: center;
         align-self: center;
+        @include for-narrow-layout {
+            justify-self: left;
+            font-size: rem(20px);
+            margin-left: 4px;
+        }
     }
     .btns{
         grid-area: btns;
@@ -40,6 +49,10 @@
         transition: .2s;
         &:hover {
             background-color: rgba(255, 255, 255, 0.3);
+        }
+        @include for-narrow-layout {
+            font-weight: 400;
+            font-size: rem(14px);
         }
     }
     .logout {

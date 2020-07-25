@@ -10,7 +10,7 @@
     right: 0;
     // cursor: pointer;
     z-index: 1;
-    height: calc(100vh - 52px);
+    height: calc(100vh - 50px);
     background-color: #f4f5f7;
     transform: translateX(100%);
     transition: transform 0.3s;
@@ -93,8 +93,6 @@
             .vue-avatar--wrapper{
                 min-width: 32px;
                 min-height: 32px;
-                // margin: 30px;
-                // margin-right: 3px;
             }
             .content{
                 margin-left: 8px;

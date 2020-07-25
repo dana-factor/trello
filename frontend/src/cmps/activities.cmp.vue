@@ -4,10 +4,10 @@
 
       <div class="activity" v-for="activity in activitiesToShow" :key="activity.createdAt">
         <avatar
-          :src="activity.user.imgUrl"
-          :username="activity.user.fullName"
-          :lighten="100"
-          :size="28"
+			:src="activity.user.imgUrl"
+			:username="activity.user.fullName"
+			:lighten="100"
+			:size="28"
         />
         <div class="content" :class="{comment:activity.isComment}">
           <p>

@@ -16,6 +16,9 @@
         h2{
             font-weight: 600;
             padding: 4px 8px;
+            max-width: 230px;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         button.close{
             color: #6b778c;

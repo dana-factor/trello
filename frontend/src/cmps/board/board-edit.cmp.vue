@@ -14,7 +14,6 @@
         <i class="el-icon-brush"></i> Change Background
       </h5>
       <!-- <h5 @click="toggleCmp('date-picker')">Change Due Date</h5> -->
-      <h5 @click="toggleDeleteModal">Delete Board</h5>
     </div>
     <div>
       <component v-if="cmpToShow" :is="cmpToShow" @setBgc="setBgc" @setBgImg="setBgImg" />
