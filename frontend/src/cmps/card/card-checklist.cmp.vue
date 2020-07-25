@@ -8,9 +8,9 @@
 			@keydown.enter="updateChecklistTitle; $event.target.blur()"
 		/>
 		<div v-if="checklist.tasks.length" class="progress">
-			{{checklistProgress}}
+			<span> {{checklistProgress}}</span>
 			<div>
-				<div :style="{width:checklistProgress}"></div>
+				<div :class="{completed: checklistCompleted}" :style="{width:checklistProgress}"></div>
 			</div>
 		</div>
 		<button class="remove-checklist" @click="removeChecklist(checklist)">
@@ -54,7 +54,10 @@ export default {
 			const doneTaskCount = this.checklist.tasks.reduce(
 				(doneEnteriesInTask, task) =>
 					task.isDone ? doneEnteriesInTask + 1 : doneEnteriesInTask, 0);
-			return ((doneTaskCount / tasksCount) * 100).toFixed() + '%';
+			return Math.round(((doneTaskCount / tasksCount) * 100)) + '%';
+		},
+		checklistCompleted() {
+			return this.checklistProgress === '100%';
 		}
 	},
 	methods: {

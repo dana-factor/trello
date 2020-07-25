@@ -87,12 +87,19 @@
 .progress{
     display: flex;
     align-items: center;
+    span {
+        width: 45px;
+    }
     & div{
         background-color: gray;
         height: 10px;
-        width: 400px;
+        width: 100%;
+        border-radius: 5px;
         & div{
             background-color: red;
+        }
+        .completed {
+            background-color: #03b103;
         }
     }
 }
