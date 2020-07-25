@@ -240,7 +240,7 @@
 					font-size: 0.875rem;
 					line-height: 20px;
 					font-weight: 400;
-					padding: 8px 0;
+					padding: 7px 0;
 					margin-left: 35px;
 					.avatar-comment {
 						font-size: 22px;
@@ -265,22 +265,22 @@
 						font-size: rem(14px);
 					}
 				}
+				i {
+					font-size: 22px;
+					font-weight: 500;
+					display: inline-block;
+					margin-right: 13px;
+					&::before {
+						vertical-align: middle;
+					}
+				}
+				h2 {
+					line-height: rem(20px);
+					font-size: rem(16px);
+					font-weight: 600;
+					// margin-bottom: 7px;
+				}
 				.activities-container {
-					i {
-						font-size: 22px;
-						font-weight: 500;
-						display: inline-block;
-						margin-right: 13px;
-						&::before {
-							vertical-align: middle;
-						}
-					}
-					h2 {
-						line-height: rem(20px);
-						font-size: rem(16px);
-						font-weight: 600;
-						margin-bottom: 7px;
-					}
 					.activities {
 						max-height: 35vh;
 						overflow-y: auto;

@@ -90,15 +90,15 @@
               @taskToggled="saveToggledTask"
             />
           </div>
-          <h5>
+          <h2>
             <i class="el-icon-notebook-1"></i>
             Activity
+          </h2>
 			<div class="comment">
 			<avatar class="avatar-comment" :src="loggedinUser.imgUrl" :username="loggedinUser.fullName" :lighten="100" :size="28" background-color="#dfe1e6" color="#172b4d" />
 			<input v-model="comment" @keypress.enter="addComment" placeholder="Write a comment..."/>
 			</div>
             <activities :activities="activities" isShowInCard="false" />
-          </h5>
         </div>
         <div class="right-side">
           <h2>Add To Card</h2>
