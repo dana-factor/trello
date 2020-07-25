@@ -19,7 +19,7 @@
 		</div>
 		<div class="blue-note note">
 			<h2>Make it yours</h2>
-			<p>Make it feel like home for you and your team. Customize the board's appearancets to fit the team's flow.</p>
+			<p>Make it feel like home for you and your team. Customize the board's appearance to fit the team's flow.</p>
 		</div>
 	</section>
 </template>
@@ -37,20 +37,6 @@ export default {
 	},
 	computed: {},
 	methods: {
-		// addBoard(boardName) {
-		// 	var board = boardService.getStarterBoard();
-		// 	if(boardName) board.name = boardName;
-		// 	this.$store.dispatch({ type: "saveBoard", board })
-        //         .then((res) => {
-		// 			this.$router.push('/board/' + res._id)
-		// 		})
-		// 		.catch(err => {
-		// 			console.log("ERROR, cannot add a board", err);
-		// 		});
-        // },
-        // updateBoard(board) {
-        //     this.$store.commit({type: 'saveBoard', board})
-        // }
 	},
 	created() {
         this.$store.dispatch({type: 'loadBoards'})

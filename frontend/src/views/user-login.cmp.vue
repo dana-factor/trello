@@ -31,6 +31,7 @@
 				<button @click="removeUser(user._id)">x</button>
 			</li>
 		</ul> -->
+		</div>
 	</section>
 </template>
 
