@@ -101,7 +101,10 @@
                 white-space: pre-wrap;
                 // word-wrap: break-word;
                 font-size: rem(14px);
-                line-height: 20px;	
+                line-height: 20px;
+                span{
+                    word-break: break-word;
+                }	
             }
             span.name{
                 font-weight: 700;
