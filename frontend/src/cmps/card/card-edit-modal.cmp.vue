@@ -1,18 +1,14 @@
 <template>
 	<section class="card-edit-modal" @click.stop @mousedown.stop>
-		<!-- <div class="header flex"> -->
 		<header>
 			<slot name="header"></slot>
 			<button @click="close"><i class="el-icon-close"></i></button>
 		</header>
-		<!-- </div> -->
 		<slot></slot>
 	</section>
-	<!-- <modal v-if="showModal" @close="showModal = false"> -->
 </template>
 <script>
 export default {
-	// props:['modalLocation'],
 	methods: {
 		close() {
 			this.$emit('modalClose');
