@@ -14,9 +14,6 @@ export default {
 				labels: this.labels,
 				datasets: [
 					{
-						label: function(tooltipItem) {
-							return tooltipItem.yLabel;
-						},
 						backgroundColor: ['#fee2b3','#ffa299', '#ad6989', '#562349', '#bbbbbb'],
 						data: this.data,
 					}

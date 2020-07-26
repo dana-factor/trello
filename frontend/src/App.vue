@@ -31,7 +31,7 @@ export default {
 			this.background.bgc = color;
 		},
 		setBgImg(imgUrl) {
-			this.background.bgc = '';
+			this.background.bgc = '#fceddd';
 			this.background.imgUrl = imgUrl;
 		},
 		async logout() {

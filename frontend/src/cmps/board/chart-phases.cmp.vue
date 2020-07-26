@@ -27,7 +27,13 @@ export default {
 							'#562349',
 							'#bbbbbb'
 						],
-						data: this.data
+						data: this.data,
+						// options: {
+						// 	layout: {
+						// 		width: '100%',
+						// 		height: '100%'
+						// 	}
+						// }
 					}
 				]
 			},
