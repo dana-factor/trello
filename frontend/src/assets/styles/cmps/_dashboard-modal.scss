@@ -55,6 +55,10 @@
         .info-box {
             display: flex;
             margin: 0 20px;
+            padding: 5px;
+            background-color: #d8d1d1;
+            border-radius: 5px;
+            color: #172b4d;
             // @include for-normal-layout {
             //     margin: 0 20px;
             // }
