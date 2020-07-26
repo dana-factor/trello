@@ -1,72 +1,76 @@
 <template>
-	<section class="board-topic">
-			<span class="column-drag-handle">
-		<div class="topic-header">
-			<h2
-				contenteditable
-				@keypress.enter.prevent="updateTopicName"
-				@blur="updateTopicName"
-				@mousemove.stop
-				 @click="closeTopicMenu"
-			>{{topicName}}
-			</h2>
-			<!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
-			<button @click="toggleTopicMenu" class="close"><i class="el-icon-more"></i></button>
-			<div class="topic-menu" v-if="topicMenu">
-				<h3>List Actions</h3>
-				<button
-					@click.stop="toggleTopicMenu"
-					class="close-menu"
-				><i class="el-icon-close"></i></button>
-				<button @click="removeTopic(topic.id); toggleTopicMenu();">Delete List</button>
-				<button @click="addCard(); toggleTopicMenu();">Add Card</button>
-				<button @click="toggleEditListNameShown">Edit List Name</button>
-				<input
-					v-if="editListNameShown"
-					v-model="topicName"
-					v-focus
-					@keypress.enter.prevent="updateTopicName"
-					@blur="updateTopicName"
-				/>
-				<button @click="toggleMinimize(); toggleTopicMenu();"><span v-if="!minimize">Minimize</span><span v-if="minimize">Maximize</span></button>
-			</div>
-		</div>
-		</span>
-		<Container
-			:style="{minHeight: 10 + 'px'}"
-			class="topic-main"
-			v-if="!minimize"
-			group-name="col"
-			@drop="(e) => onCardDrop(topic.id, e)"
-			:get-child-payload="getCardPayload(topic.id)"
-			drag-class="card-ghost"
-			drop-class="card-ghost-drop"
-			:drop-placeholder="dropPlaceholderOptions"
-		>
-			<Draggable
-				v-for="card in topic.cards"
-				:key="card.id"
-			>
-				<card-preview :card="card" :boardLabels="board.labels" @removeCard="removeCard"></card-preview>
-			</Draggable>
-		</Container>
-		<div class="topic-footer" v-if="!minimize">
-			<p v-if="!editCardNameShown" @click="editCardNameShown = true">+ Add another card</p>
-			<textarea
-				v-if="editCardNameShown"
-				v-model="cardName"
-				v-focus
-				@keypress.enter.prevent="addCard"
-				placeholder="Enter a title for this card..."
-			></textarea>
-			<div class="btns">
-				<button v-if="editCardNameShown" @click="addCard" class="add">Add Card</button>
-				<button v-if="editCardNameShown" @click="editCardNameShown = false; cardName=''" class="close">
-					<i class="el-icon-close"></i>
-				</button>
-			</div>
-		</div>
-	</section>
+  <section class="board-topic">
+    <span class="column-drag-handle">
+      <div class="topic-header">
+        <h2
+          contenteditable
+          @keypress.enter.prevent="updateTopicName"
+          @blur="updateTopicName"
+          @mousemove.stop
+          @click="closeTopicMenu"
+        >{{topicName}}</h2>
+        <!-- <input v-else type="text" v-model="topicName" @keyup.enter="updateTopicName(topic.id)"/> -->
+        <button @click="toggleTopicMenu" class="close">
+          <i class="el-icon-more"></i>
+        </button>
+        <div class="topic-menu" v-if="topicMenu">
+          <h3>List Actions</h3>
+          <button @click.stop="toggleTopicMenu" class="close-menu">
+            <i class="el-icon-close"></i>
+          </button>
+          <button @click="removeTopic(topic.id); toggleTopicMenu();">Delete List</button>
+          <button @click="addCard(); toggleTopicMenu();">Add Card</button>
+          <button @click="toggleEditListNameShown">Edit List Name</button>
+          <input
+            v-if="editListNameShown"
+            v-model="topicName"
+            v-focus
+            @keypress.enter.prevent="updateTopicName"
+            @blur="updateTopicName"
+          />
+          <button @click="toggleMinimize(); toggleTopicMenu();">
+            <span v-if="!minimize">Minimize</span>
+            <span v-if="minimize">Maximize</span>
+          </button>
+        </div>
+      </div>
+    </span>
+    <Container
+      :style="{minHeight: 10 + 'px'}"
+      class="topic-main"
+      v-if="!minimize"
+      group-name="col"
+      @drop="(e) => onCardDrop(topic.id, e)"
+      :get-child-payload="getCardPayload(topic.id)"
+      drag-class="card-ghost"
+      drop-class="card-ghost-drop"
+      :drop-placeholder="dropPlaceholderOptions"
+    >
+      <Draggable v-for="card in topic.cards" :key="card.id">
+        <card-preview :card="card" :boardLabels="board.labels" @removeCard="removeCard"></card-preview>
+      </Draggable>
+    </Container>
+    <div class="topic-footer" v-if="!minimize">
+      <p v-if="!editCardNameShown" @click="editCardNameShown = true">+ Add another card</p>
+      <textarea
+        v-if="editCardNameShown"
+        v-model="cardName"
+        v-focus
+        @keypress.enter.prevent="addCard"
+        placeholder="Enter a title for this card..."
+      ></textarea>
+      <div class="btns">
+        <button v-if="editCardNameShown" @click="addCard" class="add">Add Card</button>
+        <button
+          v-if="editCardNameShown"
+          @click="editCardNameShown = false; cardName=''"
+          class="close"
+        >
+          <i class="el-icon-close"></i>
+        </button>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -103,9 +107,9 @@ export default {
 		};
 	},
 	computed: {
-		topicMenu(){
+		topicMenu() {
 			if (this.topicsMenuOpen === false) return this.topicMenuOpen = false
-			else {return this.topicMenuOpen} 
+			else { return this.topicMenuOpen }
 		}
 	},
 	methods: {
@@ -117,7 +121,7 @@ export default {
 			else if (this.topicMenuOpen) this.$emit("topicsMenuClose");
 			this.topicMenuOpen = !this.topicMenuOpen;
 		},
-		closeTopicMenu(){
+		closeTopicMenu() {
 			this.$emit("topicsMenuClose");
 			this.topicMenuOpen = false;
 		},
@@ -133,11 +137,12 @@ export default {
 			this.editCardNameShown = false
 			this.cardName = ''
 		},
-		removeCard(cardId){
+		removeCard(cardId) {
 			this.$emit("removeCard", cardId, this.topic.id);
 		},
 		toggleMinimize() {
 			this.minimize = !this.minimize;
+			this.$emit('toggleTopicHide', this.topic);
 		},
 		toggleEditListNameShown() {
 			this.editListNameShown = !this.editListNameShown;
@@ -162,6 +167,7 @@ export default {
 	},
 	created() {
 		this.topicName = this.topic.name;
+		this.minimize = this.topic.isHidden;
 		// console.log(this.topicName);
 		// this.board = JSON.parse(JSON.stringify(this.board));
 	},

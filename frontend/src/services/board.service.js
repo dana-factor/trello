@@ -92,8 +92,8 @@ function getStarterBoard() {
 		],
 		activities: [],
 		style: {
-			backgroundColor: 'lightblue',
-			imgUrl: '',
+			backgroundColor: '',
+			imgUrl: 'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595699314/xpxjihvdbqboowhzqwer.jpg',
 		},
 		creatorId: user._id,
 		description: '',

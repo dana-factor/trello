@@ -14,22 +14,18 @@ export default {
 				labels: this.labels,
 				datasets: [
 					{
-						label: function(tooltipItem) {
-							return tooltipItem.yLabel;
-						},
-						backgroundColor: [
-							'#6B4C9A',
-							'#396AB1',
-							'#DA7C30',
-							'#CC2529',
-							'#535154',
-							'#922428',
-							'#948B3D',
-							'#3E9651'
-						],
-						data: this.data
+						backgroundColor: ['#fee2b3','#ffa299', '#ad6989', '#562349', '#bbbbbb'],
+						data: this.data,
 					}
 				]
+			},
+				{
+				legend: {
+					labels: {
+						fontFamily:
+							'-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif'
+					}
+				}
 			},
 			{
 				scales: {

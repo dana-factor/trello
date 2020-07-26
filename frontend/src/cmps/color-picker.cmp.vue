@@ -14,10 +14,8 @@ export default {
 	props: [],
 	data() {
 		return {
-            selectedColor: '',
+            // selectedColor: '',
 			colors: [
-				"white",
-				"rgb(250, 252, 167)",
 				"rgb(170, 209, 245)",
 				"rgb(97, 214, 208)",
 				"rgb(226, 183, 252)",
@@ -32,7 +30,7 @@ export default {
 	computed: {},
 	methods: {
         selectColor(color) {
-            this.selectedColor = color;
+        // this.selectedColor = color;
         this.$emit('setBgc', color);
   }
     },

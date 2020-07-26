@@ -1,49 +1,55 @@
 
 
 <script>
-import VueCharts from 'vue-chartjs'
-import { Pie } from 'vue-chartjs'
+import VueCharts from 'vue-chartjs';
+import { Pie } from 'vue-chartjs';
 
 export default {
-    extends: Pie,
-    props:['labels', 'data'],
-    data(){
-        return{
-
-        }
-    },
-    computed: {
-
-    },
-    methods: {
-
-    },
-    created(){
-    },
-    mounted(){
-    this.renderChart({
-      labels: this.labels,
-      datasets: [
-        {
-          label: 'Cards per Phase',
-          backgroundColor: ['#6B4C9A','#396AB1', '#DA7C30', '#CC2529', '#535154', '#922428', '#948B3D', '#3E9651'],
-          data: this.data
-        }
-      ]
-    },
-    {
-      legend: {
-        display: true
-      }
-    }
-    )
-
-    }
-
-}
+	extends: Pie,
+	props: ['labels', 'data'],
+	data() {
+		return {};
+	},
+	computed: {},
+	methods: {},
+	created() {},
+	mounted() {
+		this.renderChart(
+			{
+				labels: this.labels,
+				datasets: [
+					{
+						label: 'Cards per Phase',
+						backgroundColor: [
+							'#fee2b3',
+							'#ffa299',
+							'#ad6989',
+							'#562349',
+							'#bbbbbb'
+						],
+						data: this.data,
+						// options: {
+						// 	layout: {
+						// 		width: '100%',
+						// 		height: '100%'
+						// 	}
+						// }
+					}
+				]
+			},
+			{
+				legend: {
+					display: true,
+					labels: {
+						fontFamily:
+							'-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif'
+					}
+				}
+			}
+		);
+	}
+};
 </script>
 
 <style>
-
-
 </style>

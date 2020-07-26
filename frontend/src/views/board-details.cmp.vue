@@ -79,6 +79,7 @@
 					@addCard="addCard"
 					@removeCard="removeCard"
 					@updateDND="saveAfterDnd"
+					@toggleTopicHide="toggleTopicHide"
 				/>
 			</Draggable>
 			<div class="topic-wrapper add-topic">
@@ -260,6 +261,10 @@ export default {
 			if (!this.board) return;
 			this.$store.dispatch({ type: 'saveBoard', board: this.board, activity: { text: action } });
 		},
+		toggleTopicHide(topic){
+			topic.isHidden = !topic.isHidden;
+			this.saveBoard();
+		},
 		loadBoard() {
 			const boardId = this.$route.params.boardId;
 			return this.$store.dispatch({ type: "loadCurrBoard", id: boardId })
@@ -326,7 +331,7 @@ export default {
 	},
 	mounted() { },
 	destroyed() {
-		this.$emit('setBgc', '');
+		this.$emit('setBgc', '#fceddd');
 		this.$emit('setBgImg', '');
 	},
 	watch: {

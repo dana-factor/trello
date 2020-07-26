@@ -93,32 +93,49 @@
           <h2>
             <i class="el-icon-notebook-1"></i>Activity
           </h2>
-			<div class="comment">
-			<avatar class="avatar-comment" :src="loggedinUser.imgUrl" :username="loggedinUser.fullName" :lighten="100" :size="28" background-color="#dfe1e6" color="#172b4d" />
-			<input v-model="comment" @keypress.enter="addComment" placeholder="Write a comment..."/>
-			</div>
-            <activities :activities="activities" isShowInCard="false" />
+          <div class="comment">
+            <avatar
+              class="avatar-comment"
+              :src="loggedinUser.imgUrl"
+              :username="loggedinUser.fullName"
+              :lighten="100"
+              :size="28"
+              background-color="#dfe1e6"
+              color="#172b4d"
+            />
+            <input v-model="comment" @keypress.enter="addComment" placeholder="Write a comment..." />
+          </div>
+          <activities :activities="activities" isShowInCard="false" />
         </div>
         <div class="right-side">
-          <h2>Add<span> To Card</span></h2>
+          <h2>
+            Add
+            <span>To Card</span>
+          </h2>
           <button @click="toggleModal('card-label-edit')">
-            <i class="el-icon-collection-tag"></i> <span>Labels</span>
+            <i class="el-icon-collection-tag"></i>
+            <span>Labels</span>
           </button>
           <button @click="toggleModal('card-checklist-edit')">
-            <i class="el-icon-document-checked"></i> <span>Checklists</span>
+            <i class="el-icon-document-checked"></i>
+            <span>Checklists</span>
           </button>
           <button @click="toggleModal('card-due-edit')">
-            <i class="el-icon-time"></i> <span>Due Date</span>
+            <i class="el-icon-time"></i>
+            <span>Due Date</span>
           </button>
           <button @click="toggleModal('card-member-edit')">
-            <i class="el-icon-user"></i> <span>Members</span>
+            <i class="el-icon-user"></i>
+            <span>Members</span>
           </button>
           <button>
             <input type="file" @change="onUploadImg" accept="image/*" />
-            <i class="el-icon-picture-outline"></i><span> Add Image</span>
+            <i class="el-icon-picture-outline"></i>
+            <span>Add Image</span>
           </button>
           <button @click="toggleModal('card-background-edit')">
-            <i class="el-icon-brush"></i> <span>Background Color</span>
+            <i class="el-icon-brush"></i>
+            <span>Background Color</span>
           </button>
         </div>
       </div>
@@ -197,14 +214,14 @@ export default {
 			return this.board.activities.filter(activity => activity.cardId === this.card.id)
 		},
 		loggedinUser() {
-			if(!this.$store.getters.loggedinUser) return {fullName: 'Guest'}
+			if (!this.$store.getters.loggedinUser) return { fullName: 'Guest' }
 			else return this.$store.getters.loggedinUser;
 		}
 	},
 	methods: {
 		updateCardName(ev) {
 			this.card.name = ev.target.innerText;
-			this.dispatchBoardSave('updated a card name');
+			this.dispatchBoardSave('updated the card name to ' + this.card.name);
 		},
 		updateBoardLabels(labelToUpdate) {
 			boardService.updateBoardLabel(this.boardToUpdate, labelToUpdate);
@@ -221,15 +238,15 @@ export default {
 			// let checklist = this.card.checklists.find(checklistToFind => checklistId === checklistToFind.id)
 			task.text = text;
 			checklist.tasks.push(task);
-			this.dispatchBoardSave('added a new checklist task to ' + checklist.name);
+			this.dispatchBoardSave('added a new checklist task ' + text + ' to ' + checklist.name);
 		},
 		removeChecklist(checklistId) {
 			const idx = boardService.getChecklistIdxById(this.card.checklists, checklistId);
 			this.card.checklists.splice(idx, 1);
 			this.dispatchBoardSave('removed a checklist');
 		},
-		removeChecklistTask(checklist, task) {
-			const idx = checklist.tasks.findIndex((findTask) => task.id === findTask.id);
+		removeChecklistTask(checklist, taskId) {
+			const idx = checklist.tasks.findIndex((findTask) => taskId === findTask.id);
 			checklist.tasks.splice(idx, 1);
 			this.dispatchBoardSave('removed a checklist task');
 		},
@@ -247,16 +264,23 @@ export default {
 		saveToggledTask(checklist, task) {
 			const taskIdx = checklist.tasks.findIndex(taskToFind => taskToFind.id === task.id);
 			checklist.tasks.splice(taskIdx, 1, task);
-			this.dispatchBoardSave('toggled the task ' + task.text);
+			if (task.isDone)
+				this.dispatchBoardSave('marked the task ' + task.text + ' as done');
+			else
+				this.dispatchBoardSave('marked the task ' + task.text + ' as undone');
 		},
 		toggleLabel(label) {
 			let currLabels = this.card.labels;
-			if (currLabels.includes(label)) currLabels.splice(currLabels.indexOf(label), 1)
-			else currLabels.push(label);
-			this.dispatchBoardSave('toggled a label');
+			if (currLabels.includes(label)) {
+				this.dispatchBoardSave('removed a label');
+				currLabels.splice(currLabels.indexOf(label), 1)
+			}
+			else {
+				this.dispatchBoardSave('added a label');
+				currLabels.push(label)
+			}
 		},
 		removeAttachment(attachment) {
-			//kinda temp idk
 			this.card.attachments.splice(this.card.attachments.indexOf(attachment), 1);
 			this.dispatchBoardSave('removed an attachment');
 		},
@@ -264,7 +288,7 @@ export default {
 			this.card.dueDate = date;
 			this.card.isCardDone = false;
 			this.closeModal();
-			this.dispatchBoardSave('updated the due date to ' + moment(date).format('DD.MM.YY h:mm'));
+			this.dispatchBoardSave('updated the due date to ' + moment(date).format('DD/MM/YY HH:mm'));
 		},
 		removeDueDate() {
 			this.card.dueDate = null;
