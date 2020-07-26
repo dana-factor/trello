@@ -53,6 +53,18 @@
                 bottom: 83px;
                 word-spacing: 16px;
             }
+        }        @include for-narrow-layout {
+            height: 255px;
+            img{
+                max-width: 305px;
+                bottom: 25px;
+            }
+            h1{
+                font-size: 28px;
+                bottom: 63px;
+                word-spacing: 10px;
+                padding: 20px;
+            }
         }
     }
     h2{
