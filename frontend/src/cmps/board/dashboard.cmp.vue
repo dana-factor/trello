@@ -15,7 +15,7 @@
 						</div>
 					</div>
 					<div class="info-box">
-						<i class="el-icon-postcard"></i>
+						<i class="el-icon-tickets"></i>
 						<div class="info">
 							<h4> {{numOfCardsTotal}} </h4>
 							<p> total cards </p>
@@ -24,7 +24,7 @@
 				</div>
 				<div class="fact-half">
 					<div class="info-box">
-						<i class="el-icon-question"></i>
+						<i class="icon-question">?</i>
 						<div class="info">
 							<h4> {{numOfUnassignedCards}} </h4>
 							<p> unassigned cards </p>

@@ -55,22 +55,32 @@
         .info-box {
             display: flex;
             margin: 0 20px;
-            padding: 5px;
-            background-color: #d8d1d1;
+            // padding: 5px;
+            border: 1px solid #d8d1d1;
             border-radius: 5px;
-            color: #172b4d;
             // @include for-normal-layout {
             //     margin: 0 20px;
             // }
             i {
                 font-size: rem(35px);
                 margin-right: 10px;
+                padding: 5px;
+            }
+            .icon-question {
+                font-style: normal;
+                border: 2.3px solid #606060;
+                padding: 5px;
+                line-height: 0.6;
+                margin: 6px;
+                height: 33px;
+                font-size: 31px;
             }
 
             .info {
                 display: flex;
                 flex-direction: column;
                 text-align: center;
+                padding: 4px;
                 h4 {
                     font-size: rem(20px);
                     font-weight: bold;
