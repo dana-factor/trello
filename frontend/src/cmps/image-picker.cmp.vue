@@ -25,6 +25,7 @@ export default {
 				'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595257780/qyse9g8vtia73btrliqh.jpg',
 				'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595317869/in3rirgiuy9056gxunam.jpg',
 				'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595692898/xk0u73cqvsaiehceablw.jpg',
+				'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595755893/a7ercyro550r3jz5c7ir.jpg',
 				'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595693125/q1ipc1rmoytpg8x8pgvo.jpg',
 				'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595317933/akw7galczskf0pt1ya1p.jpg',
 				'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595692927/reagthnikpshsdcrtcfw.jpg',
