@@ -221,7 +221,7 @@ export default {
 	methods: {
 		updateCardName(ev) {
 			this.card.name = ev.target.innerText;
-			this.dispatchBoardSave('updated a card name');
+			this.dispatchBoardSave('updated the card name to ' + this.card.name);
 		},
 		updateBoardLabels(labelToUpdate) {
 			boardService.updateBoardLabel(this.boardToUpdate, labelToUpdate);
@@ -245,8 +245,8 @@ export default {
 			this.card.checklists.splice(idx, 1);
 			this.dispatchBoardSave('removed a checklist');
 		},
-		removeChecklistTask(checklist, task) {
-			const idx = checklist.tasks.findIndex((findTask) => task.id === findTask.id);
+		removeChecklistTask(checklist, taskId) {
+			const idx = checklist.tasks.findIndex((findTask) => taskId === findTask.id);
 			checklist.tasks.splice(idx, 1);
 			this.dispatchBoardSave('removed a checklist task');
 		},
