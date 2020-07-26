@@ -79,6 +79,7 @@
 					@addCard="addCard"
 					@removeCard="removeCard"
 					@updateDND="saveAfterDnd"
+					@toggleTopicHide="toggleTopicHide"
 				/>
 			</Draggable>
 			<div class="topic-wrapper add-topic">
@@ -259,6 +260,10 @@ export default {
 		saveBoard(action) {
 			if (!this.board) return;
 			this.$store.dispatch({ type: 'saveBoard', board: this.board, activity: { text: action } });
+		},
+		toggleTopicHide(topic){
+			topic.isHidden = !topic.isHidden;
+			this.saveBoard();
 		},
 		loadBoard() {
 			const boardId = this.$route.params.boardId;
