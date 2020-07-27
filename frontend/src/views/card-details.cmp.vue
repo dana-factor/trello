@@ -273,7 +273,6 @@ export default {
 		whatsappUrl() {
 			let url = 'whatsapp://send?text=';
 			url += encodeURIComponent(location.href);
-			// console.log(url);
 			return url;
 		},
 		cardUrl() {

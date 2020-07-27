@@ -162,14 +162,12 @@ export default {
 		},
 		toggleUserList() {
 			this.isUserListOpen = !this.isUserListOpen;
-			// console.log(this.isUserListOpen)
 		},
 		updateBoardName(ev) {
 			if (ev.target.innerText) this.board.name = ev.target.innerText;
 			this.saveBoard('updated board name')
 		},
 		async toggleMember(userId) {
-			// remove member
 			if (this.board.members.find(member => member._id === userId)) {
 				const idx = this.board.members.findIndex(member => member._id === userId);
 				const name = this.board.members[idx].fullName; // keep the name for the action-txt before the splice
@@ -302,11 +300,7 @@ export default {
 				newColumn.cards,
 				dropResult
 			);
-			// var lengthBefore = this.board.topics[columnIndex].cards.length;
 			this.board.topics.splice(columnIndex, 1, newColumn);
-			// var lengthAfter = this.board.topics[columnIndex].cards.length;
-			// if (lengthBefore > lengthAfter) return;
-			// console.log(activityTxt)
 			if (this.topicNameBefore === this.topicNameAfter) {
 				this.saveBoard();
 				this.topicNameBefore = '';

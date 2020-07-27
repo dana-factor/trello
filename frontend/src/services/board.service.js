@@ -173,12 +173,6 @@ function _update(board, activity) {
 }
 
 function _add(board) {
-	// var user = sessionStorage.getItem('user');
-	// board.creatorId = user._id;
-	// if (!user) user = { fullName: 'Guest' };
-	// console.log(user)
-	// board.members.push(user);
-	// console.log(board.members)
 	return httpService.post(`board/`, board).then((board) => board);
 }
 function getCardById(board, id) {
@@ -189,9 +183,6 @@ function getCardById(board, id) {
 		if (card) return card;
 	}
 }
-// function searchBoard(id, text) {
-// 	return httpService.get(`board/${id}/search?text=${text}`);
-// }
 function _makeId(length = 5) {
 	var txt = '';
 	var possible =

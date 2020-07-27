@@ -7,12 +7,10 @@ async function getUser(req, res) {
 }
 async function addUser(req, res) {
     const user = req.body;
-    console.log(user)
 	await userService.add(user);
 	res.send(user);
 }
 async function getUsers(req, res) {
-	console.log(req.query);
 	const users = await userService.query(req.query);
 	logger.debug(users);
 	res.send(users);

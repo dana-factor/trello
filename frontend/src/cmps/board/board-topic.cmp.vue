@@ -168,8 +168,6 @@ export default {
 	created() {
 		this.topicName = this.topic.name;
 		this.minimize = this.topic.isHidden;
-		// console.log(this.topicName);
-		// this.board = JSON.parse(JSON.stringify(this.board));
 	},
 	mounted() { },
 	watch: {},
