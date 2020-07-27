@@ -84,7 +84,7 @@ export const boardStore = {
 			try {
 				const type = board._id ? 'updateBoard' : 'addBoard';
 				const savedBoard = await boardService.save(board, activity);
-				this._vm.$socket.client.emit('boardChanged', board);
+				this._vm.$socket.client.emit('boardChanged', savedBoard);
 				commit({ type, board: savedBoard });
 				return savedBoard;
 			} catch (err) {
