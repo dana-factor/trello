@@ -243,6 +243,9 @@
 					font-weight: 400;
 					padding: 7px 0;
 					margin-left: 35px;
+					@include for-normal-layout{
+						margin-left: 0;
+					}
 					.avatar-comment {
 						font-size: 22px;
 						font-weight: 500;
@@ -296,6 +299,9 @@
 							font-weight: 400;
 							padding: 8px 0;
 							margin-left: 35px;
+							@include for-normal-layout{
+								margin-left: 0px;
+							}
 							.content {
 								margin-left: 8px;
 							}
