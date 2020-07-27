@@ -31,7 +31,7 @@ async function deleteBoard(req, res) {
 	}
 }
 
-async function updateBoard(req, res) {
+async function updateBoard(req, res, next) {
 	try {
 		const board = req.body.board;
 		let activity = req.body.activity;
@@ -39,7 +39,10 @@ async function updateBoard(req, res) {
 		if (!user) user = { fullName: 'Guest' };
 		else delete user.username;
 		const addedBoard = await boardService.update(board, activity, user);
-		res.send(addedBoard);
+		// res.send(addedBoard);
+		res.end();
+		res.board = addedBoard;
+		next();
 	} catch (err) {
 		res.status(500).end();
 	}
