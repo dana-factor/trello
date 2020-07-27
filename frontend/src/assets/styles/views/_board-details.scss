@@ -16,7 +16,11 @@
     .topic-wrapper{
         width: 272px;
         margin: 0 4px;
-        max-height: 100%;
+        max-height: 70vh;
+        @media (min-width: 960px){
+            max-height: 100%;
+        }
+        // max-height: 100%;
     }
     .add-topic{
         display: inline-block;
@@ -91,10 +95,6 @@
 }
 .smooth-dnd-container.horizontal > .smooth-dnd-draggable-wrapper {
 	display: inline-block;
-}
-
-.board-details .topic-wrapper {
-	max-height: 70vh;
 }
 
 .smooth-dnd-disable-touch-action *{
