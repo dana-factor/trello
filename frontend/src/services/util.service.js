@@ -1,6 +1,7 @@
 export const utilService = {
     formatTime,
-    getDateShort
+    getDateShort,
+    makeId
 }
 
 function formatTime(timestamp) {
@@ -19,4 +20,13 @@ function getDateShort(timestamp) {
     const day = date.getDate();
     const month = months[date.getMonth()];
     return  `${month} ${day}`;
+}
+function makeId(length = 5) {
+	var txt = '';
+	var possible =
+		'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	for (let i = 0; i < length; i++) {
+		txt += possible.charAt(Math.floor(Math.random() * possible.length));
+	}
+	return txt;
 }

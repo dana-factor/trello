@@ -51,6 +51,8 @@ async function update(board, activity, user) {
 			user,
 			createdAt: Date.now(),
 		};
+		console.log('length',board.activities.length)
+		if (board.activities.length >= 80) board.activities.splice(79);
 		board.activities.unshift(activityToAdd);
 	}
 	try {

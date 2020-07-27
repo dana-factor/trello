@@ -271,9 +271,8 @@ export default {
 			else return this.$store.getters.loggedinUser;
 		},
 		whatsappUrl() {
-			// let url = 'whatsapp://send?text=';
-			let url = encodeURIComponent(location.href);
-			console.log(url);
+			let url = 'whatsapp://send?text=';
+			url += encodeURIComponent(location.href);
 			return url;
 		},
 		cardUrl() {
