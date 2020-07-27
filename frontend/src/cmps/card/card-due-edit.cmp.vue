@@ -21,7 +21,7 @@ export default {
     props:[],
     data(){
         return{
-            value: "",
+            value: '',
         }
     },
     computed: {
@@ -38,7 +38,6 @@ export default {
 
     },
     mounted(){
-        // document.querySelector('input').focus();
     },
     watch: {
 
