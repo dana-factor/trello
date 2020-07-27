@@ -2,8 +2,8 @@
 	<section class="homepage">
 
 		<div class="hero-container">
+			<img src="../../src/assets/img/hero.png" />
 			<router-link to="/board/5f1aefd0f30ae5001757bd46">
-				<img src="../../src/assets/img/hero.png" />
 				<h1>try trellA now</h1>
 			</router-link>
 		</div>
