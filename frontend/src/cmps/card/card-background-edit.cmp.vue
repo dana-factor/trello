@@ -30,7 +30,6 @@ export default {
 	},
 	computed: {
 		selectedColor() {
-			console.log(this.card)
 			return this.card.backgroundColor;
 		}
 	},

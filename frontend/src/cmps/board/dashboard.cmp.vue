@@ -50,7 +50,6 @@
 						class="chart chart-members"
 						:labels="members"
 						:data="numsOfCardsPerMember"
-                       
 					/>
 				</div>
 				<div>
@@ -59,7 +58,6 @@
 						class="chart chart-due"
 						:labels="['Completed on Time', 'Delayed']"
 						:data="[numOnTime, numDelayed]"
-                       
 					/>
 				</div>
 			</div>
