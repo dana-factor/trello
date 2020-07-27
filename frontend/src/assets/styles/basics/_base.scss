@@ -94,14 +94,3 @@ input[type="file"] {
 	height: 0;
 }
 
-.smooth-dnd-container.horizontal > .smooth-dnd-draggable-wrapper {
-	display: inline-block;
-}
-
-.board-details .topic-wrapper {
-	max-height: 70vh;
-}
-
-.smooth-dnd-disable-touch-action * {
-	touch-action: auto;
-}

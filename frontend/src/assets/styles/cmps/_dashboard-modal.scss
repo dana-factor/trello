@@ -40,6 +40,14 @@
 
             .chart {
                 width: 100%;
+                .chartjs-render-monitor {
+                    padding: 30px;
+                    @include for-wide-layout {
+                        .chartjs-render-monitor {
+                       padding: 0;
+                        }
+                   }
+                }
             }
         }
     }
@@ -54,13 +62,9 @@
         }
         .info-box {
             display: flex;
-            margin: 0 20px;
-            // padding: 5px;
+            margin: 5px 20px;
             border: 1px solid #d8d1d1;
             border-radius: 5px;
-            // @include for-normal-layout {
-            //     margin: 0 20px;
-            // }
             i {
                 font-size: rem(35px);
                 margin-right: 10px;

@@ -6,7 +6,7 @@
 				@click="closeDashboard"
 			></i>
 			<div class="facts">
-				<div class="fact-half">
+				<!-- <div class="fact-half"> -->
 					<div class="info-box">
 						<i class="el-icon-user"></i>
 						<div class="info">
@@ -21,8 +21,8 @@
 							<p> total cards </p>
 						</div>
 					</div>
-				</div>
-				<div class="fact-half">
+				<!-- </div> -->
+				<!-- <div class="fact-half"> -->
 					<div class="info-box">
 						<i class="icon-question">?</i>
 						<div class="info">
@@ -37,7 +37,7 @@
 							<p> activities </p>
 						</div>
 					</div>
-				</div>
+				<!-- </div> -->
 			</div>
 			<div class="charts">
 				<div>
@@ -46,8 +46,7 @@
 					<chart-phases
 						class="chart chart-phases"
 						:labels="topicNames"
-						:data="numsOfCardsPerTopic"
-                       
+						:data="numsOfCardsPerTopic"                       
 					/>
 					<!-- width=100% 
                 height =100% -->
