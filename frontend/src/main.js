@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
-import './registerServiceWorker';
+// import './registerServiceWorker';
 import router from './router';
 import store from './store';
 import './assets/styles/styles.scss';
@@ -8,13 +8,20 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import socketio from 'socket.io-client';
 import VueSocketIOExt from 'vue-socket.io-extended';
-import locale from 'element-ui/lib/locale/lang/en'
-Vue.use(ElementUI, { locale })
-
+import locale from 'element-ui/lib/locale/lang/en';
+Vue.use(ElementUI, { locale });
 
 const BASE_URL =
-	process.env.NODE_ENV === 'production' ? '/' : '//localhost:3000';
+  process.env.NODE_ENV === 'production' ? '/' : '//localhost:3000';
 const socket = socketio(BASE_URL);
+
+window.OneSignal = window.OneSignal || [];
+OneSignal.push(function() {
+  OneSignal.init({
+    appId: '650fc41c-0376-45f4-bb56-5d88b42f158d',
+    allowLocalhostAsSecureOrigin: process.env.NODE_ENV !== 'production'
+  });
+});
 
 Vue.use(VueSocketIOExt, socket, { store });
 
@@ -23,16 +30,14 @@ Vue.use(VueSocketIOExt, socket, { store });
 Vue.use(ElementUI);
 
 Vue.directive('focus', {
-	inserted(el) {
-		el.focus();
-	},
+  inserted(el) {
+    el.focus();
+  }
 });
 
 Vue.config.productionTip = false;
 new Vue({
-	router,
-	store,
-	render: (h) => h(App),
+  router,
+  store,
+  render: h => h(App)
 }).$mount('#app');
-
-
