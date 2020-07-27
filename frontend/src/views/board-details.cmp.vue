@@ -43,7 +43,7 @@
       <h5>Are you sure you want to delete this board?</h5>
       <div class="btns">
         <button @click="toggleDeleteModal" class="cancel-btn">
-          <i class="el-icon-close"></i> Cancel
+        	Cancel
         </button>
         <button @click="removeBoard(board._id)" class="delete-btn">
           <i class="el-icon-delete"></i> Delete
