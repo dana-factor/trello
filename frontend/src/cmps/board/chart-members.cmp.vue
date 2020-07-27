@@ -14,34 +14,37 @@ export default {
 				labels: this.labels,
 				datasets: [
 					{
-						backgroundColor: ['#fee2b3','#ffa299', '#ad6989', '#562349', '#bbbbbb'],
-						data: this.data,
-					}
-				]
+						backgroundColor: [
+							'#39375b',
+							'#745c97',
+							'#d597ce',
+							'#f5b0cb',
+							// '#bbbbbb'
+						],
+						data: this.data
+					}],
 			},
-				{
-				legend: {
-					labels: {
-						fontFamily:
-							'-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif'
-					}
-				}
-			},
-			{
-				scales: {
-					yAxes: [
-						{
-							ticks: {
-								min: 0,
-								stepSize: 1
+			 {		responsive: true,
+			 		maintainAspectRatio: false,
+					tooltips: {
+						enabled: false
+						},
+					legend: {
+						labels: {
+							fontFamily:'-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif'
+								}
+						},
+					scales: {
+						yAxes: [
+							{
+								ticks: {
+									min: 0,
+									stepSize: 1
+								}
 							}
-						}
-					]
-				},
-				tooltips: {
-					enabled: false
-				}
-			}
+								]
+							}
+					}
 		);
 	}
 };

@@ -6,7 +6,7 @@
 				@click="closeDashboard"
 			></i>
 			<div class="facts">
-				<div class="fact-half">
+				<!-- <div class="fact-half"> -->
 					<div class="info-box">
 						<i class="el-icon-user"></i>
 						<div class="info">
@@ -15,16 +15,16 @@
 						</div>
 					</div>
 					<div class="info-box">
-						<i class="el-icon-postcard"></i>
+						<i class="el-icon-tickets"></i>
 						<div class="info">
 							<h4> {{numOfCardsTotal}} </h4>
 							<p> total cards </p>
 						</div>
 					</div>
-				</div>
-				<div class="fact-half">
+				<!-- </div> -->
+				<!-- <div class="fact-half"> -->
 					<div class="info-box">
-						<i class="el-icon-question"></i>
+						<i class="icon-question">?</i>
 						<div class="info">
 							<h4> {{numOfUnassignedCards}} </h4>
 							<p> unassigned cards </p>
@@ -37,7 +37,7 @@
 							<p> activities </p>
 						</div>
 					</div>
-				</div>
+				<!-- </div> -->
 			</div>
 			<div class="charts">
 				<div>
@@ -46,8 +46,7 @@
 					<chart-phases
 						class="chart chart-phases"
 						:labels="topicNames"
-						:data="numsOfCardsPerTopic"
-                       
+						:data="numsOfCardsPerTopic"                       
 					/>
 					<!-- width=100% 
                 height =100% -->
@@ -63,6 +62,15 @@
                        
 					/>
 				</div>
+				<div>
+					<h2>Production Schedule</h2>
+					<chart-due
+						class="chart chart-due"
+						:labels="['Completed on Time', 'Delayed']"
+						:data="[numOnTime, numDelayed]"
+                       
+					/>
+				</div>
 			</div>
 		</section>
 	</section>
@@ -71,6 +79,7 @@
 <script>
 import chartPhases from '../board/chart-phases.cmp';
 import chartMembers from '../board/chart-members.cmp';
+import chartDue from '../board/chart-due.cmp';
 export default {
 	props: ['board'],
 	data() {
@@ -120,7 +129,27 @@ export default {
 		},
 		numOfActivities() {
 			return this.board.activities.length;
-		}
+        },
+        numOnTime() {
+            return this.board.topics.reduce((acc, topic) => {
+				var sum = topic.cards.reduce((acc, card) => {
+					if (card.isCardDone) {
+                        return acc + 1;
+                    }
+					else return acc;
+				}, 0);
+                return sum + acc;
+            }, 0);
+        },
+        numDelayed() {
+             return this.board.topics.reduce((acc, topic) => {
+				var sum = topic.cards.reduce((acc, card) => {
+					if (!card.isCardDone && card.dueDate < Date.now()) return acc + 1;
+					else return acc;
+                }, 0);
+				return sum + acc;
+			}, 0);
+        }
 	},
 	methods: {
 		closeDashboard() {
@@ -128,11 +157,12 @@ export default {
 		}
 	},
 	created() {},
-	mounted() {},
+	mounted() {console.log(this.numOnTime)},
 	watch: {},
 	components: {
 		chartPhases,
-		chartMembers
+        chartMembers,
+        chartDue
 	}
 };
 </script>

@@ -1,11 +1,10 @@
 
-
 <script>
 import VueCharts from 'vue-chartjs';
-import { Pie } from 'vue-chartjs';
+import { Doughnut } from 'vue-chartjs';
 
 export default {
-	extends: Pie,
+	extends: Doughnut,
 	props: ['labels', 'data'],
 	data() {
 		return {};
@@ -19,13 +18,10 @@ export default {
 				labels: this.labels,
 				datasets: [
 					{
-						label: 'Cards per Phase',
+						label: 'Due/Delay',
 						backgroundColor: [
-							'#fee2b3',
-							'#ffa299',
-							'#ad6989',
-							'#562349',
-							'#bbbbbb'
+							'#99b898',
+							'#ff847c'
 						],
 						data: this.data,
 						// options: {
@@ -38,11 +34,7 @@ export default {
 				]
 			},
 			{
-				layout: {
-					width: '100%',
-					height: '100%'
-				},
-				responsive: true,
+                responsive: true,
 			 	maintainAspectRatio: false,
 				legend: {
 					display: true,

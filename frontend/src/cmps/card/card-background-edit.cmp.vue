@@ -12,10 +12,10 @@
 
 <script>
 export default {
-	props: [],
+	props: ['card'],
 	data() {
 		return {
-			selectedColor: 'white',
+			// selectedColor: 'white',
 			colors: [
 				'white',
 				'#f5cbf5',
@@ -28,7 +28,12 @@ export default {
 			]
 		};
 	},
-	computed: {},
+	computed: {
+		selectedColor() {
+			console.log(this.card)
+			return this.card.backgroundColor;
+		}
+	},
 	methods: {
 		selectColor(color) {
 			this.selectedColor = color;
