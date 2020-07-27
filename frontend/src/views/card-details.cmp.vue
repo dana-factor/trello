@@ -270,11 +270,6 @@ export default {
 			if (!this.$store.getters.loggedinUser) return { fullName: 'Guest' };
 			else return this.$store.getters.loggedinUser;
 		},
-		whatsappUrl() {
-			let url = 'whatsapp://send?text=';
-			url += encodeURIComponent(location.href);
-			return url;
-		},
 		cardUrl() {
 			return `https://trella.herokuapp.com/#/board/${this.board._id}/card/${this.card.id}`;
 		}
