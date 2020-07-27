@@ -50,20 +50,12 @@ function getChecklistIdxById(checklists, id) {
 // 	});
 // }
 function getStarterBoard() {
-	// var board = {};
 	var user = JSON.parse(sessionStorage.getItem('user'));
 	var guestId = _makeId();
 	if (!user) user = { fullName: 'Guest', _id: guestId };
 	return {
-		// _id: _makeId(),
 		name: 'New Board',
 		members: [user],
-		// green #519839
-		// yellow #d9b51c
-		// orange #ff9f1a
-		// red #b04632
-		// purple #c377e0
-		// blue #0079bf
 		labels: [
 			{
 				color: '#61bd4f',
@@ -93,20 +85,20 @@ function getStarterBoard() {
 		activities: [],
 		style: {
 			backgroundColor: '',
-			imgUrl: 'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595699314/xpxjihvdbqboowhzqwer.jpg',
+			imgUrl: 'https://res.cloudinary.com/ddh9unyrw/image/upload/v1595692960/rrhvawsjtr9x8ccbse2m.jpg',
 		},
 		creatorId: user._id,
 		description: '',
 		topics: [
 			{
 				id: _makeId(),
-				name: 'backlog',
+				name: 'Enter List Name',
 				cards: [
 					{
 						id: _makeId(),
-						name: 'start project',
-						description: 'wow',
-						createdAt: Date.now(), //will come from server in the near future!
+						name: 'Enter card name 1',
+						description: '',
+						createdAt: Date.now(),
 						members: [],
 						labels: [],
 						backgroundColor: 'white',
@@ -115,9 +107,9 @@ function getStarterBoard() {
 					},
 					{
 						id: _makeId(),
-						name: 'meet madonna',
-						description: 'wow',
-						createdAt: Date.now(), //will come from server in the near future!
+						name: 'Enter card name 2',
+						description: '',
+						createdAt: Date.now(),
 						members: [],
 						labels: [],
 						backgroundColor: 'white',
@@ -126,87 +118,9 @@ function getStarterBoard() {
 					},
 					{
 						id: _makeId(),
-						name: 'kiss gandi',
-						description: 'wow',
-						createdAt: Date.now(), //will come from server in the near future!
-						members: [],
-						labels: [],
-						backgroundColor: 'white',
-						attachments: [],
-						checklists: [],
-					},
-				],
-			},
-			{
-				id: _makeId(),
-				name: 'in progress',
-				cards: [
-					{
-						id: _makeId(),
-						name: 'start project',
-						description: 'wow',
-						createdAt: Date.now(), //will come from server in the near future!
-						members: [],
-						labels: [],
-						backgroundColor: 'white',
-						attachments: [],
-						checklists: [],
-					},
-					{
-						id: _makeId(),
-						name: 'meet madonna',
-						description: 'wow',
-						createdAt: Date.now(), //will come from server in the near future!
-						members: [],
-						labels: [],
-						backgroundColor: 'white',
-						attachments: [],
-						checklists: [],
-					},
-					{
-						id: _makeId(),
-						name: 'kiss gandi',
-						description: 'wow',
-						createdAt: Date.now(), //will come from server in the near future!
-						members: [],
-						labels: [],
-						backgroundColor: 'white',
-						attachments: [],
-						checklists: [],
-					},
-				],
-			},
-			{
-				id: _makeId(),
-				name: 'Done',
-				cards: [
-					{
-						id: _makeId(),
-						name: 'start project',
-						description: 'wow',
-						createdAt: Date.now(), //will come from server in the near future!
-						members: [],
-						labels: [],
-						backgroundColor: 'white',
-						attachments: [],
-						checklists: [],
-					},
-					{
-						id: _makeId(),
-						name: 'meet madonna',
-						description: 'wow',
-						createdAt: Date.now(), //will come from server in the near future!
-						members: [],
-						labels: [],
-						backgroundColor: 'white',
-						attachments: [],
-						checklists: [],
-					},
-					{
-						id: _makeId(),
-						name: 'kiss gandi',
-						description: 'wow',
-						createdAt: Date.now(), //will come from server in the near future!
+						name: 'Enter card name 3',
+						description: '',
+						createdAt: Date.now(),
 						members: [],
 						labels: [],
 						backgroundColor: 'white',
