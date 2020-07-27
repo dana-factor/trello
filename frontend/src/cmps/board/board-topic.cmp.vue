@@ -1,5 +1,5 @@
 <template>
-  <section class="board-topic">
+  <section class="board-topic" :class="{private:!!topic.owner}">
     <span class="column-drag-handle">
       <div class="topic-header">
         <h2
@@ -20,6 +20,10 @@
           </button>
           <button @click="removeTopic(topic.id); toggleTopicMenu();">Delete List</button>
           <button @click="addCard(); toggleTopicMenu();">Add Card</button>
+          <button @click="$emit('setTopicOwner',topic); toggleTopicMenu();">
+            <span v-if="topic.owner">Set as public</span>
+            <span v-else>Set as private</span>
+          </button>
           <button @click="toggleEditListNameShown">Edit List Name</button>
           <input
             v-if="editListNameShown"
@@ -90,6 +94,9 @@ export default {
 		topicsMenuOpen: {
 			type: Boolean,
 			required: true
+		},
+		loggedinUser: {
+			type: Object,
 		}
 	},
 	data() {
@@ -129,7 +136,6 @@ export default {
 			if (ev.target.innerText) this.topicName = ev.target.innerText;
 			this.$emit("updateTopicName", this.topicName, this.topic.id);
 			this.editListNameShown = false;
-			// this.topicMenuOpen = false;
 		},
 		addCard() {
 			let cardName = (this.cardName) ? this.cardName : 'New Card'
@@ -142,7 +148,6 @@ export default {
 		},
 		toggleMinimize() {
 			this.minimize = !this.minimize;
-			this.$emit('toggleTopicHide', this.topic);
 		},
 		toggleEditListNameShown() {
 			this.editListNameShown = !this.editListNameShown;
@@ -167,9 +172,6 @@ export default {
 	},
 	created() {
 		this.topicName = this.topic.name;
-		this.minimize = this.topic.isHidden;
-		// console.log(this.topicName);
-		// this.board = JSON.parse(JSON.stringify(this.board));
 	},
 	mounted() { },
 	watch: {},

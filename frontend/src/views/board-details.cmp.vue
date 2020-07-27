@@ -1,110 +1,113 @@
 <template>
-	<section
-		v-if="board"
-		class="board-details"
-		@click="isFilterModalOpen=false; isFilterInputShown=false; isUserListOpen=false;"
-	>
-		<div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
-		<div class="dashboard-modal" v-if="isDashboardOpen">
-			<dashboard :board="board" @closeDashboard="isDashboardOpen = false" />
-		</div>
-		<board-nav
-			@filterSet="setFilter"
-			:filteredTopics="filteredTopics"
-			:isFilterModalOpen="isFilterModalOpen"
-			@openFilterModal="isFilterModalOpen=true"
-			:isFilterInputShown="isFilterInputShown"
-			@showFilterInput="isFilterInputShown=true"
-			@toggleUserList="toggleUserList"
-			:users="users"
-			:members="board.members"
-		>
-			<h2
-				class="board-name"
-				slot="board-name"
-				contenteditable
-				@keypress.enter.prevent="updateBoardName"
-				@blur="updateBoardName"
-			>{{board.name}}</h2>
-			<button class="dashboard-btn" @click="isDashboardOpen = !isDashboardOpen">
-				<i class="el-icon-s-data"></i>
-			</button>
-			<button class="menu-btn" @click="toggleBoardMenu">
-				<i class="el-icon-s-operation"></i>
-			</button>
-		</board-nav>
-		<div class="member-modal" v-if="isUserListOpen" @click.stop>
-			<h4>Invite to Board</h4>
-			<i class="el-icon-close" @click="isUserListOpen = false"></i>
-			<app-filter @filterSet="searchMember" />
-			<user-list :users="filteredUsers" :memberOf="board" @toggleMember="toggleMember" />
-		</div>
-		<div v-if="isDeleteModalOpen" class="delete-modal">
-			<h5>Are you sure you want to delete this board?</h5>
-			<div class="btns">
-				<button @click="toggleDeleteModal" class="cancel-btn">
-					<i class="el-icon-close"></i> Cancel
-				</button>
-				<button @click="removeBoard(board._id)" class="delete-btn">
-					<i class="el-icon-delete"></i> Delete
-				</button>
-			</div>
-		</div>
-		<board-edit
-			:class="{'board-menu-open':isBoardMenuOpen}"
-			@toggleBoardMenu="toggleBoardMenu"
-			@removeBoard="removeBoard"
-			@toggleDeleteModal="toggleDeleteModal"
-			@setBgc="setBgc"
-			@setBgImg="setBgImg"
-			:board="board"
-		/>
-		<Container
-			orientation="horizontal"
-			@drop="onColumnDrop($event)"
-			drag-class="card-ghost"
-			drop-class="card-ghost-drop"
-			:drop-placeholder="upperDropPlaceholderOptions"
-		>
-			<Draggable v-for="topic in board.topics" :key="topic.id">
-				<board-topic
-					class="topic-wrapper"
-					:topic="topic"
-					:board="board"
-					:topicsMenuOpen="topicsMenuOpen"
-					@topicsMenuClose="topicsMenuOpen = false"
-					@topicsMenuOpen="topicsMenuOpen = true"
-					@updateTopicName="updateTopicName"
-					@removeTopic="removeTopic"
-					@addCard="addCard"
-					@removeCard="removeCard"
-					@updateDND="saveAfterDnd"
-					@toggleTopicHide="toggleTopicHide"
-				/>
-			</Draggable>
-			<div class="topic-wrapper add-topic">
-				<h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add another list</h2>
-				<input
-					placeholder="Enter list title..."
-					class="topicName"
-					v-if="topicNameInputOpen"
-					v-model="topicName"
-					v-focus
-				/>
-				<div class="btns-container">
-					<button class="add" @click="addTopic" v-if="topicNameInputOpen">Add List</button>
-					<button
-						class="close"
-						@click="topicNameInputOpen = false; topicName='';"
-						v-if="topicNameInputOpen"
-					>
-						<i class="el-icon-close"></i>
-					</button>
-				</div>
-			</div>
-		</Container>
-		<router-view :board="boardGetter" />
-	</section>
+  <section
+    v-if="board"
+    class="board-details"
+    @click="isFilterModalOpen=false; isFilterInputShown=false; isUserListOpen=false;"
+  >
+    <div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
+    <div class="dashboard-modal" v-if="isDashboardOpen">
+      <dashboard :board="board" @closeDashboard="isDashboardOpen = false" />
+    </div>
+    <board-nav
+      @filterSet="setFilter"
+      :filteredTopics="filteredTopics"
+      :isFilterModalOpen="isFilterModalOpen"
+      @openFilterModal="isFilterModalOpen=true"
+      :isFilterInputShown="isFilterInputShown"
+      @showFilterInput="isFilterInputShown=true"
+      @toggleUserList="toggleUserList"
+      :users="users"
+      :members="board.members"
+    >
+      <h2
+        class="board-name"
+        slot="board-name"
+        contenteditable
+        @keypress.enter.prevent="updateBoardName"
+        @blur="updateBoardName"
+      >{{board.name}}</h2>
+      <button class="dashboard-btn" @click="isDashboardOpen = !isDashboardOpen">
+        <i class="el-icon-s-data"></i>
+      </button>
+      <button class="menu-btn" @click="toggleBoardMenu">
+        <i class="el-icon-s-operation"></i>
+      </button>
+    </board-nav>
+    <div class="member-modal" v-if="isUserListOpen" @click.stop>
+      <h4>Invite to Board</h4>
+      <i class="el-icon-close" @click="isUserListOpen = false"></i>
+      <app-filter @filterSet="searchMember" />
+      <user-list :users="filteredUsers" :memberOf="board" @toggleMember="toggleMember" />
+    </div>
+    <div v-if="isDeleteModalOpen" class="delete-modal">
+      <h5>Are you sure you want to delete this board?</h5>
+      <div class="btns">
+        <button @click="toggleDeleteModal" class="cancel-btn">
+          <i class="el-icon-close"></i> Cancel
+        </button>
+        <button @click="removeBoard(board._id)" class="delete-btn">
+          <i class="el-icon-delete"></i> Delete
+        </button>
+      </div>
+    </div>
+    <board-edit
+      :class="{'board-menu-open':isBoardMenuOpen}"
+      @toggleBoardMenu="toggleBoardMenu"
+      @removeBoard="removeBoard"
+      @toggleDeleteModal="toggleDeleteModal"
+      @setBgc="setBgc"
+      @setBgImg="setBgImg"
+      :board="board"
+    />
+    <Container
+      orientation="horizontal"
+      @drop="onColumnDrop($event)"
+      drag-class="card-ghost"
+      drop-class="card-ghost-drop"
+      :drop-placeholder="upperDropPlaceholderOptions"
+    >
+      <Draggable v-for="topic in board.topics" :key="topic.id">
+        <board-topic
+          v-if="isShowTopic(topic)"
+          class="topic-wrapper"
+		  :key="topic.owner"
+          :topic="topic"
+          :board="board"
+          :topicsMenuOpen="topicsMenuOpen"
+          :loggedinUser="loggedinUser"
+          @topicsMenuClose="topicsMenuOpen = false"
+          @topicsMenuOpen="topicsMenuOpen = true"
+          @updateTopicName="updateTopicName"
+          @removeTopic="removeTopic"
+          @addCard="addCard"
+          @removeCard="removeCard"
+          @updateDND="saveAfterDnd"
+          @setTopicOwner="setTopicOwner"
+        />
+      </Draggable>
+      <div class="topic-wrapper add-topic">
+        <h2 v-if="!topicNameInputOpen" @click="topicNameInputOpen = true">+Add another list</h2>
+        <input
+          placeholder="Enter list title..."
+          class="topicName"
+          v-if="topicNameInputOpen"
+          v-model="topicName"
+          v-focus
+        />
+        <div class="btns-container">
+          <button class="add" @click="addTopic" v-if="topicNameInputOpen">Add List</button>
+          <button
+            class="close"
+            @click="topicNameInputOpen = false; topicName='';"
+            v-if="topicNameInputOpen"
+          >
+            <i class="el-icon-close"></i>
+          </button>
+        </div>
+      </div>
+    </Container>
+    <router-view :board="boardGetter" />
+  </section>
 </template>
 
 <script>
@@ -151,9 +154,16 @@ export default {
 		},
 		users() {
 			return this.$store.getters.users;
-		}
+		},
+		loggedinUser() {
+			return this.$store.getters.loggedinUser;
+		},
 	},
 	methods: {
+		isShowTopic(topic) {
+			return !topic.owner || (this.loggedinUser && topic.owner === this.loggedinUser._id) ||
+				topic.owner === localStorage.getItem('id')
+		},
 		toggleBoardMenu() {
 			this.isBoardMenuOpen = !this.isBoardMenuOpen;
 		},
@@ -162,7 +172,6 @@ export default {
 		},
 		toggleUserList() {
 			this.isUserListOpen = !this.isUserListOpen;
-			// console.log(this.isUserListOpen)
 		},
 		updateBoardName(ev) {
 			if (ev.target.innerText) this.board.name = ev.target.innerText;
@@ -261,9 +270,12 @@ export default {
 			if (!this.board) return;
 			this.$store.dispatch({ type: 'saveBoard', board: this.board, activity: { text: action } });
 		},
-		toggleTopicHide(topic){
-			topic.isHidden = !topic.isHidden;
+		setTopicOwner(topic) {
+			if (topic.owner) topic.owner = null;
+			else if (this.loggedinUser) topic.owner = this.loggedinUser._id;
+			else topic.owner = localStorage.getItem('id');
 			this.saveBoard();
+			console.log('changed hidden owner:', topic.owner)
 		},
 		loadBoard() {
 			const boardId = this.$route.params.boardId;
@@ -302,11 +314,7 @@ export default {
 				newColumn.cards,
 				dropResult
 			);
-			// var lengthBefore = this.board.topics[columnIndex].cards.length;
 			this.board.topics.splice(columnIndex, 1, newColumn);
-			// var lengthAfter = this.board.topics[columnIndex].cards.length;
-			// if (lengthBefore > lengthAfter) return;
-			// console.log(activityTxt)
 			if (this.topicNameBefore === this.topicNameAfter) {
 				this.saveBoard();
 				this.topicNameBefore = '';
