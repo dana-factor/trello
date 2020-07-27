@@ -20,6 +20,7 @@
         grid-area: logo;
         justify-self: center;
         align-self: center;
+        cursor: pointer;
         @include for-narrow-layout {
             // justify-self: left;
             font-size: rem(20px);
@@ -34,6 +35,11 @@
     .btns{
         grid-area: btns;
         align-self: center;
+        @include for-narrow-layout{
+            .home{
+                display: none;
+            }
+        }
     }
     i {
         font-size: rem(20px);

@@ -39,7 +39,7 @@ export default {
 			return moment(timestamp).fromNow();
 		},
 		removeInCard(text) {
-			let parts = text.split('in');
+			let parts = text.split('in card');
 			return parts[parts.length - 2];
 		}
 	},

@@ -2,11 +2,17 @@
     padding: 40px;
     min-height: calc(100vh - 40px);
     background-image: url('~@/assets/img/pinboard.jpg');
+    @include for-wide-layout{
+        padding: 15px;
+    }
     ul {
         display: grid;
         grid-template-columns: repeat(auto-fill, 300px);
         justify-content: center;
         gap: 35px;
+        @include for-wide-layout{
+            gap: 15px;
+        }
     }
     li {
         height: 300px;

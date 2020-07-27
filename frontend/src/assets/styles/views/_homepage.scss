@@ -2,7 +2,9 @@
     margin: 0 auto;
     text-align: center;
     background-color: #fceddd;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 40px);
     .hero-container{
         background-color: #fadec0;
         overflow: hidden;
@@ -54,41 +56,84 @@
                 bottom: 83px;
                 word-spacing: 16px;
             }
+        }        @include for-narrow-layout {
+            height: 255px;
+            img{
+                max-width: 305px;
+                bottom: 25px;
+            }
+            h1{
+                font-size: 28px;
+                bottom: 63px;
+                word-spacing: 10px;
+                padding: 20px;
+            }
         }
     }
-    h2{
-        font-size: rem(25px);
-        font-weight: bold;
-        font-family: Roboto;
-        margin-bottom: 20px;
-    }
-    p{
-        font-size: rem(20px);
-        line-height: rem(40px);
-        font-family: Roboto;
-    }
-    .note{
-        background-repeat: round;
-        height: 400px;
-        width: 400px;
-        display: inline-block;
-        margin: 20px 0 30px;
-    }
-    .green-note{
-        background-image: url('~@/assets/img/note-green.png');
-        margin-right: 40px;
-        padding: 105px 46px 70px;
-    }
-    .yellow-note{
-        background-image: url('~@/assets/img/note-yellow.png');
-        margin-right: 40px;
-        padding: 105px 45px 25px;
-    }
-    .blue-note{
-        background-image: url('~@/assets/img/note-blue.png');
-        width: 420px;
-        // display: inline-block;
-        padding: 105px 78px 34px 47px;
-    
+    .notes-container{
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-evenly;
+        margin: 30px 0 auto;
+        flex-wrap: wrap;
+        padding: 0 7px 50px;
+        @include for-wide-layout {
+            margin: 15px auto auto;
+            padding-bottom: 30px;
+        }
+        h2{
+            font-size: rem(25px);
+            font-weight: bold;
+            font-family: Roboto;
+            margin-bottom: 20px;
+            @include for-wide-layout {
+                font-size: rem(22px);
+                margin-bottom: 5px;
+            }
+        }
+        p{
+            font-size: rem(20px);
+            line-height: rem(40px);
+            font-family: Roboto;
+            @include for-wide-layout {
+                font-size: rem(18px);
+            }
+        }
+        .note{
+            background-repeat: round;
+            height: 400px;
+            width: 400px;
+            display: inline-block;
+            @include for-wide-layout {
+                height: 300px;
+                width: 300px;
+            }
+        }
+        .green-note{
+            background-image: url('~@/assets/img/note-green.png');
+            // padding: 105px 46px 70px;
+            padding: 114px 18px 70px 27px;
+            @include for-wide-layout {
+                padding-top: 85px;
+            }
+        }
+        .yellow-note{
+            background-image: url('~@/assets/img/note-yellow.png');
+            // padding: 105px 45px 25px;
+            padding: 118px 23px 20px;
+            @include for-wide-layout {
+                padding-top: 90px;
+            }
+        }
+        .blue-note{
+            background-image: url('~@/assets/img/note-blue.png');
+            height: 375px;
+            // padding: 105px 78px 34px 47px;
+            padding: 97px 30px 34px 15px;
+            @include for-wide-layout {
+                height: 280px;
+                padding-top: 73px;
+            }
+        }
     }
 }
