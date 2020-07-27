@@ -7,19 +7,15 @@
       </button>
     </div>
     <div class="board-menu-nav">
-      <h5 v-if="board._id !== '5f1aefd0f30ae5001757bd46'" @click="toggleDeleteModal">
+      <h5 @click="toggleDeleteModal">
         <i class="el-icon-delete"></i> Delete Board
       </h5>
       <h5 @click="toggleCmp('board-edit-background')">
         <i class="el-icon-brush"></i> Change Background
       </h5>
-      <!-- <h5 @click="toggleCmp('date-picker')">Change Due Date</h5> -->
     </div>
     <div>
       <component v-if="cmpToShow" :is="cmpToShow" @setBgc="setBgc" @setBgImg="setBgImg" />
-      <!-- <board-edit-background v-if="isEditingBg" @toggleColorPicker="toggleColorPicker" @setBgc="setBgc" @setBgImg="setBgImg"/>
-      <date-picker v-if="datePickerOpen"/>-->
-      <!-- <activites :activities="board.activities" /> -->
     </div>
     <h5>
       <i class="el-icon-notebook-1"></i>
@@ -41,9 +37,6 @@ export default {
 	props: ['board'],
 	data() {
 		return {
-			// isEditingBg: false,
-			// isColorPickerOpen: false,
-			// datePickerOpen: false,
 			cmpToShow: ''
 		}
 	},
@@ -54,15 +47,6 @@ export default {
 		toggleBoardMenu() {
 			this.$emit('toggleBoardMenu');
 		},
-		// toggleEditBg() {
-		// 	this.isEditingBg = !this.isEditingBg;
-		// },
-		// toggleColorPicker() {
-		// 	this.isColorPickerOpen = !this.isColorPickerOpen;
-		// },
-		// toggleDatePicker() {
-		// 	this.datePickerOpen = !this.datePickerOpen;
-		// },
 		toggleDeleteModal() {
 			this.$emit('toggleDeleteModal');
 		},
