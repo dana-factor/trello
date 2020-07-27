@@ -137,6 +137,10 @@
             <i class="el-icon-brush"></i>
             <span>Background Color</span>
           </button>
+          <a :href="whatsappUrl">
+            <i class="el-icon-brush"></i>
+            <span>Share on Whatsapp</span>
+          </a>
         </div>
       </div>
       <card-edit-modal v-if="editModal" @modalClose="closeModal">
@@ -216,6 +220,12 @@ export default {
 		loggedinUser() {
 			if (!this.$store.getters.loggedinUser) return { fullName: 'Guest' }
 			else return this.$store.getters.loggedinUser;
+		},
+		whatsappUrl(){
+			let url = 'whatsapp://send?text=';
+			url += encodeURIComponent(location.href);
+			// console.log(url);
+			return url;
 		}
 	},
 	methods: {

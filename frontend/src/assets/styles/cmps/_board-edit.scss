@@ -99,6 +99,8 @@
             .vue-avatar--wrapper{
                 min-width: 32px;
                 min-height: 32px;
+                background-repeat: round !important;
+                background-position: center !important;
             }
             .content{
                 margin-left: 8px;
@@ -127,4 +129,3 @@
     z-index: 2;
     transform: translateX(0);
 }
-
