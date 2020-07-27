@@ -271,7 +271,8 @@ export default {
 			else return this.$store.getters.loggedinUser;
 		},
 		cardUrl() {
-			return `https://trella.herokuapp.com/#/board/${this.board._id}/card/${this.card.id}`;
+			return location.href;
+			// return `https://trella.herokuapp.com/#/board/${this.board._id}/card/${this.card.id}`;
 		}
 	},
 	methods: {
