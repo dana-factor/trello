@@ -14,8 +14,8 @@
 			</template>
             <template v-else>
 				<div class="user-header">
-                <avatar class="avatar" :src="loggedInUser.imgUrl" :username="loggedInUser.fullName" :size="32" background-color="#dfe1e6" color="#172b4d"/>
                 <button class="logout" @click="$emit('logout')">Logout</button>
+                <avatar class="avatar" :src="loggedInUser.imgUrl" :username="loggedInUser.fullName" :size="32" background-color="#dfe1e6" color="#172b4d"/>
 				</div>
             </template>
 		</div>

@@ -178,17 +178,9 @@
             <i class="el-icon-brush"></i>
             <span>Share on Whatsapp</span>
           </a> -->
-					<button>
+					<button @click="toggleModal('card-share-edit')">
 						<i class="el-icon-share"></i>
-						<span>
-							<ShareNetwork
-								network="whatsapp"
-								:url="cardUrl"
-								title="Become a member of this trella task"
-							>
-								Share on Whatsapp
-							</ShareNetwork>
-						</span>
+						<span>Share</span>
 					</button>
 				</div>
 			</div>
@@ -203,6 +195,7 @@
 					:labels="labels"
 					:members="board.members"
 					:card="card"
+					:cardUrl="cardUrl"
 					@modalClose="closeModal"
 					@toggleLabel="toggleLabel"
 					@boardLabelsUpdate="updateBoardLabels"
@@ -228,6 +221,7 @@ import cardAttachments from '../cmps/card/card-attachments.cmp';
 import cardDueEdit from '../cmps/card/card-due-edit.cmp';
 import cardMemberEdit from '../cmps/card/card-member-edit.cmp';
 import cardBackgroundEdit from '../cmps/card/card-background-edit.cmp';
+import cardShareEdit from '../cmps/card/card-share-edit.cmp';
 import activities from '../cmps/activities.cmp';
 import Avatar from 'vue-avatar';
 import moment from 'moment';
@@ -474,7 +468,8 @@ export default {
 		cardMemberEdit,
 		Avatar,
 		cardBackgroundEdit,
-		cardChecklist
+		cardChecklist,
+		cardShareEdit
 	}
 };
 </script>
