@@ -40,12 +40,15 @@
       <user-list :users="filteredUsers" :memberOf="board" @toggleMember="toggleMember" />
     </div>
     <div v-if="isDeleteModalOpen" class="delete-modal">
-      <h5>Are you sure you want to delete this board?</h5>
+      <h5 v-if="board._id !== '5f1aefd0f30ae5001757bd46'">
+        Are you sure you want to delete this board?
+      </h5>
+	  <h5 v-else>This is the public board, it cannot be deleted!</h5>
       <div class="btns">
         <button @click="toggleDeleteModal" class="cancel-btn">
           <i class="el-icon-close"></i> Cancel
         </button>
-        <button @click="removeBoard(board._id)" class="delete-btn">
+        <button :disabled="board._id === '5f1aefd0f30ae5001757bd46'" @click="removeBoard(board._id)" class="delete-btn">
           <i class="el-icon-delete"></i> Delete
         </button>
       </div>
@@ -70,7 +73,7 @@
         <board-topic
           v-if="isShowTopic(topic)"
           class="topic-wrapper"
-		  :key="topic.owner"
+          :key="topic.owner"
           :topic="topic"
           :board="board"
           :topicsMenuOpen="topicsMenuOpen"
@@ -348,7 +351,7 @@ export default {
 			if (this.board.style.backgroundColor) this.$emit('setBgc', this.board.style.backgroundColor)
 			else this.$emit('setBgImg', this.board.style.imgUrl);
 		},
-		'$route.params.boardId': function() {
+		'$route.params.boardId': function () {
 			this.loadBoard();
 		}
 	},
