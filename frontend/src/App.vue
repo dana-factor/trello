@@ -1,11 +1,11 @@
 <template>
-	<div
-		id="app"
-		:style="{backgroundColor: background.bgc, backgroundImage: `url('${background.imgUrl}')`}"
-	>
-		<app-header :loggedInUser="loggedInUser" @logout="logout"></app-header>
-		<router-view @setBgc="setBgc" @setBgImg="setBgImg" />
-	</div>
+  <div
+    id="app"
+    :style="{backgroundColor: background.bgc, backgroundImage: `url('${background.imgUrl}')`}"
+  >
+    <app-header :loggedInUser="loggedInUser" @logout="logout"></app-header>
+    <router-view @setBgc="setBgc" @setBgImg="setBgImg" />
+  </div>
 </template>
 
 <script>

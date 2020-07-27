@@ -24,10 +24,14 @@ async function getBoards(req, res) {
 
 async function deleteBoard(req, res) {
 	try {
-		await boardService.remove(req.params.id);
+		const boardId = req.params.id;
+		if (boardId === '5f1aefd0f30ae5001757bd46') {
+			throw "Why are you trying to remove our public board? That's not nice :(";
+		}
+		await boardService.remove(boardId);
 		res.end();
 	} catch (err) {
-		res.status(500).end();
+		res.status(500).send({ error: err });
 	}
 }
 
@@ -62,5 +66,5 @@ module.exports = {
 	getBoards,
 	deleteBoard,
 	updateBoard,
-	addBoard
+	addBoard,
 };
