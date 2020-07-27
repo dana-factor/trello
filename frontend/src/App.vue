@@ -11,6 +11,7 @@
 <script>
 
 import appHeader from '../src/cmps/app-header.cmp'
+import { utilService } from './services/util.service.js';
 export default {
 	data() {
 		return {
@@ -24,6 +25,9 @@ export default {
 		loggedInUser() {
 			return this.$store.getters.loggedinUser;
 		}
+	},
+	created() {
+		if (!localStorage.getItem('id')) localStorage.setItem('id', utilService.makeId());
 	},
 	methods: {
 		setBgc(color) {

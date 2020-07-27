@@ -135,7 +135,9 @@ export default {
         numDelayed() {
              return this.board.topics.reduce((acc, topic) => {
 				var sum = topic.cards.reduce((acc, card) => {
-					if (!card.isCardDone && card.dueDate < Date.now()) return acc + 1;
+					if (!card.isCardDone && card.dueDate && card.dueDate < Date.now()) {
+						return acc + 1;
+					}
 					else return acc;
                 }, 0);
 				return sum + acc;

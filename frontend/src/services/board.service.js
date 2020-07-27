@@ -1,5 +1,4 @@
 import httpService from './http.service';
-// axios.defaults.withCredentials = true
 
 export const boardService = {
 	query,
@@ -10,13 +9,9 @@ export const boardService = {
 	getCardById,
 	getStarterCard,
 	getStarterTopic,
-	// saveCardToBoard,
 	getStarterChecklist,
 	getStarterChecklistTask,
 	updateBoardLabel,
-	// removeChecklist,
-	// removeChecklistTask,
-	// searchBoard,
 	getChecklistIdxById
 };
 function query(filterBy) {
@@ -42,13 +37,6 @@ function updateBoardLabel(board, label) {
 function getChecklistIdxById(checklists, id) {
 	return checklists.findIndex((checklist) => id === checklist.id);
 }
-// function saveCardToBoard(board, card) {
-// 	board.topics.find((topic) => {
-// 		const idx = topic.cards.indexOf(getCardById(board, card.id));
-// 		topic.cards.splice(idx, 1, card);
-// 		return idx !== -1;
-// 	});
-// }
 function getStarterBoard() {
 	var user = JSON.parse(sessionStorage.getItem('user'));
 	var guestId = _makeId();
