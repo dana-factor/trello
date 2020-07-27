@@ -348,6 +348,9 @@ export default {
 			this.setScene();
 			if (this.board.style.backgroundColor) this.$emit('setBgc', this.board.style.backgroundColor)
 			else this.$emit('setBgImg', this.board.style.imgUrl);
+		},
+		'$route.params.boardId': function() {
+			this.loadBoard();
 		}
 	},
 	components: {

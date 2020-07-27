@@ -6,7 +6,6 @@
 				@click="closeDashboard"
 			></i>
 			<div class="facts">
-				<!-- <div class="fact-half"> -->
 					<div class="info-box">
 						<i class="el-icon-user"></i>
 						<div class="info">
@@ -21,8 +20,6 @@
 							<p> total cards </p>
 						</div>
 					</div>
-				<!-- </div> -->
-				<!-- <div class="fact-half"> -->
 					<div class="info-box">
 						<i class="icon-question">?</i>
 						<div class="info">
@@ -37,21 +34,15 @@
 							<p> activities </p>
 						</div>
 					</div>
-				<!-- </div> -->
 			</div>
 			<div class="charts">
 				<div>
 					<h2>Cards per Phase </h2>
-					<!-- <div width=400px> -->
 					<chart-phases
 						class="chart chart-phases"
 						:labels="topicNames"
 						:data="numsOfCardsPerTopic"                       
 					/>
-					<!-- width=100% 
-                height =100% -->
-					<!-- </div> -->
-                     <!-- :style="{width: '350px', height: '100%'}" -->
 				</div>
 				<div>
 					<h2>Cards per Member </h2>
@@ -144,7 +135,9 @@ export default {
         numDelayed() {
              return this.board.topics.reduce((acc, topic) => {
 				var sum = topic.cards.reduce((acc, card) => {
-					if (!card.isCardDone && card.dueDate < Date.now()) return acc + 1;
+					if (!card.isCardDone && card.dueDate && card.dueDate < Date.now()) {
+						return acc + 1;
+					}
 					else return acc;
                 }, 0);
 				return sum + acc;
@@ -157,7 +150,7 @@ export default {
 		}
 	},
 	created() {},
-	mounted() {console.log(this.numOnTime)},
+	mounted() {},
 	watch: {},
 	components: {
 		chartPhases,
