@@ -86,7 +86,7 @@
 						></textarea>
 						<button
 							v-if="isDescriptionSaveShown"
-							@click="dispatchBoardSave('updated the description'); isDescriptionSaveShown=false"
+							@click="dispatchBoardSave('updated the description to ' + card.description); isDescriptionSaveShown=false"
 							class="save"
 						>Save</button>
 						<button

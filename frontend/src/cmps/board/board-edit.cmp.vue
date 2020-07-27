@@ -7,7 +7,7 @@
       </button>
     </div>
     <div class="board-menu-nav">
-      <h5 @click="toggleDeleteModal">
+      <h5 v-if="board._id !== '5f1aefd0f30ae5001757bd46'" @click="toggleDeleteModal">
         <i class="el-icon-delete"></i> Delete Board
       </h5>
       <h5 @click="toggleCmp('board-edit-background')">

@@ -3,7 +3,9 @@
 
 		<div class="hero-container">
 			<img src="../../src/assets/img/hero.png" />
-			<h1>try trellA now</h1>
+			<router-link to="/board/5f1aefd0f30ae5001757bd46">
+				<h1>try trellA now</h1>
+			</router-link>
 		</div>
 		<div class="notes-container">
 			<div class="yellow-note note">

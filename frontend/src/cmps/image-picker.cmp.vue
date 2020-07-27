@@ -16,7 +16,7 @@ export default {
 		return {
 			selectedImgUrl: "",
 			imgUrls: [
-				'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595699314/xpxjihvdbqboowhzqwer.jpg',
+				'https://res.cloudinary.com/ddh9unyrw/image/upload/v1595861123/dark-pinboard_lybtmx.jpg',
                 'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595247424/mqzclgmqseuvpfyg98j1.jpg',
                 'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595257632/jwx3pgn88cupsgb3vm2h.jpg',
                 'http://res.cloudinary.com/ddh9unyrw/image/upload/v1595692812/c2nvonx0vniezgg7sv0s.jpg',
