@@ -92,6 +92,9 @@
 .smooth-dnd-container {
   margin-top: 5px;
   &.horizontal > .smooth-dnd-draggable-wrapper {
-    display: inline-block;
+    display: inline-block !important;
   }
 }
+// .smooth-dnd-disable-touch-action *{
+//   touch-action: pan-x !important;
+// }
