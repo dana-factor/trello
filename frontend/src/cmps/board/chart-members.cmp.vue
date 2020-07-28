@@ -19,7 +19,6 @@ export default {
 							'#745c97',
 							'#d597ce',
 							'#f5b0cb',
-							// '#bbbbbb'
 						],
 						data: this.data
 					}],

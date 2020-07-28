@@ -30,7 +30,6 @@ export default {
 	props: ['activities', 'isShowInCard'],
 	computed: {
 		activitiesToShow() {
-			// return this.activities;
 			return this.activities.slice(0, 20);
 		},
 	},

@@ -7,12 +7,6 @@ import { Pie } from 'vue-chartjs';
 export default {
 	extends: Pie,
 	props: ['labels', 'data'],
-	data() {
-		return {};
-	},
-	computed: {},
-	methods: {},
-	created() {},
 	mounted() {
 		this.renderChart(
 			{
@@ -28,12 +22,6 @@ export default {
 							'#bbbbbb'
 						],
 						data: this.data,
-						// options: {
-						// 	layout: {
-						// 		width: '100%',
-						// 		height: '100%'
-						// 	}
-						// }
 					}
 				]
 			},
@@ -43,7 +31,7 @@ export default {
 					height: '100%'
 				},
 				responsive: true,
-			 	maintainAspectRatio: false,
+				maintainAspectRatio: false,
 				legend: {
 					display: true,
 					labels: {
@@ -56,6 +44,3 @@ export default {
 	}
 };
 </script>
-
-<style>
-</style>

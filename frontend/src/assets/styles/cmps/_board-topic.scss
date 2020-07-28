@@ -5,7 +5,6 @@
     display: flex;
     flex-direction: column;
     max-height: 100%;
-    // z-index: 2;
     &.private{
         background-color: #b9b9b9;
     }
@@ -35,7 +34,6 @@
         .topic-menu{
             display: flex;
             flex-direction: column;
-            // align-items: end;
             position: absolute;
             top: 32px;
             right: -60px;
@@ -97,7 +95,6 @@
         padding: 0 4px;
         // For inner scrollbar:
         overflow-x: hidden;
-        // overflow-y: auto;
         max-height: 75vh;
         &::-webkit-scrollbar {
             width: 8px;

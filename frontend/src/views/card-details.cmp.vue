@@ -272,7 +272,6 @@ export default {
 		},
 		cardUrl() {
 			return location.href;
-			// return `https://trella.herokuapp.com/#/board/${this.board._id}/card/${this.card.id}`;
 		}
 	},
 	methods: {
@@ -296,7 +295,6 @@ export default {
 		},
 		addNewChecklistTask(checklist, text) {
 			let task = boardService.getStarterChecklistTask();
-			// let checklist = this.card.checklists.find(checklistToFind => checklistId === checklistToFind.id)
 			task.text = text;
 			checklist.tasks.push(task);
 			this.dispatchBoardSave(

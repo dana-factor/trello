@@ -16,35 +16,10 @@
 <script>
 export default {
 	props: ['attachments'],
-	data() {
-		return {
-			// attachmentsToUpdate: JSON.parse(JSON.stringify(this.attachments))
-		}
-	},
-	computed: {
-
-	},
 	methods: {
 		removeAttachment(attachment) {
 			this.$emit('attachmentRemoved', attachment);
 		}
 	},
-	created() {
-
-	},
-	mounted() {
-
-	},
-	watch: {
-
-	},
-	components: {
-
-	}
-
 }
 </script>
-
-<style lang="scss">
-
-</style>

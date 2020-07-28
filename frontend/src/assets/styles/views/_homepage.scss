@@ -112,7 +112,6 @@
         }
         .green-note{
             background-image: url('~@/assets/img/note-green.png');
-            // padding: 105px 46px 70px;
             padding: 114px 18px 70px 27px;
             @include for-wide-layout {
                 padding-top: 85px;
@@ -120,7 +119,6 @@
         }
         .yellow-note{
             background-image: url('~@/assets/img/note-yellow.png');
-            // padding: 105px 45px 25px;
             padding: 118px 23px 20px;
             @include for-wide-layout {
                 padding-top: 90px;
@@ -129,7 +127,6 @@
         .blue-note{
             background-image: url('~@/assets/img/note-blue.png');
             height: 375px;
-            // padding: 105px 78px 34px 47px;
             padding: 97px 30px 34px 15px;
             @include for-wide-layout {
                 height: 280px;

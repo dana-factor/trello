@@ -46,8 +46,6 @@ export default {
 	},
 	methods: {
 		async signup() {
-			// const cred = this.credentials;
-			// if (!cred.username || !cred.password || !cred.fullName) return this.msg = 'Username, password, name are required!'
 			if (this.textNearUpload === 'Uploading...') return this.msg = 'Wait for upload to finish!';
 			try {
 				await this.$store.dispatch({ type: 'signup', userCred: this.credentials })
@@ -68,16 +66,6 @@ export default {
 		const user = this.$store.getters.loggedinUser;
 		if (user) this.$router.push('/login');
 	},
-	mounted() {
-
-	},
-	watch: {
-
-	},
-	components: {
-
-	}
-
 }
 </script>
 

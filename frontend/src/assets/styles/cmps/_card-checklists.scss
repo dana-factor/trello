@@ -1,112 +1,104 @@
-.card-checklist{
-    
-    // .checklists{
-        position: relative;
-        margin-bottom: 10px;
-        &:hover{
-            button.remove-checklist{
-                display: inline-block;
-            }
-        }
-        i.el-icon-finished{
-            font-size: 22px;
-            font-weight: 500;
-            display: inline-block;
-            margin-right: 1px;
-            &::before{
-                vertical-align: middle;
-            }
-            
-        }
-        input.checklist-name {
-            line-height: rem(20px);
-            font-size: rem(16px);
-            font-weight: 600;
-            margin: 0 0 2px 11px;
-            padding: 5px 12px 5px 2px;
-            width: 90%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: #606060;
-            cursor: text;
-            &:focus{
-                background-color: white;
-            }
-            &:hover{
-                button{
-                    display: inline-block;
-                }
-            }
-            // margin-left: 35px;
-        }
-        li{
-            margin-left: 35px;
-            &:hover{
-                background-color:rgba(9, 30, 66, 0.04);
-                button{
-                    display: inline-block;
-                }
-            }
-        }
-        input {
-            font-size: rem(14px);
-            color: #172b4d;
-            background-color: transparent;
-			cursor: pointer;
-            font-family: inherit;
-            border: none;
-            margin-right: 7px;
-        }
-        input[type=checkbox]{
-            margin: 0 7px 10px 0;
-        }
-        button{
-            position: absolute;
-            right: 0;
-            display: none;
-            font-size: rem(16px);
-            color: inherit;
-        }
-        .add-task{
-            margin: 0 0 5px 35px;
-            background-color: rgba(9,30,66,.04);
-            padding: 6px 12px;
-            width: 100px;
-            ::placeholder {
-                
-            }
-            &:focus{
-                background-color: white;
-                width: -webkit-fill-available;
-                cursor: text;
-            }
-            &:hover{
-                background-color: rgba(9,30,66,.08);
-            }
-        }
-        input.add-task::placeholder{
-            color: #172b4d;
-        }
-.progress{
+.card-checklist {
+  position: relative;
+  margin-bottom: 10px;
+  &:hover {
+    button.remove-checklist {
+      display: inline-block;
+    }
+  }
+  i.el-icon-finished {
+    font-size: 22px;
+    font-weight: 500;
+    display: inline-block;
+    margin-right: 1px;
+    &::before {
+      vertical-align: middle;
+    }
+  }
+  input.checklist-name {
+    line-height: rem(20px);
+    font-size: rem(16px);
+    font-weight: 600;
+    margin: 0 0 2px 11px;
+    padding: 5px 12px 5px 2px;
+    width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #606060;
+    cursor: text;
+    &:focus {
+      background-color: white;
+    }
+    &:hover {
+      button {
+        display: inline-block;
+      }
+    }
+  }
+  li {
+    margin-left: 35px;
+    &:hover {
+      background-color: rgba(9, 30, 66, 0.04);
+      button {
+        display: inline-block;
+      }
+    }
+  }
+  input {
+    font-size: rem(14px);
+    color: #172b4d;
+    background-color: transparent;
+    cursor: pointer;
+    font-family: inherit;
+    border: none;
+    margin-right: 7px;
+  }
+  input[type='checkbox'] {
+    margin: 0 7px 10px 0;
+  }
+  button {
+    position: absolute;
+    right: 0;
+    display: none;
+    font-size: rem(16px);
+    color: inherit;
+  }
+  .add-task {
+    margin: 0 0 5px 35px;
+    background-color: rgba(9, 30, 66, 0.04);
+    padding: 6px 12px;
+    width: 100px;
+    &:focus {
+      background-color: white;
+      width: -webkit-fill-available;
+      cursor: text;
+    }
+    &:hover {
+      background-color: rgba(9, 30, 66, 0.08);
+    }
+  }
+  input.add-task::placeholder {
+    color: #172b4d;
+  }
+  .progress {
     margin-left: 35px;
     display: flex;
     align-items: center;
     padding: 4px 0;
     span {
-        width: 45px;
+      width: 45px;
     }
-    & div{
-        background-color: gray;
-        height: 10px;
-        width: 100%;
-        border-radius: 5px;
-        & div{
-            background-color: red;
-        }
-        .completed {
-            background-color: #03b103;
-        }
+    & div {
+      background-color: gray;
+      height: 10px;
+      width: 100%;
+      border-radius: 5px;
+      & div {
+        background-color: red;
+      }
+      .completed {
+        background-color: #03b103;
+      }
     }
-}
-
+  }
 }

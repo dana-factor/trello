@@ -63,10 +63,6 @@ export default {
 				this.loginCred = {};
 			}
 		},
-		// async getAllUsers() {//for debugging
-		// 	const users = await this.$store.dispatch({ type: 'loadUsers' })
-		// 	return users
-		// },
 	},
 	created() {
 		const user = this.$store.getters.loggedinUser;

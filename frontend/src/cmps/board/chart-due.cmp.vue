@@ -9,9 +9,6 @@ export default {
 	data() {
 		return {};
 	},
-	computed: {},
-	methods: {},
-	created() {},
 	mounted() {
 		this.renderChart(
 			{
@@ -24,12 +21,6 @@ export default {
 							'#ff847c'
 						],
 						data: this.data,
-						// options: {
-						// 	layout: {
-						// 		width: '100%',
-						// 		height: '100%'
-						// 	}
-						// }
 					}
 				]
 			},

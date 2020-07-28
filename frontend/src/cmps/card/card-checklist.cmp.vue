@@ -1,42 +1,41 @@
 <template>
-	<section class="card-checklist">
-		<i class="el-icon-finished"></i>
-		<input
-			class="checklist-name"
-			v-model="checklistToUpdate.name"
-			@blur="updateChecklistTitle"
-			@keydown.enter="updateChecklistTitle; $event.target.blur()"
-		/>
-		<button class="remove-checklist" @click="removeChecklist(checklist)">
-			<i class="el-icon-delete"></i>
-		</button>
-		<div v-if="checklist.tasks.length" class="progress">
-			<span> {{checklistProgress}}</span>
-			<div>
-				<div :class="{completed: checklistCompleted}" :style="{width:checklistProgress}"></div>
-			</div>
-		</div>
-		<ul>
-			<li v-for="(task,index) in checklistToUpdate.tasks" :key="task.id">
-				<input type="checkbox" v-model="task.isDone" @change="saveToggledTask(task)" />
-				<input
-					v-model="task.text"
-					@blur="updateChecklistTaskText(task,index)"
-					@keydown.enter="updateChecklistTaskText(task,index); $event.target.blur()"
-				/>
-				<button @click="removeChecklistTask(task)">
-					<i class="el-icon-delete"></i>
-				</button>
-			</li>
-		</ul>
-		<input
-			class="add-task"
-			@keypress.enter="addNewChecklistTask"
-			v-model="newTaskText"
-			placeholder="Add an item"
-		/>
-		<!-- <button @click="addNewChecklistTask(checklist)">Add</button> -->
-	</section>
+  <section class="card-checklist">
+    <i class="el-icon-finished"></i>
+    <input
+      class="checklist-name"
+      v-model="checklistToUpdate.name"
+      @blur="updateChecklistTitle"
+      @keydown.enter="updateChecklistTitle; $event.target.blur()"
+    />
+    <button class="remove-checklist" @click="removeChecklist(checklist)">
+      <i class="el-icon-delete"></i>
+    </button>
+    <div v-if="checklist.tasks.length" class="progress">
+      <span>{{checklistProgress}}</span>
+      <div>
+        <div :class="{completed: checklistCompleted}" :style="{width:checklistProgress}"></div>
+      </div>
+    </div>
+    <ul>
+      <li v-for="(task,index) in checklistToUpdate.tasks" :key="task.id">
+        <input type="checkbox" v-model="task.isDone" @change="saveToggledTask(task)" />
+        <input
+          v-model="task.text"
+          @blur="updateChecklistTaskText(task,index)"
+          @keydown.enter="updateChecklistTaskText(task,index); $event.target.blur()"
+        />
+        <button @click="removeChecklistTask(task)">
+          <i class="el-icon-delete"></i>
+        </button>
+      </li>
+    </ul>
+    <input
+      class="add-task"
+      @keypress.enter="addNewChecklistTask"
+      v-model="newTaskText"
+      placeholder="Add an item"
+    />
+  </section>
 </template>
 
 <script>
@@ -82,9 +81,6 @@ export default {
 		saveToggledTask(task) {
 			this.$emit('taskToggled', this.checklist, task)
 		}
-		// updateTaskText(task) {
-		// 	this.$emit('taskTextUpdate', this.checklist.id, task.id)
-		// }
 	},
 	watch: {
 		checklist(value) {
@@ -93,6 +89,3 @@ export default {
 	}
 }
 </script>
-
-<style>
-</style>

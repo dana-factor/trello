@@ -17,17 +17,7 @@ const BASE_URL =
   process.env.NODE_ENV === 'production' ? '/' : '//localhost:3000';
 const socket = socketio(BASE_URL);
 
-// window.OneSignal = window.OneSignal || [];
-// OneSignal.push(function() {
-//   OneSignal.init({
-//     appId: '650fc41c-0376-45f4-bb56-5d88b42f158d',
-//     allowLocalhostAsSecureOrigin: process.env.NODE_ENV !== 'production'
-//   });
-// });
-
 Vue.use(VueSocketIOExt, socket, { store });
-
-// Vue.use(VueSocketIO, SocketInstance);
 
 Vue.use(ElementUI);
  

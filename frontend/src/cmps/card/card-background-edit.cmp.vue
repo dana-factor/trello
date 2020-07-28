@@ -15,7 +15,6 @@ export default {
 	props: ['card'],
 	data() {
 		return {
-			// selectedColor: 'white',
 			colors: [
 				'white',
 				'#f5cbf5',
@@ -39,10 +38,6 @@ export default {
 			this.$emit('setBgc', color);
 		}
 	},
-	created() {},
-	mounted() {},
-	watch: {},
-	components: {}
 };
 </script>
 

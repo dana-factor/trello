@@ -13,11 +13,6 @@
 		<li @click="addBoard" class="add-board"><i class="el-icon-plus"></i></li>
 	</ul>
 	</div>
-	<!-- <div :class="{hidden: isNameInputHidden}" class="add-name-modal">
-		<button @click="toggleInput">X</button>
-		<label>Name of your Board</label>
-		<input type="text" autofocus @change="addBoard"/>
-	</div> -->
 </div>
 </template>
 
@@ -32,11 +27,7 @@ export default {
 		return {
 		};
 	},
-	computed: {},
 	methods: {
-		// toggleInput() {
-		// 	this.isNameInputHidden = !this.isNameInputHidden;
-		// },
 		addBoard(ev) {
 			this.$emit('addBoard');
 		},
@@ -44,9 +35,6 @@ export default {
             this.$emit('updateBoard', board);
         },
 	},
-	created() {},
-	mounted() {},
-	watch: {},
 	components: {
 		boardPreview
 	}

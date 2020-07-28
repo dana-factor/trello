@@ -30,9 +30,6 @@ export const userStore = {
 		setUsers(state, { users }) {
 			state.users = users;
 		},
-		// removeUser(state, { userId }) {
-		// 	state.users = state.users.filter((user) => user._id !== userId);
-		// },
 	},
 	actions: {
 		async login(context, { userCred }) {
@@ -54,13 +51,5 @@ export const userStore = {
 			const users = await userService.getUsers();
 			context.commit({ type: 'setUsers', users });
 		},
-		// async removeUser(context, { userId }) {
-		// 	await userService.remove(userId);
-		// 	context.commit({ type: 'removeUser', userId });
-		// },
-		// async updateUser(context, { user }) {
-		// 	user = await userService.update(user);
-		// 	context.commit({ type: 'setUser', user });
-		// },
 	},
 };
