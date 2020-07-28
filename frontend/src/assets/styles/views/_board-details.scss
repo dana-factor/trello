@@ -1,95 +1,97 @@
-.board-details{
-    height: calc(100vh - 40px);
-    white-space: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 47px 4px 0;
-    .screen{
-        position: fixed;
-        width: 100vw;
-        height: 100%;
-        top: 0;
-        left: 0;
-        // background-color: transparent;
-        z-index: 1;
+.board-details {
+  height: calc(100vh - 40px);
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 47px 4px 0;
+  .screen {
+    position: fixed;
+    width: 100vw;
+    height: 100%;
+    top: 0;
+    left: 0;
+    // background-color: transparent;
+    z-index: 1;
+  }
+  .topic-wrapper {
+    width: 272px;
+    margin: 0 4px;
+    max-height: 70vh;
+    @media (min-width: 960px) {
+      max-height: 100%;
     }
-    .topic-wrapper{
-        width: 272px;
-        margin: 0 4px;
-        max-height: 70vh;
-        @media (min-width: 960px){
-            max-height: 100%;
-        }
-        // max-height: 100%;
+    // max-height: 100%;
+  }
+  .add-topic {
+    display: inline-block;
+    background-color: hsla(0, 0%, 100%, 0.24);
+    border-radius: 3px;
+    padding: 8px;
+    margin-right: 8px;
+    color: white;
+    cursor: pointer;
+    input {
+      border-radius: 3px;
+      height: rem(32px);
+      display: block;
+      width: 100%;
+      border: none;
+      margin-bottom: 8px;
+      padding: 8px 12px;
+      font-size: rem(14px);
+      color: #172b4d;
     }
-    .add-topic{
-        display: inline-block;
-        background-color: hsla(0,0%,100%,.24);
-        border-radius: 3px;
-        padding: 8px;
-        margin-right: 8px;
-        color: white;
-        cursor: pointer;
-        input{
-            border-radius: 3px;
-            height: rem(32px);
-            display: block;
-            width: 100%;
-            border: none;
-            margin-bottom: 8px;
-            padding: 8px 12px;
-            font-size: rem(14px);
-            color: #172b4d
-        }
-        .btns-container{
-            display: flex;
-            justify-content: space-between;
-        }
-        button{
-            border-radius: 3px;
-            font-family: inherit;
-            font-weight: 400;
-            transition: .2s;
-        }
-        button.add{
-            padding: 6px 12px;
-            color: #fff;
-            background-color: #beb7b7;
-            width: 86%;
-            font-size: rem(15px);
-        }
-        button.add:hover{
-            padding: 6px 12px;
-            background-color: #d8d1d1;
-        }
-        button.close{
-            font-size: rem(21px);
-            color: #6b778c
-        }
-        button.close:hover{
-            color: #46484b
-        }
+    .btns-container {
+      display: flex;
+      justify-content: space-between;
     }
-    .add-topic:hover{
-        background-color: hsla(0,0%,100%,.32);
+    button {
+      border-radius: 3px;
+      font-family: inherit;
+      font-weight: 400;
+      transition: 0.2s;
     }
+    button.add {
+      padding: 6px 12px;
+      color: #fff;
+      background-color: #beb7b7;
+      width: 86%;
+      font-size: rem(15px);
+    }
+    button.add:hover {
+      padding: 6px 12px;
+      background-color: #d8d1d1;
+    }
+    button.close {
+      font-size: rem(21px);
+      color: #6b778c;
+    }
+    button.close:hover {
+      color: #46484b;
+    }
+  }
+  .add-topic:hover {
+    background-color: hsla(0, 0%, 100%, 0.32);
+  }
 
-    .menu-btn {
-        float: right;
-    }
-
-
+  .menu-btn {
+    float: right;
+  }
 }
 // drag'n'drop
-.card-ghost, .card-host-drop {
-    cursor: grabbing;
+.card-ghost,
+.card-host-drop {
+  cursor: grabbing;
 }
 
 .drop-preview {
-    background-color: rgba(150, 150, 200, 0.1);
-    margin: 5px;
+  background-color: rgba(150, 150, 200, 0.1);
+  margin: 5px;
 }
 
 .smooth-dnd-container {
-    margin-top: 5px;
+  margin-top: 5px;
+  &.horizontal > .smooth-dnd-draggable-wrapper {
+    display: inline-block;
+  }
 }
