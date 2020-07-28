@@ -87,6 +87,7 @@
           @removeCard="removeCard"
           @updateDND="saveAfterDnd"
           @setTopicOwner="setTopicOwner"
+		  @toggleHidden="toggleHidden"
         />
       </Draggable>
       <div class="topic-wrapper add-topic">
@@ -164,6 +165,10 @@ export default {
 		},
 	},
 	methods: {
+		toggleHidden(topic){
+			topic.isHidden = !topic.isHidden;
+			this.saveBoard();
+		},
 		isShowTopic(topic) {
 			return !topic.owner || (this.loggedinUser && topic.owner === this.loggedinUser._id) ||
 				topic.owner === localStorage.getItem('id')

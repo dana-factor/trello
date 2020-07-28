@@ -42,9 +42,9 @@ async function updateBoard(req, res, next) {
 		let user = req.session.user;
 		if (!user) user = { fullName: 'Guest' };
 		else delete user.username;
-		const addedBoard = await boardService.update(board, activity, user);
+		const updatedBoard = await boardService.update(board, activity, user);
 		res.end();
-		res.board = addedBoard;
+		res.updatedBoard = updatedBoard;
 		next();
 	} catch (err) {
 		res.status(500).end();

@@ -48,7 +48,7 @@
       :get-child-payload="getCardPayload(topic.id)"
       drag-class="card-ghost"
       drop-class="card-ghost-drop"
-	  :drag-begin-delay=0
+      :drag-begin-delay="0"
       :drop-placeholder="dropPlaceholderOptions"
     >
       <Draggable v-for="card in topic.cards" :key="card.id">
@@ -149,6 +149,7 @@ export default {
 		},
 		toggleMinimize() {
 			this.minimize = !this.minimize;
+			this.$emit('toggleHidden', this.topic);
 		},
 		toggleEditListNameShown() {
 			this.editListNameShown = !this.editListNameShown;
@@ -173,6 +174,7 @@ export default {
 	},
 	created() {
 		this.topicName = this.topic.name;
+		this.minimize = this.topic.isHidden;
 	},
 	mounted() { },
 	watch: {},

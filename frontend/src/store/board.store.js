@@ -76,7 +76,7 @@ export const boardStore = {
     async loadCurrBoard({ commit }, { id }) {
       try {
         const board = await boardService.getById(id);
-        this._vm.$socket.client.emit('setBoardId', board._id);
+        this._vm.$socket.client.emit('subscribeToBoard', board._id);
         commit({ type: 'setCurrBoard', board });
         return board;
       } catch (err) {
