@@ -93,22 +93,22 @@
 .smooth-dnd-container {
     margin-top: 5px;
 }
-.smooth-dnd-container.horizontal > .smooth-dnd-draggable-wrapper {
-	display: inline-block;
-}
+// .smooth-dnd-container.horizontal > .smooth-dnd-draggable-wrapper {
+// 	display: inline-block;
+// }
 
-.smooth-dnd-disable-touch-action *{
-	touch-action: auto;
-}
+// .smooth-dnd-disable-touch-action *{
+// 	touch-action: auto;
+// }
 
-.smooth-dnd-disable-touch-action .topic-wrapper {
-	touch-action: none;
-}
+// .smooth-dnd-disable-touch-action .topic-wrapper {
+// 	touch-action: none;
+// }
 
-.smooth-dnd-disable-touch-action .card-preview {
-    touch-action: none;
-}
+// .smooth-dnd-disable-touch-action .card-preview {
+//     touch-action: none;
+// }
 
-.smooth-dnd-disable-touch-action .board-topic {
-    touch-action: auto;
-}
+// .smooth-dnd-disable-touch-action .board-topic {
+//     touch-action: auto;
+// }

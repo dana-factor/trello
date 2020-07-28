@@ -67,6 +67,7 @@
       @drop="onColumnDrop($event)"
       drag-class="card-ghost"
       drop-class="card-ghost-drop"
+	  :drag-begin-delay=0
       :drop-placeholder="upperDropPlaceholderOptions"
     >
       <Draggable v-for="topic in board.topics" :key="topic.id">

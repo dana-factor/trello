@@ -2,6 +2,7 @@
   <div
     id="app"
     :style="{backgroundColor: background.bgc, backgroundImage: `url('${background.imgUrl}')`}"
+    @touchend="removeDndClasses"
   >
     <app-header :loggedInUser="loggedInUser" @logout="logout"></app-header>
     <router-view @setBgc="setBgc" @setBgImg="setBgImg" />
@@ -41,6 +42,9 @@ export default {
 		async logout() {
 			const user = await this.$store.dispatch({ type: 'logout' })
 		},
+		removeDndClasses() {
+			document.querySelector('body').classList.remove('smooth-dnd-no-user-select', 'smooth-dnd-disable-touch-action');
+		}
 	},
 	components: {
 		appHeader

@@ -48,6 +48,7 @@
       :get-child-payload="getCardPayload(topic.id)"
       drag-class="card-ghost"
       drop-class="card-ghost-drop"
+	  :drag-begin-delay=0
       :drop-placeholder="dropPlaceholderOptions"
     >
       <Draggable v-for="card in topic.cards" :key="card.id">
