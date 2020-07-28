@@ -1,10 +1,8 @@
 const express = require('express');
-// const {requireAuth, requireAdmin} = require('../../middlewares/requireAuth.middleware')
 const boardController = require('./board.controller');
 const router = express.Router();
 
-// middleware that is specific to this router
-// router.use(requireAuth)
+
 var socket_io;
 router.get('/', boardController.getBoards);
 router.get('/:id', boardController.getBoard);

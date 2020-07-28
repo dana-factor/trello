@@ -43,7 +43,6 @@ async function updateBoard(req, res, next) {
 		if (!user) user = { fullName: 'Guest' };
 		else delete user.username;
 		const addedBoard = await boardService.update(board, activity, user);
-		// res.send(addedBoard);
 		res.end();
 		res.board = addedBoard;
 		next();
