@@ -40,15 +40,17 @@
       <user-list :users="filteredUsers" :memberOf="board" @toggleMember="toggleMember" />
     </div>
     <div v-if="isDeleteModalOpen" class="delete-modal">
-      <h5 v-if="board._id !== '5f1aefd0f30ae5001757bd46'">
-        Are you sure you want to delete this board?
-      </h5>
-	  <h5 v-else>This is the public board, it cannot be deleted!</h5>
+      <h5
+        v-if="board._id !== '5f1aefd0f30ae5001757bd46'"
+      >Are you sure you want to delete this board?</h5>
+      <h5 v-else>This is the public board, it cannot be deleted!</h5>
       <div class="btns">
-        <button @click="toggleDeleteModal" class="cancel-btn">
-        	Cancel
-        </button>
-        <button :disabled="board._id === '5f1aefd0f30ae5001757bd46'" @click="removeBoard(board._id)" class="delete-btn">
+        <button @click="toggleDeleteModal" class="cancel-btn">Cancel</button>
+        <button
+          :disabled="board._id === '5f1aefd0f30ae5001757bd46'"
+          @click="removeBoard(board._id)"
+          class="delete-btn"
+        >
           <i class="el-icon-delete"></i> Delete
         </button>
       </div>
@@ -67,8 +69,8 @@
       @drop="onColumnDrop($event)"
       drag-class="card-ghost"
       drop-class="card-ghost-drop"
-	  :drag-begin-delay=0
       :drop-placeholder="upperDropPlaceholderOptions"
+      :drag-begin-delay="100"
     >
       <Draggable v-for="topic in board.topics" :key="topic.id">
         <board-topic
@@ -87,7 +89,7 @@
           @removeCard="removeCard"
           @updateDND="saveAfterDnd"
           @setTopicOwner="setTopicOwner"
-		  @toggleHidden="toggleHidden"
+          @toggleHidden="toggleHidden"
         />
       </Draggable>
       <div class="topic-wrapper add-topic">
@@ -165,7 +167,7 @@ export default {
 		},
 	},
 	methods: {
-		toggleHidden(topic){
+		toggleHidden(topic) {
 			topic.isHidden = !topic.isHidden;
 			this.saveBoard();
 		},

@@ -48,8 +48,9 @@
       :get-child-payload="getCardPayload(topic.id)"
       drag-class="card-ghost"
       drop-class="card-ghost-drop"
-      :drag-begin-delay="0"
       :drop-placeholder="dropPlaceholderOptions"
+      @contextmenu.prevent
+	  :drag-begin-delay=100
     >
       <Draggable v-for="card in topic.cards" :key="card.id">
         <card-preview :card="card" :boardLabels="board.labels" @removeCard="removeCard"></card-preview>

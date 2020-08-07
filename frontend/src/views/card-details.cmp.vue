@@ -11,10 +11,15 @@
 			<div class="header">
 				<i class="el-icon-postcard"></i>
 				<h1
-					@keypress.enter.prevent="updateCardName; $event.target.blur()"
+					@keypress.enter.prevent="
+						updateCardName;
+						$event.target.blur();
+					"
 					@blur="updateCardName"
 					contenteditable
-				>{{card.name}}</h1>
+				>
+					{{ card.name }}
+				</h1>
 				<router-link to="../">
 					<i class="el-icon-close"></i>
 				</router-link>
@@ -46,8 +51,10 @@
 							<li
 								v-for="label in labels"
 								:key="label.color"
-								:style="{backgroundColor:label.color}"
-							>{{label.title}}</li>
+								:style="{ backgroundColor: label.color }"
+							>
+								{{ label.title }}
+							</li>
 						</ul>
 						<div
 							v-if="card.dueDate"
@@ -58,9 +65,11 @@
 								<input
 									type="checkbox"
 									v-model="card.isCardDone"
-									@change="dispatchBoardSave('marked as done')"
+									@change="
+										dispatchBoardSave('marked as done')
+									"
 								/>
-								<p>{{ dueDateToShow}}</p>
+								<p>{{ dueDateToShow }}</p>
 								<span
 									class="card-status completed"
 									v-if="card.isCardDone"
@@ -86,12 +95,23 @@
 						></textarea>
 						<button
 							v-if="isDescriptionSaveShown"
-							@click="dispatchBoardSave('updated the description to ' + card.description); isDescriptionSaveShown=false"
+							@click="
+								dispatchBoardSave(
+									'updated the description to ' +
+										card.description
+								);
+								isDescriptionSaveShown = false;
+							"
 							class="save"
-						>Save</button>
+						>
+							Save
+						</button>
 						<button
 							v-if="isDescriptionSaveShown"
-							@click="card.description = ''; isDescriptionSaveShown=false"
+							@click="
+								card.description = '';
+								isDescriptionSaveShown = false;
+							"
 						>
 							<i class="el-icon-close"></i>
 						</button>
@@ -116,9 +136,7 @@
 							@taskToggled="saveToggledTask"
 						/>
 					</div>
-					<h2>
-						<i class="el-icon-notebook-1"></i>Activity
-					</h2>
+					<h2><i class="el-icon-notebook-1"></i>Activity</h2>
 					<div class="comment">
 						<avatar
 							class="avatar-comment"
@@ -174,21 +192,22 @@
 						<i class="el-icon-brush"></i>
 						<span>Background Color</span>
 					</button>
-					<!-- <a :href="whatsappUrl">
-            <i class="el-icon-brush"></i>
-            <span>Share on Whatsapp</span>
-          </a> -->
 					<button @click="toggleModal('card-share-edit')">
 						<i class="el-icon-share"></i>
 						<span>Share</span>
 					</button>
+
+					<!-- <button @click="toggleModal('card-share-edit')">
+            <i class="el-icon-share"></i>
+            <span>Delete</span>
+          </button> -->
 				</div>
 			</div>
 			<card-edit-modal
 				v-if="editModal"
 				@modalClose="closeModal"
 			>
-				<template v-slot:header>{{modalTitle}}</template>
+				<template v-slot:header>{{ modalTitle }}</template>
 				<component
 					:is="editModal"
 					:boardLabels="board.labels"
@@ -374,7 +393,7 @@ export default {
 			this.closeModal();
 			this.dispatchBoardSave(
 				'updated the due date to ' +
-					moment(date).format('DD/MM/YY HH:mm')
+				moment(date).format('DD/MM/YY HH:mm')
 			);
 		},
 		removeDueDate() {

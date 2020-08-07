@@ -1,7 +1,6 @@
 module.exports = {
   pwa: {
-    workboxOptions: {
-      exclude: [/OneSignal.*\.js$/]
-    }
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black',
   }
 };

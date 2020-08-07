@@ -3,7 +3,6 @@
     id="app"
     :style="{backgroundColor: background.bgc, backgroundImage: `url('${background.imgUrl}')`}"
     @touchend="removeDndClasses"
-    @touchmove="handleTouchMove"
   >
     <app-header :loggedInUser="loggedInUser" @logout="logout"></app-header>
     <router-view @setBgc="setBgc" @setBgImg="setBgImg" />
@@ -46,9 +45,6 @@ export default {
 		removeDndClasses() {
 			document.querySelector('body').classList.remove('smooth-dnd-no-user-select', 'smooth-dnd-disable-touch-action');
 		},
-		handleTouchMove(ev) {
-			if (document.querySelector('body').classList.contains('smooth-dnd-disable-touch-action')) ev.preventDefault();
-		}
 	},
 	components: {
 		appHeader
