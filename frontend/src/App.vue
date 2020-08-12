@@ -19,7 +19,7 @@ export default {
 			background: {
 				imgUrl: '',
 				bgc: '#fceddd',
-			}
+			},
 		}
 	},
 	computed: {
@@ -39,8 +39,8 @@ export default {
 			this.background.bgc = '#fceddd';
 			this.background.imgUrl = imgUrl;
 		},
-		async logout() {
-			const user = await this.$store.dispatch({ type: 'logout' })
+		logout() {
+			this.$store.dispatch({ type: 'logout' })
 		},
 		removeDndClasses() {
 			document.querySelector('body').classList.remove('smooth-dnd-no-user-select', 'smooth-dnd-disable-touch-action');
@@ -51,6 +51,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss">
-</style>

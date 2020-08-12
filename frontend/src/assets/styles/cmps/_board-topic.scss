@@ -93,6 +93,7 @@
     .topic-main{
         margin: 0 4px;
         padding: 0 4px;
+        min-height: 10px;
         // For inner scrollbar:
         overflow-x: hidden;
         max-height: 75vh;

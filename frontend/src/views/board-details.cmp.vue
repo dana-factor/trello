@@ -3,8 +3,10 @@
     v-if="board"
     class="board-details"
     @click="isFilterModalOpen=false; isFilterInputShown=false; isUserListOpen=false;"
+	@touchstart="dndDelay = 100"
+	@mousedown="dndDelay = 0"
   >
-    <div class="screen" v-if="topicsMenuOpen" @click="topicsMenuOpen = false"></div>
+    <div class="screen" v-if="anyTopicMenuOpen" @click="anyTopicMenuOpen = false"></div>
     <div class="dashboard-modal" v-if="isDashboardOpen">
       <dashboard :board="board" @closeDashboard="isDashboardOpen = false" />
     </div>
@@ -70,7 +72,7 @@
       drag-class="card-ghost"
       drop-class="card-ghost-drop"
       :drop-placeholder="upperDropPlaceholderOptions"
-      :drag-begin-delay="100"
+      :drag-begin-delay=dndDelay
     >
       <Draggable v-for="topic in board.topics" :key="topic.id">
         <board-topic
@@ -79,10 +81,10 @@
           :key="topic.owner"
           :topic="topic"
           :board="board"
-          :topicsMenuOpen="topicsMenuOpen"
+          :anyTopicMenuOpen="anyTopicMenuOpen"
           :loggedinUser="loggedinUser"
-          @topicsMenuClose="topicsMenuOpen = false"
-          @topicsMenuOpen="topicsMenuOpen = true"
+		  :dndDelay="dndDelay"
+		  @toggleTopicMenu="anyTopicMenuOpen = !anyTopicMenuOpen"
           @updateTopicName="updateTopicName"
           @removeTopic="removeTopic"
           @addCard="addCard"
@@ -144,7 +146,7 @@ export default {
 				className: "drop-preview",
 				animationDuration: 150
 			},
-			topicsMenuOpen: false,
+			anyTopicMenuOpen: false,
 			filteredTopics: [],
 			isFilterModalOpen: false,
 			isFilterInputShown: false,
@@ -152,7 +154,8 @@ export default {
 			filteredUsers: [],
 			isDashboardOpen: false,
 			topicNameBefore: '',
-			topicNameAfter: ''
+			topicNameAfter: '',
+			dndDelay: 0
 		};
 	},
 	computed: {
@@ -189,8 +192,8 @@ export default {
 			this.saveBoard('updated board name')
 		},
 		async toggleMember(userId) {
-			if (this.board.members.find(member => member._id === userId)) {
-				const idx = this.board.members.findIndex(member => member._id === userId);
+			const idx = this.board.members.findIndex(member => member._id === userId);
+			if (idx !== -1) {
 				const name = this.board.members[idx].fullName; // keep the name for the action-txt before the splice
 				this.board.members.splice(idx, 1);
 				this.saveBoard('removed ' + name + ' as a member')
@@ -203,10 +206,9 @@ export default {
 		},
 		searchMember(filterBy) {
 			const exp = new RegExp(`.*${filterBy.searchStr}.*`, 'i');
-			const filteredUsers = this.users.filter(user => {
+			this.filteredUsers = this.users.filter(user => {
 				return user.fullName.match(exp) || user.username.match(exp);
 			})
-			this.filteredUsers = filteredUsers;
 		},
 		setFilter(filterBy) {
 			if (!filterBy.searchStr) {
@@ -214,12 +216,10 @@ export default {
 				return;
 			}
 			const exp = new RegExp(`.*${filterBy.searchStr}.*`, 'i');
-			const topicsToFilter = JSON.parse(JSON.stringify(this.board.topics))
-			const filteredTopics = topicsToFilter.filter((topic) => {
+			this.filteredTopics = this.board.topics.filter((topic) => {
 				topic.cards = topic.cards.filter((card) => card.name.match(exp) || card.description.match(exp));
 				return topic.cards.length;
 			});
-			this.filteredTopics = filteredTopics
 		},
 		setBgc(color) {
 			this.board.style.backgroundColor = color;
@@ -239,28 +239,27 @@ export default {
 			this.$router.push('/board')
 		},
 		updateTopicName(topicName, topicId) {
-			const currTopic = this.board.topics.find(
+			const topic = this.board.topics.find(
 				topic => topic.id === topicId
 			);
-			currTopic.name = topicName;
+			topic.name = topicName;
 			this.saveBoard('updated a topic');
 		},
 		addCard(topicId, cardName) {
 			const starterCard = boardService.getStarterCard(cardName);
-			let currTopic = this.board.topics.find(
+			let topic = this.board.topics.find(
 				topic => topic.id === topicId
 			);
-			currTopic.cards.push(starterCard);
+			topic.cards.push(starterCard);
 			this.saveBoard('added a card');
 		},
-		async removeCard(cardId, topicId) {
-			const topicIdx = this.board.topics.findIndex(
+		removeCard(cardId, topicId) {
+			const topic = this.board.topics.find(
 				topic => topic.id === topicId
 			);
-			const topic = this.board.topics[topicIdx];
 			const cardIdx = topic.cards.findIndex(card => card.id === cardId)
 			const activity = 'removed card ' + topic.cards[cardIdx].name + ' from ' + topic.name;
-			this.board.topics[topicIdx].cards.splice(cardIdx, 1);
+			topic.cards.splice(cardIdx, 1);
 			this.saveBoard(activity);
 		},
 		removeTopic(topicId) {
@@ -281,11 +280,13 @@ export default {
 			this.$store.dispatch({ type: 'saveBoard', board: this.board, activity: { text: action } });
 		},
 		setTopicOwner(topic) {
-			if (topic.owner) topic.owner = null;
+			if (topic.owner) {
+				topic.owner = null;
+				topic.isHidden = false;
+			}
 			else if (this.loggedinUser) topic.owner = this.loggedinUser._id;
 			else topic.owner = localStorage.getItem('id');
 			this.saveBoard();
-			console.log('changed hidden owner:', topic.owner)
 		},
 		loadBoard() {
 			const boardId = this.$route.params.boardId;
@@ -325,12 +326,8 @@ export default {
 				dropResult
 			);
 			this.board.topics.splice(columnIndex, 1, newColumn);
-			if (this.topicNameBefore === this.topicNameAfter) {
-				this.saveBoard();
-				this.topicNameBefore = '';
-				this.topicNameAfter = '';
-			}
-			else if (activityTxt) {
+			if (activityTxt) {
+				if (this.topicNameBefore === this.topicNameAfter) activityTxt = '';
 				this.saveBoard(activityTxt);
 				this.topicNameBefore = '';
 				this.topicNameAfter = '';
@@ -376,6 +373,3 @@ export default {
 	}
 };
 </script>
-
-<style scoped>
-</style>
