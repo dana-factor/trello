@@ -8,7 +8,7 @@
 			<li v-for="label in boardLabels" :key="label.color">
 				<button class="label" @click="toggleLabel(label)" :style="{backgroundColor:label.color}">
 					{{label.title}}
-					<span v-if="hasLabel(label.color)">
+					<span v-if="hasLabel(label)">
 						<i class="el-icon-check"></i>
 					</span>
 				</button>
