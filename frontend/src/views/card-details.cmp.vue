@@ -158,7 +158,7 @@
 						isShowInCard="false"
 					/>
 				</div>
-				<div class="right-side">
+				<div class="right-side" @mousedown.stop>
 					<h2>
 						Add
 						<span>To Card</span>
