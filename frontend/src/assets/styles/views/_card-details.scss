@@ -31,14 +31,16 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
-		.header {
+		.header i {
+				font-size: 22px;
+		}
+		.title {
 			display: flex;
 			align-items: center;
 			i {
-				font-size: 22px;
 				font-weight: 500;
 				&::before {
-					vertical-align: middle;
+					display: flex;
 				}
 			}
 			h1 {
@@ -167,6 +169,9 @@
 					}
 				}
 				.description {
+					> div {
+						margin-bottom: 7px;
+					}
 					i {
 						font-size: 22px;
 						font-weight: 500;
@@ -180,7 +185,6 @@
 						line-height: rem(20px);
 						font-size: rem(16px);
 						font-weight: 600;
-						margin-bottom: 7px;
 					}
 					textarea {
 						min-height: 40px;

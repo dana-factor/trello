@@ -188,8 +188,14 @@ export default {
 			this.isUserListOpen = !this.isUserListOpen;
 		},
 		updateBoardName(ev) {
-			if (ev.target.innerText) this.board.name = ev.target.innerText;
-			this.saveBoard('updated board name')
+			if (this.board.name === ev.target.innerText) return;
+			if (!ev.target.innerText) {
+				ev.target.innerText = this.board.name;
+				return;
+			}
+			this.board.name = ev.target.innerText;
+			ev.target.blur();
+			this.saveBoard('updated board name to ' + this.board.name)
 		},
 		async toggleMember(userId) {
 			const idx = this.board.members.findIndex(member => member._id === userId);

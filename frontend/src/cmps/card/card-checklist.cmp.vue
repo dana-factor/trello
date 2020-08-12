@@ -1,15 +1,18 @@
 <template>
   <section class="card-checklist">
-    <i class="el-icon-finished"></i>
-    <input
-      class="checklist-name"
-      v-model="checklistToUpdate.name"
-      @blur="updateChecklistTitle"
-      @keydown.enter="updateChecklistTitle; $event.target.blur()"
-    />
-    <button class="remove-checklist" @click="removeChecklist(checklist)">
-      <i class="el-icon-delete"></i>
-    </button>
+	<div class="title">
+		<i class="el-icon-finished"></i>
+		<input
+		type="text"
+		class="checklist-name"
+		v-model="checklistToUpdate.name"
+		@blur="updateChecklistTitle"
+		@keydown.enter="updateChecklistTitle; $event.target.blur()"
+		/>
+		<button class="remove-checklist" @click="removeChecklist(checklist)">
+		<i class="el-icon-delete"></i>
+		</button>
+	</div>
     <div v-if="checklist.tasks.length" class="progress">
       <span>{{checklistProgress}}</span>
       <div>
@@ -18,8 +21,9 @@
     </div>
     <ul>
       <li v-for="(task,index) in checklistToUpdate.tasks" :key="task.id">
-        <input type="checkbox" v-model="task.isDone" @change="saveToggledTask(task)" />
+        <input type="checkbox" v-model="task.isDone" @change="saveToggledTask(task); $event.target.blur()" />
         <input
+		  type="text"
           v-model="task.text"
           @blur="updateChecklistTaskText(task,index)"
           @keydown.enter="updateChecklistTaskText(task,index); $event.target.blur()"
@@ -30,8 +34,10 @@
       </li>
     </ul>
     <input
+	  type="text"
       class="add-task"
       @keypress.enter="addNewChecklistTask"
+	  @blur="newTaskText = ''"
       v-model="newTaskText"
       placeholder="Add an item"
     />
@@ -69,10 +75,15 @@ export default {
 		},
 		updateChecklistTitle() {
 			if (this.checklistToUpdate.name === this.checklist.name) return;
+			if (!this.checklistToUpdate.name) {
+				this.checklistToUpdate.name = this.checklist.name;
+				return;
+			} 
 			this.$emit('checklistTitleUpdated', this.checklistToUpdate)
 		},
 		updateChecklistTaskText(task, index) {
 			if (this.checklist.tasks[index].text === task.text) return;
+			if (!task.text) return this.removeChecklistTask(task);
 			this.$emit('checklistTaskTextUpdated', this.checklist, task);
 		},
 		removeChecklist() {

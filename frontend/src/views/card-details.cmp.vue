@@ -8,7 +8,7 @@
 			v-if="card"
 			@mousedown="closeModal"
 		>
-			<div class="header">
+			<div class="title header">
 				<i class="el-icon-postcard"></i>
 				<h1
 					@keypress.enter.prevent="
@@ -86,8 +86,10 @@
 						</div>
 					</div>
 					<div class="description">
-						<i class="el-icon-document"></i>
-						<h2>Description</h2>
+						<div class="title">
+							<i class="el-icon-document"></i>
+							<h2>Description</h2>
+						</div>
 						<textarea
 							v-model="card.description"
 							@input="isDescriptionSaveShown = true"
@@ -120,7 +122,7 @@
 						:attachments="card.attachments"
 						@attachmentRemoved="removeAttachment"
 					/>
-					<h2 v-if="isAddingImage">Adding image...</h2>
+					<h2 v-if="isAddingImage">Uploading image...</h2>
 					<div
 						class="checklists"
 						v-for="checklist in card.checklists"
@@ -136,7 +138,7 @@
 							@taskToggled="saveToggledTask"
 						/>
 					</div>
-					<h2><i class="el-icon-notebook-1"></i>Activity</h2>
+					<div class="title"><i class="el-icon-notebook-1"></i><h2>Activity</h2></div>
 					<div class="comment">
 						<avatar
 							class="avatar-comment"
@@ -295,10 +297,14 @@ export default {
 	},
 	methods: {
 		updateCardName(ev) {
+			if (this.card.name === ev.target.innerText) return;
+			if (!ev.target.innerText) {
+				ev.target.innerText = this.card.name;
+				return;
+			}
 			this.card.name = ev.target.innerText;
-			this.dispatchBoardSave(
-				'updated the card name to ' + this.card.name
-			);
+			ev.target.blur();
+			this.dispatchBoardSave('updated the card name to ' + this.card.name);
 		},
 		updateBoardLabels(labelToUpdate) {
 			boardService.updateBoardLabel(this.boardToUpdate, labelToUpdate);
@@ -450,6 +456,7 @@ export default {
 			this.editModal = '';
 		},
 		addComment() {
+			if (!this.comment) return;
 			this.dispatchBoardSave(`${this.comment}`, true);
 			this.comment = '';
 		}

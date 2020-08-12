@@ -12,7 +12,7 @@
         <div class="content" :class="{comment:activity.isComment}">
           <p>
             <span class="name">{{activity.user.fullName}}</span>&nbsp;
-            <span v-if="activity.isComment">left a comment&nbsp;</span>
+            <span v-if="activity.isComment">left a comment:&nbsp;</span>
             <span v-if="isShowInCard">{{activity.text | removeInCard}}</span>
             <span v-else>{{activity.text}}</span>
           </p>

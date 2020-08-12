@@ -1,7 +1,9 @@
 <template>
 	<section class="card-attachments">
-		<i class="el-icon-paperclip"></i>
-		<h2>Attachments</h2>
+		<div class="title">
+			<i class="el-icon-paperclip"></i>
+			<h2>Attachments</h2>
+		</div>
 		<ul>
 			<li v-for="attachment in attachments" :key="attachment.imgUrl">
 				<button @click="removeAttachment(attachment)">
