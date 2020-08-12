@@ -34,7 +34,6 @@ export default {
 	},
 	methods: {
 		selectColor(color) {
-			this.selectedColor = color;
 			this.$emit('setBgc', color);
 		}
 	},
@@ -51,7 +50,7 @@ export default {
 .selected::after {
 	content: '✔';
 	position: relative;
-	top: 25%;
-	left: 35%;
+	top: 35%;
+	left: 30%;
 }
 </style>
