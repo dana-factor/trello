@@ -36,20 +36,19 @@
   }
   li {
     margin-left: 35px;
-    padding: 5px 5px;
+    padding: 0 5px;
     display: flex;
     margin-bottom: 2px;
     display: flex;
     align-items: center;
     border-radius: 3px;
     &:hover {
-      background-color: rgba(9, 30, 66, 0.04);
+      &:not(:focus-within){
+        background-color: rgba(9, 30, 66, 0.04);
+      }
       button {
         display: inline-block;
       }
-    }
-    &:focus-within{
-      background-color: white
     }
   }
   input[type='text'] {
@@ -60,8 +59,12 @@
     font-family: inherit;
     border: none;
     width: 89%;
-    &:hover:focus{
+    padding: 5px;
+    &:hover:focus {
       cursor: initial;
+    }
+    &:focus {
+      background-color: white;
     }
     &.add-task {
       border-radius: 3px;
