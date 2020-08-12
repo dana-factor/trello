@@ -93,28 +93,28 @@
 							@input="isDescriptionSaveShown = true"
 							placeholder="Add a description..."
 						></textarea>
-						<button
-							v-if="isDescriptionSaveShown"
-							@click="
-								dispatchBoardSave(
-									'updated the description to ' +
-										card.description
-								);
-								isDescriptionSaveShown = false;
-							"
-							class="save"
-						>
-							Save
-						</button>
-						<button
-							v-if="isDescriptionSaveShown"
-							@click="
-								card.description = '';
-								isDescriptionSaveShown = false;
-							"
-						>
-							<i class="el-icon-close"></i>
-						</button>
+						<div v-if="isDescriptionSaveShown" class="description-controls">
+							<button
+								@mousedown="
+									dispatchBoardSave(
+										'updated the description to ' +
+											card.description
+									);
+									isDescriptionSaveShown = false;
+								"
+								class="save"
+							>
+								Save
+							</button>
+							<button
+								@mousedown="
+									card.description = '';
+									isDescriptionSaveShown = false;
+								"
+							>
+								<i class="el-icon-close"></i>
+							</button>
+						</div>
 					</div>
 					<card-attachments
 						:attachments="card.attachments"
