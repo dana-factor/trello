@@ -301,6 +301,12 @@
 							@include for-normal-layout{
 								margin-left: 0px;
 							}
+							.vue-avatar--wrapper{
+								min-width: 28px;
+								min-height: 28px;
+								background-repeat: round !important;
+								background-position: center !important;
+							}
 							.content {
 								margin-left: 8px;
 							}

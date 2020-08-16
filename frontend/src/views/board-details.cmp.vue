@@ -217,12 +217,13 @@ export default {
 			})
 		},
 		setFilter(filterBy) {
+			const topicsCopy = JSON.parse(JSON.stringify(this.board.topics));
 			if (!filterBy.searchStr) {
-				this.filteredUsers = this.users;
+				this.filteredTopics = topicsCopy;
 				return;
 			}
 			const exp = new RegExp(`.*${filterBy.searchStr}.*`, 'i');
-			this.filteredTopics = this.board.topics.filter((topic) => {
+			this.filteredTopics = topicsCopy.filter((topic) => {
 				topic.cards = topic.cards.filter((card) => card.name.match(exp) || card.description.match(exp));
 				return topic.cards.length;
 			});

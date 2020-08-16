@@ -3,7 +3,7 @@
   margin-bottom: 10px;
   &:hover {
     button.remove-checklist {
-      display: inline-block;
+       display: flex;
     }
   }
   i.el-icon-finished {
@@ -47,7 +47,7 @@
         background-color: rgba(9, 30, 66, 0.04);
       }
       button {
-        display: inline-block;
+        display: flex;
       }
     }
   }
