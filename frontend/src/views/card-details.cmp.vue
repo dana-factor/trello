@@ -447,7 +447,7 @@ export default {
 		async onUploadImg(ev) {
 			this.isAddingImage = true;
 			const res = await uploadImg(ev);
-			this.card.attachments.push({ imgUrl: res.url });
+			this.card.attachments.push({ imgUrl: res.secure_url });
 			ev.target.value = '';
 			this.isAddingImage = false;
 			this.dispatchBoardSave('added an image');

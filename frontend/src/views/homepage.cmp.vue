@@ -8,8 +8,8 @@
     </div>
     <div class="notes-container">
       <div class="yellow-note note">
-        <h2>Real-time Updating</h2>
-        <p>You and your team can enjoy a live workspace that syncs in real-time and allows working simultaneously.</p>
+        <h2>Real-time Updates</h2>
+        <p>You and your team will enjoy a live workspace that syncs in real time and allows working simultaneously.</p>
       </div>
       <div class="blue-note note">
         <h2>Control your privacy</h2>

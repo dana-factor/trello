@@ -103,11 +103,10 @@
     }
     .topic-footer{
         transition: 0.2s;
-        margin: 0px 8px 8px;
+        margin: 8px;
         display: flex;
         flex-direction: column;
         justify-content: stretch;
-        min-height: 28px;
         transition: .2s ease-in;
         p{
             width: 100%;

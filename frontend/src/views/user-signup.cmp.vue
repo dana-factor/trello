@@ -58,7 +58,7 @@ export default {
 			this.textNearUpload = 'Uploading...';
 			const splitPath = ev.target.value.split('\\');
 			const imgData = await uploadImg(ev);
-			this.credentials.imgUrl = imgData.url;
+			this.credentials.imgUrl = imgData.secure_url;
 			this.textNearUpload = splitPath[splitPath.length - 1];
 		}
 	},

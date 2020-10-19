@@ -4,9 +4,11 @@
 	box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
 	min-height: 32px;
 	padding: 6px 8px 2px;
-	margin-bottom: 8px;
 	overflow: hidden;
 	white-space: break-spaces;
+	div:not(:last-child) > & {
+		margin-bottom: 8px;
+	}
 	.card-label {
 		border-radius: 4px;
 		overflow: hidden;
@@ -15,7 +17,7 @@
 		margin: 0 4px 4px 0;
 		display: inline-block;
 		transition: 0.2s ease-in;
-		&.title-shown{
+		&.title-shown {
 			height: 16px;
 			width: 56px;
 		}

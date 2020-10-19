@@ -1,6 +1,6 @@
-module.exports = {
-  pwa: {
-    appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: 'black',
-  }
-};
+// module.exports = {
+//   pwa: {
+//     appleMobileWebAppCapable: 'yes',
+//     appleMobileWebAppStatusBarStyle: 'black',
+//   }
+// };
